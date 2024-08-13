@@ -1,23 +1,12 @@
-import {
-  Select as NSelect,
-  SelectItem,
-  SelectProps,
-  SelectionMode,
-} from "@nextui-org/react";
+import { Select as NSelect, SelectItem, SelectProps } from "@nextui-org/react";
 import { useField } from "formik";
 import * as React from "react";
 import { SelectType } from "@/types";
 
-// Define the props for the component
-interface Props
-  extends Omit<
-    SelectProps,
-    "items" | "children" | "onSelect" | "selectionMode"
-  > {
-  item: SelectType[]; // List of options
-  name: string; // Field name for Formik
-  onSelect?: (value: string) => void; // Optional callback when a value is selected
-  selectionMode?: SelectionMode; // Mode of selection (single/multiple)
+interface Props extends Omit<SelectProps, "items" | "children" | "onSelect"> {
+  item: SelectType[];
+  name: string;
+  onSelect?: (value: string) => void;
 }
 
 export default function Select({
@@ -30,9 +19,9 @@ export default function Select({
   size,
   labelPlacement = "outside",
   onSelect,
-  selectionMode = "single",
   ...props
 }: Props) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, helpers] = useField(name);
 
   const onChange = React.useCallback(
@@ -45,19 +34,18 @@ export default function Select({
 
   return (
     <NSelect
+      label={label}
       placeholder={placeholder}
       isRequired={isRequired}
       className={className}
       onChange={onChange}
       size={size}
       labelPlacement={labelPlacement}
-      value={field.value} // Set the value from Formik
-      errorMessage={meta.touched && meta.error ? meta.error : undefined} // Show error message
-      isInvalid={meta.touched && !!meta.error} // Indicate invalid state
-      selectionMode={selectionMode}
+      errorMessage={meta.touched && meta.error !== undefined && meta.error}
+      isInvalid={meta.touched && meta.error !== undefined ? true : false}
       {...props}
     >
-      {item.map(({ label, value }) => (
+      {item?.map(({ label, value }) => (
         <SelectItem
           className="text-base text-black font-poppins"
           key={value}

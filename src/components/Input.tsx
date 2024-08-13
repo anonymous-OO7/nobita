@@ -22,6 +22,10 @@ export default function Input({
   errorMessage,
   labelPlacement = "outside",
   className,
+  maxLength,
+  minLength,
+  hidden = false,
+  inputMode = "none",
 }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, helpers] = useField(name);
@@ -58,6 +62,10 @@ export default function Input({
       isDisabled={disabled}
       labelPlacement={labelPlacement}
       className={className}
+      maxLength={maxLength}
+      minLength={minLength}
+      hidden={hidden}
+      inputMode={inputMode}
     />
   );
 }

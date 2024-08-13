@@ -147,6 +147,19 @@ export const SaveJobApi = (job_id: string) => {
   });
 };
 
+export const RemoveSaveJobApi = (job_id: string) => {
+  const formData = new FormData();
+  formData.append("job_id", job_id);
+
+  return onePiece.post("/unsave", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      user_id: `${localStorage.getItem("id")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+    },
+  });
+};
 export const GetAllSavedJobsList = () => {
   return onePiece.get(`/saver`, {
     headers: {

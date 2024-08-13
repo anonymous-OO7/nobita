@@ -11,6 +11,7 @@ export default function Sidebar({ children, setExpandedMain }) {
   const [expanded, setExpanded] = useState(true);
   // const name = nextLocalStorage()?.getItem("name") ?? "name";
   const email = nextLocalStorage()?.getItem("email") ?? "";
+  const name = nextLocalStorage()?.getItem("name") ?? "";
 
   const [data, setData] = React.useState();
 
@@ -66,16 +67,16 @@ export default function Sidebar({ children, setExpandedMain }) {
             <img // eslint-disable-line
               src="https://cdn1.vectorstock.com/i/1000x1000/77/10/men-faceless-profile-vector-13567710.jpg"
               alt=""
-              className="w-6 h-6 rounded-md"
+              className="w-6 h-6 rounded-md "
             />
             <div
               className={`
-                flex justify-between items-center
+                flex justify-between items-center 
                 overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
               `}
             >
               <div className="leading-4 text-black">
-                <p> {data?.name != "" ? data?.name : ""}</p>
+                <p> {name != "" ? name : ""}</p>
                 <span className="text-xs text-gray-600">
                   <p className="text-black font-poppins font-light text-xs">
                     {email != "" ? email : ""}

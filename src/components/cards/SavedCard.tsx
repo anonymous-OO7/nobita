@@ -17,7 +17,6 @@ import {
   Building2Icon,
 } from "lucide-react";
 import { CiLocationOn } from "react-icons/ci";
-import Image from "next/image";
 interface CardProps {
   job: Job;
   onSave: (uuid: string) => void;
@@ -204,16 +203,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
       <div className=" flex flex-row justify-between items-center">
         <div className="flex flex-col sm:flex-row gap-3 justify-start sm:items-center">
           <div className="flex flex-row items-center gap-2">
-            {job.LogoUrl && job.LogoUrl != "" ? (
-              <Image
-                src={job.LogoUrl}
-                width={50}
-                height={50}
-                alt="Picture of the author"
-              />
-            ) : (
-              <Building2Icon color="black" size={30} />
-            )}
+            <Building2Icon color="black" size={30} />
             <h2 className="font-semibold text-xl font-poppins text-black">
               {job.Position}
             </h2>
@@ -265,19 +255,11 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
         </div>
         <div className="flex flex-row justify-center items-center gap-2">
           <Button
-            color="primary"
+            color="danger"
             variant="bordered"
             onClick={() => onSave(job.Uuid)}
           >
-            <p className="text-sm font-poppins text-blue-400">Save</p>
-          </Button>
-          <Button
-            className="bg-blue-400 rounded-lg "
-            color="primary"
-            variant="flat"
-            onClick={() => onApply(job)}
-          >
-            <p className="text-sm font-poppins text-white">Apply</p>
+            <p className="text-sm font-poppins text-red-700">Remove</p>
           </Button>
         </div>
       </div>

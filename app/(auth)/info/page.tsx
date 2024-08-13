@@ -2,6 +2,7 @@ import { gradients } from "@/assets/colors";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Clients from "@/components/homelements/Clients";
+import Contact from "@/components/homelements/ContactUs";
 import Founders from "@/components/homelements/Founders";
 import FrontContent from "@/components/homelements/FrontContent";
 import TechContent from "@/components/homelements/TechContent";
@@ -23,6 +24,7 @@ export default function About() {
           {/* <Founders /> */}
           <UserCount />
           <Clients />
+          <Contact />
         </div>
         <Footer />
       </div>
