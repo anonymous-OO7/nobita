@@ -111,7 +111,10 @@ const LoginPage = () => {
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 "
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <Logo />
+          {/* <Logo /> */}
+          <h1 className="text-xl font-semibold font-poppins leading-tight tracking-tight text-gray-900 md:text-2xl">
+            Log In
+          </h1>
         </a>
         <div className="  rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0  dark:border-gray-700">
           {showOtp ? (
@@ -147,7 +150,7 @@ const LoginPage = () => {
             </div>
           ) : (
             <div className=" p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+              <h1 className="text-xl font-light font-poppins leading-tight tracking-tight text-gray-900 md:text-2xl">
                 Sign in to your account
               </h1>
               <Formik

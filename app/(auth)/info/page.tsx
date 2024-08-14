@@ -8,6 +8,7 @@ import FrontContent from "@/components/homelements/FrontContent";
 import TechContent from "@/components/homelements/TechContent";
 import Testimonials from "@/components/homelements/Testimonials";
 import UserCount from "@/components/homelements/UserCount";
+import Accordian from "@/components/homelements/Accordian";
 
 export default function About() {
   return (
@@ -24,6 +25,7 @@ export default function About() {
           {/* <Founders /> */}
           <UserCount />
           <Clients />
+          <Accordian />
           <Contact />
         </div>
         <Footer />

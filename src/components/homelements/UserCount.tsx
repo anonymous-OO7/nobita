@@ -5,8 +5,8 @@ const UserCount = () => {
     <div>
       <div className="flex items-center justify-center bg-gradient-to-r mt-20">
         <div className="flex-col items-center justify-center text-black">
-          <div className="h-40 w-[70%] md:w-1/2 flex items-center justify-center font-poppins  text-3xl lg:text-5xl font-bold mx-14">
-            The best way you can connect people and grow
+          <div className="h-40 w-[70%] md:w-1/2 flex items-center justify-center font-poppins  text-3xl lg:text-5xl font-semibold mx-14">
+            The best way you can grab opportunities and grow.
           </div>
 
           <div className="flex">
@@ -16,20 +16,21 @@ const UserCount = () => {
                   <div className="text-sm font-medium text-black font-poppins">
                     Visitors
                   </div>
-                  <div className="text-5xl font-bold font-poppins">15k+</div>
+                  <div className="text-5xl font-bold font-poppins">1000+</div>
                   <div className="text-sm font-medium text-black font-poppins">
-                    Compass has more than 15k+ visitors per month.
+                    Compass has more 100+ of daily visitors and our tagret is to
+                    get more than 10k+ visitors per month.
                   </div>
                 </div>
               </div>
               <div className="h-40 w-[70%] md:w-1/4 flex items-center justify-center">
                 <div className="flex-col space-y-2">
                   <div className="text-sm font-medium text-black font-poppins">
-                    Total Users
+                    Total Referals
                   </div>
                   <div className="text-5xl font-bold font-poppins">1.2M+</div>
                   <div className="text-sm font-medium text-black font-poppins">
-                    Users has more than 1.2M+ total users.
+                    Goal is to grow biggest community for referals.
                   </div>
                 </div>
               </div>
@@ -38,9 +39,9 @@ const UserCount = () => {
                   <div className="text-sm font-medium text-black font-poppins">
                     Engagement
                   </div>
-                  <div className="text-5xl font-bold font-poppins">69k</div>
+                  <div className="text-5xl font-bold font-poppins">10k</div>
                   <div className="text-sm font-medium text-black font-poppins">
-                    Compass has gained 69k+ users last month.
+                    Compass has gained 100+ users last month.
                   </div>
                 </div>
               </div>
