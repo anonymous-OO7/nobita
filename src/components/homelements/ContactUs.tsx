@@ -1,6 +1,39 @@
-import React from "react";
+"use client";
+import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
+import useToast from "@/hooks/useToast";
 
 const Contact = () => {
+  const [open, setOpen] = useState(false);
+  const form = useRef<HTMLFormElement>(null);
+  const { showToast } = useToast();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (form.current) {
+      emailjs
+        .sendForm(
+          "service_f0k1jz5", // Replace with your actual service ID
+          "template_j5uj72k", // Replace with your actual template ID
+          form.current,
+          "hdVUQq4cKYuDJtnXv" // Replace with your actual public key
+        )
+        .then(
+          (result) => {
+            showToast("Message delivered!!", { type: "success" });
+            setOpen(true);
+            form.current?.reset();
+          },
+          (error) => {
+            console.error("Error sending message:", error.text);
+          }
+        );
+    } else {
+      console.error("Form reference is null");
+    }
+  };
+
   return (
     <>
       <section className="relative z-10 overflow-hidden bg-white py-20 dark:bg-dark px-10 lg:py-[120px]">
@@ -11,13 +44,13 @@ const Contact = () => {
                 <span className="mb-4 block text-base font-semibold text-primary">
                   Contact Us
                 </span>
-                <h2 className="mb-6 text-[32px] font-bold uppercase text-black  sm:text-[40px] lg:text-[36px] xl:text-[40px]">
-                  GET IN TOUCH WITH US
+                <h2 className="mb-6 text-[32px] font-poppins font-semibold  text-black  sm:text-[40px] lg:text-[36px] xl:text-[40px]">
+                  Get in touch with us
                 </h2>
                 <p className="mb-9 text-base leading-relaxed text-body-color text-black">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eius tempor incididunt ut labore e dolore magna aliqua. Ut
-                  enim adiqua minim veniam quis nostrud exercitation ullamco
+                  We’d love to hear from you! Whether you have a question,
+                  feedback, or just want to say hello, don’t hesitate to reach
+                  out. Here’s how you can get in touch with us:
                 </p>
                 <div className="mb-8 flex w-full max-w-[370px]">
                   <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-primary/5 text-primary sm:h-[70px] sm:max-w-[70px]">
@@ -112,7 +145,7 @@ const Contact = () => {
             </div>
             <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
               <div className="relative rounded-lg bg-white p-8 shadow-lg dark:bg-dark-2 sm:p-12">
-                <form>
+                <form ref={form} onSubmit={handleSubmit}>
                   <ContactInputBox
                     type="text"
                     name="name"
@@ -131,7 +164,7 @@ const Contact = () => {
                   <ContactTextArea
                     row="6"
                     placeholder="Your Message"
-                    name="details"
+                    name="message"
                     defaultValue=""
                   />
                   <div>
@@ -970,7 +1003,7 @@ const ContactTextArea = ({ row, placeholder, name, defaultValue }: any) => {
           rows={row}
           placeholder={placeholder}
           name={name}
-          className="w-full resize-none rounded border border-stroke px-[14px] py-3 text-base text-body-color outline-none focus:border-primary dark:border-dark-3 dark:bg-dark dark:text-dark-6"
+          className="w-full resize-none font-poppins text-black  rounded border border-stroke px-[14px] py-3 text-base text-body-color outline-none focus:border-primary dark:border-dark-3 dark:bg-dark dark:text-dark-6"
           defaultValue={defaultValue}
         />
       </div>
@@ -986,7 +1019,7 @@ const ContactInputBox = ({ type, placeholder, name }: any) => {
           type={type}
           placeholder={placeholder}
           name={name}
-          className="w-full rounded border border-stroke px-[14px] py-3 text-base text-body-color outline-none focus:border-primary dark:border-dark-3 dark:bg-dark dark:text-dark-6"
+          className="w-full rounded border font-poppins text-black  border-stroke px-[14px] py-3 text-base text-body-color outline-none focus:border-primary dark:border-dark-3 dark:bg-dark dark:text-dark-6"
         />
       </div>
     </>

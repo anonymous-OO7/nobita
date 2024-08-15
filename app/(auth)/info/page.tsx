@@ -21,10 +21,11 @@ export default function About() {
         <div className="flex-grow">
           <FrontContent />
           <TechContent />
+          <Clients />
+
           <Testimonials />
           {/* <Founders /> */}
           <UserCount />
-          <Clients />
           <Accordian />
           <Contact />
         </div>

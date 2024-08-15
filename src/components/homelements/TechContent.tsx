@@ -40,13 +40,20 @@ const TechContent = () => {
             </button>
           </div>
 
-          <div className="flex items-center justify-center text-center mt-28">
-            <div className="flex flex-col items-center justify-center rounded-tr-full rounded-bl-full w-full bg-white">
-              <div className="flex flex-col p-2 m-2 max-w-7xl">
-                <p className="text-2xl md:text-3xl text-black font-semibold font-poppins mb-9">
-                  Latest Referals listed
-                </p>
-              </div>
+          <div className=" text-lg text-black py-2">
+            <span className="text-xl font-normal font-poppins">Want to</span>{" "}
+            <span className="text-xl font-bold font-poppins">
+              Earn by providing referals to people
+            </span>
+            <div className="text-left text-xl font-normal font-poppins text-black py-4">
+              Looking to earn money while helping others? Sign up now to become
+              a referral partner and start making money by connecting people
+              with valuable opportunities. By listing the referral options you
+              can provide, you can help others find great products, services, or
+              programs while earning a commission for every successful referral.
+            </div>
+            <div className="text-left text-xl font-normal font-poppins text-black py-4">
+            It’s a win-win situation: you get rewarded for your efforts, and others benefit from the opportunities you offer. Join today and start turning your network into a source of income!
             </div>
           </div>
         </div>

@@ -14,9 +14,8 @@ const Accordion = () => {
               <h2 className="mb-4 text-3xl font-bold text-dark dark:text-black font-poppins sm:text-[40px]/[48px]">
                 Any Questions? Look Here
               </h2>
-              <p className="text-base text-body-color dark:text-black font-poppins">
-                There are many variations of passages of Lorem Ipsum available
-                but the majority have suffered alteration in some form.
+              <p className="text-2xl font-semibold text-body-color dark:text-black font-poppins">
+                General Questions
               </p>
             </div>
           </div>
@@ -25,26 +24,26 @@ const Accordion = () => {
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4 lg:w-1/2">
             <AccordionItem
-              header="How long we deliver your first blog post?"
-              text="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              header="What services do you offer?"
+              text="We provide a platform for job seekers to find and apply for job opportunities and for employers to find qualified candidates through referrals and direct listings. Our services include job listings, referral programs, resume assistance, and career advice."
             />
             <AccordionItem
-              header="How long we deliver your first blog post?"
-              text="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              header="How do I sign up for your services?"
+              text="You can sign up by creating an account on our website. Simply click the Sign Up button on the top right of the homepage and follow the instructions to set up your profile."
             />
             <AccordionItem
-              header="How long we deliver your first blog post?"
-              text="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              header="Is there a cost to use your services?"
+              text="Our basic job listing and referral services are free. We also offer premium features and additional services that may have associated costs. Details on pricing can be found on our Pricing Page."
             />
           </div>
           <div className="w-full px-4 lg:w-1/2">
             <AccordionItem
-              header="How long we deliver your first blog post?"
-              text="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              header="How do I apply for a job?"
+              text="To apply for a job, browse our job listings and select the position you’re interested in. Click on the job title to view the full description and application instructions. You can apply directly through our site or follow the instructions provided by the employer."
             />
             <AccordionItem
-              header="How long we deliver your first blog post?"
-              text="It takes 2-3 weeks to get your first blog post ready. That includes the in-depth research & creation of your monthly content marketing strategy that we do before writing your first blog post, Ipsum available ."
+              header="How can I get a referral?"
+              text="It takes 2-."
             />
             <AccordionItem
               header="How long we deliver your first blog post?"
