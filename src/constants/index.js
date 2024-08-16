@@ -77,25 +77,25 @@ export const techList = [
 export const sidebarLinks = [
   {
     imgURL: "/assets/home.svg",
-    route: "/",
+    route: "/dashboard",
     label: "Home",
     logocmp: <Home />,
   },
   {
     imgURL: "/assets/search.svg",
-    route: "/explore",
+    route: "/dashboard/explore",
     label: "Applied",
     logocmp: <BookText />,
   },
   {
     imgURL: "/assets/heart.svg",
-    route: "/profile",
+    route: "/dashboard/profile",
     label: "Profile",
     logocmp: <BookmarkCheckIcon />,
   },
   {
     imgURL: "/assets/community.svg",
-    route: "/settings",
+    route: "/dashboard/settings",
     label: "Settings",
     logocmp: <Wrench />,
   },

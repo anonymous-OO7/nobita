@@ -39,3 +39,13 @@ export function extractFromDate(date: Date, part: DatePart): string | number {
       throw new Error("Invalid date part requested");
   }
 }
+
+export const formatDateIntl = (dateString: string): string => {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+  return new Intl.DateTimeFormat("en-GB", options).format(date);
+};

@@ -32,7 +32,7 @@ const LoginPage = () => {
   }, [router]);
 
   const navigateToHomePage = React.useCallback(() => {
-    router.replace("/");
+    router.replace("/dashboard");
   }, [router]);
 
   const handleSubmit = React.useCallback(

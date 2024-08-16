@@ -13,6 +13,7 @@ import {
   Wrench,
   BookmarkCheckIcon,
   BookText,
+  Telescope,
 } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import Bottombar from "./pages/dashboard/Bottombar";
@@ -84,31 +85,38 @@ function SidebarNew({
       <SidebarItem
         icon={<Home />}
         text={"Home"}
-        alert={pathname === "/"}
-        active={pathname === "/"}
-        href="/"
+        alert={pathname === "/dashboard"}
+        active={pathname === "/dashboard"}
+        href="/dashboard"
       />
       <SidebarItem
         icon={<BookText />}
         text={"Applied"}
-        alert={pathname === "/explore"}
-        active={pathname === "/explore"}
-        href="/explore"
+        alert={pathname === "/dashboard/explore"}
+        active={pathname === "/dashboard/explore"}
+        href="/dashboard/explore"
       />
       <SidebarItem
         icon={<BookmarkCheckIcon />}
         text={"Saved"}
-        alert={pathname === "/profile"}
-        active={pathname === "/profile"}
-        href="/profile"
+        alert={pathname === "/dashboard/profile"}
+        active={pathname === "/dashboard/profile"}
+        href="/dashboard/profile"
       />
 
       <SidebarItem
         icon={<Wrench />}
         text={"Settings"}
-        alert={pathname === "/settings"}
-        active={pathname === "/settings"}
-        href="/settings"
+        alert={pathname === "/dashboard/settings"}
+        active={pathname === "/dashboard/settings"}
+        href="/dashboard/settings"
+      />
+      <SidebarItem
+        icon={<Telescope />}
+        text={"My Jobs"}
+        alert={pathname === "/dashboard/myjobs"}
+        active={pathname === "/dashboard/myjobs"}
+        href="/dashboard/myjobs"
       />
     </Sidebar>
   );

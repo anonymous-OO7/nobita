@@ -13,14 +13,17 @@ function Bottombar() {
       <div className="flex items-center justify-between gap-3 xs:gap-5">
         {sidebarLinks.map((link) => {
           const isActive =
-            (pathname.includes(link.route) && link.route.length > 1) ||
+            pathname.includes(link.route) &&
+            link.route.length > 1 &&
             pathname === link.route;
 
           return (
             <Link
               href={link.route}
               key={link.label}
-              className={` relative flex text-black flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5 ${isActive && "bg-primary-500"}`}
+              className={` relative flex text-black flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5 ${
+                isActive && "bg-primary-500"
+              }`}
             >
               {/* <Image
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMMbTeQ3avpXty_1plz1_iD07cPMGWQzX_Vg&usqp=CAU"

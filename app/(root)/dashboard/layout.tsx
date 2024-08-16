@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "../globals.css";
-import { Providers } from "./providers";
+import { Providers } from "./../providers";
 import Main from "@/components/Main";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,12 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${poppins.variable}`}>
-        <Providers>
-          <main>{children}</main>
-        </Providers>
-      </body>
-    </html>
+    <Main>
+      <main>{children}</main>
+    </Main>
   );
 }

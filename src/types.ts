@@ -58,6 +58,28 @@ export interface UserProfile {
   website: string | null; // URL to a personal or professional website
 }
 
+export type JobListing = {
+  ID: number;
+  CreatedAt: string;
+  UpdatedAt: string;
+  DeletedAt: string | null;
+  UserID: number;
+  Status: string;
+  Uuid: string;
+  CompanyName: string;
+  Position: string;
+  Location: string;
+  Type: string;
+  Description: string;
+  Field: string;
+  Owner: string;
+  MinPay: number;
+  MaxPay: number;
+  Price: number;
+  TotalEmp: number;
+  LogoUrl: string;
+};
+
 // Define a type for WorkExperience
 export interface WorkExperience {
   role: string;

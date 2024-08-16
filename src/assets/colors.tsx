@@ -16,5 +16,5 @@ export const Colors = {
 export const gradients = {
   gradient1: "linear-gradient(45deg, #ff7300, #fe4a27)",
   gradient2: "linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%)",
-  gradientbackground: "linear-gradient(45deg, #BFDAE6, #693B93)",
+  gradientbackground: "linear-gradient(45deg, #BFDAE6, #FAFAFA)",
 };

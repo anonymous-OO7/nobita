@@ -46,7 +46,7 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
 
   const handleLogout = React.useCallback(() => {
     localStorage.clear();
-    router.replace("/info");
+    router.replace("/");
   }, [router]);
 
   const handleUpdateProfile = React.useCallback(() => {
@@ -113,7 +113,7 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
           type="search"
         /> */}
         <div>
-          <Link href="/submit">
+          <Link href="/dashboard/submit">
             <Button
               className=" hover:bg-stone-300 p-2 shadow-md text-black rounded-md font-poppins font-normal my-4"
               color="primary"

@@ -200,3 +200,27 @@ export const GetAllAppliedJobsList = () => {
     },
   });
 };
+
+export const GetMyJobsApi = () => {
+  return onePiece.get("/myjobs", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+    },
+  });
+};
+
+export const UpdateMyJobsStatusApi = (job_id: string, status: string) => {
+  // Create a new FormData object and append all required fields
+  const formData = new FormData();
+  formData.append("id", job_id);
+  formData.append("status", status);
+
+  // Make the POST request to the API endpoint
+  return onePiece.post("/myjobs", formData, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      user_id: `${localStorage.getItem("id")}`,
+    },
+  });
+};
