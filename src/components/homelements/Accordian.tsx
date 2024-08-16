@@ -43,7 +43,7 @@ const Accordion = () => {
             />
             <AccordionItem
               header="How can I get a referral?"
-              text="It takes 2-."
+              text="Typically, you’ll start by submitting a request or filling out a form on the website detailing your needs. The service will then match you with a professional based on your criteria and the professional’s expertise."
             />
             <AccordionItem
               header="How long we deliver your first blog post?"

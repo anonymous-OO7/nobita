@@ -5,24 +5,24 @@ import styled, { keyframes, css } from "styled-components";
 
 function ClientsAnimation() {
   const row1 = [
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/800px-TI_New_Logo.png",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/Bosch-Logo-2018-present.jpg",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/CP-Logo-white.svg",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/KPMG_logo.svg",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/Logo_Konica_Minolta.svg.webp",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/Nykaa_logo.webp",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/Philips.webp",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyiHR51obalVq8EbqnD_-fjlOVl41vmAHdUA&s",
+    "https://blogs.microsoft.com/wp-content/uploads/prod/2012/08/8867.Microsoft_5F00_Logo_2D00_for_2D00_screen.jpg",
+    "https://cdn.logojoy.com/wp-content/uploads/20230629132639/current-logo-600x338.png",
+    "https://upload.wikimedia.org/wikipedia/commons/e/e4/Meta_Inc._logo.jpg",
+    "https://cdn.logojoy.com/wp-content/uploads/20240110154233/Tesla-wordmark-logo--600x319.png",
+    "https://logos-world.net/wp-content/uploads/2021/02/JP-Morgan-Chase-Logo.png",
+    "https://www.pngall.com/wp-content/uploads/15/Goldman-Sachs-Logo-PNG.png",
     "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/Samsung_Orig_Wordmark_BLUE_RGB.jpg",
     "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/airtel-red.svg",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/bl%20kashyap.png",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpOIExes7SkKMj61zdgksPGqTv-mIEPVod6w&s",
   ];
 
   const row2 = [
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/hul.webp",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/images.png",
+    "https://www.nvidia.com/content/dam/en-zz/Solutions/about-nvidia/logo-and-brand/01-nvidia-logo-horiz-500x200-2c50-p@2x.png",
+    "https://www.theadvertisingclub.org/wp-content/uploads/2022/12/Walmart-Logo-PNG-Transparent.png-scaled.webp",
     "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/johnson%20controls.png",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/marico.jpg",
-    "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/parle%20logo.webp",
+    "https://blog.logomaster.ai/hs-fs/hubfs/intel-logo-3.jpg?width=672&height=448&name=intel-logo-3.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKNPRQuLPpKrjO5bdFPgVGRoAbysq635o6ZQ&s",
     "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/titan-logo.svg",
     "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/welspun.png",
     "https://storage.googleapis.com/connectrpl_images/companywebsite/logo/wework.jpg",

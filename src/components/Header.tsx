@@ -31,6 +31,9 @@ const Header = () => {
     router.push(`/signup`);
   }, [router]);
 
+  const navigateToPricing = React.useCallback(() => {
+    router.push(`/pricing`);
+  }, [router]);
   return (
     <header
       className={`px-4 py-2 sm:py-4 flex justify-center transition-all duration-300 ease-in-out ${
@@ -45,9 +48,17 @@ const Header = () => {
           <Logo className={`w-20 sm:w-32 ${isHeaderFixed ? "w-12" : ""}`} />
         </div>
         <div>
-          <h1 className="text-black text-base font-semibold font-poppins">
-            What is inside!
-          </h1>
+          <div className="flex flex-row justify-center items-center">
+            <h1 className="text-black text-base font-semibold font-poppins">
+              What is inside
+            </h1>
+            <h1
+              onClick={navigateToPricing}
+              className="text-black text-base font-semibold font-poppins ml-4 hover:underline hover:cursor-pointer"
+            >
+              Pricing
+            </h1>
+          </div>
         </div>
         <div className="flex space-x-2">
           <button

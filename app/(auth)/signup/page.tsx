@@ -107,9 +107,9 @@ export default function SignUp() {
   });
 
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <section className="bg-white">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+        <h2 className="mb-4 text-2xl font-poppins font-bold text-gray-900">
           Sign Up
         </h2>
         <Formik
@@ -130,7 +130,6 @@ export default function SignUp() {
             <Input
               label="Password"
               placeholder="Enter Password"
-              type="password"
               name="password"
             />
             <Spacer size="xs" />
@@ -143,7 +142,6 @@ export default function SignUp() {
               label="Gender"
               placeholder="Select your gender"
               item={genderOptions}
-              isRequired
               className="bg-white text-black rounded-md"
             />
             <Spacer size="xs" />

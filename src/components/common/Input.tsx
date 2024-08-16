@@ -49,13 +49,13 @@ export default function Input({
         onChange(name, event.target.value);
       }
     },
-    [helpers, name, onChange],
+    [helpers, name, onChange]
   );
 
   return (
     <>
       {label !== undefined && (
-        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label className="block mb-2 text-sm font-medium text-gray-900">
           {label}
         </label>
       )}

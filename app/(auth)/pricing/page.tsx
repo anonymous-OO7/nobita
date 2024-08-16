@@ -25,10 +25,10 @@ const page = () => {
             </p>
             <p className="mt-6 flex items-baseline gap-x-1">
               <span className="line-through text-2xl font-sans text-gray-500/70">
-                ₹199
+                ₹149
               </span>
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                ₹149
+                ₹99
               </span>
             </p>
             <a
@@ -116,10 +116,10 @@ const page = () => {
             </p>
             <p className="mt-6 flex items-baseline gap-x-1">
               <span className="line-through text-2xl font-sans text-gray-500/70">
-                ₹549
+                ₹449
               </span>
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                ₹399
+                ₹249
               </span>
             </p>
             <a
