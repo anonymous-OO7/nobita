@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import useApi from "@/hooks/useApi";
 import { LoginApi, OtpSubmitApi } from "@/apis";
 import useToast from "@/hooks/useToast";
+
 const INTIAL_VALUES = {
   email: "",
 };
@@ -119,7 +120,7 @@ const LoginPage = () => {
         <div className="  rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0  dark:border-gray-700">
           {showOtp ? (
             <div className="flex justify-center items-center text-black">
-              <div className="flex flex-col items-center justify-center p-8  text-black">
+              <div className="flex flex-col items-center justify-center p-8  text-black w-[80%] ">
                 <OtpInput
                   value={otp}
                   onChange={(text) => onOtpChange(text)}
@@ -127,6 +128,7 @@ const LoginPage = () => {
                   renderSeparator={
                     <span style={{ margin: "0 0.5rem" }}>-</span>
                   }
+                  inputType="number"
                   renderInput={(props, index) => <input {...props} />} // eslint-disable-line
                   // inputStyle="  border border-gray-300 rounded-md  py-4 px-1  mx-4 text-black"
                   inputStyle={{
@@ -140,11 +142,12 @@ const LoginPage = () => {
 
                 <Button
                   color="primary"
+                  variant="solid"
                   isLoading={otpLoading}
                   disabled={otp.length >= 4 ? false : true}
                   onClick={() => otpSubmit(email, otp)}
                 >
-                  Loading
+                  Submit
                 </Button>
               </div>
             </div>
@@ -176,7 +179,7 @@ const LoginPage = () => {
                       className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                     >
                       <LoadingIcon />
-                      Loading...
+                      Sending...
                     </button>
                   ) : (
                     <button
