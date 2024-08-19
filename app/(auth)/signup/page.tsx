@@ -13,6 +13,8 @@ import useApi from "@/hooks/useApi";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
 import { CreateUserApi } from "@/apis"; // Ensure correct import
 import useToast from "@/hooks/useToast";
+import Image from "next/image";
+import Worklist from "../../../src/assets/logo.png";
 
 // Example options for the select
 const genderOptions: SelectType[] = [
@@ -109,7 +111,12 @@ export default function SignUp() {
   return (
     <section className="bg-white">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 className="mb-4 text-2xl font-poppins font-bold text-gray-900">
+        <Image
+          src={Worklist}
+          alt="logo"
+          className={`w-14 sm:w-24 rounded-xl mb-4`}
+        />
+        <h2 className="mb-4 text-2xl font-poppins font-normal text-gray-900">
           Sign Up
         </h2>
         <Formik

@@ -21,9 +21,9 @@ const Testimonials = () => (
 
               <TestimonialCard
                 text="As a designer, finding the right fit can be challenging. This platform not only connected me with potential employers but also provided valuable industry insights. The referral I received was exactly what I needed to advance my career."
-                authorName="Akshay Kumar"
+                authorName="Mohit Rai"
                 authorTitle="Software Developer Graphic Designer"
-                authorImage="https://media.licdn.com/dms/image/D4D03AQGuC68CADReRA/profile-displayphoto-shrink_200_200/0/1641484568624?e=2147483647&v=beta&t=iygzL1_2nJGGfd2RaG7YrCSHjW1VQpCSZuqyAuoDRco"
+                authorImage="https://media.licdn.com/dms/image/v2/D5603AQEwrZQtKjwecg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1718745577190?e=1729728000&v=beta&t=DHGDCso1dFRIpFGyjOGlufDPUvyKzhXSuO8Udx8jQCU"
               />
 
               <TestimonialCard
