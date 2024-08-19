@@ -92,25 +92,25 @@ function SidebarNew({
       <SidebarItem
         icon={<BookText />}
         text={"Applied"}
-        alert={pathname === "/dashboard/explore"}
-        active={pathname === "/dashboard/explore"}
-        href="/dashboard/explore"
+        alert={pathname === "/dashboard/applied"}
+        active={pathname === "/dashboard/applied"}
+        href="/dashboard/applied"
       />
       <SidebarItem
         icon={<BookmarkCheckIcon />}
         text={"Saved"}
-        alert={pathname === "/dashboard/profile"}
-        active={pathname === "/dashboard/profile"}
-        href="/dashboard/profile"
+        alert={pathname === "/dashboard/saved"}
+        active={pathname === "/dashboard/saved"}
+        href="/dashboard/saved"
       />
 
-      <SidebarItem
+      {/* <SidebarItem
         icon={<Wrench />}
         text={"Settings"}
         alert={pathname === "/dashboard/settings"}
         active={pathname === "/dashboard/settings"}
         href="/dashboard/settings"
-      />
+      /> */}
       <SidebarItem
         icon={<Telescope />}
         text={"My Jobs"}

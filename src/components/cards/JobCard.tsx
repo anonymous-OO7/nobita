@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { CiLocationOn } from "react-icons/ci";
 import Image from "next/image";
+import { FormatToLakhs } from "@/utils/utils";
 interface CardProps {
   job: Job;
   onSave: (uuid: string) => void;
@@ -389,7 +390,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
       <p className="text-sm font-poppins text-black mt-10">{job.Description}</p>
 
       <p className="text-gray-700">
-        Pay - {job.MinPay} - {job.MaxPay} INR
+        {FormatToLakhs(job.MinPay)} - {FormatToLakhs(job.MaxPay)} INR/pa
       </p>
       <p className="text-xs mt-3 font-poppins text-black">
         Posted {postedDate}

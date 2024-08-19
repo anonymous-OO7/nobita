@@ -49,3 +49,19 @@ export const formatDateIntl = (dateString: string): string => {
   };
   return new Intl.DateTimeFormat("en-GB", options).format(date);
 };
+
+export function FormatToLakhs(number: number): string {
+  // Handle negative numbers
+  if (number < 0) {
+    return `-${FormatToLakhs(-number)}`;
+  }
+
+  // Define conversion factor
+  const lakh = 100000;
+
+  // Convert number to lakhs
+  const lakhs = number / lakh;
+
+  // Format the number to 2 decimal places
+  return lakhs.toFixed(2) + " Lakh";
+}

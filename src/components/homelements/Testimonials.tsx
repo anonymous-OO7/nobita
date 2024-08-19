@@ -9,7 +9,7 @@ const Testimonials = () => (
         <section className="text-gray-600 body-font">
           <div className="container px-5  mx-auto">
             <h1 className="text-3xl font-medium title-font text-gray-900 mb-12 text-center">
-              People love using compass
+              People love using workist
             </h1>
             <div className="flex flex-wrap -m-4">
               <TestimonialCard
@@ -21,9 +21,9 @@ const Testimonials = () => (
 
               <TestimonialCard
                 text="As a designer, finding the right fit can be challenging. This platform not only connected me with potential employers but also provided valuable industry insights. The referral I received was exactly what I needed to advance my career."
-                authorName="Mohit Rai"
+                authorName="Sean S. Ellis"
                 authorTitle="Software Developer Graphic Designer"
-                authorImage="https://media.licdn.com/dms/image/v2/D5603AQEwrZQtKjwecg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1718745577190?e=1729728000&v=beta&t=DHGDCso1dFRIpFGyjOGlufDPUvyKzhXSuO8Udx8jQCU"
+                authorImage="https://ogletree.com/app/uploads/people/alexandre-abitbol.jpg"
               />
 
               <TestimonialCard

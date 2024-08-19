@@ -7,7 +7,7 @@ import { Job } from "@/types";
 import React, { useEffect, useState, useCallback } from "react";
 import SaveCard from "@/components/cards/SavedCard";
 
-const Profile = () => {
+const Saved = () => {
   const { makeApiCall } = useApi();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
@@ -63,4 +63,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Saved;

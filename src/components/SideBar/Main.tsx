@@ -16,16 +16,16 @@ export function SideBar() {
         Feed
       </SideBarItem>
       <SideBarItem
-        href="/explore"
+        href="/applied"
         startContent={<Image src={client} alt="CLIENT" />}
       >
-        Explore
+        Applied
       </SideBarItem>
       <SideBarItem
-        href="/profile"
+        href="/saved"
         startContent={<Image src={inventory} alt="Inventory" />}
       >
-        Profile
+        Saved
       </SideBarItem>
     </SideBarBody>
   );

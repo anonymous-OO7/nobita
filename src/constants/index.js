@@ -6,6 +6,8 @@ import {
   Wrench,
   BookmarkCheckIcon,
   BookText,
+  TelescopeIcon,
+  Telescope,
 } from "lucide-react";
 export const teamMembers = [
   {
@@ -83,21 +85,27 @@ export const sidebarLinks = [
   },
   {
     imgURL: "/assets/search.svg",
-    route: "/dashboard/explore",
+    route: "/dashboard/applied",
     label: "Applied",
     logocmp: <BookText />,
   },
   {
     imgURL: "/assets/heart.svg",
-    route: "/dashboard/profile",
-    label: "Profile",
+    route: "/dashboard/saved",
+    label: "Saved",
     logocmp: <BookmarkCheckIcon />,
   },
+  // {
+  //   imgURL: "/assets/community.svg",
+  //   route: "/dashboard/settings",
+  //   label: "Settings",
+  //   logocmp: <Wrench />,
+  // },
   {
     imgURL: "/assets/community.svg",
-    route: "/dashboard/settings",
-    label: "Settings",
-    logocmp: <Wrench />,
+    route: "/dashboard/myjobs",
+    label: "My Jobs",
+    logocmp: <Telescope />,
   },
 ];
 

@@ -23,7 +23,7 @@ import BellIcon from "../../../assets/bell.svg";
 import { useRouter } from "next/navigation";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
 import { Search } from "lucide-react";
-import Logo2 from "../../../assets/NewLogo.svg";
+import Logo2 from "../../../assets/workistlogo.png";
 interface UserData {
   id: number;
   name: string;
@@ -69,10 +69,10 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
   }, []);
 
   return (
-    <Navbar isBordered className=" ">
+    <Navbar isBordered>
       <NavbarContent justify="start">
         <NavbarBrand className="mr-4">
-          <Image src={Logo2} alt="logo" height={40} width={40} />
+          <Image src={Logo2} alt="logo" width={60} />
           <p className=" text-black font-semibold font-poppins sm:block  ">
             {data?.college != "" ? data?.college : "---"}
           </p>
@@ -115,8 +115,7 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
         <div>
           <Link href="/dashboard/submit">
             <Button
-              className=" hover:bg-stone-300 p-2 shadow-md text-black rounded-md font-poppins font-normal my-4"
-              color="primary"
+              className=" hover:bg-stone-300 bg-blue-300 p-2 shadow-md text-black rounded-md font-poppins font-normal my-4"
               endContent={<Add />}
             >
               Create Job Referal

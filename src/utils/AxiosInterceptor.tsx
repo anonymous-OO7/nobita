@@ -9,20 +9,20 @@ interface Props {
   children: React.ReactNode;
 }
 
-// const baseOnePieceURLS =
-//   getEnviromentVariable() === "staging"
-//     ? "http://192.168.1.55:8080/"
-//     : "http://192.168.1.55:8080/";
+const baseOnePieceURLS =
+  getEnviromentVariable() === "staging"
+    ? "http://192.168.1.55:8080/"
+    : "http://192.168.1.55:8080/";
 
 const baseBakiURL =
   getEnviromentVariable() === "staging"
     ? "https://staging.baki.connectrpl.in"
     : "https://baki.connectrpl.in";
 
-const baseOnePieceURLS =
-  getEnviromentVariable() === "staging"
-    ? "https://9088-103-15-252-147.ngrok-free.app/"
-    : "https://9088-103-15-252-147.ngrok-free.app/";
+// const baseOnePieceURLS =
+//   getEnviromentVariable() === "staging"
+//     ? "https://9088-103-15-252-147.ngrok-free.app/"
+//     : "https://9088-103-15-252-147.ngrok-free.app/";
 
 // local ngrok url for production :  https://bbd9-103-15-252-147.ngrok-free.app
 export const onePiece: AxiosInstance = axios.create({

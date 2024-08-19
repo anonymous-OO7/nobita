@@ -9,7 +9,7 @@ function Bottombar() {
   const pathname = usePathname();
   // backdrop-blur-lg
   return (
-    <section className="fixed bottom-0 z-10 w-full shadow-xl  bg-glassmorphism px-4 py-1 bg-white xs:px-7  sm:hidden">
+    <section className="fixed -bottom-0.5 z-10 w-full shadow-xl  bg-glassmorphism px-4 py-1 bg-white xs:px-7  sm:hidden">
       <div className="flex items-center justify-between gap-3 xs:gap-5">
         {sidebarLinks.map((link) => {
           const isActive =
@@ -21,8 +21,8 @@ function Bottombar() {
             <Link
               href={link.route}
               key={link.label}
-              className={` relative flex text-black flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5 ${
-                isActive && "bg-primary-500"
+              className={` relative flex text-black flex-col items-center gap-2 rounded-lg px-2 py-1 sm:flex-1 sm:px-2 sm:py-2.5 ${
+                isActive && "bg-primary-300"
               }`}
             >
               {/* <Image
@@ -34,9 +34,7 @@ function Bottombar() {
               /> */}
               {link.logocmp}
 
-              <p className="text-subtle-medium text-black text-light-1 max-sm:hidden">
-                {link.label.split(/\s+/)[0]}
-              </p>
+              <p className="text-sm text-black font-poppins ">{link.label}</p>
             </Link>
           );
         })}

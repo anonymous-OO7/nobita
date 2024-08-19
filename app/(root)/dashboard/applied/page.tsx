@@ -7,7 +7,7 @@ import { Job } from "@/types";
 import React, { useEffect, useState, useCallback } from "react";
 import JobCard from "@/components/cards/JobCard";
 
-const Explore = () => {
+const Applied = () => {
   const { makeApiCall } = useApi();
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
@@ -52,4 +52,4 @@ const Explore = () => {
   );
 };
 
-export default Explore;
+export default Applied;
