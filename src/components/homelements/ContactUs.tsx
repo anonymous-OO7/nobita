@@ -137,7 +137,7 @@ const Contact = () => {
                       Email Address
                     </h4>
                     <p className="text-base text-body-color text-black">
-                      info@yourdomain.com
+                      workist.ai@gmail.com
                     </p>
                   </div>
                 </div>

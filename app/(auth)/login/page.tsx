@@ -113,7 +113,7 @@ const LoginPage = () => {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {/* <Logo /> */}
-          <h1 className="text-xl font-semibold font-poppins leading-tight tracking-tight text-gray-900 md:text-2xl">
+          <h1 className="text-xl font-semibold font-poppins leading-tight tracking-tight text-gray-900 md:text-4xl">
             Log In
           </h1>
         </a>

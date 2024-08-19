@@ -101,7 +101,7 @@ export function SidebarItem({ icon, text, active, alert, href }) {
       <li
         className={`
         relative flex items-center py-2 px-3 my-1
-        font-medium  rounded-md cursor-pointer
+        font-normal  rounded-md cursor-pointer
         transition-colors group
         ${
           active
@@ -112,7 +112,7 @@ export function SidebarItem({ icon, text, active, alert, href }) {
       >
         {icon}
         <span
-          className={`overflow-hidden transition-all ${
+          className={`overflow-hidden transition-all font-poppins font-light ${
             expanded ? "w-52 ml-3" : "w-0"
           }`}
         >

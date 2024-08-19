@@ -1,6 +1,14 @@
+"use client";
+
 import React from "react";
+import { useRouter } from "next/navigation";
 
 const Footer = () => {
+  const router = useRouter();
+
+  const navigateToPricing = React.useCallback(() => {
+    router.push(`/pricing`);
+  }, [router]);
   return (
     <footer className="bg-white" aria-labelledby="footer-heading">
       <footer className="bg-white pt-4 sm:pt-6 lg:pt-8">
@@ -46,13 +54,14 @@ const Footer = () => {
                     >
                       <path d="M96 0V47L48 94H0V47L48 0H96Z" />
                     </svg>
-                    Connect
+                    Workist
                   </a>
                 </div>
 
                 <p className="mb-6 text-gray-500 sm:pr-8">
-                  Filler text is dummy text which has no meaning however looks
-                  very similar to real text
+                  Find useful links here and get attached to use. We would like
+                  to hear you. Fill the above form with your valuable
+                  suggestions
                 </p>
 
                 <div className="flex gap-4">
@@ -91,7 +100,7 @@ const Footer = () => {
                   </a>
 
                   <a
-                    href="#"
+                    href="https://www.linkedin.com/company/workistai/"
                     target="_blank"
                     className="text-gray-400 transition duration-100 hover:text-gray-500 active:text-gray-600"
                   >
@@ -152,7 +161,7 @@ const Footer = () => {
 
                   <div>
                     <a
-                      href="#"
+                      onClick={navigateToPricing}
                       className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
                     >
                       Pricing
@@ -304,7 +313,7 @@ const Footer = () => {
             </div>
 
             <div className="border-t py-8 text-center text-sm text-gray-400">
-              © 2021 - Present Flowrift. All rights reserved.
+              © 2024 - Workist. All rights reserved.
             </div>
           </div>
         </div>

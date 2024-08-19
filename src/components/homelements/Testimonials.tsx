@@ -7,7 +7,7 @@ const Testimonials = () => (
     <div className=" w-[90%] ">
       <div>
         <section className="text-gray-600 body-font">
-          <div className="container px-5 py-24 mx-auto">
+          <div className="container px-5  mx-auto">
             <h1 className="text-3xl font-medium title-font text-gray-900 mb-12 text-center">
               People love using compass
             </h1>
@@ -35,9 +35,9 @@ const Testimonials = () => (
 
               <TestimonialCard
                 text="The referral system here is exceptional. I felt confident going into interviews knowing that I had a strong recommendation backing me. I highly recommend this platform to anyone looking to advance their career."
-                authorName="Shivam Yadav"
+                authorName="Henry"
                 authorTitle="Financial Analyst"
-                authorImage="https://media.licdn.com/dms/image/D5603AQGyJ2SkQ2yiEQ/profile-displayphoto-shrink_200_200/0/1713978926095?e=1729123200&v=beta&t=G_SejCmT6Oo4i_LwRH9HB3RWpRWsnb9n9NqjP5fLh5U"
+                authorImage="https://images.ctfassets.net/lh3zuq09vnm2/yBDals8aU8RWtb0xLnPkI/19b391bda8f43e16e64d40b55561e5cd/How_tracking_user_behavior_on_your_website_can_improve_customer_experience.png"
               />
             </div>
           </div>

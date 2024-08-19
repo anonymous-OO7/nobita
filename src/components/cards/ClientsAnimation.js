@@ -74,7 +74,7 @@ export default ClientsAnimation;
 
 const AppContainer = styled.div`
   //   width: 100vw;
-  height: 50vh;
+  height: 30vh;
   color: #000000;
   position: relative;
   display: flex;

@@ -6,7 +6,7 @@ const Clients = () => {
     <div>
       <section>
         <div className="py-24">
-          <div className="flex items-center justify-center text-center mt-28">
+          <div className="flex items-center justify-center text-center mt-8 mb-2 lg:mt28">
             <div className="flex flex-col items-center justify-center rounded-tr-full rounded-bl-full w-full bg-white py-6">
               <div className="flex flex-col m-2 max-w-7xl">
                 <p className="text-2xl md:text-3xl text-black font-semibold font-poppins mb-4">

@@ -15,6 +15,7 @@ import {
   UsersRound,
   IndianRupee,
   Building2Icon,
+  CircleCheckBig,
 } from "lucide-react";
 import { CiLocationOn } from "react-icons/ci";
 import Image from "next/image";
@@ -25,6 +26,13 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
+  const backgroundColorClass =
+    job.Status === "inactive" ||
+    job.Status === "hired" ||
+    job.Status === "closed"
+      ? "bg-red-400"
+      : "bg-blue-400";
+
   const postedDate = formatDistanceToNow(new Date(job.CreatedAt), {
     addSuffix: true,
   });
@@ -53,6 +61,28 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             <p className="text-sm font-poppins text-black">Closed</p>
           </Chip>
         );
+      case "inactive":
+        return (
+          <Chip
+            startContent={<CircleX size={18} />}
+            color="warning"
+            variant="flat"
+            size="sm"
+          >
+            <p className="text-sm font-poppins text-black">Inactive</p>
+          </Chip>
+        );
+      case "hired":
+        return (
+          <Chip
+            startContent={<CircleCheckBig size={18} />}
+            color="success"
+            variant="bordered"
+            size="sm"
+          >
+            <p className="text-sm font-poppins text-black">Hired</p>
+          </Chip>
+        );
       default:
         return (
           <Chip variant="flat" color="success" size="sm">
@@ -68,18 +98,37 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
         return (
           <Chip
             startContent={<ChartNoAxesCombined size={18} />}
-            variant="flat"
+            variant="bordered"
             color="warning"
             size="sm"
+            className="p-2"
           >
             <p className="text-sm font-poppins text-black">Growing Fast</p>
+          </Chip>
+        );
+      case false:
+        return (
+          <Chip
+            startContent={<ChartNoAxesCombined size={18} />}
+            variant="bordered"
+            color="success"
+            size="sm"
+            className="p-2"
+          >
+            <p className="text-sm font-poppins text-black">Well Established</p>
           </Chip>
         );
 
       default:
         return (
-          <Chip variant="flat" color="success" size="sm">
-            <span className="font-extrabold">&#8226;</span> Active
+          <Chip
+            startContent={<ChartNoAxesCombined size={18} />}
+            variant="flat"
+            color="warning"
+            size="sm"
+            className="p-2"
+          >
+            <p className="text-sm font-poppins text-black">Growing Fast</p>
           </Chip>
         );
     }
@@ -94,7 +143,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             variant="flat"
             color="primary"
             size="sm"
-            className="bg-slate-100"
+            className=" p-1"
           >
             <p className="text-sm font-poppins text-black">Full-Time</p>
           </Chip>
@@ -106,6 +155,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             variant="flat"
             color="warning"
             size="sm"
+            className=" p-1"
           >
             <p className="text-sm font-poppins text-black">Contract</p>
           </Chip>
@@ -117,6 +167,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             variant="flat"
             color="warning"
             size="sm"
+            className=" p-1"
           >
             <p className="text-sm font-poppins text-black">Internship</p>
           </Chip>
@@ -128,6 +179,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             variant="flat"
             color="warning"
             size="sm"
+            className=" p-1"
           >
             <p className="text-sm font-poppins text-black">Freelance</p>
           </Chip>
@@ -135,68 +187,93 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
 
       default:
         return (
-          <Chip variant="flat" color="success" size="sm">
-            <span className="font-extrabold">&#8226;</span> Active
+          <Chip
+            startContent={<Check size={18} />}
+            variant="flat"
+            color="primary"
+            size="sm"
+            className=" p-1"
+          >
+            <p className="text-sm font-poppins text-black">Full-Time</p>
           </Chip>
         );
     }
   }, []);
 
-  const renderPriceTag = React.useCallback((value: string) => {
-    switch (value) {
-      case "low_cost":
-        return (
-          <Chip
-            startContent={<TagIcon size={18} />}
-            variant="flat"
-            color="secondary"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Affordable</p>
-          </Chip>
-        );
-      case "medium_cost":
-        return (
-          <Chip
-            startContent={<AwardIcon size={18} />}
-            color="secondary"
-            variant="flat"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">
-              Competetive Pricing
-            </p>
-          </Chip>
-        );
-      case "premium":
-        return (
-          <Chip
-            startContent={<GemIcon size={18} />}
-            color="primary"
-            variant="flat"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Premium</p>
-          </Chip>
-        );
-      case "luxirious":
-        return (
-          <Chip
-            startContent={<GemIcon size={18} />}
-            color="danger"
-            variant="flat"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Rare</p>
-          </Chip>
-        );
-      default:
-        return (
-          <Chip variant="flat" color="success" size="sm">
-            <span className="font-extrabold">&#8226;</span> Active
-          </Chip>
-        );
+  const renderPriceTag = React.useCallback((price: number) => {
+    let chipProps: {
+      startContent: React.ReactNode;
+      color:
+        | "default"
+        | "secondary"
+        | "primary"
+        | "danger"
+        | "success"
+        | "warning"
+        | undefined;
+      variant:
+        | "flat"
+        | "solid"
+        | "bordered"
+        | "light"
+        | "faded"
+        | "shadow"
+        | "dot"
+        | undefined;
+      size: "sm" | "md" | "lg" | undefined;
+      content: string;
+    } = {
+      startContent: null,
+      color: "default",
+      variant: "flat",
+      size: "sm",
+      content: "Unknown",
+    };
+
+    if (price < 2000) {
+      chipProps = {
+        startContent: <TagIcon size={18} />,
+        color: "secondary",
+        variant: "flat",
+        size: "sm",
+        content: "Affordable",
+      };
+    } else if (price >= 1000 && price < 2000) {
+      chipProps = {
+        startContent: <AwardIcon size={18} />,
+        color: "secondary",
+        variant: "flat",
+        size: "sm",
+        content: "Competitive Pricing",
+      };
+    } else if (price >= 2000 && price < 5000) {
+      chipProps = {
+        startContent: <GemIcon size={18} />,
+        color: "primary",
+        variant: "flat",
+        size: "sm",
+        content: "Premium",
+      };
+    } else if (price >= 5000) {
+      chipProps = {
+        startContent: <GemIcon size={18} />,
+        color: "danger",
+        variant: "flat",
+        size: "sm",
+        content: "Rare",
+      };
     }
+
+    return (
+      <Chip
+        startContent={chipProps.startContent}
+        color={chipProps.color}
+        variant={chipProps.variant}
+        size={chipProps.size}
+      >
+        <p className="text-sm font-poppins text-black">{chipProps.content}</p>
+      </Chip>
+    );
   }, []);
 
   return (
@@ -259,9 +336,11 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
 
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-wrap gap-4 md:flex-nowrap">
-          <div className="w-full md:w-auto">{renderJobType("active")}</div>
-          <div className="w-full md:w-auto">{renderPriceTag("low_cost")}</div>
-          <div className="w-full md:w-auto">{growinfFast(true)}</div>
+          <div className="w-full md:w-auto">{renderJobType(job.Status)}</div>
+          <div className="w-full md:w-auto">{renderPriceTag(job.Price)}</div>
+          <div className="w-full md:w-auto">
+            {growinfFast(job.TotalEmp > 500 ? false : true)}
+          </div>
         </div>
         <div className="flex flex-row justify-center items-center gap-2">
           <Button
@@ -272,12 +351,37 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             <p className="text-sm font-poppins text-blue-400">Save</p>
           </Button>
           <Button
-            className="bg-blue-400 rounded-lg "
-            color="primary"
-            variant="flat"
+            className={`rounded-lg p-4 ${backgroundColorClass}`}
+            color={
+              job.Status === "inactive" ||
+              job.Status === "hired" ||
+              job.Status === "closed"
+                ? "danger"
+                : "primary"
+            }
+            variant={
+              job.Status === "inactive" ||
+              job.Status === "hired" ||
+              job.Status === "closed"
+                ? "solid"
+                : "flat"
+            }
             onClick={() => onApply(job)}
+            disabled={
+              job.Status === "inactive" ||
+              job.Status === "hired" ||
+              job.Status === "closed"
+                ? true
+                : false
+            }
           >
-            <p className="text-sm font-poppins text-white">Apply</p>
+            <p className="text-sm font-poppins text-white capitalize">
+              {job.Status === "inactive" ||
+              job.Status === "hired" ||
+              job.Status === "closed"
+                ? job.Status
+                : "Apply"}
+            </p>
           </Button>
         </div>
       </div>
