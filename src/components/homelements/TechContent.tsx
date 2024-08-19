@@ -45,7 +45,7 @@ const TechContent = () => {
             <span className="text-xl font-bold font-poppins">
               Earn by providing referals to people
             </span>
-            <div className="text-left text-xl font-normal font-poppins text-black py-4">
+            <div className="text-left text-xl font-normal font-poppins text-black py-4 hidden sm:block">
               Looking to earn money while helping others? Sign up now to become
               a referral partner and start making money by connecting people
               with valuable opportunities. By listing the referral options you
@@ -53,7 +53,9 @@ const TechContent = () => {
               programs while earning a commission for every successful referral.
             </div>
             <div className="text-left text-xl font-normal font-poppins text-black py-4">
-            It’s a win-win situation: you get rewarded for your efforts, and others benefit from the opportunities you offer. Join today and start turning your network into a source of income!
+              It’s a win-win situation: you get rewarded for your efforts, and
+              others benefit from the opportunities you offer. Join today and
+              start turning your network into a source of income!
             </div>
           </div>
         </div>

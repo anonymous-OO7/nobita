@@ -30,7 +30,6 @@ const FrontContent = () => {
             </div>
           </div>
         </div>
-
         <div className="text-left text-lg font-normal font-poppins text-black p-4">
           Did you know that referred candidates are 5 times more likely to be
           hired? Leverage the network of industry experts to get your foot in
@@ -38,13 +37,14 @@ const FrontContent = () => {
         </div>
         <div className="text-left text-lg font-normal font-poppins text-black px-4">
           From tech to finance, healthcare to marketing, our platform connects
-          you with professionals in over 50 industries. Find the perfect
-          referral to match your career goals.
+          you with professionals in over 50 industries.
+        </div>{" "}
+        <div className="text-left text-lg font-normal font-poppins text-black px-4 hidden sm:block">
+          Find the perfect referral to match your career goals.
         </div>
         <button className="flex m-4 justify-center items-center px-3 py-5  w-[30%] hover:bg-black hover:text-white  rounded-full bg-[#333] text-white font-poppins  font-medium leading-[1.125rem]">
           Get started
         </button>
-
         <div className="flex  justify-start items-center px-4 mb-6">
           <AvatarGroup className="mr-2" isBordered max={3} total={10}>
             <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
