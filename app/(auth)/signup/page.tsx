@@ -83,7 +83,7 @@ export default function SignUp() {
         );
         console.log(response, "RESPONSE OF USER CREATION");
         localStorage.setItem("authToken", response?.data?.token);
-        showToast("User created successfully!!", { type: "success" });
+        showToast("User created successfully!! Login Please", { type: "success" });
         navigateToHomePage();
       } catch (error) {
         console.error("SignUp Error:- ", error);
