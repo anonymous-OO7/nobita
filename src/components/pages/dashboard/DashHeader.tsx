@@ -23,7 +23,7 @@ import BellIcon from "../../../assets/bell.svg";
 import { useRouter } from "next/navigation";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
 import { Search } from "lucide-react";
-import Logo2 from "../../../assets/workistlogo.png";
+import Logo2 from "../../../assets/workistlogo.svg";
 interface UserData {
   id: number;
   name: string;

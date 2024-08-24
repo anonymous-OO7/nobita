@@ -45,13 +45,13 @@ export default function SubmitJob() {
   const [loading, setLoading] = React.useState(false);
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
-
+  const [jobtype, setType] = React.useState("");
   const [InitialValues, setInitialValues] = React.useState({
     status: "active",
     companyName: "",
     position: "",
     location: "",
-    jobType: "",
+    jobType: "fulltime",
     description: "",
     field: "",
     owner: "",
@@ -91,7 +91,7 @@ export default function SubmitJob() {
         companyName,
         position,
         location,
-        jobType,
+        jobtype,
         description,
         field,
         minPay,
@@ -109,7 +109,7 @@ export default function SubmitJob() {
           companyName,
           position,
           location,
-          jobType,
+          jobtype,
           description,
           field,
           minPay,
@@ -129,21 +129,22 @@ export default function SubmitJob() {
         })
         .finally(() => setLoading(false));
     },
-    [showToast, makeApiCall]
+    [showToast, makeApiCall,jobtype]
   );
 
   const handleShowSource = React.useCallback((data: string) => {
     console.log(data, "selected job type");
-    setInitialValues((prevValues) => ({
-      ...prevValues,
-      jobType: data,
-    }));
+    // setInitialValues((prevValues) => ({
+    //   ...prevValues,
+    //   jobType: data,
+    // }));
+    setType(data);
   }, []);
 
   return (
     <section className="bg-white">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 className="mb-4 text-xl font-bold text-gray-900">Create a Job</h2>
+        <h2 className="mb-4 text-xl font-bold text-gray-900">Create a Job Referal</h2>
         <Formik
           initialValues={InitialValues}
           onSubmit={handleSubmit}

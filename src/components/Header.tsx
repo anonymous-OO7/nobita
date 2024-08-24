@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Logo } from "@/assets/images/Logo";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import LogoWorkist from "../assets/workist.png";
+import LogoWorkist from "../assets/workistlogo.svg";
 const Header = () => {
   const [isHeaderFixed, setIsHeaderFixed] = useState(false);
   const router = useRouter();

@@ -4,7 +4,7 @@ import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState } from "react";
 import Link from "next/link";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
-import Logo2 from "../../src/assets/workist.png";
+import Logo2 from "../../src/assets/workistlogo.svg";
 import Image from "next/image";
 
 const SidebarContext = createContext();
@@ -43,7 +43,7 @@ export default function Sidebar({ children, setExpandedMain }) {
               src={Logo2}
               alt="logo"
               className={`overflow-hidden transition-all ${
-                expanded ? "w-32" : "w-0"
+                expanded ? "w-20" : "w-0"
               }`}
             />
 
