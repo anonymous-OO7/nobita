@@ -22,7 +22,7 @@ const baseBakiURL =
 const baseOnePieceURLS =
   getEnviromentVariable() === "staging"
     ? "https://53c4-2405-201-4036-c04f-1822-7fb6-4018-5999.ngrok-free.app/"
-    : "hhttps://53c4-2405-201-4036-c04f-1822-7fb6-4018-5999.ngrok-free.app/";
+    : "https://53c4-2405-201-4036-c04f-1822-7fb6-4018-5999.ngrok-free.app/";
 
 // local ngrok url for production :  https://bbd9-103-15-252-147.ngrok-free.app
 export const onePiece: AxiosInstance = axios.create({
