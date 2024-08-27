@@ -9,18 +9,15 @@ interface Props {
   children: React.ReactNode;
 }
 
-
 const baseOnePieceURLS =
   getEnviromentVariable() === "staging"
     ? "http://192.168.29.188:8080/"
-    : "https://8dcf-2405-201-4036-c04f-f866-a61d-5825-4ea8.ngrok-free.app/";
+    : "https://6f86-2405-201-4036-c04f-9de-905c-9334-fb84.ngrok-free.app/";
 
 const baseBakiURL =
   getEnviromentVariable() === "staging"
     ? "https://staging.baki.connectrpl.in"
     : "https://baki.connectrpl.in";
-
-
 
 // local ngrok url for production :  https://bbd9-103-15-252-147.ngrok-free.app
 export const onePiece: AxiosInstance = axios.create({

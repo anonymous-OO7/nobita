@@ -49,7 +49,7 @@ export default function UpdateProfilePage() {
     ],
     linkedin: "https://www.linkedin.com/in/gaurav-yadav",
     twitter: "https://twitter.com/gaurav_yadav",
-    website: "https://gauravyadav.com",
+    website: "https://anonymous-oo7.github.io/gauravportfolio/",
   };
 
   const [userdata, setUserdata] =

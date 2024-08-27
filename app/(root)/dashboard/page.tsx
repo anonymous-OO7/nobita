@@ -88,7 +88,7 @@ const Home: React.FC = () => {
         </p>
 
         <div className="grid grid-cols-1 gap-4">
-          {jobsInfo.map((job, index) => (
+          {jobsInfo?.map((job, index) => (
             <JobCard
               key={index}
               job={job}
@@ -97,7 +97,7 @@ const Home: React.FC = () => {
             />
           ))}
         </div>
-        {loading && <p className="text-center">Loading more jobs...</p>}
+        {loading && <p className="text-center text-black font-poppins font-normal">Loading more jobs...</p>}
       </div>
     </div>
   );

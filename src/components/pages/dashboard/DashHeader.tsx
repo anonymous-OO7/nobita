@@ -41,6 +41,7 @@ interface DashHeaderProps {
 }
 export default function DashHeader({ onOpen }: DashHeaderProps) {
   const router = useRouter();
+  const name = nextLocalStorage()?.getItem("name") ?? "";
 
   // const userData = JSON.parse(nextLocalStorage()?.getItem("user_data") ?? "");
 
@@ -151,7 +152,7 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
                 Signed in as
               </p>
               <p className="font-semibold text-black font-poppins">
-                {data?.name != "" ? data?.name : "---"}
+              {name != "" ? name : ""}
               </p>
             </DropdownItem>
 

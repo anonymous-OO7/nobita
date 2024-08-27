@@ -129,7 +129,7 @@ export default function SubmitJob() {
         })
         .finally(() => setLoading(false));
     },
-    [showToast, makeApiCall,jobtype]
+    [showToast, makeApiCall, jobtype]
   );
 
   const handleShowSource = React.useCallback((data: string) => {
@@ -144,7 +144,9 @@ export default function SubmitJob() {
   return (
     <section className="bg-white">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 className="mb-4 text-xl font-bold text-gray-900">Create a Job Referal</h2>
+        <h2 className="mb-4 text-xl font-bold text-gray-900">
+          Create a Job Referal
+        </h2>
         <Formik
           initialValues={InitialValues}
           onSubmit={handleSubmit}
@@ -156,7 +158,6 @@ export default function SubmitJob() {
           {() => (
             <Form>
               <Spacer size="xs" />
-
               <Input
                 className="bg-white p-2  text-black font-poppins font-light text-lg"
                 label="Company Name"
@@ -167,13 +168,11 @@ export default function SubmitJob() {
                 label="Job Title"
                 name="position"
               />
-
               <Input
                 className="bg-white  p-2 text-black font-poppins font-light text-lg"
                 label="Location"
                 name="location"
               />
-
               <Spacer size="xs" />
               <Select
                 label="Job Type"
@@ -221,7 +220,12 @@ export default function SubmitJob() {
                 className="bg-white p-2 text-black font-poppins font-light text-lg"
                 label="Logo URL"
                 name="logoUrl"
-              />
+              />{" "}
+              <p className="bg-white px-6 text-red-400 font-poppins font-light text-xs">
+                *Its higher visibility if you add logo url. Right click and copy
+                image address on company logo from your company website and
+                paste it. Thats it..{" "}
+              </p>
               <Spacer size="xs" />
               <button
                 type="submit"
