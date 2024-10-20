@@ -4,8 +4,9 @@ import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
 import { useContext, createContext, useState } from "react";
 import Link from "next/link";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
-import Logo2 from "../../src/assets/workistlogo.svg";
+import Logo2 from "../../src/assets/workisticon.svg";
 import Image from "next/image";
+import { gradients } from "../../src/assets/colors";
 
 const SidebarContext = createContext();
 
@@ -43,7 +44,7 @@ export default function Sidebar({ children, setExpandedMain }) {
               src={Logo2}
               alt="logo"
               className={`overflow-hidden transition-all ${
-                expanded ? "w-20" : "w-0"
+                expanded ? "w-16" : "w-0"
               }`}
             />
 
@@ -111,11 +112,18 @@ export function SidebarItem({ icon, text, active, alert, href }) {
             : "hover:bg-stone-200 text-gray-600"
         }
       `}
+        style={{
+          background: active ? gradients.sidebarActive : undefined, // Apply gradient when active
+        }}
       >
         {icon}
         <span
           className={`overflow-hidden transition-all font-poppins font-light ${
             expanded ? "w-52 ml-3" : "w-0"
+          }  ${
+            active
+              ? "text-white" // Only the text color
+              : "text-black"
           }`}
         >
           {text}

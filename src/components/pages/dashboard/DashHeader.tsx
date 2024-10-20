@@ -23,7 +23,7 @@ import BellIcon from "../../../assets/bell.svg";
 import { useRouter } from "next/navigation";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
 import { Search } from "lucide-react";
-import Logo2 from "../../../assets/workistlogo.svg";
+import Logo2 from "../../../assets/workistheadline.svg";
 interface UserData {
   id: number;
   name: string;
@@ -73,7 +73,7 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
     <Navbar isBordered>
       <NavbarContent justify="start">
         <NavbarBrand className="mr-4">
-          <Image src={Logo2} alt="logo" width={60} />
+          <Image src={Logo2} alt="logo" width={140} />
           <p className=" text-black font-semibold font-poppins sm:block  ">
             {data?.college != "" ? data?.college : "---"}
           </p>
@@ -152,7 +152,7 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
                 Signed in as
               </p>
               <p className="font-semibold text-black font-poppins">
-              {name != "" ? name : ""}
+                {name != "" ? name : ""}
               </p>
             </DropdownItem>
 
