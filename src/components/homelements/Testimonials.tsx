@@ -16,7 +16,7 @@ const Testimonials = () => (
                 text="Joining this platform was a game-changer for my career. I received a referral to a top tech company and landed my dream job within a month. The network here is incredibly supportive and connected."
                 authorName="Gaurav Yadav"
                 authorTitle="Software Engineer"
-                authorImage="https://media.licdn.com/dms/image/v2/C4D03AQGLbwd9j1oSRQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1650774597752?e=1729123200&v=beta&t=7AYWHlo-42qiQCrqTqC_6PiKGY2Tp5AiqrfEIHpu12A"
+                authorImage="https://media.licdn.com/dms/image/v2/C4D03AQGLbwd9j1oSRQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1650774597752?e=1735171200&v=beta&t=pXUEE0VsGImntkghwReTmnYcPE5Cgiso7t43Rynpkik"
               />
 
               <TestimonialCard
@@ -30,7 +30,7 @@ const Testimonials = () => (
                 text="I was skeptical at first, but the quality of referrals I received was outstanding. It's reassuring to know that I'm connecting with trusted professionals in the industry. This platform made my job search so much easier."
                 authorName="Shubham Singh"
                 authorTitle="Full Stack  Specialist"
-                authorImage="https://media.licdn.com/dms/image/v2/D5603AQEsmesP-gp4FQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1723100699541?e=1729123200&v=beta&t=EmR0-4E_e_DUGaJgyNGp7Qpi0PnTFvQRYLU2G8YjUJU"
+                authorImage="https://img.freepik.com/free-photo/smiling-young-male-professional-standing-with-arms-crossed-while-making-eye-contact-against-isolated-background_662251-838.jpg"
               />
 
               <TestimonialCard

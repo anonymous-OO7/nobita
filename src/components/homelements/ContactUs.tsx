@@ -36,12 +36,12 @@ const Contact = () => {
 
   return (
     <>
-      <section className="relative z-10 overflow-hidden bg-white py-20 dark:bg-dark px-10 lg:py-[120px]">
+      <section className="relative z-10 overflow-hidden bg-white py-20  px-10 lg:py-[120px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap lg:justify-between">
             <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
               <div className="mb-12 max-w-[570px] lg:mb-0">
-                <span className="mb-4 block text-base font-semibold text-primary">
+                <span className="mb-4 block text-base font-semibold text-black">
                   Contact Us
                 </span>
                 <h2 className="mb-6 text-[32px] font-poppins font-semibold  text-black  sm:text-[40px] lg:text-[36px] xl:text-[40px]">
@@ -108,7 +108,7 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div className="w-full">
-                    <h4 className="mb-1 text-xl font-bold text-black dark:text-black">
+                    <h4 className="mb-1 text-xl font-bold text-black ">
                       Phone Number
                     </h4>
                     <p className="text-base text-body-color text-black">
@@ -144,7 +144,7 @@ const Contact = () => {
               </div>
             </div>
             <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
-              <div className="relative rounded-lg bg-white p-8 shadow-lg dark:bg-dark-2 sm:p-12">
+              <div className="relative rounded-lg bg-white p-8 shadow-lg  sm:p-12">
                 <form ref={form} onSubmit={handleSubmit}>
                   <ContactInputBox
                     type="text"
@@ -170,7 +170,7 @@ const Contact = () => {
                   <div>
                     <button
                       type="submit"
-                      className="w-full rounded border border-primary bg-primary p-3 text-white transition hover:bg-opacity-90"
+                      className="w-full rounded border border-primary bg-blue-800 p-3 text-white transition hover:bg-opacity-90"
                     >
                       Send Message
                     </button>
@@ -1003,7 +1003,7 @@ const ContactTextArea = ({ row, placeholder, name, defaultValue }: any) => {
           rows={row}
           placeholder={placeholder}
           name={name}
-          className="w-full resize-none font-poppins text-black  rounded border border-stroke px-[14px] py-3 text-base text-body-color outline-none focus:border-primary dark:border-dark-3 dark:bg-dark dark:text-dark-6"
+          className="w-full resize-none font-poppins text-black  rounded border border-stroke px-[14px] py-3 text-base text-body-color outline-none focus:border-primary "
           defaultValue={defaultValue}
         />
       </div>
@@ -1019,7 +1019,7 @@ const ContactInputBox = ({ type, placeholder, name }: any) => {
           type={type}
           placeholder={placeholder}
           name={name}
-          className="w-full rounded border font-poppins text-black  border-stroke px-[14px] py-3 text-base text-body-color outline-none focus:border-primary dark:border-dark-3 dark:bg-dark dark:text-dark-6"
+          className="w-full rounded border font-poppins text-black  border-stroke px-[14px] py-3 text-base text-body-color outline-none focus:border-primary "
         />
       </div>
     </>
