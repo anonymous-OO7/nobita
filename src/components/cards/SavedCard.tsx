@@ -17,6 +17,7 @@ import {
   Building2Icon,
 } from "lucide-react";
 import { CiLocationOn } from "react-icons/ci";
+import Image from "next/image";
 interface CardProps {
   job: Job;
   onSave: (uuid: string) => void;
@@ -203,7 +204,16 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
       <div className=" flex flex-row justify-between items-center">
         <div className="flex flex-col sm:flex-row gap-3 justify-start sm:items-center">
           <div className="flex flex-row items-center gap-2">
-            <Building2Icon color="black" size={30} />
+            {job.LogoUrl && job.LogoUrl != "" ? (
+              <Image
+                src={job.LogoUrl}
+                width={50}
+                height={50}
+                alt="Picture of the author"
+              />
+            ) : (
+              <Building2Icon color="black" size={30} />
+            )}{" "}
             <h2 className="font-semibold text-xl font-poppins text-black">
               {job.Position}
             </h2>

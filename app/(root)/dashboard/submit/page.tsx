@@ -10,6 +10,7 @@ import { CreateJobApi } from "@/apis";
 import useToast from "@/hooks/useToast";
 import Select from "@/components/common/Select";
 import { SelectType } from "@/types";
+import Textarea from "@/components/common/TextArea";
 
 // const INITIAL_VALUES = {
 //   status: "active",
@@ -143,8 +144,8 @@ export default function SubmitJob() {
 
   return (
     <section className="bg-white">
-      <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 className="mb-4 text-xl font-bold text-gray-900">
+      <div className="py-8  mx-auto max-w-2xl lg:py-12 ">
+        <h2 className="mb-4 text-2xl font-normal text-gray-900">
           Create a Job Referal
         </h2>
         <Formik
@@ -182,11 +183,12 @@ export default function SubmitJob() {
                 placeholder="Job type"
                 className="text-black font-poppins font-light px-2"
               />
-              <Input
+              {/* <Input
                 className="bg-white  p-2 text-black font-poppins font-light text-lg"
                 label="Description"
                 name="description"
-              />
+              /> */}
+              <Textarea name="description" label="Description" size="large" />
               <Input
                 className="bg-white p-2 text-black font-poppins font-light text-lg"
                 label="Field"
