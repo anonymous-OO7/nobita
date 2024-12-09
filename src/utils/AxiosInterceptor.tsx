@@ -12,7 +12,7 @@ interface Props {
 const baseOnePieceURLS =
   getEnviromentVariable() === "staging"
     ? "http://192.168.29.188:8080/"
-    : "https://9048-119-82-83-120.ngrok-free.app/";
+    : "https://f302-180-151-24-73.ngrok-free.app/";
 
 const baseBakiURL =
   getEnviromentVariable() === "staging"
