@@ -47,6 +47,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             variant="flat"
             color="success"
             size="sm"
+            className="z-0"
           >
             <p className="text-sm font-poppins text-black">Actively Hiring</p>
           </Chip>
@@ -58,6 +59,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             color="danger"
             variant="flat"
             size="sm"
+            className="z-0"
           >
             <p className="text-sm font-poppins text-black">Closed</p>
           </Chip>
@@ -69,6 +71,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             color="warning"
             variant="flat"
             size="sm"
+            className="z-0"
           >
             <p className="text-sm font-poppins text-black">Inactive</p>
           </Chip>
@@ -80,6 +83,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             color="success"
             variant="bordered"
             size="sm"
+            className="z-0"
           >
             <p className="text-sm font-poppins text-black">Hired</p>
           </Chip>
@@ -102,7 +106,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             variant="bordered"
             color="warning"
             size="sm"
-            className="p-2"
+            className="p-2 -z-0"
           >
             <p className="text-sm font-poppins text-black">Growing Fast</p>
           </Chip>
@@ -114,7 +118,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             variant="bordered"
             color="success"
             size="sm"
-            className="p-2"
+            className="p-2 -z-0"
           >
             <p className="text-sm font-poppins text-black">Well Established</p>
           </Chip>
@@ -127,7 +131,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             variant="flat"
             color="warning"
             size="sm"
-            className="p-2"
+            className="p-2 -z-0"
           >
             <p className="text-sm font-poppins text-black">Growing Fast</p>
           </Chip>

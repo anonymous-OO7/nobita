@@ -35,7 +35,7 @@ export default function Sidebar({ children, setExpandedMain }) {
       <aside
         id="logo-sidebar"
         className={`fixed top-0  hidden sm:block left-0 z-40 w-64 pt-0 h-screen sm:translate-x-0 transition-all bg-orange-900 ${
-          expanded ? "w-[18%]  hidden sm:block" : "w-[5%] hidden sm:block"
+          expanded ? "w-[17%]  hidden sm:block" : "w-[5%] hidden sm:block"
         }`}
       >
         <nav className="h-full flex flex-col bg-white border-r shadow-sm">
@@ -102,23 +102,18 @@ export function SidebarItem({ icon, text, active, alert, href }) {
   return (
     <Link href={href}>
       <li
-        className={`
-        relative flex items-center py-2 px-3 my-1
-        font-normal  rounded-md cursor-pointer
-        transition-colors group
-        ${
+        className={`relative flex items-center py-2 px-3 my-1 mx-3 font-normal rounded-md cursor-pointer transition-colors group ${
           active
-            ? "bg-gradient-to-tr from-slate-200 to-slate-200 text-black"
+            ? "text-black" // Only the text color
             : "hover:bg-stone-200 text-gray-600"
-        }
-      `}
+        }`}
         style={{
-          background: active ? gradients.sidebarActive : undefined, // Apply gradient when active
+          background: active ? gradients.sidebarActive : undefined,
         }}
       >
         {icon}
         <span
-          className={`overflow-hidden transition-all font-poppins font-light ${
+          className={`overflow-hidden transition-all font-rubik font-light ${
             expanded ? "w-52 ml-3" : "w-0"
           }  ${
             active
@@ -130,7 +125,7 @@ export function SidebarItem({ icon, text, active, alert, href }) {
         </span>
         {alert && (
           <div
-            className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${
+            className={`absolute right-2 w-2 h-2 rounded bg-violet-300 ${
               expanded ? "" : "top-2"
             }`}
           />
@@ -139,11 +134,11 @@ export function SidebarItem({ icon, text, active, alert, href }) {
         {!expanded && (
           <div
             className={`
-            absolute left-full rounded-md px-2 py-1 ml-6
-            bg-indigo-100 text-indigo-800 text-sm
-            invisible opacity-20 -translate-x-3 transition-all
-            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
-          `}
+          absolute left-full rounded-md px-2 py-1 ml-6
+          bg-indigo-100 text-indigo-800 text-sm
+          invisible opacity-20 -translate-x-3 transition-all
+          group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
+        `}
           >
             {text}
           </div>

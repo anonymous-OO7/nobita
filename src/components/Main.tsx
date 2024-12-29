@@ -6,7 +6,6 @@ import { LocationProps } from "./Breadcrumb";
 import DashHeader from "./pages/dashboard/DashHeader";
 import Sidebar, { SidebarItem } from "./SideBarNew";
 import {
-  Home,
   Search,
   CircleUserIcon,
   BadgeInfo,
@@ -19,7 +18,17 @@ import { useRouter, usePathname } from "next/navigation";
 import Bottombar from "./pages/dashboard/Bottombar";
 import CommonModal from "./pages/home/CommonModal";
 import { useDisclosure } from "@nextui-org/react";
-
+import {
+  Clients,
+  DocumentSVG,
+  EmployeeDirectorySvg,
+  Home,
+  InvoicesSVG,
+  Marketing,
+  ProductSVG,
+  RentalScheduleSVG,
+  Transaction,
+} from "../assets/images/Images";
 interface Props {
   children: React.ReactNode;
   locations?: LocationProps[];
@@ -83,21 +92,29 @@ function SidebarNew({
   return (
     <Sidebar setExpandedMain={setExpandedMain}>
       <SidebarItem
-        icon={<Home />}
+        icon={<Home color={pathname === "/dashboard" ? "#fff" : "#683FDB"} />}
         text={"Home"}
         alert={pathname === "/dashboard"}
         active={pathname === "/dashboard"}
         href="/dashboard"
       />
       <SidebarItem
-        icon={<BookText />}
+        icon={
+          <InvoicesSVG
+            color={pathname === "/dashboard/applied" ? "#fff" : "#683FDB"}
+          />
+        }
         text={"Applied"}
         alert={pathname === "/dashboard/applied"}
         active={pathname === "/dashboard/applied"}
         href="/dashboard/applied"
       />
       <SidebarItem
-        icon={<BookmarkCheckIcon />}
+        icon={
+          <RentalScheduleSVG
+            color={pathname === "/dashboard/saved" ? "#fff" : "#683FDB"}
+          />
+        }
         text={"Saved"}
         alert={pathname === "/dashboard/saved"}
         active={pathname === "/dashboard/saved"}

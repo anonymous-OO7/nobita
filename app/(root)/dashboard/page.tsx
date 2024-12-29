@@ -23,6 +23,38 @@ const Home: React.FC = () => {
   const [applyingJob, setApplyingJobInfo] = React.useState<Job>();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const fetchAndUpdateBaseURL = async () => {
+    try {
+      console.log("calling  hosted url file ");
+
+      const response = await fetch(
+        "https://raw.githubusercontent.com/anonymous-OO7/assets/refs/heads/master/workisturl.txt"
+      );
+      console.log(response, "Response from hosted url file ");
+
+      if (response.ok) {
+        const url = await response.text();
+        console.log(url, "Response from hosted url file ");
+
+        localStorage.setItem("baseOnePieceURL", url.trim());
+        return url.trim();
+      } else {
+        throw new Error("Failed to fetch base URL from text file.");
+      }
+    } catch (error) {
+      console.error("Error fetching base URL:", error);
+      return "https://f302-180-151-24-73.ngrok-free.app/";
+    }
+  };
+
+  React.useEffect(() => {
+    const updateBaseURL = async () => {
+      const url = await fetchAndUpdateBaseURL(); // Fetch URL from text file
+      console.log(url, "URLLL");
+    };
+
+    updateBaseURL(); // Fetch URL on initial load
+  }, []);
 
   const handleScroll = useCallback(() => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2) {
@@ -82,8 +114,8 @@ const Home: React.FC = () => {
         applyingJob={applyingJob}
       />
 
-      <div className="container  mx-auto py-10">
-        <p className="font-poppins font-light text-black text-2xl my-8">
+      <div className="container  mx-auto pb-5">
+        <p className="font-poppins font-normal text-black text-2xl my-8">
           Find your referrals..
         </p>
 
@@ -97,7 +129,11 @@ const Home: React.FC = () => {
             />
           ))}
         </div>
-        {loading && <p className="text-center text-black font-poppins font-normal">Loading more jobs...</p>}
+        {loading && (
+          <p className="text-center text-black font-poppins font-normal">
+            Loading more jobs...
+          </p>
+        )}
       </div>
     </div>
   );

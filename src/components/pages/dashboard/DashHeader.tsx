@@ -70,24 +70,25 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
   }, []);
 
   return (
-    <Navbar isBordered>
+    <Navbar
+      isBordered
+      className="p-0 h-[7vh]  flex flex-row justify-between overflow-hidden"
+    >
       <NavbarContent justify="start">
-        <NavbarBrand className="mr-4">
-          <Image src={Logo2} alt="logo" width={140} />
+        <NavbarBrand>
+          <Image src={Logo2} alt="logo" width={120} />
           <p className=" text-black font-semibold font-poppins sm:block  ">
             {data?.college != "" ? data?.college : "---"}
           </p>
         </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-3">
+        <NavbarContent className="hidden sm:flex gap-2">
           <Input
             classNames={{
-              base: "max-w-full sm:max-w-[20rem] h-10 rounded-lg",
-              mainWrapper: "h-full",
-              input: "text-small",
-              inputWrapper:
-                "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+              base: "max-w-full sm:max-w-[32rem] h-8 rounded-2xl",
+              input: "text-small border-0	",
+              inputWrapper: "font-normal font-rubik text-default-500 ",
             }}
-            placeholder="Search here..."
+            placeholder="Search ..."
             size="sm"
             startContent={<Search />}
             type="search"
@@ -116,7 +117,7 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
         <div>
           <Link href="/dashboard/submit">
             <Button
-              className=" hover:bg-stone-300 bg-blue-300 p-2 shadow-md text-black rounded-md font-poppins font-normal my-4"
+              className=" hover:bg-stone-300 bg-buttonPrimary p-2 shadow-md text-white rounded-md font-poppins font-normal my-4"
               endContent={<Add />}
             >
               Create Job Referal
@@ -129,7 +130,7 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
           color="warning"
           variant="faded"
           aria-label="Take a photo"
-          className="h-8"
+          className="h-8 "
         >
           <Image height={18} src={BellIcon} alt="File" />
         </Button>
