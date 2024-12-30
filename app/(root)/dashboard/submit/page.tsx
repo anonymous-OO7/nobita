@@ -11,22 +11,7 @@ import useToast from "@/hooks/useToast";
 import Select from "@/components/common/Select";
 import { SelectType } from "@/types";
 import Textarea from "@/components/common/TextArea";
-
-// const INITIAL_VALUES = {
-//   status: "active",
-//   companyName: "",
-//   position: "",
-//   location: "",
-//   jobType: "",
-//   description: "",
-//   field: "",
-//   owner: "",
-//   minPay: 0,
-//   maxPay: 0,
-//   price: 0,
-//   totalEmp: 0,
-//   logoUrl: "",
-// };
+import Row from "@/components/common/Row";
 
 const validationSchema = Yup.object().shape({
   companyName: Yup.string().required("Company Name is required"),
@@ -86,24 +71,7 @@ export default function SubmitJob() {
         logoUrl,
       } = values;
 
-      console.log(
-        "sending the job data",
-        status,
-        companyName,
-        position,
-        location,
-        jobtype,
-        description,
-        field,
-        minPay,
-        maxPay,
-        price,
-        totalEmp,
-        logoUrl
-      );
-
       setLoading(true);
-
       return makeApiCall(
         CreateJobApi(
           status,
@@ -135,16 +103,22 @@ export default function SubmitJob() {
 
   const handleShowSource = React.useCallback((data: string) => {
     console.log(data, "selected job type");
-    // setInitialValues((prevValues) => ({
-    //   ...prevValues,
-    //   jobType: data,
-    // }));
     setType(data);
   }, []);
 
+  // Function to render description with newlines and spaces preserved
+  const formatText = (text: string) => {
+    return text.split("\n").map((line, index) => (
+      <span key={index}>
+        {line}
+        <br />
+      </span>
+    ));
+  };
+
   return (
     <section className="bg-white">
-      <div className="py-8  mx-auto max-w-2xl lg:py-12 ">
+      <div className="mx-auto max-w-2xl">
         <h2 className="mb-4 text-2xl font-normal text-gray-900">
           Create a Job Referal
         </h2>
@@ -160,73 +134,76 @@ export default function SubmitJob() {
             <Form>
               <Spacer size="xs" />
               <Input
-                className="bg-white p-2  text-black font-poppins font-light text-lg"
+                className="bg-white p-1  text-black font-poppins font-light text-lg"
                 label="Company Name"
                 name="companyName"
               />
-              <Input
-                className="bg-white  p-2  text-black font-poppins font-light text-lg"
-                label="Job Title"
-                name="position"
-              />
-              <Input
-                className="bg-white  p-2 text-black font-poppins font-light text-lg"
-                label="Location"
-                name="location"
-              />
+              <Row>
+                <Input
+                  className="bg-white  p-1  text-black font-poppins font-light text-lg"
+                  label="Job Title"
+                  name="position"
+                />
+                <Input
+                  className="bg-white  p-1 text-black font-poppins font-light text-lg"
+                  label="Location"
+                  name="location"
+                />
+                <Select
+                  label="Job Type"
+                  item={dropdownData}
+                  name="jobType"
+                  onSelect={handleShowSource}
+                  placeholder="Job type"
+                  className="text-black font-poppins font-light px-1"
+                />
+              </Row>
               <Spacer size="xs" />
-              <Select
-                label="Job Type"
-                item={dropdownData}
-                name="jobType"
-                onSelect={handleShowSource}
-                placeholder="Job type"
-                className="text-black font-poppins font-light px-2"
-              />
-              {/* <Input
-                className="bg-white  p-2 text-black font-poppins font-light text-lg"
-                label="Description"
+
+              <Textarea
                 name="description"
-              /> */}
-              <Textarea name="description" label="Description" size="large" />
+                label="Description"
+                size="large"
+                // className="text-black font-poppins font-light text-lg"
+              />
               <Input
-                className="bg-white p-2 text-black font-poppins font-light text-lg"
+                className="bg-white p-1 text-black font-poppins font-light text-lg"
                 label="Field"
                 name="field"
               />
               <Input
-                className="bg-white p-2 text-black font-poppins font-light text-lg"
+                className="bg-white p-1 text-black font-poppins font-light text-lg"
                 label="Minimum Pay"
                 name="minPay"
                 type="number"
               />
               <Input
-                className="bg-white p-2  text-black font-poppins font-light text-lg"
+                className="bg-white p-1 text-black font-poppins font-light text-lg"
                 label="Maximum Pay"
                 name="maxPay"
                 type="number"
               />
               <Input
-                className="bg-white  p-2  text-black font-poppins font-light text-lg"
+                className="bg-white  p-1 text-black font-poppins font-light text-lg"
                 label="Price"
                 name="price"
                 type="number"
               />
               <Input
-                className="bg-white p-2 text-black font-poppins font-light text-lg"
+                className="bg-white p-1 text-black font-poppins font-light text-lg"
                 label="Total Employees"
                 name="totalEmp"
                 type="number"
               />
               <Input
-                className="bg-white p-2 text-black font-poppins font-light text-lg"
+                className="bg-white p-1 text-black font-poppins font-light text-lg"
                 label="Logo URL"
                 name="logoUrl"
-              />{" "}
+              />
               <p className="bg-white px-6 text-red-400 font-poppins font-light text-xs">
-                *Its higher visibility if you add logo url. Right click and copy
-                image address on company logo from your company website and
-                paste it. Thats it..{" "}
+                *It's higher visibility if you add logo URL. Right click and
+                copy image address on company logo from your company website and
+                paste it. That's it..
               </p>
               <Spacer size="xs" />
               <button
@@ -239,6 +216,12 @@ export default function SubmitJob() {
             </Form>
           )}
         </Formik>
+
+        <div style={{ whiteSpace: "pre-wrap", marginTop: "20px" }}>
+          <h3>Preview Description:</h3>
+          {/* Display formatted description here */}
+          {formatText(InitialValues.description)}
+        </div>
       </div>
     </section>
   );

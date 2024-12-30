@@ -43,7 +43,7 @@ export default function Textarea({
         onChange(name, event.target.value);
       }
     },
-    [helpers, name, onChange],
+    [helpers, name, onChange]
   );
   return (
     <>

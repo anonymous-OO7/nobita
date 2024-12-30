@@ -281,6 +281,16 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
     );
   }, []);
 
+  // Function to render description with newlines and spaces preserved
+  const formatText = (text: string) => {
+    return text.split("\n").map((line, index) => (
+      <span key={index}>
+        {line}
+        <br />
+      </span>
+    ));
+  };
+
   return (
     <div className="p-4  shadow-md rounded-md mb-4 border">
       <div className=" flex flex-row justify-between items-center">
@@ -391,7 +401,9 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
         </div>
       </div>
 
-      <p className="text-sm font-poppins text-black mt-10">{job.Description}</p>
+      <p className="text-sm font-poppins text-black mt-10 max-h-[20vh] overflow-auto">
+        {formatText(job.Description)}
+      </p>
 
       <p className="text-gray-700">
         {FormatToLakhs(job.MinPay)} - {FormatToLakhs(job.MaxPay)} INR/pa
