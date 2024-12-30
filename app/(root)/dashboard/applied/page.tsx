@@ -2,16 +2,13 @@
 
 import { GetAllAppliedJobsList } from "@/apis";
 import useApi from "@/hooks/useApi";
-import useToast from "@/hooks/useToast";
 import { Job } from "@/types";
 import React, { useEffect, useState, useCallback } from "react";
-import JobCard from "@/components/cards/JobCard";
+import Card from "@/components/cards/ApplyCard";
 
 const Applied = () => {
   const { makeApiCall } = useApi();
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0);
-  const { showToast } = useToast();
 
   const [jobsInfo, setJobsInfo] = React.useState<Job[]>([]);
 
@@ -26,10 +23,6 @@ const Applied = () => {
       .finally(() => setLoading(false));
   }, [makeApiCall]);
 
-  const saveJob = React.useCallback((jobUuid: string) => {
-    console.log("saving job", jobUuid);
-  }, []);
-
   return (
     <div>
       <div className="container  mx-auto py-10">
@@ -38,12 +31,7 @@ const Applied = () => {
         </p>
         <div className="grid grid-cols-1 gap-4">
           {jobsInfo.map((job, index) => (
-            <JobCard
-              key={index}
-              job={job}
-              onSave={saveJob}
-              onApply={() => {}}
-            />
+            <Card key={index} job={job} />
           ))}
         </div>
         {loading && <p className="text-center">Loading more jobs...</p>}

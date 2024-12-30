@@ -106,16 +106,6 @@ export default function SubmitJob() {
     setType(data);
   }, []);
 
-  // Function to render description with newlines and spaces preserved
-  const formatText = (text: string) => {
-    return text.split("\n").map((line, index) => (
-      <span key={index}>
-        {line}
-        <br />
-      </span>
-    ));
-  };
-
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-2xl">
@@ -208,7 +198,7 @@ export default function SubmitJob() {
               <Spacer size="xs" />
               <button
                 type="submit"
-                className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                className="bg-buttonPrimary font-poppins text-white font-normal py-2 px-4 rounded"
                 disabled={loading}
               >
                 {loading ? "Loading..." : "Submit"}
@@ -216,12 +206,6 @@ export default function SubmitJob() {
             </Form>
           )}
         </Formik>
-
-        <div style={{ whiteSpace: "pre-wrap", marginTop: "20px" }}>
-          <h3>Preview Description:</h3>
-          {/* Display formatted description here */}
-          {formatText(InitialValues.description)}
-        </div>
       </div>
     </section>
   );

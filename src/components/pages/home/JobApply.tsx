@@ -141,7 +141,7 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({
                     Close
                   </Button>
                   <Button
-                    color="primary"
+                    className="bg-buttonPrimary font-poppins text-white"
                     type="submit"
                     disabled={loading || isSubmitting}
                   >

@@ -32,7 +32,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
     job.Status === "hired" ||
     job.Status === "closed"
       ? "bg-red-400"
-      : "bg-blue-400";
+      : "bg-buttonPrimary";
 
   const postedDate = formatDistanceToNow(new Date(job.CreatedAt), {
     addSuffix: true,
@@ -343,7 +343,6 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           className="px-2"
         >
           <p className="text-sm font-poppins text-black">
-            {" "}
             {job.TotalEmp}+ Employees
           </p>
         </Chip>
