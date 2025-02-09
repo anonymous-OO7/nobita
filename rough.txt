@@ -1,0 +1,118 @@
+"use client";
+
+import * as React from "react";
+import axios, { AxiosInstance } from "axios";
+import { useRouter } from "next/navigation";
+import { getEnviromentVariable } from "../utils/nextLocalStorage";
+
+interface Props {
+  children: React.ReactNode;
+}
+
+const BASE_URL_TEXT_FILE =
+  "https://raw.githubusercontent.com/anonymous-OO7/assets/refs/heads/master/workisturl.txt";
+const LOCAL_STORAGE_KEY = "onePieceBaseURL";
+
+// Function to fetch base URL from external text file
+const fetchBaseURL = async (): Promise<string> => {
+  try {
+    const response = await axios.get(BASE_URL_TEXT_FILE);
+    return response.data.trim();
+  } catch (error) {
+    console.error("Error fetching base URL:", error);
+    return "https://fallback-url.com"; // Fallback URL in case of failure
+  }
+};
+
+// Function to determine base URL for `onePiece`
+const getBaseOnePieceURL = async (): Promise<string> => {
+  console.log(getEnviromentVariable(), "finding urls staging");
+
+  if (getEnviromentVariable() === "staging") {
+    console.log("Indide staging");
+    return "http://192.168.29.188:8080/";
+  }
+
+  if (typeof window !== "undefined") {
+    const storedBaseURL = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (storedBaseURL) {
+      return storedBaseURL;
+    }
+
+    const fetchedBaseURL = await fetchBaseURL();
+    localStorage.setItem(LOCAL_STORAGE_KEY, fetchedBaseURL);
+    return fetchedBaseURL;
+  }
+
+  return "https://fallback-url.com"; // Default fallback for SSR
+};
+
+// Static `baki` base URL handling
+const baseBakiURL =
+  getEnviromentVariable() === "staging"
+    ? "https://staging.baki.connectrpl.in"
+    : "https://baki.connectrpl.in";
+
+// Create axios instances
+export const onePiece: AxiosInstance = axios.create();
+export const baki: AxiosInstance = axios.create({ baseURL: baseBakiURL });
+
+export default function AxiosInterceptor({ children }: Props) {
+  const router = useRouter();
+  const [initialized, setInitialized] = React.useState(false);
+
+  React.useEffect(() => {
+    console.log("Here in api call");
+    const initializeAxios = async () => {
+      const baseURL = await getBaseOnePieceURL();
+      onePiece.defaults.baseURL = baseURL; // Dynamically update baseURL
+
+      // Setup interceptors for onePiece
+      const requestInterceptor1 = onePiece.interceptors.request.use(
+        (config) => config,
+        (error) => Promise.reject(error)
+      );
+
+      const responseInterceptor1 = onePiece.interceptors.response.use(
+        (response) => response,
+        (error) => {
+          if (error.response?.status === 401) {
+            localStorage.setItem("authToken", "");
+            router.replace("/login");
+          }
+          return Promise.reject(error);
+        }
+      );
+
+      // Setup interceptors for baki
+      const requestInterceptor2 = baki.interceptors.request.use(
+        (config) => config,
+        (error) => Promise.reject(error)
+      );
+
+      const responseInterceptor2 = baki.interceptors.response.use(
+        (response) => response,
+        (error) => {
+          if (error.response?.status === 401) {
+            localStorage.setItem("authToken", "");
+            router.replace("/login");
+          }
+          return Promise.reject(error);
+        }
+      );
+
+      setInitialized(true); // Mark as initialized
+
+      return () => {
+        onePiece.interceptors.request.eject(requestInterceptor1);
+        onePiece.interceptors.response.eject(responseInterceptor1);
+        baki.interceptors.request.eject(requestInterceptor2);
+        baki.interceptors.response.eject(responseInterceptor2);
+      };
+    };
+
+    initializeAxios();
+  }, [router]);
+
+  return initialized ? <>{children}</> : <p>Loading...</p>;
+}

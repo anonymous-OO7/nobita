@@ -1,4 +1,10 @@
 "use client";
+import {
+  EducationType,
+  ProfileDetailsType,
+  SocialUrlType,
+  WorkExperienceType,
+} from "./types";
 import { onePiece } from "./utils/AxiosInterceptor";
 
 export const LoginApi = (email: string) => {
@@ -221,6 +227,58 @@ export const UpdateMyJobsStatusApi = (job_id: string, status: string) => {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
+    },
+  });
+};
+
+export const UpdateProfileApi = (
+  uuid: string,
+  name: string,
+  gender: string,
+  country: string,
+  bio: string,
+  expertise: string,
+  seniority: string,
+  work_experience: WorkExperienceType[],
+  education: EducationType[],
+  current_organisation: string,
+  tagline: string,
+  skill: string[],
+  social_urls: SocialUrlType[]
+) => {
+  return onePiece.post(
+    "/update-profile",
+    {
+      uuid,
+      name,
+      gender,
+      country,
+      bio,
+      expertise,
+      seniority,
+      work_experience,
+      education,
+      current_organisation,
+      tagline,
+      skill,
+      social_urls,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+        user_id: localStorage.getItem("id") || "",
+        email: localStorage.getItem("email") || "",
+      },
+    }
+  );
+};
+
+export const GetProfileApi = () => {
+  return onePiece.get("/get-profile", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+      email: localStorage.getItem("email"),
     },
   });
 };

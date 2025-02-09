@@ -51,8 +51,8 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
   }, [router]);
 
   const handleUpdateProfile = React.useCallback(() => {
-    // router.replace("/updateprofile");
-    onOpen();
+    router.replace("/dashboard/profile");
+    // onOpen();
   }, [router, onOpen]);
 
   const [data, setData] = React.useState<UserData>();

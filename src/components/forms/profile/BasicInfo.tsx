@@ -1,137 +1,87 @@
 import * as React from "react";
-import Spacer from "@/components/Spacer";
-import { SelectType, UserProfile } from "@/types";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
-import Input from "@/components/common/Input";
-import Select from "@/components/common/Select";
+import { useFormikContext } from "formik";
+import Spacer from "@/components/common/Spacer";
+import Input from "@/components/Input";
+import { ProfileDetailsType } from "@/types";
 import Textarea from "@/components/common/TextArea";
-import { IoCloseSharp } from "react-icons/io5";
-import Button from "@/components/Button";
-
-const Gender: SelectType[] = [
-  {
-    label: "Male",
-    value: "male",
-  },
-  {
-    label: "Female",
-    value: "female",
-  },
-];
+import Row from "@/components/common/Row";
+import Button from "../../Button";
 
 interface Props {
-  user: UserProfile | undefined;
-  onSubmit: () => void;
-  onUpdateInfo: <K extends keyof UserProfile>(
-    key: K,
-    value: UserProfile[K],
-  ) => void;
+  profileData: ProfileDetailsType;
 }
 
-export default function BasicInfo({ user, onSubmit, onUpdateInfo }: Props) {
-  const INTIAL_VALUES = {
-    name: user?.name,
-    gender: user?.gender,
-    country: user?.country,
-    bio: user?.bio,
-  };
+export default function BasicInfo({ profileData }: Props) {
+  const formikContext = useFormikContext<{
+    email: string;
+    uuid: string;
+    name: string;
+    gender: string;
+    country: string;
+    bio: string;
+  }>();
 
-  const [loading, setLoading] = React.useState(false); // eslint-disable-line
+  const { getFieldProps, setValues } = formikContext ?? {};
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    country: Yup.string().required("Country is required"),
-    gender: Yup.string().required("Gender is required"),
-    bio: Yup.mixed().required("Bio is required"),
-  });
-  const handleGenderType = React.useCallback(
-    // eslint-disable-next-line
-    (value: any) => {
-      console.log("UPDATING THE gender with--", "gender", "---", value);
+  React.useEffect(() => {
+    if (profileData) {
+      setValues({
+        email: profileData.email || "",
+        uuid: profileData.uuid || "",
+        name: profileData.name || "",
+        gender: profileData.gender || "",
+        country: profileData.country || "",
+        bio: profileData.bio || "",
+      });
+    }
+  }, [profileData, setValues]);
 
-      onUpdateInfo("gender", value);
-    },
-    [onUpdateInfo],
-  );
-  // eslint-disable-next-line
-  const handleInputChange = React.useCallback((name: any, text: string) => {
-    console.log("UPDATING THE FIELD with--", name, "---", text);
-    onUpdateInfo(name, text);
-  }, []);
+  if (!formikContext) {
+    return null;
+  }
 
   return (
-    <div className="py-8 px-4 mx-auto w-[80%] lg:py-8">
-      <Formik
-        initialValues={INTIAL_VALUES}
-        onSubmit={onSubmit}
-        validateOnBlur
-        validateOnChange
-        validationSchema={validationSchema}
-        enableReinitialize
-      >
-        <Form>
-          {user?.image && (
-            <div className="flex flex-row items-center relative w-[10] mx-auto  mb-5">
-              <IoCloseSharp className="absolute top-0 right-0 text-white bg-gray-800 rounded-full w-5 h-5 cursor-pointer" />
-              <img
-                src={
-                  typeof user?.image === "string" && user.image !== null
-                    ? user.image
-                    : "https://cdn1.vectorstock.com/i/1000x1000/77/10/men-faceless-profile-vector-13567710.jpg"
-                }
-                className="h-20 object-contain rounded-2xl"
-              />
-              <div className="ml-5">
-                <p className="text-sm  font-medium font-poppins text-green-800">
-                  Update Profile Picture
-                </p>
-                <p className="text-xs  font-normal font-poppins">
-                  Make sure that file is less than 2 MB
-                </p>
-              </div>
-            </div>
-          )}
+    <section>
+      <div className="flex flex-col justify-between space-x-4 ">
+        <div className="flex flex-row  gap-2">
           <Input
-            label="Your Full Name"
-            placeholder="Enter full name"
-            name="name"
-            onChange={handleInputChange}
-          />
-          <Spacer size="xs" />
-          <Select
-            name="gender"
-            item={Gender}
-            label="Select Gender"
-            placeholder="Gender"
-            onSelect={handleGenderType}
+            label="Name"
+            placeholder="Enter name"
+            {...getFieldProps?.("name")}
           />
           <Spacer size="xs" />
           <Input
-            label="Which country do you live in?*"
-            placeholder="Country"
-            name="country"
-            onChange={handleInputChange}
+            label="Email"
+            className="text-black font-poppins font-normal text-base"
+            placeholder="Enter email"
+            {...getFieldProps?.("email")}
+          />
+        </div>
+
+        <div className="flex flex-row  gap-2">
+          <Input
+            label="Gender"
+            placeholder="Enter gender (e.g., Male, Female, Other)"
+            {...getFieldProps?.("gender")}
           />
           <Spacer size="xs" />
-          <Textarea
-            label="Bio"
-            placeholder="write something about yourself!!"
-            name="bio"
-            onChange={handleInputChange}
+          <Input
+            label="Country"
+            placeholder="Enter country"
+            {...getFieldProps?.("country")}
           />
-          <Spacer size="xs" />
-          <div className="flex justify-center items-center">
-            <Button
-              isLoading={loading}
-              disabled={loading ? true : false}
-              type="submit"
-            >
-              Submit
-            </Button>
-          </div>
-        </Form>
-      </Formik>
-    </div>
+        </div>
+        <Textarea
+          label="Bio"
+          placeholder="Enter your bio"
+          {...getFieldProps?.("bio")}
+        />
+        <Row justifyContent="center">
+          <Button color="primary" type="submit">
+            Submit
+          </Button>
+        </Row>
+      </div>
+    </section>
   );
 }

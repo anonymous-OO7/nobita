@@ -34,12 +34,12 @@ export default function Sidebar({ children, setExpandedMain }) {
       {/* Sidebar for large devices */}
       <aside
         id="logo-sidebar"
-        className={`fixed top-0  hidden sm:block left-0 z-40 w-64 pt-0 h-screen sm:translate-x-0 transition-all bg-orange-900 ${
-          expanded ? "w-[17%]  hidden sm:block" : "w-[5%] hidden sm:block"
+        className={`fixed top-0   hidden sm:block left-0 z-40 w-[17%] pt-0 h-screen sm:translate-x-0 transition-all ${
+          expanded ? "  hidden sm:block" : "w-[5%] hidden sm:block"
         }`}
       >
-        <nav className="h-full flex flex-col bg-white border-r shadow-sm">
-          <div className="p-4 pb-2 flex justify-between items-center">
+        <nav className="h-full flex flex-col   shadow-lg">
+          <div className="p-4 pb-4 flex justify-between items-center mb-8">
             <Image
               src={Logo2}
               alt="logo"
@@ -47,7 +47,6 @@ export default function Sidebar({ children, setExpandedMain }) {
                 expanded ? "w-16" : "w-0"
               }`}
             />
-
             <button
               onClick={() => {
                 setExpandedMain((curr) => !curr);

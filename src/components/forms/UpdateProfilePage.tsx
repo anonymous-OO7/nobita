@@ -1,162 +1,233 @@
 import * as React from "react";
 import useApi from "@/hooks/useApi";
-import { GetAllUserData } from "@/apis";
-import { UserProfile } from "@/types";
+import { GetAllUserData, GetProfileApi, UpdateProfileApi } from "@/apis";
+import { ProfileDetailsType, UserProfile } from "@/types";
 import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import BasicInfo from "./profile/BasicInfo";
 import Experience from "./profile/Experience";
 import Social from "./profile/Social";
+import { Form, Formik } from "formik";
+import Button from "../Button";
+import Row from "../Row";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+
+const emptyProfileDetails: ProfileDetailsType = {
+  email: "",
+  uuid: "",
+  name: "",
+  gender: "",
+  country: "",
+  bio: "",
+  expertise: "",
+  seniority: "",
+  work_experience: [],
+  education: [],
+  current_organisation: "",
+  tagline: "",
+  skill: [],
+  social_urls: [],
+};
 
 export default function UpdateProfilePage() {
-  const defaultUserProfile: UserProfile = {
-    college: "MNNIT Allahabad",
-    company: "Rapipay",
-    course: "computer science",
-    createdAt: null, // Use new Date() if you want the current date
-    email: "gauravyadav00729@gmail.com",
-    gender: "male",
-    id: 0,
-    name: "gaurav yadav",
-    phone_no: "75248944398",
-    username: "anon_anon",
-    uuid: "00000000-0000-0000-0000-000000000000",
-    image:
-      "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
-    country: "India",
-    bio: "This is my first bio. I am feeling so much good to develop this.This will go beyond!!!",
-    expertise: [
-      "Software Engineering",
-      "Web Development",
-      "Project Management",
-    ],
-    seniority_level: "Senior Developer",
-    work_experience: [
-      {
-        role: "Software Developer",
-        company: "Rapipay",
-        industry: ["Fintech", "Software"],
-        start_date: new Date(2018, 0, 1), // January 1, 2018
-        end_date: null, // currently employed
-        brief: "Developing scalable web applications.",
-      },
-    ],
-    education: [
-      {
-        university_or_college: "MNNIT Allahabad",
-        field_of_study: "Computer Science",
-        timeline: "2012 - 2016",
-      },
-    ],
-    linkedin: "https://www.linkedin.com/in/gaurav-yadav",
-    twitter: "https://twitter.com/gaurav_yadav",
-    website: "https://anonymous-oo7.github.io/gauravportfolio/",
-  };
-
-  const [userdata, setUserdata] =
-    React.useState<UserProfile>(defaultUserProfile);
-  const [loading, setLoading] = React.useState(false); // eslint-disable-line
   const { makeApiCall } = useApi();
-  // eslint-disable-next-line
-  const [img, setImg] = React.useState<string | ArrayBuffer | null>(null);
-  // eslint-disable-next-line
-  const imgRef = React.useRef(null);
-  // eslint-disable-next-line
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    // createPost({ text, img });
-  };
-
-  function updateUserData<K extends keyof UserProfile>(
-    key: K,
-    value: UserProfile[K],
-  ): void {
-    console.log("Running update function --- ", key, "----", value);
-    setUserdata((currentData) => ({
-      ...currentData,
-      [key]: value,
-    }));
-  }
-  // eslint-disable-next-line
-  const handleImgChange = (e: any) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImg(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const [profileDetails, setProfileDetails] =
+    React.useState<ProfileDetailsType>(emptyProfileDetails);
+  const [selected, setSelected] = React.useState<React.Key>("basicinfo-tab");
 
   React.useEffect(() => {
-    setLoading(true);
-    makeApiCall(GetAllUserData())
-      .then((response) => {
-        if (response !== undefined) {
-          console.log("ALL USER DATA FETCHED inside update", response);
-          setUserdata(response);
-        }
+    makeApiCall(GetProfileApi())
+      // eslint-disable-next-line
+      .then((response: any) => {
+        console.log(response, "Response  of get profile");
+        setProfileDetails(response?.data);
       })
-      .catch((error) => console.error(error, "error in fetching user"))
+      .catch((error) => console.error(error))
       .finally(() => {
-        setLoading(false);
+        console.log("finally");
       });
   }, [makeApiCall]);
 
-  const handleUpdate = React.useCallback(() => {}, []);
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    uuid: Yup.string().required("UUID is required"),
+    name: Yup.string().required("Name is required"),
+    gender: Yup.string().required("Gender is required"),
+    country: Yup.string().required("Country is required"),
+    bio: Yup.string().required("Bio is required"),
+    expertise: Yup.string().required("Expertise is required"),
+    seniority: Yup.string().required("Seniority is required"),
+    current_organisation: Yup.string().required(
+      "Current Organisation is required"
+    ),
+    tagline: Yup.string().required("Tagline is required"),
+    skill: Yup.string().required("Skill is required"),
 
-  const tabs = [
-    {
-      id: "basic_info",
-      label: "Basic Info",
-      content: (
-        <BasicInfo
-          user={userdata}
-          onSubmit={handleUpdate}
-          onUpdateInfo={updateUserData}
-        />
-      ),
+    // work_experience validation - array of objects
+    work_experience: Yup.array().of(
+      Yup.object().shape({
+        role: Yup.string().required("Role is required"),
+        company: Yup.string().required("Company is required"),
+        employmentType: Yup.string().required("Employment type is required"),
+        duration: Yup.object().shape({
+          start: Yup.string().required("Start date is required"),
+          end: Yup.string().required("End date is required"),
+          years: Yup.number()
+            .required("Years are required")
+            .positive()
+            .integer(),
+        }),
+        location: Yup.string().required("Location is required"),
+        skills: Yup.array().of(Yup.string()).required("Skills are required"),
+      })
+    ),
+
+    // Education validation - array of objects
+    education: Yup.array().of(
+      Yup.object().shape({
+        universityName: Yup.string().required("University name is required"),
+        degree: Yup.string().required("Degree is required"),
+        duration: Yup.object().shape({
+          start: Yup.string().required("Start date is required"),
+          end: Yup.string().required("End date is required"),
+          years: Yup.number()
+            .required("Years are required")
+            .positive()
+            .integer(),
+        }),
+        skills: Yup.array().of(Yup.string()).required("Skills are required"),
+      })
+    ),
+
+    // social_urls validation - array of objects
+    social_urls: Yup.array().of(
+      Yup.object().shape({
+        platform: Yup.string().required("Platform is required"),
+        url: Yup.string().url("Invalid URL format").required("URL is required"),
+      })
+    ),
+  });
+
+  const handleSubmit = React.useCallback(
+    ({
+      email,
+      uuid,
+      name,
+      gender,
+      country,
+      bio,
+      expertise,
+      seniority,
+      work_experience,
+      education,
+      current_organisation,
+      tagline,
+      skill,
+      social_urls,
+    }: ProfileDetailsType) => {
+      // Example of how you can process the array of work experiences, education, and social URLs
+      console.log(
+        email,
+        uuid,
+        name,
+        gender,
+        country,
+        bio,
+        expertise,
+        seniority,
+        work_experience,
+        education,
+        current_organisation,
+        tagline,
+        skill,
+        social_urls,
+        "All data sending"
+      );
+      // const formattedwork_experience = work_experience.map((experience) => ({
+      //   role: experience.role,
+      //   company: experience.company,
+      //   employmentType: experience.employmentType,
+      //   duration: {
+      //     start: experience.duration.start,
+      //     end: experience.duration.end,
+      //     years: experience.duration.years,
+      //   },
+      //   location: experience.location,
+      //   skills: experience.skills.join(", "),
+      // }));
+
+      // const formattedEducation = education.map((edu) => ({
+      //   universityName: edu.universityName,
+      //   degree: edu.degree,
+      //   duration: edu.duration,
+      //   skills: edu.skills.join(", "),
+      // }));
+
+      // const formattedsocial_urls = social_urls.map((social) => ({
+      //   platform: social.platform,
+      //   url: social.url,
+      // }));
+
+      return makeApiCall(
+        UpdateProfileApi(
+          uuid,
+          name,
+          gender,
+          country,
+          bio,
+          expertise,
+          seniority,
+          work_experience,
+          education,
+          current_organisation,
+          tagline,
+          skill,
+          social_urls
+        )
+      )
+        .then((response) => {
+          toast.success("Profile updated succesfully");
+          console.log(response, "Responseof upload products");
+        })
+        .catch((error) => {
+          toast.error(
+            error?.response?.data?.message || "Product addition failed"
+          );
+        });
     },
-    {
-      id: "experience",
-      label: "Experience",
-      content: (
-        <Experience
-          user={userdata}
-          onSubmit={handleUpdate}
-          onUpdateInfo={updateUserData}
-        />
-      ),
-    },
-    {
-      id: "social",
-      label: "Social Links",
-      content: (
-        <Social
-          user={userdata}
-          onSubmit={handleUpdate}
-          onUpdateInfo={updateUserData}
-        />
-      ),
-    },
-  ];
+    []
+  );
 
   return (
     <>
-      <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-        Profile Update
-      </h2>
-
-      <div className="flex w-full flex-col">
-        <Tabs aria-label="Dynamic tabs" items={tabs} radius={"full"}>
-          {(item) => (
-            <Tab key={item.id} title={item.label}>
-              <Card>
-                <CardBody>{item.content}</CardBody>
-              </Card>
-            </Tab>
-          )}
-        </Tabs>
+      <h2 className="mb-4 text-xl font-bold text-gray-900">Profile Update</h2>
+      <div>
+        <Formik
+          initialValues={profileDetails}
+          onSubmit={handleSubmit}
+          validateOnBlur
+          validateOnChange
+          // validationSchema={validationSchema}
+          enableReinitialize
+        >
+          <Form>
+            <Tabs
+              aria-label="Options"
+              selectedKey={selected.toString()}
+              onSelectionChange={setSelected}
+            >
+              <Tab key="basicinfo-tab" title="Basic Info">
+                <BasicInfo profileData={profileDetails} />
+              </Tab>
+              <Tab key="experience-tab" title="Experience">
+                <Experience profileData={profileDetails} />
+              </Tab>
+              <Tab key="social-tab" title="Social">
+                <Social profileData={profileDetails} />
+              </Tab>
+            </Tabs>
+          </Form>
+        </Formik>
       </div>
     </>
   );

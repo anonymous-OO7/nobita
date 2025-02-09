@@ -163,3 +163,49 @@ export type Job = {
   UpdatedAt: string;
   DeletedAt: string | null;
 };
+
+export interface WorkExperienceType {
+  role: string;
+  company: string;
+  employmentType: string;
+  duration: {
+    start: string;
+    end: string;
+    years: number;
+  };
+  location: string;
+  skills: string[];
+}
+
+export interface EducationType {
+  universityName: string;
+  degree: string;
+  duration: {
+    start: string;
+    end: string;
+    years: number;
+  };
+  skills: string[];
+}
+
+export interface SocialUrlType {
+  platform: string;
+  url: string;
+}
+
+export interface ProfileDetailsType {
+  email: string;
+  uuid: string;
+  name: string;
+  gender: string;
+  country: string;
+  bio: string;
+  expertise: string;
+  seniority: string;
+  work_experience: WorkExperienceType[];
+  education: EducationType[];
+  current_organisation: string;
+  tagline: string;
+  skill: string[];
+  social_urls: SocialUrlType[];
+}

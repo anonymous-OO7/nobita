@@ -31,11 +31,11 @@ export default function CommonModal({
         onOpenChange={onOpenChange}
         onClose={onClose}
         scrollBehavior={"inside"}
-        size="2xl"
+        size="4xl"
       >
         <ModalContent>
           {(
-            onClose, // eslint-disable-line
+            onClose // eslint-disable-line
           ) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
