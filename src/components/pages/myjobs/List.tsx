@@ -279,8 +279,8 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
         <Pagination
           showControls
           classNames={{
-            item: "bg-pageBackground w-6 h-6 min-w-4 font-roboto",
-            cursor: "w-6 h-6 min-w-4 font-roboto",
+            item: "bg-pageBackground w-8 h-6 min-w-4 font-roboto",
+            cursor: "bg-info w-8 h-6 min-w-4 font-roboto",
           }}
           color="default"
           isDisabled={hasSearchFilter}
@@ -291,7 +291,7 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
         />
         <div className="flex justify-between items-center">
           <label className="flex items-center text-small font-roboto text-black font-light ">
-            Items per page :&nbsp;
+            Size :&nbsp;
             <select
               className="border-none shadow-sm outline-none text-default-400 text-small font-roboto font-light px-1 py-0 rounded-md"
               onChange={onRowsPerPageChange}

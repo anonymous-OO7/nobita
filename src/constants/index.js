@@ -104,8 +104,14 @@ export const sidebarLinks = [
   {
     imgURL: "/assets/community.svg",
     route: "/dashboard/myjobs",
-    label: "My Jobs",
+    label: "MyJobs",
     logocmp: <Telescope />,
+  },
+  {
+    imgURL: "/assets/community.svg",
+    route: "/dashboard/feedback",
+    label: "Feedback",
+    logocmp: <Wrench />,
   },
 ];
 

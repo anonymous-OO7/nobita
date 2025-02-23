@@ -42,7 +42,6 @@ const LoginPage = () => {
       setLoading(true);
       setEmail(email);
       localStorage.setItem("email", email);
-
       return makeApiCall(LoginApi(email))
         .then((response) => {
           console.log(response, "RESPONSE OF OTP SENT");
@@ -107,7 +106,7 @@ const LoginPage = () => {
       .email("Please enter a valid email"),
   });
   return (
-    <section className="bg-gray-50 ">
+    <section className="bg-gray-50">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <Image
           src={Worklist}
@@ -120,7 +119,7 @@ const LoginPage = () => {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {/* <Logo /> */}
-          <h1 className="text-xl font-semibold font-poppins leading-tight tracking-tight text-gray-900 md:text-4xl">
+          <h1 className="text-xl font-medium font-poppins leading-tight tracking-tight text-gray-900 md:text-4xl">
             Log In
           </h1>
         </a>

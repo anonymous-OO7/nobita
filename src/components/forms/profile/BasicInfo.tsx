@@ -42,8 +42,8 @@ export default function BasicInfo({ profileData }: Props) {
 
   return (
     <section>
-      <div className="flex flex-col justify-between space-x-4 ">
-        <div className="flex flex-row  gap-2">
+      <div className="flex flex-col justify-between">
+        <div className="flex flex-row  gap-2 mb-4">
           <Input
             label="Name"
             placeholder="Enter name"
@@ -58,7 +58,7 @@ export default function BasicInfo({ profileData }: Props) {
           />
         </div>
 
-        <div className="flex flex-row  gap-2">
+        <div className="flex flex-row  gap-2 mb-4 ">
           <Input
             label="Gender"
             placeholder="Enter gender (e.g., Male, Female, Other)"
@@ -76,6 +76,8 @@ export default function BasicInfo({ profileData }: Props) {
           placeholder="Enter your bio"
           {...getFieldProps?.("bio")}
         />
+        <Spacer size="xs" />
+
         <Row justifyContent="center">
           <Button color="primary" type="submit">
             Submit

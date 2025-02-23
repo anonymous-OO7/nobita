@@ -63,55 +63,63 @@ export default function Social({ profileData }: Props) {
             Social URLs
           </p>
           <FieldArray name="social">
-            {({ push }) => (
-              <div>
+            {({ push, remove }) => (
+              <div className="space-y-4">
                 {formikContext.values.social_urls?.map((social, index) => (
-                  <div key={index} className="mb-4">
+                  <div
+                    key={index}
+                    className="p-4 bg-white shadow-md rounded-lg border border-gray-200 flex justify-between items-center"
+                  >
                     {social.platform && social.url ? (
                       <div>
-                        <p className="font-semibold text-gray-900">
+                        <p className="text-lg font-semibold text-gray-900">
                           {social.platform}:{" "}
                           <a
                             href={social.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-500"
+                            className="text-blue-500 hover:underline"
                           >
                             {social.url}
                           </a>
                         </p>
                       </div>
                     ) : (
-                      <div>
-                        <div className="flex flex-row space-x-4">
-                          <Input
-                            label={`Platform ${index + 1}`}
-                            placeholder="Enter platform (e.g., LinkedIn, GitHub)"
-                            {...getFieldProps(`social[${index}].platform`)}
-                          />
-                          <Spacer size="xs" />
-                          <Input
-                            label={`URL ${index + 1}`}
-                            placeholder="Enter URL"
-                            {...getFieldProps(`social[${index}].url`)}
-                          />
-                        </div>
+                      <div className="flex flex-row space-x-4 w-full">
+                        <Input
+                          label={`Platform ${index + 1}`}
+                          placeholder="Enter platform (e.g., LinkedIn, GitHub)"
+                          {...getFieldProps(`social[${index}].platform`)}
+                          className="w-1/2"
+                        />
+                        <Input
+                          label={`URL ${index + 1}`}
+                          placeholder="Enter URL"
+                          {...getFieldProps(`social[${index}].url`)}
+                          className="w-1/2"
+                        />
                       </div>
                     )}
-                    <Spacer size="xs" />
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className="text-red-500 hover:text-red-700 font-medium ml-4"
+                    >
+                      ✖
+                    </button>
                   </div>
                 ))}
-
                 <button
                   type="button"
                   onClick={() => setSocialModalOpen(true)}
-                  className="text-blue-500"
+                  className="block w-full py-2 px-4 text-center bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition"
                 >
-                  Add Social URL
+                  + Add Social URL
                 </button>
               </div>
             )}
           </FieldArray>
+          <Spacer size="xs" />
           <Row justifyContent="center">
             <Button color="primary" type="submit">
               Submit

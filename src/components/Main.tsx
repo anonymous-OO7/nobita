@@ -125,11 +125,27 @@ function SidebarNew({
         href="/dashboard/settings"
       /> */}
       <SidebarItem
-        icon={<Telescope />}
+        icon={
+          <ProductSVG
+            color={pathname === "/dashboard/myjobs" ? "#fff" : "#683FDB"}
+          />
+        }
         text={"My Jobs"}
         alert={pathname === "/dashboard/myjobs"}
         active={pathname === "/dashboard/myjobs"}
         href="/dashboard/myjobs"
+      />
+
+      <SidebarItem
+        icon={
+          <Transaction
+            color={pathname === "/dashboard/feedback" ? "#fff" : "#683FDB"}
+          />
+        }
+        text={"Feedback"}
+        alert={pathname === "/dashboard/feedback"}
+        active={pathname === "/dashboard/feedback"}
+        href="/dashboard/feedback"
       />
     </Sidebar>
   );

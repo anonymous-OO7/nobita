@@ -168,39 +168,52 @@ export default function Experience({ profileData }: Props) {
 
           <FieldArray name="workExperience">
             {({ insert, remove, push }) => (
-              <div>
+              <div className="space-y-4">
                 {formikContext.values.workExperience?.map(
                   (experience, index) => (
-                    <div key={index} className="mb-4">
+                    <div
+                      key={index}
+                      className="p-4 bg-white shadow-md rounded-lg border border-gray-200 flex justify-between items-start"
+                    >
                       <div>
-                        <p className="font-semibold text-gray-900">
+                        <p className="text-lg font-semibold text-gray-900">
                           {experience.role} at {experience.company}
                         </p>
-                        <p className="text-gray-700">
+                        <p className="text-gray-600 text-sm">
                           {experience.employmentType}
                         </p>
-                        <p className="text-gray-700">{experience.location}</p>
-                        <p className="text-gray-700">
+                        <p className="text-gray-600 text-sm">
+                          {experience.location}
+                        </p>
+                        <p className="text-gray-600 text-sm">
                           {experience.duration.start} -{" "}
                           {experience.duration.end || "Present"}
                         </p>
-                        <p className="text-gray-700">
-                          Years: {experience.duration.years}
+                        <p className="text-gray-600 text-sm">
+                          <span className="font-medium">Years:</span>{" "}
+                          {experience.duration.years}
                         </p>
-                        <p className="text-gray-700">
-                          Skills: {experience.skills.join(", ")}
+                        <p className="text-gray-600 text-sm">
+                          <span className="font-medium">Skills:</span>{" "}
+                          {experience.skills.join(", ")}
                         </p>
                       </div>
-                      <Spacer size="xs" />
+                      <button
+                        type="button"
+                        onClick={() => remove(index)}
+                        className="text-red-500 hover:text-red-700 font-medium"
+                      >
+                        ✖
+                      </button>
                     </div>
                   )
                 )}
                 <button
                   type="button"
                   onClick={() => setIsWorkExperienceModalOpen(true)}
-                  className="text-blue-500 hover:underline"
+                  className="block w-full py-2 px-4 text-center bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition"
                 >
-                  Add New Work Experience
+                  + Add New Work Experience
                 </button>
               </div>
             )}
@@ -307,37 +320,50 @@ export default function Experience({ profileData }: Props) {
           </p>
           <FieldArray name="education">
             {({ insert, remove, push }) => (
-              <div>
+              <div className="space-y-4">
                 {formikContext.values.education?.map((education, index) => (
-                  <div key={index} className="mb-4">
+                  <div
+                    key={index}
+                    className="p-4 bg-white shadow-md rounded-lg border border-gray-200 flex justify-between items-start"
+                  >
                     <div>
-                      <p className="font-semibold text-gray-900">
+                      <p className="text-lg font-semibold text-gray-900">
                         {education.degree} from {education.universityName}
                       </p>
-                      <p className="text-gray-700">
-                        Duration: {education.duration.start} -{" "}
+                      <p className="text-gray-600 text-sm">
+                        <span className="font-medium">Duration:</span>{" "}
+                        {education.duration.start} -{" "}
                         {education.duration.end || "Present"}
                       </p>
-                      <p className="text-gray-700">
-                        Years: {education.duration.years}
+                      <p className="text-gray-600 text-sm">
+                        <span className="font-medium">Years:</span>{" "}
+                        {education.duration.years}
                       </p>
-                      <p className="text-gray-700">
-                        Skills: {education.skills.join(", ")}
+                      <p className="text-gray-600 text-sm">
+                        <span className="font-medium">Skills:</span>{" "}
+                        {education.skills.join(", ")}
                       </p>
                     </div>
-                    <Spacer size="xs" />
+                    <button
+                      type="button"
+                      onClick={() => remove(index)}
+                      className="text-red-500 hover:text-red-700 font-medium"
+                    >
+                      ✖
+                    </button>
                   </div>
                 ))}
                 <button
                   type="button"
                   onClick={() => setIsEducationModalOpen(true)}
-                  className="text-blue-500 hover:underline"
+                  className="block w-full py-2 px-4 text-center bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition"
                 >
-                  Add New Education
+                  + Add New Education
                 </button>
               </div>
             )}
           </FieldArray>
+          <Spacer size="xs" />
           <Row justifyContent="center">
             <Button color="primary" type="submit">
               Submit

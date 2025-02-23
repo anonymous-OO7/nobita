@@ -282,3 +282,27 @@ export const GetProfileApi = () => {
     },
   });
 };
+
+export const FeedbackApi = (
+  name: string,
+  recipient: string,
+  subject: string,
+  body: string
+) => {
+  return onePiece.post(
+    "/feedback",
+    {
+      name,
+      recipient,
+      subject,
+      body,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+        user_id: localStorage.getItem("id") || "",
+        email: localStorage.getItem("email") || "",
+      },
+    }
+  );
+};
