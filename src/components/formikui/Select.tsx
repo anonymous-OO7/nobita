@@ -1,7 +1,7 @@
+import { SelectType } from "@/types";
 import { Select as NSelect, SelectItem, SelectProps } from "@nextui-org/react";
 import { useField } from "formik";
 import * as React from "react";
-import { SelectType } from "@/types";
 
 interface Props extends Omit<SelectProps, "items" | "children" | "onSelect"> {
   item: SelectType[];
@@ -46,11 +46,7 @@ export default function Select({
       {...props}
     >
       {item?.map(({ label, value }) => (
-        <SelectItem
-          className="bg-white p-1 text-black font-poppins font-light text-lg"
-          key={value}
-          value={value}
-        >
+        <SelectItem key={value} value={value}>
           {label}
         </SelectItem>
       ))}

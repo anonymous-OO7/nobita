@@ -32,6 +32,37 @@ export default function SubmitJob() {
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
   const [jobtype, setType] = React.useState("");
+  const fieldDropdowndata: SelectType[] = React.useMemo(
+    () => [
+      { value: "engineering", label: "Engineering" },
+      { value: "marketing", label: "Marketing" },
+      { value: "sales", label: "Sales" },
+      { value: "finance", label: "Finance" },
+      { value: "human_resources", label: "Human Resources" },
+      { value: "information_technology", label: "Information Technology" },
+      { value: "customer_service", label: "Customer Service" },
+      { value: "operations", label: "Operations" },
+      { value: "design", label: "Design" },
+      { value: "product_management", label: "Product Management" },
+      { value: "business_development", label: "Business Development" },
+      { value: "data_science", label: "Data Science" },
+      { value: "healthcare", label: "Healthcare" },
+      { value: "education", label: "Education" },
+      { value: "consulting", label: "Consulting" },
+      { value: "supply_chain", label: "Supply Chain & Logistics" },
+      { value: "media", label: "Media & Communications" },
+      { value: "real_estate", label: "Real Estate" },
+      { value: "government", label: "Government & Public Sector" },
+      { value: "hospitality", label: "Hospitality & Tourism" },
+      { value: "construction", label: "Construction & Architecture" },
+      { value: "pharmaceutical", label: "Pharmaceutical & Biotechnology" },
+      { value: "telecommunications", label: "Telecommunications" },
+      { value: "energy", label: "Energy & Utilities" },
+      { value: "others", label: "Others" },
+    ],
+    []
+  );
+
   const [InitialValues, setInitialValues] = React.useState({
     status: "active",
     companyName: "",
@@ -156,10 +187,13 @@ export default function SubmitJob() {
                 size="large"
                 // className="text-black font-poppins font-light text-lg"
               />
-              <Input
-                className="bg-white p-1 text-black font-poppins font-light text-lg"
+
+              <Select
                 label="Field"
+                placeholder="Select"
+                item={fieldDropdowndata}
                 name="field"
+                size="sm"
               />
               <Input
                 className="bg-white p-1 text-black font-poppins font-light text-lg"

@@ -405,7 +405,8 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
       </p>
 
       <p className="text-gray-700">
-        {FormatToLakhs(job.MinPay)} - {FormatToLakhs(job.MaxPay)} INR/pa
+        Annual Salary: ₹{FormatToLakhs(job.MinPay)} - ₹
+        {FormatToLakhs(job.MaxPay)}
       </p>
       <p className="text-xs mt-3 font-poppins text-black">
         Posted {postedDate}
