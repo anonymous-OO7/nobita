@@ -11,6 +11,34 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const formData = new FormData(form.current);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const phone = formData.get("phone");
+    const message = formData.get("message");
+
+    if (!name || name === "") {
+      alert("Please enter your name.");
+      return;
+    }
+
+    if (!email || email === "") {
+      alert("Please enter your email.");
+      return;
+    }
+
+    if (!phone || phone === "") {
+      alert("Please enter your phone number.");
+      return;
+    }
+
+    if (!message || message === "") {
+      alert("Please enter your message.");
+      return;
+    }
+
+    console.log(form, "sending contact form");
+
     if (form.current) {
       emailjs
         .sendForm(
@@ -21,12 +49,16 @@ const Contact = () => {
         )
         .then(
           (result) => {
+            console.log(result, "sending contact form");
             showToast("Message delivered!!", { type: "success" });
             setOpen(true);
             form.current?.reset();
           },
           (error) => {
             console.error("Error sending message:", error.text);
+            showToast("Failed to send message. Please try again.", {
+              type: "error",
+            }); // Show error toast
           }
         );
     } else {
