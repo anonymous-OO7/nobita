@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Loader } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Phone } from "lucide-react";
-import { Mail } from "lucide-react";
 import useApi from "@/hooks/useApi";
 import { FeedbackApi } from "@/apis";
 
@@ -17,17 +14,9 @@ const ContactForm = () => {
 
   const { makeApiCall } = useApi();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const notify = (text) => toast.success(text);
-  const notifyfail = (text) => toast.error(text);
-
-  const payload = {
-    name: formData.name,
-    recipient: formData.email,
-    subject: "Feedback from workist",
-    body: formData.message,
-  };
+  const notifyFail = (text) => toast.error(text);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,13 +24,30 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.message.trim()
+    ) {
+      notifyFail("All fields are required!");
+      return;
+    }
+
     fetchData();
   };
 
   const fetchData = async () => {
     setIsLoading(true);
 
-    return makeApiCall(
+    const payload = {
+      name: formData.name,
+      recipient: formData.email,
+      subject: "Feedback from workist",
+      body: formData.message,
+    };
+
+    makeApiCall(
       FeedbackApi(
         payload.name,
         payload.recipient,
@@ -49,13 +55,15 @@ const ContactForm = () => {
         payload.body
       )
     )
-      .then((response) => {
-        toast.success("Feedbacks sent succesfully");
+      .then(() => {
+        notify("Feedback sent successfully");
+        setFormData({ name: "", email: "", message: "" }); // Reset form
       })
       .catch((error) => {
-        toast.error(
-          error?.response?.data?.message || "Feedback sentding failed "
-        );
+        notifyFail(error?.response?.data?.message || "Feedback sending failed");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -64,7 +72,7 @@ const ContactForm = () => {
       <div className="contact-form bg-white shadow-lg rounded-lg p-6 w-full border border-gray-200">
         <form
           onSubmit={handleSubmit}
-          className="form-content relative flex flex-col justify-center "
+          className="form-content relative flex flex-col justify-center"
         >
           <h2 className="text-2xl font-normal text-black mb-4">Contact Us</h2>
           <div className="form-inputs flex flex-col justify-between mb-4 w-3/4 sm:w-full">
@@ -105,6 +113,7 @@ const ContactForm = () => {
             <button
               className="submit-button rounded-lg p-5 bg-[#00006A] text-white font-semibold py-3 hover:bg-[#00004A] transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               type="submit"
+              disabled={isLoading}
             >
               {isLoading ? (
                 <Loader />
