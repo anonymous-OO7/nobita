@@ -11,6 +11,11 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!form.current) {
+      console.error("Form reference is null. Cannot submit form.");
+      return; // Exit early if form is not available
+    }
+
     const formData = new FormData(form.current);
     const name = formData.get("name");
     const email = formData.get("email");
