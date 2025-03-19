@@ -157,8 +157,8 @@ export type Job = {
   MinPay: number;
   MaxPay: number;
   Price: number;
-  TotalEmp: number;
-  LogoUrl: string;
+  total_emp: number;
+  logourl: string;
   CreatedAt: string;
   UpdatedAt: string;
   DeletedAt: string | null;
