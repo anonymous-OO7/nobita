@@ -100,9 +100,9 @@ const Card: React.FC<CardProps> = ({ job }) => {
       <div className=" flex flex-row justify-between items-center">
         <div className="flex flex-col sm:flex-row gap-3 justify-start sm:items-center">
           <div className="flex flex-row items-center gap-2">
-            {job.logourl && job.logourl != "" ? (
+            {job.LogoUrl && job.LogoUrl != "" ? (
               <Image
-                src={job.logourl}
+                src={job.LogoUrl}
                 width={50}
                 height={50}
                 alt="Picture of the author"
