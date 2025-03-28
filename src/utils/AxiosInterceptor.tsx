@@ -10,7 +10,7 @@ interface Props {
 }
 
 const baseOnePieceURLS =
-  getEnviromentVariable() === "staging"
+  getEnviromentVariable() === "staginga"
     ? "http://192.168.68.111:8080/"
     : // ? "http://192.168.68.113:8080/"
 
