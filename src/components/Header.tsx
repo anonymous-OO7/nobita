@@ -5,6 +5,8 @@ import { Logo } from "@/assets/images/Logo";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import LogoWorkist from "../assets/workistlogo.svg";
+import RojgarMitra from "../assets/rm.png";
+
 const Header = () => {
   const [isHeaderFixed, setIsHeaderFixed] = useState(false);
   const router = useRouter();
@@ -48,7 +50,7 @@ const Header = () => {
           {/* Adjust the width and height classes as needed */}
           {/* <Logo className={`w-20 sm:w-32 ${isHeaderFixed ? "w-12" : ""}`} /> */}
           <Image
-            src={LogoWorkist}
+            src={RojgarMitra}
             alt="logo"
             className={`w-14 sm:w-24 ${isHeaderFixed ? "w-12" : ""}`}
           />

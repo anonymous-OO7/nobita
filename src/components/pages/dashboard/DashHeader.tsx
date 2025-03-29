@@ -23,7 +23,7 @@ import BellIcon from "../../../assets/bell.svg";
 import { useRouter } from "next/navigation";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
 import { Search } from "lucide-react";
-import Logo2 from "../../../assets/workistheadline.svg";
+import Rojgarmitra from "../../../assets/rm.png";
 interface UserData {
   id: number;
   name: string;
@@ -76,7 +76,7 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
     >
       <NavbarContent justify="start">
         <NavbarBrand>
-          <Image src={Logo2} alt="logo" width={120} />
+          <Image src={Rojgarmitra} alt="logo" width={120} />
           <p className=" text-black font-semibold font-poppins sm:block  ">
             {data?.college != "" ? data?.college : "---"}
           </p>
