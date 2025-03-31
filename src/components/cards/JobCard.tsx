@@ -296,9 +296,9 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
       <div className=" flex flex-row justify-between items-center">
         <div className="flex flex-col sm:flex-row gap-3 justify-start sm:items-center">
           <div className="flex flex-row items-center gap-2">
-            {job.LogoUrl && job.LogoUrl != "" ? (
+            {job.logourl && job.logourl != "" ? (
               <Image
-                src={job.LogoUrl}
+                src={job.logourl}
                 width={50}
                 height={50}
                 alt="Picture of the author"
@@ -343,7 +343,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           className="px-2"
         >
           <p className="text-sm font-poppins text-black">
-            {job.TotalEmp}+ Employees
+            {job.total_emp}+ Employees
           </p>
         </Chip>
       </div>
@@ -353,7 +353,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           <div className="w-full md:w-auto">{renderJobType(job.Status)}</div>
           <div className="w-full md:w-auto">{renderPriceTag(job.Price)}</div>
           <div className="w-full md:w-auto">
-            {growinfFast(job.TotalEmp > 500 ? false : true)}
+            {growinfFast(job.total_emp > 500 ? false : true)}
           </div>
         </div>
         <div className="flex flex-row justify-center items-center gap-2">
