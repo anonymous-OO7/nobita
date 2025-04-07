@@ -14,8 +14,7 @@ import { nextLocalStorage } from "@/utils/nextLocalStorage";
 import { CreateUserApi } from "@/apis"; // Ensure correct import
 import useToast from "@/hooks/useToast";
 import Image from "next/image";
-import RojgarMitr from "../../../src/assets/rm.png";
-
+import Worklist from "../../../src/assets/logo.png";
 // Example options for the select
 const genderOptions: SelectType[] = [
   { label: "Male", value: "male" },
@@ -114,7 +113,7 @@ export default function SignUp() {
     <section className="bg-white">
       <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
         <Image
-          src={RojgarMitr}
+          src={Worklist}
           alt="logo"
           className={`w-14 sm:w-24 rounded-xl mb-4`}
         />

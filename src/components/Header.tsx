@@ -50,7 +50,7 @@ const Header = () => {
           {/* Adjust the width and height classes as needed */}
           {/* <Logo className={`w-20 sm:w-32 ${isHeaderFixed ? "w-12" : ""}`} /> */}
           <Image
-            src={RojgarMitra}
+            src={LogoWorkist}
             alt="logo"
             className={`w-14 sm:w-24 ${isHeaderFixed ? "w-12" : ""}`}
           />

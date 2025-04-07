@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import useApi from "@/hooks/useApi";
 import { LoginApi, OtpSubmitApi } from "@/apis";
 import useToast from "@/hooks/useToast";
-import RojgaerMitra from "../../../src/assets/rm.png";
+import Worklist from "../../../src/assets/logo.png";
 import Image from "next/image";
 const INTIAL_VALUES = {
   email: "",
@@ -109,7 +109,7 @@ const LoginPage = () => {
     <section className="bg-gray-50">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <Image
-          src={RojgaerMitra}
+          src={Worklist}
           alt="logo"
           className={`w-14 sm:w-24 rounded-xl mb-4`}
         />
