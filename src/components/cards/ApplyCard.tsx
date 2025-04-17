@@ -25,10 +25,9 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ job }) => {
-  const postedDate = formatDistanceToNow(new Date(job.CreatedAt), {
-    addSuffix: true,
-  });
-
+  // const postedDate = formatDistanceToNow(new Date(job.CreatedAt), {
+  //   addSuffix: true,
+  // });
   const renderType = React.useCallback((value: string) => {
     switch (value) {
       case "fulltime":
@@ -100,9 +99,9 @@ const Card: React.FC<CardProps> = ({ job }) => {
       <div className=" flex flex-row justify-between items-center">
         <div className="flex flex-col sm:flex-row gap-3 justify-start sm:items-center">
           <div className="flex flex-row items-center gap-2">
-            {job.logourl && job.logourl != "" ? (
+            {job?.company?.logo_url && job?.company?.logo_url != "" ? (
               <Image
-                src={job.logourl}
+                src={job?.company?.logo_url}
                 width={50}
                 height={50}
                 alt="Picture of the author"
@@ -125,7 +124,7 @@ const Card: React.FC<CardProps> = ({ job }) => {
         </div>
       </div>
       <div className=" flex flex-row gap-1 items-center mt-3">
-        <p className="text-sm font-poppins text-black">{job.CompanyName}</p>
+        <p className="text-sm font-poppins text-black">{job.company.name}</p>
         <div className=" flex flex-row gap-1 items-center">
           <CiLocationOn className="h-4 w-4 text-black" />
           <p className="text-xs font-poppins text-black">{job.Location}</p>
@@ -135,9 +134,7 @@ const Card: React.FC<CardProps> = ({ job }) => {
       <p className="text-gray-700">
         {FormatToLakhs(job.MinPay)} - {FormatToLakhs(job.MaxPay)} INR/pa
       </p>
-      <p className="text-xs mt-3 font-poppins text-black">
-        Posted {postedDate}
-      </p>
+      <p className="text-xs mt-3 font-poppins text-black">Posted</p>
     </div>
   );
 };

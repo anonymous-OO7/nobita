@@ -296,9 +296,9 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
       <div className=" flex flex-row justify-between items-center">
         <div className="flex flex-col sm:flex-row gap-3 justify-start sm:items-center">
           <div className="flex flex-row items-center gap-2">
-            {job.logourl && job.logourl != "" ? (
+            {job?.company?.logo_url && job?.company?.logo_url != "" ? (
               <Image
-                src={job.logourl}
+                src={job?.company?.logo_url}
                 width={50}
                 height={50}
                 alt="Picture of the author"
@@ -328,7 +328,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
         </div>
       </div>
       <div className=" flex flex-row gap-1 items-center mt-3">
-        <p className="text-sm font-poppins text-black">{job.CompanyName}</p>
+        <p className="text-sm font-poppins text-black">{job.company.name}</p>
         <div className=" flex flex-row gap-1 items-center">
           <CiLocationOn className="h-4 w-4 text-black" />
           <p className="text-xs font-poppins text-black">{job.Location}</p>
@@ -343,7 +343,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           className="px-2"
         >
           <p className="text-sm font-poppins text-black">
-            {job.total_emp}+ Employees
+            {job.company.company_size}+ Employees
           </p>
         </Chip>
       </div>
@@ -353,7 +353,9 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           <div className="w-full md:w-auto">{renderJobType(job.Status)}</div>
           <div className="w-full md:w-auto">{renderPriceTag(job.Price)}</div>
           <div className="w-full md:w-auto">
-            {growinfFast(job.total_emp > 500 ? false : true)}
+            {growinfFast(
+              parseInt(job.company.company_size) > 500 ? false : true
+            )}
           </div>
         </div>
         <div className="flex flex-row justify-center items-center gap-2">

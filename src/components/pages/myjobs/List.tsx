@@ -57,7 +57,7 @@ const COLUMNS = [
 
 export default function OrdersEpp({ eppOrders, loading }: Props) {
   const [filterValue, setFilterValue] = React.useState("");
-  const [rowsPerPage, setRowsPerPage] = React.useState(20);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
   const role = secureLocalStorage.getItem("role");

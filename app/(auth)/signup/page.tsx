@@ -27,8 +27,7 @@ const INITIAL_VALUES = {
   password: "",
   gender: "",
   phone: "",
-  institution_name: "",
-  course_field: "",
+  referal_code: "",
   country: "",
   username: "",
   role: "normal",
@@ -75,8 +74,7 @@ export default function SignUp() {
             values.username,
             values.phone,
             values.gender,
-            values.institution_name,
-            values.course_field,
+            values.referal_code,
             values.country
           )
         );
@@ -154,16 +152,11 @@ export default function SignUp() {
             />
             <Spacer size="xs" />
             <Input
-              label="Company/School"
-              placeholder="Company/School"
-              name="institution_name"
+              label="Referal Code"
+              placeholder="Enter Referal Code"
+              name="referal_code"
             />
-            <Spacer size="xs" />
-            <Input
-              label="Course/Field"
-              placeholder="Course/Field"
-              name="course_field"
-            />
+
             <Spacer size="xs" />
             <Input label="Country" placeholder="Country" name="country" />
             <Spacer size="xs" />

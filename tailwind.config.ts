@@ -14,6 +14,7 @@ const config: Config = {
     "src/components/SideBarNew.jsx",
     "src/components/common/SelectSearchNew.js",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {

@@ -61,12 +61,24 @@ export default function Main({ children }: Props) {
       <div className={`fixed top-0 left-0 right-0 transition-all ml-[17%] `}>
         <DashHeader onOpen={onOpen} />
       </div>
+      {/* <Body sideView={<SidebarNew setExpandedMain={setExpandedMain} />}>
+        <div className="px-4 bg-white py-6">
+          <div
+            className={`mt-14 ml-[17%] transition-all ${
+              expandedMain ? "sm:ml-72" : "sm:ml-24"
+            }`}
+          >
+            {children}
+          </div>
+        </div>
+      </Body> */}
       <Body sideView={<SidebarNew setExpandedMain={setExpandedMain} />}>
         <div className="px-4 bg-white py-6">
           <div
-            className={`mt-14 transition-all ${
-              expandedMain ? "sm:ml-72" : "sm:ml-24"
-            }`}
+            className=" mt-14 ml-[17%]"
+            // transition-all ${
+            //   expandedMain ? "sm:ml-72" : "sm:ml-24"
+            // }`}
           >
             {children}
           </div>

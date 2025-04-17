@@ -6,12 +6,13 @@ import * as Yup from "yup";
 import Input from "@/components/Input";
 import Spacer from "@/components/Spacer";
 import useApi from "@/hooks/useApi";
-import { CreateJobApi } from "@/apis";
+import { CreateJobApi, SearchGetCompaniesApi } from "@/apis";
 import useToast from "@/hooks/useToast";
 import Select from "@/components/common/Select";
-import { SelectType } from "@/types";
+import { Option, SelectType } from "@/types";
 import Textarea from "@/components/common/TextArea";
 import Row from "@/components/common/Row";
+import SearchSelect from "@/components/common/SearchSelect";
 
 const validationSchema = Yup.object().shape({
   companyName: Yup.string().required("Company Name is required"),
@@ -23,8 +24,6 @@ const validationSchema = Yup.object().shape({
   minPay: Yup.number().required("Minimum pay is required"),
   maxPay: Yup.number().required("Maximum pay is required"),
   price: Yup.number().required("Price is required"),
-  totalEmp: Yup.number().required("Total Employees is required"),
-  logoUrl: Yup.string().required("Logo URL is required"),
 });
 
 export default function SubmitJob() {
@@ -32,6 +31,8 @@ export default function SubmitJob() {
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
   const [jobtype, setType] = React.useState("");
+  const [companyData, setCompanyData] = React.useState<Option[]>([]);
+
   const fieldDropdowndata: SelectType[] = React.useMemo(
     () => [
       { value: "engineering", label: "Engineering" },
@@ -75,8 +76,6 @@ export default function SubmitJob() {
     minPay: 0,
     maxPay: 0,
     price: 0,
-    totalEmp: 0,
-    logoUrl: "",
   });
   const dropdownData: SelectType[] = [
     { label: "Full Time", value: "fulltime" },
@@ -98,8 +97,6 @@ export default function SubmitJob() {
         minPay,
         maxPay,
         price,
-        totalEmp,
-        logoUrl,
       } = values;
 
       setLoading(true);
@@ -114,9 +111,7 @@ export default function SubmitJob() {
           field,
           minPay,
           maxPay,
-          price,
-          totalEmp,
-          logoUrl
+          price
         )
       )
         .then((response) => {
@@ -137,6 +132,48 @@ export default function SubmitJob() {
     setType(data);
   }, []);
 
+  React.useEffect(() => {
+    makeApiCall(SearchGetCompaniesApi(""))
+      // eslint-disable-next-line
+      .then((response: any) => {
+        console.log(response, "Response  of all companies");
+        var count = Object.keys(response?.data).length;
+        let cityArray = [];
+        for (var i = 0; i < count; i++) {
+          cityArray.push({
+            value: response.data[i].code,
+            label: response.data[i].name,
+          });
+        }
+        setCompanyData(cityArray);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        console.log("finally");
+      });
+  }, [makeApiCall]);
+
+  const searchCompanies = React.useCallback((text: String) => {
+    makeApiCall(SearchGetCompaniesApi(text))
+      // eslint-disable-next-line
+      .then((response: any) => {
+        console.log(response, "Response  of all companies");
+        var count = Object.keys(response?.data).length;
+        let cityArray = [];
+        for (var i = 0; i < count; i++) {
+          cityArray.push({
+            value: response.data[i].code,
+            label: response.data[i].name,
+          });
+        }
+        setCompanyData(cityArray);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        console.log("finally");
+      });
+  }, []);
+
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-2xl">
@@ -153,16 +190,25 @@ export default function SubmitJob() {
         >
           {() => (
             <Form>
-              <Spacer size="xs" />
-              <Input
-                className="bg-white p-1  text-black font-poppins font-light text-lg"
-                label="Company Name"
-                name="companyName"
-              />
+              <div>
+                <Spacer size="md" orientation="horizontal" />
+                <SearchSelect
+                  placeholder="e.g., amazon, facebook"
+                  label="Company Name"
+                  item={companyData}
+                  name="companyName"
+                  className="bg-white p-1 text-black font-poppins font-light text-lg"
+                  size="sm"
+                  onChange={(e) => {
+                    console.log(e, "Texttt");
+                    searchCompanies(e.target.value);
+                  }}
+                />
+              </div>
               <Row>
                 <Input
                   className="bg-white  p-1  text-black font-poppins font-light text-lg"
-                  label="Job Title"
+                  label="Position"
                   name="position"
                 />
                 <Input
@@ -197,13 +243,13 @@ export default function SubmitJob() {
               />
               <Input
                 className="bg-white p-1 text-black font-poppins font-light text-lg"
-                label="Minimum Pay"
+                label="Minimum Pay (Lakhs per Annum(LPA))"
                 name="minPay"
                 type="number"
               />
               <Input
                 className="bg-white p-1 text-black font-poppins font-light text-lg"
-                label="Maximum Pay"
+                label="Maximum Pay (Lakhs per Annum(LPA))"
                 name="maxPay"
                 type="number"
               />
@@ -213,22 +259,7 @@ export default function SubmitJob() {
                 name="price"
                 type="number"
               />
-              <Input
-                className="bg-white p-1 text-black font-poppins font-light text-lg"
-                label="Total Employees"
-                name="totalEmp"
-                type="number"
-              />
-              <Input
-                className="bg-white p-1 text-black font-poppins font-light text-lg"
-                label="Logo URL"
-                name="logoUrl"
-              />
-              <p className="bg-white px-6 text-red-400 font-poppins font-light text-xs">
-                *It's higher visibility if you add logo URL. Right click and
-                copy image address on company logo from your company website and
-                paste it. That's it..
-              </p>
+
               <Spacer size="xs" />
               <button
                 type="submit"

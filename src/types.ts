@@ -142,12 +142,41 @@ export type Month =
   | "November"
   | "December";
 
+export type Company = {
+  ID: number;
+  CreatedAt: string;
+  UpdatedAt: string;
+  DeletedAt: string | null;
+  logo_url: string;
+  name: string;
+  uuid: string;
+  code: string;
+  description: string;
+  website_url: string;
+  industry: string;
+  company_size: string;
+  location: string;
+  company_culture: string;
+  benefits: string;
+  social_media_links: string;
+  founded_date: string;
+  headquarters_address: string;
+  contact_email: string;
+  contact_phone: string;
+  subscription_plan: string;
+  status: string;
+  glassdoor_url: string;
+};
+
 export type Job = {
   ID: number;
+  CreatedAt: string;
+  UpdatedAt: string;
+  DeletedAt: string | null;
   UserID: number;
   Status: string;
   Uuid: string;
-  CompanyName: string;
+  CompanyCode: string;
   Position: string;
   Location: string;
   Type: string;
@@ -157,11 +186,7 @@ export type Job = {
   MinPay: number;
   MaxPay: number;
   Price: number;
-  total_emp: number;
-  logourl: string;
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: string | null;
+  company: Company;
 };
 
 export interface WorkExperienceType {
@@ -208,4 +233,9 @@ export interface ProfileDetailsType {
   tagline: string;
   skill: string[];
   social_urls: SocialUrlType[];
+}
+
+export interface Option {
+  value: string;
+  label: string;
 }

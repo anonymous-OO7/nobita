@@ -106,7 +106,7 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({
             {({ setFieldValue, isSubmitting }) => (
               <Form>
                 <ModalHeader className="flex flex-col gap-1 text-black font-poppins">
-                  Apply to {applyingJob?.CompanyName}
+                  Apply to {applyingJob?.company.name}
                 </ModalHeader>
                 <ModalBody>
                   <p className="flex flex-col gap-1 text-black font-poppins font-light text-base">

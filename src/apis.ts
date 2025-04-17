@@ -39,9 +39,8 @@ export const CreateUserApi = (
   username: string,
   phone: string,
   gender: string,
-  organisation: string,
-  title: string,
-  country: string
+  country: string,
+  referal_code: string
 ) => {
   const formData = new FormData();
   formData.append("email", email);
@@ -51,8 +50,7 @@ export const CreateUserApi = (
   formData.append("username", username);
   formData.append("phone", phone);
   formData.append("gender", gender);
-  formData.append("organisation", organisation);
-  formData.append("title", title);
+  formData.append("referal_code", referal_code);
   formData.append("country", country);
 
   return onePiece.post("/signup", formData, {
@@ -102,13 +100,11 @@ export const CreateJobApi = (
   field: string,
   minPay: number,
   maxPay: number,
-  price: number,
-  totalEmp: number,
-  logoUrl: string
+  price: number
 ) => {
   const formData = new FormData();
   formData.append("status", status);
-  formData.append("company_name", companyName);
+  formData.append("company_code", companyName);
   formData.append("position", position);
   formData.append("location", location);
   formData.append("job_type", jobType);
@@ -117,8 +113,6 @@ export const CreateJobApi = (
   formData.append("min_pay", minPay.toString());
   formData.append("max_pay", maxPay.toString());
   formData.append("price", price.toString());
-  formData.append("total_emp", totalEmp.toString());
-  formData.append("logo_url", logoUrl);
 
   return onePiece.post("/create-job", formData, {
     headers: {
@@ -131,10 +125,13 @@ export const CreateJobApi = (
 };
 
 //get api for utility claims
-export const GetAllJobsList = () => {
+export const GetAllJobsList = (page: number, limit: number, search: string) => {
   return onePiece.get(`/all-jobs`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      page: page,
+      limit: limit,
+      search: search,
     },
   });
 };
@@ -305,4 +302,18 @@ export const FeedbackApi = (
       },
     }
   );
+};
+
+export const SearchGetCompaniesApi = async (searchText: String) => {
+  return onePiece.get("/search-company", {
+    params: {
+      search: searchText,
+    },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+      email: localStorage.getItem("email") || "",
+    },
+  });
 };
