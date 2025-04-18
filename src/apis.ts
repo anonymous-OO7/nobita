@@ -317,3 +317,13 @@ export const SearchGetCompaniesApi = async (searchText: String) => {
     },
   });
 };
+
+export const GetAllUserAppliedJobsList = async () => {
+  return onePiece.get(`/all-appliedjobs`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+      user_id: localStorage.getItem("id") || "",
+      email: localStorage.getItem("email") || "",
+    },
+  });
+};

@@ -5,7 +5,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import useApi from "@/hooks/useApi";
 import useTokenCheck from "@/hooks/useTokenCheck";
 import JobCard from "@/components/cards/JobCard";
-import { GetAllJobsList, SaveJobApi } from "@/apis";
+import { GetAllJobsList, GetAllUserAppliedJobsList, SaveJobApi } from "@/apis";
 import { Job } from "@/types";
 import useToast from "@/hooks/useToast";
 import JobApplicationModal from "@/components/pages/home/JobApply";
@@ -30,6 +30,7 @@ const Home: React.FC = () => {
   const [debouncedSearch, setDebouncedSearch] = React.useState<string>(search);
   const [jobsInfo, setJobsInfo] = React.useState<Job[]>([]);
   const [applyingJob, setApplyingJobInfo] = React.useState<Job>();
+  const [allAppliedJobs, setAllAppliedJobs] = React.useState<string[]>([]);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -58,7 +59,16 @@ const Home: React.FC = () => {
     },
     [makeApiCall, limit, debouncedSearch]
   );
-
+  React.useEffect(() => {
+    makeApiCall(GetAllUserAppliedJobsList())
+      .then((response) => {
+        console.log(response, "all applied jobs");
+        setAllAppliedJobs(response?.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [makeApiCall, debouncedSearch]);
   // Remove unused showItems function
   // const showItems = (posts) => {
   //   var items = [];
@@ -197,6 +207,7 @@ const Home: React.FC = () => {
                 job={job}
                 onSave={saveJob}
                 onApply={onApplyJob}
+                isApplied={allAppliedJobs?.includes(job?.Uuid) ? true : false}
               />
             ))}
           </InfiniteScroll>

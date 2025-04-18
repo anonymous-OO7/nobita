@@ -24,9 +24,15 @@ interface CardProps {
   job: Job;
   onSave: (uuid: string) => void;
   onApply: (job: Job) => void;
+  isApplied: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
+const Card: React.FC<CardProps> = ({
+  job,
+  onSave,
+  onApply,
+  isApplied = false,
+}) => {
   const backgroundColorClass =
     job.Status === "inactive" ||
     job.Status === "hired" ||
@@ -299,8 +305,8 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             {job?.company?.logo_url && job?.company?.logo_url != "" ? (
               <Image
                 src={job?.company?.logo_url}
-                width={50}
-                height={50}
+                width={60}
+                height={60}
                 alt="Picture of the author"
               />
             ) : (
@@ -315,16 +321,36 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
         </div>
 
         <div className="flex flex-row justify-center items-center gap-2">
-          <p className="text-lg font-poppins text-green-400">At</p>
-          <Chip
-            startContent={<IndianRupee size={18} />}
-            variant="bordered"
-            color="success"
-            size="md"
-            className="px-2"
-          >
-            <p className="text-sm font-poppins ">{job.Price}</p>
-          </Chip>
+          {/* This is the parent div for the "Applied" Chip */}
+          {/* Added 'relative' class here */}
+          <div className="flex flex-row gap-2 relative">
+            <p className="text-lg font-poppins text-green-400">At</p>
+            <Chip
+              startContent={<IndianRupee size={18} />}
+              variant="bordered"
+              color="success"
+              size="md"
+              className="px-2"
+            >
+              <p className="text-sm font-poppins">{job.Price}</p>{" "}
+              {/* Assuming job.Price is available */}
+            </Chip>
+            {isApplied ? (
+              <div className="flex flex-row items-center  right-0 bg-green-500 z-10 rounded-xl px-1 text-right">
+                {/* This Chip's content needed the 'Applied' text */}
+                <Chip
+                  startContent={<Check size={18} />}
+                  variant="flat"
+                  color="primary"
+                  size="sm"
+                  className="p-1"
+                >
+                  {/* The text "Applied" goes inside the Chip content */}
+                  Applied
+                </Chip>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
       <div className=" flex flex-row gap-1 items-center mt-3">
