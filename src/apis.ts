@@ -191,6 +191,7 @@ export const ApplyJobAPI = (
       user_id: `${localStorage.getItem("id")}`,
       email: localStorage.getItem("email"),
       name: localStorage.getItem("name"),
+      uuid: `${localStorage.getItem("uuid")}`,
     },
   });
 };
