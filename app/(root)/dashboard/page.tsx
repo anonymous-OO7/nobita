@@ -169,10 +169,14 @@ const Home: React.FC = () => {
   const onApplyJob = React.useCallback(
     (job: Job) => {
       console.log("applying job", job);
-      setApplyingJobInfo(job);
-      onOpen();
+      if (allAppliedJobs?.includes(job?.Uuid)) {
+        showToast("Already applied!!", { type: "info" });
+      } else {
+        setApplyingJobInfo(job);
+        onOpen();
+      }
     },
-    [onOpen]
+    [onOpen, allAppliedJobs]
   );
 
   return (
