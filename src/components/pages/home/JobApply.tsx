@@ -78,12 +78,20 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({
           applyingJob?.Uuid || ""
         )
       )
-        .then(() => {
-          formSuccessToast();
-          onOpenChange(false); // Close the modal on success
-          return true;
+        .then((response) => {
+          console.log(response, "Response of apliyinf");
+          if (response?.status == true) {
+            formSuccessToast();
+            onOpenChange(false);
+            return true;
+          } else {
+            formErrorToast();
+            return false;
+          }
         })
-        .catch(() => {
+        .catch((e) => {
+          console.log(e, "error response of apliyinf");
+
           formErrorToast();
           return false;
         })

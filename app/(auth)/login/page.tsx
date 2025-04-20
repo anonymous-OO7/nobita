@@ -46,8 +46,13 @@ const LoginPage = () => {
         .then((response) => {
           console.log(response, "RESPONSE OF OTP SENT");
           console.log("LOGIN SUCCESS");
-          setSetShowOtp(true);
-          showToast("OTP sent successfully!!", { type: "success" });
+          if (response?.existingUser == true) {
+            setSetShowOtp(true);
+            showToast("OTP sent successfully!!", { type: "success" });
+          } else {
+            showToast("Please signup!!", { type: "info" });
+            navigateToSignup();
+          }
         })
         .catch((error) => {
           console.error("Login Error:- ", error);

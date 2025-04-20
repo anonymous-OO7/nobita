@@ -57,7 +57,7 @@ export default function SignUp() {
     },
   ];
   const navigateToHomePage = React.useCallback(() => {
-    router.replace("/");
+    router.replace("/dashboard");
   }, [router]);
 
   const handleSubmit = React.useCallback(
@@ -79,11 +79,20 @@ export default function SignUp() {
           )
         );
         console.log(response, "RESPONSE OF USER CREATION");
-        localStorage.setItem("authToken", response?.data?.token);
-        showToast("User created successfully!! Login Please", {
-          type: "success",
-        });
-        navigateToHomePage();
+
+        if (response?.status === true) {
+          localStorage.setItem("authToken", response?.token);
+          localStorage.setItem("email", response?.email);
+          localStorage.setItem("name", response?.name);
+          localStorage.setItem("role", response?.role);
+          localStorage.setItem("status", response?.status);
+          localStorage.setItem("id", response?.id.toString());
+          localStorage.setItem("uuid", response?.uuid);
+          showToast("User created successfully!!", {
+            type: "success",
+          });
+          navigateToHomePage();
+        }
       } catch (error) {
         console.error("SignUp Error:- ", error);
         showToast("Some error occurred!!", { type: "error" });
@@ -102,8 +111,6 @@ export default function SignUp() {
       .email("Invalid email format")
       .required("Email is required"),
     gender: Yup.string().required("Gender is required"),
-    institution_name: Yup.string().required("Company/School name is required"),
-    course_field: Yup.string().required("Course field is required"),
     country: Yup.string().required("Country is required"),
   });
 

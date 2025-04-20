@@ -39,8 +39,8 @@ export const CreateUserApi = (
   username: string,
   phone: string,
   gender: string,
-  country: string,
-  referal_code: string
+  referal_code: string,
+  country: string
 ) => {
   const formData = new FormData();
   formData.append("email", email);
