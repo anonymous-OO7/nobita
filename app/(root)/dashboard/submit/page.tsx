@@ -193,7 +193,7 @@ export default function SubmitJob() {
               <div>
                 <Spacer size="md" orientation="horizontal" />
                 <SearchSelect
-                  placeholder="e.g., amazon, facebook"
+                  placeholder="Enter company name (e.g., Microsoft)"
                   label="Company Name"
                   item={companyData}
                   name="companyName"
@@ -204,18 +204,16 @@ export default function SubmitJob() {
                     searchCompanies(e.target.value);
                   }}
                 />
+                <Spacer size="xs" />
               </div>
               <Row>
                 <Input
                   className="bg-white  p-1  text-black font-poppins font-light text-lg"
                   label="Position"
                   name="position"
+                  placeholder="	Enter position (e.g., Backend Developer)"
                 />
-                <Input
-                  className="bg-white  p-1 text-black font-poppins font-light text-lg"
-                  label="Location"
-                  name="location"
-                />
+
                 <Select
                   label="Job Type"
                   item={dropdownData}
@@ -225,6 +223,11 @@ export default function SubmitJob() {
                   className="text-black font-poppins font-light px-1"
                 />
               </Row>
+              <Input
+                className="bg-white  p-1 text-black font-poppins font-light text-lg"
+                label="Job Location"
+                name="location"
+              />
               <Spacer size="xs" />
 
               <Textarea
@@ -233,29 +236,36 @@ export default function SubmitJob() {
                 size="large"
                 // className="text-black font-poppins font-light text-lg"
               />
+              <Spacer size="xs" />
 
               <Select
                 label="Field"
-                placeholder="Select"
+                placeholder="Select a professional field (e.g., Engineering, Marketing)"
                 item={fieldDropdowndata}
                 name="field"
                 size="sm"
               />
+              <Spacer size="xs" />
+
               <Input
                 className="bg-white p-1 text-black font-poppins font-light text-lg"
                 label="Minimum Pay (Lakhs per Annum(LPA))"
                 name="minPay"
                 type="number"
               />
+              <Spacer size="xs" />
+
               <Input
                 className="bg-white p-1 text-black font-poppins font-light text-lg"
                 label="Maximum Pay (Lakhs per Annum(LPA))"
                 name="maxPay"
                 type="number"
               />
+              <Spacer size="xs" />
+
               <Input
                 className="bg-white  p-1 text-black font-poppins font-light text-lg"
-                label="Price"
+                label="Price of referring (amount at which you want to refer a person in this company)"
                 name="price"
                 type="number"
               />
