@@ -225,13 +225,16 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
         <div className="flex flex-row justify-center items-center gap-2">
           <p className="text-lg font-poppins text-green-400">At</p>
           <Chip
-            startContent={<IndianRupee size={18} />}
+            startContent={<IndianRupee color="black" size={22} />}
             variant="bordered"
             color="success"
-            size="md"
-            className="px-2"
+            size="lg"
+            className="p-2"
           >
-            <p className="text-sm font-poppins ">{job.Price}</p>
+            <p className="text-2xl font-semibold font-poppins text-black">
+              {job.Price}
+            </p>
+            {/* Assuming job.Price is available */}
           </Chip>
         </div>
       </div>

@@ -124,8 +124,8 @@ export default function Sidebar({ children, setExpandedMain }) {
           </div>
 
           <p className="text-black font-poppins font-light text-xs px-3 my-4">
-            *credits are the number of applies you can more to a referral. Share
-            with your friends using above referral code to earn more credits.
+            *Credits let you apply to referrals. Want more? Share your referral
+            code with friends using the code below to earn extra credits!
           </p>
           <p className="text-black font-poppins font-light text-xs px-3 my-4 ">
             Your Referral Code:

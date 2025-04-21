@@ -324,22 +324,25 @@ const Card: React.FC<CardProps> = ({
           {/* This is the parent div for the "Applied" Chip */}
           {/* Added 'relative' class here */}
           <div className="flex flex-row gap-2 relative">
-            <p className="text-lg font-poppins text-green-400">At</p>
+            {/* <p className="text-lg font-poppins text-green-400">At</p> */}
             <Chip
-              startContent={<IndianRupee size={18} />}
+              startContent={<IndianRupee color="black" size={22} />}
               variant="bordered"
               color="success"
-              size="md"
-              className="px-2"
+              size="lg"
+              className="p-2"
+              radius={"md"}
             >
-              <p className="text-sm font-poppins">{job.Price}</p>{" "}
+              <p className="text-2xl font-semibold font-poppins text-black">
+                {job.Price}
+              </p>
               {/* Assuming job.Price is available */}
             </Chip>
             {isApplied ? (
               <div className="flex flex-row items-center  right-0 bg-green-500 z-10 rounded-xl px-1 text-right">
                 {/* This Chip's content needed the 'Applied' text */}
                 <Chip
-                  startContent={<Check size={18} />}
+                  startContent={<Check size={22} color="white" />}
                   variant="flat"
                   color="primary"
                   size="sm"
@@ -347,6 +350,9 @@ const Card: React.FC<CardProps> = ({
                 >
                   {/* The text "Applied" goes inside the Chip content */}
                   Applied
+                  <p className="text-xs font-light font-poppins text-white">
+                    Applied
+                  </p>
                 </Chip>
               </div>
             ) : null}

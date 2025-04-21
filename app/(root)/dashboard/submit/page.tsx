@@ -13,6 +13,7 @@ import { Option, SelectType } from "@/types";
 import Textarea from "@/components/common/TextArea";
 import Row from "@/components/common/Row";
 import SearchSelect from "@/components/common/SearchSelect";
+import { useRouter } from "next/navigation";
 
 const validationSchema = Yup.object().shape({
   companyName: Yup.string().required("Company Name is required"),
@@ -24,6 +25,7 @@ const validationSchema = Yup.object().shape({
   minPay: Yup.number().required("Minimum pay is required"),
   maxPay: Yup.number().required("Maximum pay is required"),
   price: Yup.number().required("Price is required"),
+  category: Yup.string().required("Field is required"),
 });
 
 export default function SubmitJob() {
@@ -31,6 +33,9 @@ export default function SubmitJob() {
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
   const [jobtype, setType] = React.useState("");
+  const [jobCategory, setCategory] = React.useState("");
+  const router = useRouter();
+
   const [companyData, setCompanyData] = React.useState<Option[]>([]);
 
   const fieldDropdowndata: SelectType[] = React.useMemo(
@@ -76,6 +81,7 @@ export default function SubmitJob() {
     minPay: 0,
     maxPay: 0,
     price: 0,
+    category: "referral",
   });
   const dropdownData: SelectType[] = [
     { label: "Full Time", value: "fulltime" },
@@ -83,6 +89,14 @@ export default function SubmitJob() {
     { label: "Internship", value: "internship" },
     { label: "Free Lancing", value: "freelancing" },
   ];
+
+  const dropdownCategory: SelectType[] = [
+    { label: "Job post", value: "job_post" },
+    { label: "Referral", value: "referral_post" },
+  ];
+  const handleSuccessPosting = React.useCallback(() => {
+    router.push(`/dashboard/myjobs`);
+  }, [router]);
 
   const handleSubmit = React.useCallback(
     async (values: typeof InitialValues) => {
@@ -97,6 +111,7 @@ export default function SubmitJob() {
         minPay,
         maxPay,
         price,
+        category,
       } = values;
 
       setLoading(true);
@@ -111,12 +126,14 @@ export default function SubmitJob() {
           field,
           minPay,
           maxPay,
-          price
+          price,
+          jobCategory
         )
       )
         .then((response) => {
           console.log(response, "RESPONSE OF Create job");
           showToast("Job created successfully!!", { type: "success" });
+          handleSuccessPosting();
         })
         .catch((error) => {
           console.error("Job creation Error:- ", error);
@@ -124,12 +141,16 @@ export default function SubmitJob() {
         })
         .finally(() => setLoading(false));
     },
-    [showToast, makeApiCall, jobtype]
+    [showToast, makeApiCall, jobtype, jobCategory]
   );
 
   const handleShowSource = React.useCallback((data: string) => {
     console.log(data, "selected job type");
     setType(data);
+  }, []);
+  const handleSetCategory = React.useCallback((data: string) => {
+    console.log(data, "selected job category");
+    setCategory(data);
   }, []);
 
   React.useEffect(() => {
@@ -205,15 +226,24 @@ export default function SubmitJob() {
                   }}
                 />
                 <Spacer size="xs" />
-              </div>
-              <Row>
                 <Input
                   className="bg-white  p-1  text-black font-poppins font-light text-lg"
                   label="Position"
                   name="position"
                   placeholder="	Enter position (e.g., Backend Developer)"
                 />
+              </div>
+              <Spacer size="xs" />
 
+              <Row>
+                <Select
+                  label="Job Category"
+                  item={dropdownCategory}
+                  name="category"
+                  onSelect={handleSetCategory}
+                  placeholder="Job category (referral or normal job posting"
+                  className="text-black font-poppins font-light px-1"
+                />
                 <Select
                   label="Job Type"
                   item={dropdownData}
@@ -223,11 +253,14 @@ export default function SubmitJob() {
                   className="text-black font-poppins font-light px-1"
                 />
               </Row>
+              <Spacer size="xs" />
+
               <Input
                 className="bg-white  p-1 text-black font-poppins font-light text-lg"
                 label="Job Location"
                 name="location"
               />
+
               <Spacer size="xs" />
 
               <Textarea

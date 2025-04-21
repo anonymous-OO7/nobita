@@ -100,7 +100,8 @@ export const CreateJobApi = (
   field: string,
   minPay: number,
   maxPay: number,
-  price: number
+  price: number,
+  category: string
 ) => {
   const formData = new FormData();
   formData.append("status", status);
@@ -113,6 +114,7 @@ export const CreateJobApi = (
   formData.append("min_pay", minPay.toString());
   formData.append("max_pay", maxPay.toString());
   formData.append("price", price.toString());
+  formData.append("category", category);
 
   return onePiece.post("/create-job", formData, {
     headers: {
