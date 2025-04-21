@@ -7,16 +7,44 @@ import { nextLocalStorage } from "@/utils/nextLocalStorage";
 import Logo2 from "../../src/assets/workisticon.svg";
 import Image from "next/image";
 import { gradients } from "../../src/assets/colors";
+import useApi from "@/hooks/useApi";
+import { GetProfileApi } from "@/apis";
 
 const SidebarContext = createContext();
 
+const emptyProfileDetails = {
+  email: "",
+  uuid: "",
+  name: "",
+  gender: "",
+  country: "",
+  bio: "",
+  expertise: "",
+  seniority: "",
+  seniority: "",
+  seniority: "",
+  work_experience: [],
+  education: [],
+  current_organisation: "",
+  tagline: "",
+  skill: [],
+  social_urls: [],
+  referal_code: "",
+  applies: 0,
+};
+
 export default function Sidebar({ children, setExpandedMain }) {
   const [expanded, setExpanded] = useState(true);
+  const { makeApiCall } = useApi();
+
   // const name = nextLocalStorage()?.getItem("name") ?? "name";
   const email = nextLocalStorage()?.getItem("email") ?? "";
   const name = nextLocalStorage()?.getItem("name") ?? "";
 
   const [data, setData] = React.useState();
+
+  const [profileDetails, setProfileDetails] =
+    React.useState(emptyProfileDetails);
 
   React.useEffect(() => {
     const storedData = nextLocalStorage()?.getItem("user_data");
@@ -29,13 +57,27 @@ export default function Sidebar({ children, setExpandedMain }) {
       }
     }
   }, []);
+
+  React.useEffect(() => {
+    makeApiCall(GetProfileApi())
+      // eslint-disable-next-line
+      .then((response) => {
+        console.log(response, "Response  of get profile paege");
+        setProfileDetails(response?.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        console.log("finally");
+      });
+  }, [makeApiCall]);
+
   return (
     <div>
       {/* Sidebar for large devices */}
       <aside
         id="logo-sidebar"
         className={`fixed top-0   hidden sm:block left-0 z-40 w-[17%] pt-0 h-screen sm:translate-x-0 transition-all ${
-          expanded ? "  hidden sm:block" : "w-[5%] hidden sm:block"
+          expanded ? "hidden sm:block" : "w-[5%] hidden sm:block"
         }`}
       >
         <nav className="h-full flex flex-col   shadow-lg">
@@ -65,7 +107,34 @@ export default function Sidebar({ children, setExpandedMain }) {
           <SidebarContext.Provider value={{ expanded }}>
             <ul className="flex-1 px-3">{children}</ul>
           </SidebarContext.Provider>
+          <div
+            className={`
+                flex justify-between items-center 
+                overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
+              `}
+          >
+            <div className="flex flex-row justify-between leading-4 text-black gap-6 items-center">
+              <p className="text-black font-poppins font-semibold text-xl">
+                Credits
+              </p>
+              <p className="text-black font-poppins font-light text-2xl">
+                {profileDetails?.applies != "" ? profileDetails?.applies : "--"}
+              </p>
+            </div>
+          </div>
 
+          <p className="text-black font-poppins font-light text-xs px-3 my-4">
+            *credits are the number of applies you can more to a referral. Share
+            with your friends using above referral code to earn more credits.
+          </p>
+          <p className="text-black font-poppins font-light text-xs px-3 my-4 ">
+            Your Referral Code:
+            <span className="text-xs text-gray-600">
+              <p className="text-red-600 font-poppins font-semibold text-3xl">
+                {profileDetails?.referal_code}
+              </p>
+            </span>
+          </p>
           <div className="border-t flex p-3">
             <img // eslint-disable-line
               src="https://cdn1.vectorstock.com/i/1000x1000/77/10/men-faceless-profile-vector-13567710.jpg"
