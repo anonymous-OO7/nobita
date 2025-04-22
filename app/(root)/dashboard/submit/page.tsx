@@ -195,6 +195,10 @@ export default function SubmitJob() {
       });
   }, []);
 
+  const navigateToCreateCompany = React.useCallback(() => {
+    router.replace("/dashboard/createcompany");
+  }, [router]);
+
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-2xl">
@@ -225,6 +229,13 @@ export default function SubmitJob() {
                     searchCompanies(e.target.value);
                   }}
                 />
+
+                <p
+                  className="mt-4 text-base leading-6 text-blue-500 flex justify-end cursor-pointer"
+                  onClick={navigateToCreateCompany}
+                >
+                  Can't find your company? create here
+                </p>
                 <Spacer size="xs" />
                 <Input
                   className="bg-white  p-1  text-black font-poppins font-light text-lg"

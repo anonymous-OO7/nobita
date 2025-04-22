@@ -330,3 +330,30 @@ export const GetAllUserAppliedJobsList = async () => {
     },
   });
 };
+
+export const AddCompanyApi = async (
+  logoUrl: string,
+  name: string,
+  description: string,
+  websiteUrl: string,
+  industry: string
+) => {
+  return onePiece.post(
+    "/create-company",
+    {
+      logo_url: logoUrl,
+      name: name,
+      description: description,
+      website_url: websiteUrl,
+      industry: industry,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+        user_id: localStorage.getItem("id") || "",
+        email: localStorage.getItem("email") || "",
+      },
+    }
+  );
+};

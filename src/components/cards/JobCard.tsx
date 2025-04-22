@@ -342,14 +342,12 @@ const Card: React.FC<CardProps> = ({
               <div className="flex flex-row items-center  right-0 bg-green-500 z-10 rounded-xl px-1 text-right">
                 {/* This Chip's content needed the 'Applied' text */}
                 <Chip
-                  startContent={<Check size={22} color="white" />}
+                  startContent={<Check size={20} color="white" />}
                   variant="flat"
                   color="primary"
                   size="sm"
                   className="p-1"
                 >
-                  {/* The text "Applied" goes inside the Chip content */}
-                  Applied
                   <p className="text-xs font-light font-poppins text-white">
                     Applied
                   </p>
