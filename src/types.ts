@@ -239,3 +239,18 @@ export interface Option {
   value: string;
   label: string;
 }
+
+export type CommunityReferral = {
+  ID: number;
+  CreatedAt: string;
+  UpdatedAt: string;
+  DeletedAt: string | null;
+  UserID: number;
+  code: string;
+  cover_letter: string;
+  description: string;
+  job_link: string;
+  job_role: string;
+  owner_uuid: string;
+  status: string;
+};

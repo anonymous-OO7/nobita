@@ -22,6 +22,7 @@ import {
   Clients,
   DocumentSVG,
   EmployeeDirectorySvg,
+  FeedBack,
   Home,
   InvoicesSVG,
   Marketing,
@@ -58,7 +59,11 @@ export default function Main({ children }: Props) {
         onClose={oncloseModal}
       />
 
-      <div className={`fixed top-0 left-0 right-0 transition-all ml-[17%] `}>
+      <div
+        className={`fixed top-0 left-0 right-0 transition-all   ${
+          expandedMain ? "sm:ml-[17%]" : "sm:ml-24"
+        } `}
+      >
         <DashHeader onOpen={onOpen} />
       </div>
       {/* <Body sideView={<SidebarNew setExpandedMain={setExpandedMain} />}>
@@ -160,6 +165,20 @@ function SidebarNew({
       <SidebarItem
         icon={
           <Transaction
+            color={
+              pathname === "/dashboard/referral-community" ? "#fff" : "#683FDB"
+            }
+          />
+        }
+        text={"Community"}
+        alert={pathname === "/dashboard/referral-community"}
+        active={pathname === "/dashboard/referral-community"}
+        href="/dashboard/referral-community"
+      />
+
+      <SidebarItem
+        icon={
+          <FeedBack
             color={pathname === "/dashboard/feedback" ? "#fff" : "#683FDB"}
           />
         }

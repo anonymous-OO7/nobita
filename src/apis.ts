@@ -357,3 +357,42 @@ export const AddCompanyApi = async (
     }
   );
 };
+
+export const AddReferralRequestApi = async (
+  code: string,
+  description: string,
+  job_link: string,
+  cover_letter: string,
+  job_role: string,
+  status: string
+) => {
+  return onePiece.post(
+    "/create-referralask",
+    {
+      code: code,
+      description: description,
+      job_link: job_link,
+      cover_letter: cover_letter,
+      job_role: job_role,
+      status: status,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+        user_id: localStorage.getItem("id") || "",
+        email: localStorage.getItem("email") || "",
+        uuid: `${localStorage.getItem("uuid")}`,
+      },
+    }
+  );
+};
+
+export const GetAllCommunityReferralsJobsList = () => {
+  return onePiece.get(`/referralask`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      user_id: `${localStorage.getItem("id")}`,
+    },
+  });
+};
