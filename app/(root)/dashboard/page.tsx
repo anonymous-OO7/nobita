@@ -11,6 +11,7 @@ import useToast from "@/hooks/useToast";
 import JobApplicationModal from "@/components/pages/home/JobApply";
 import { useDisclosure } from "@nextui-org/react";
 import InfiniteScroll from "react-infinite-scroller";
+import PageLoader from "@/components/common/PageLoader";
 
 const Home: React.FC = () => {
   useTokenCheck();
@@ -59,6 +60,7 @@ const Home: React.FC = () => {
     },
     [makeApiCall, limit, debouncedSearch]
   );
+
   React.useEffect(() => {
     makeApiCall(GetAllUserAppliedJobsList())
       .then((response) => {
@@ -69,72 +71,11 @@ const Home: React.FC = () => {
         console.error(error);
       });
   }, [makeApiCall, debouncedSearch]);
-  // Remove unused showItems function
-  // const showItems = (posts) => {
-  //   var items = [];
-  //   for (var i = 0; i < records; i++) {
-  //     items.push(
-  //       <div className="post" key={posts[i].id}>
-  //         <h3>{`${posts[i].name} - ${posts[i].id}`}</h3>
-  //         <p>{posts[i].body}</p>
-  //       </div>
-  //     );
-  //   }
-  //   return items;
-  // };
 
-  const fetchAndUpdateBaseURL = async () => {
-    try {
-      console.log("calling  hosted url file ");
-
-      const response = await fetch(
-        "https://raw.githubusercontent.com/anonymous-OO7/assets/refs/heads/master/workisturl.txt"
-      );
-      console.log(response, "Response from hosted url file ");
-
-      if (response.ok) {
-        const url = await response.text();
-        console.log(url, "Response from hosted url file ");
-
-        localStorage.setItem("baseOnePieceURL", url.trim());
-        return url.trim();
-      } else {
-        console.error("Failed to fetch base URL from text file.");
-        return "https://f302-180-151-24-73.ngrok-free.app/"; // Provide a default URL in case of failure
-      }
-    } catch (error) {
-      console.error("Error fetching base URL:", error);
-      return "https://f302-180-151-24-73.ngrok-free.app/"; // Provide a default URL in case of error
-    }
-  };
-
-  React.useEffect(() => {
-    const updateBaseURL = async () => {
-      await fetchAndUpdateBaseURL(); // Fetch URL on initial load
-    };
-
-    updateBaseURL();
-  }, []);
-
-  // Remove the manual scroll listener as InfiniteScroll handles it
-  // const handleScroll = useCallback(() => {
-  //   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 2) {
-  //     setPage((prevPage) => prevPage + 1);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [handleScroll]);
-
-  // Fetch initial jobs on component mount
   React.useEffect(() => {
     setLoading(true);
-    setPage(0); // Reset page on initial load
-    setJobsInfo([]); // Clear existing jobs
+    setPage(0);
+    setJobsInfo([]);
     setHasMore(true); // Reset hasMore
     makeApiCall(GetAllJobsList(1, limit, debouncedSearch)) // Fetch the first page
       .then((response) => {
@@ -181,7 +122,6 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      {/* Job Application Modal */}
       <JobApplicationModal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -189,18 +129,28 @@ const Home: React.FC = () => {
       />
 
       <div className="container  mx-auto pb-5">
-        <p className="font-poppins font-normal text-black text-2xl my-8">
-          Find your referrals..
+        <p className="font-poppins font-semibold text-black text-2xl my-4">
+          {/* Adjusted text size slightly for variety */}
+          {/* Grouping "Get referred to over" and applying one color */}
+          <span className="text-blue-600">Get referred to over</span>
+          {/* Example color */}
+          {/* Grouping "1000+ companies" and applying another color */}
+          <span className="text-green-600"> 1000+ companies</span>
+          {/* Example color */}
+        </p>
+        <p className="font-poppins font-normal text-black text-base my-4">
+          Select a company you want a referral for, enter the URL for the job
+          posting that you want, and send your profile off to our referrers!
         </p>
 
         <div className="grid grid-cols-1 gap-4">
           <InfiniteScroll
             pageStart={0}
             loadMore={loadMore}
-            hasMore={hasMore && !loading} // Disable loadMore while loading
+            hasMore={hasMore && !loading}
             loader={
               <div key={0} className="text-center">
-                {loading ? "Loading more jobs..." : "Loading initial jobs..."}
+                <PageLoader />
               </div>
             }
             useWindow={true} // Enable window scrolling
@@ -219,12 +169,6 @@ const Home: React.FC = () => {
             <p className="text-center text-gray-500">No jobs found.</p>
           )}
         </div>
-        {/* Remove redundant loading message */}
-        {/* {loading && (
-          <p className="text-center text-black font-poppins font-normal">
-            Loading more jobs...
-          </p>
-        )} */}
       </div>
     </div>
   );

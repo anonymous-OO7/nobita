@@ -13,6 +13,7 @@ import SaveCard from "@/components/cards/SavedCard"; // Assuming this is not nee
 import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import ReferralCard from "@/components/cards/ReferralCard"; // Import the updated ReferralCard
+import PageLoader from "@/components/common/PageLoader";
 
 const Saved = () => {
   const { makeApiCall } = useApi();
@@ -86,18 +87,33 @@ const Saved = () => {
     <div>
       <div className="container mx-auto py-10 px-4">
         {/* Added horizontal padding */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-          {/* Added gap and items-center */}
-          <p className="font-poppins font-light text-black text-2xl">
-            Community people asking referrals..
-          </p>
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div>
+            <p className="font-poppins  text-2xl my-8">
+              <span className="text-blue-600 font-poppins mr-3">
+                Get referred.
+              </span>
+              <span className="text-green-600 font-poppins mr-3">
+                Get noticed.
+              </span>
+              <span className="text-purple-600 font-poppins">Get hired.</span>
+            </p>
+            <p className="font-poppins font-normal text-black text-base my-4">
+              List your profile on the referral marketplace and allow any of our
+              referrers on Workist to refer you to their companies.
+            </p>
+          </div>
+
           <Button onClick={navigateToAskReferral} color="secondary">
             Ask referral
           </Button>
         </div>
         {/* Display referrals in a responsive grid */}
         {loading ? (
-          <p className="text-center text-gray-600">Loading referrals...</p>
+          <>
+            <p className="text-center text-gray-600">Loading...</p>
+            <PageLoader />
+          </>
         ) : referralsList.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Changed to 2-column grid on medium screens and up */}
