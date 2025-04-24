@@ -22,6 +22,7 @@ const validationSchema = Yup.object().shape({
   cover_letter: Yup.string().required("Cover Letter is required"),
   job_role: Yup.string().required("Job Role is required"),
   status: Yup.string().optional(),
+  amount: Yup.string().required("Amount willing to  pay is required"),
 });
 
 const initialValues = {
@@ -31,6 +32,7 @@ const initialValues = {
   cover_letter: "",
   job_role: "",
   status: "active",
+  amount: "",
 };
 
 export default function SubmitReferralForm() {
@@ -178,6 +180,22 @@ export default function SubmitReferralForm() {
                   placeholder="e.g., Software Engineer, Data Scientist"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   value={values.job_role}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="job_role"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Amount willing to pay for referral help
+                </label>
+                <Input
+                  name="amount"
+                  placeholder="In INR"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  value={values.amount}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />

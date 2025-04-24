@@ -49,11 +49,13 @@ const Home: React.FC = () => {
       ) // Increment page for API call
         .then((response) => {
           console.log(response, "next page jobs");
-          setJobsInfo((prevJobs) => [...prevJobs, ...response.data]);
-          setTotalPages(response?.total_pages || 1); // Handle potential undefined
-          setTotalItems(response?.total_items || 0);
-          setPage((prevPage) => prevPage + 1);
-          setHasMore(response?.total_pages > pageToFetch + 1); // Update hasMore based on total pages
+          if (response?.data != null) {
+            setJobsInfo((prevJobs) => [...prevJobs, ...response?.data]);
+            setTotalPages(response?.total_pages || 1); // Handle potential undefined
+            setTotalItems(response?.total_items || 0);
+            setPage((prevPage) => prevPage + 1);
+            setHasMore(response?.total_pages > pageToFetch + 1); // Update hasMore based on total pages
+          }
         })
         .catch((error) => console.log(error))
         .finally(() => setLoading(false));
@@ -80,7 +82,7 @@ const Home: React.FC = () => {
     makeApiCall(GetAllJobsList(1, limit, debouncedSearch)) // Fetch the first page
       .then((response) => {
         console.log(response, "response from all jobs");
-        setJobsInfo(response.data);
+        setJobsInfo(response?.data);
         setTotalPages(response?.total_pages || 1);
         setTotalItems(response?.total_items || 0);
         setHasMore(response?.total_pages > 1); // Check if there are more pages

@@ -122,6 +122,19 @@ function SidebarNew({
       />
       <SidebarItem
         icon={
+          <Transaction
+            color={
+              pathname === "/dashboard/referral-community" ? "#fff" : "#683FDB"
+            }
+          />
+        }
+        text={"Community"}
+        alert={pathname === "/dashboard/referral-community"}
+        active={pathname === "/dashboard/referral-community"}
+        href="/dashboard/referral-community"
+      />
+      <SidebarItem
+        icon={
           <InvoicesSVG
             color={pathname === "/dashboard/applied" ? "#fff" : "#683FDB"}
           />
@@ -160,20 +173,6 @@ function SidebarNew({
         alert={pathname === "/dashboard/myjobs"}
         active={pathname === "/dashboard/myjobs"}
         href="/dashboard/myjobs"
-      />
-
-      <SidebarItem
-        icon={
-          <Transaction
-            color={
-              pathname === "/dashboard/referral-community" ? "#fff" : "#683FDB"
-            }
-          />
-        }
-        text={"Community"}
-        alert={pathname === "/dashboard/referral-community"}
-        active={pathname === "/dashboard/referral-community"}
-        href="/dashboard/referral-community"
       />
 
       <SidebarItem

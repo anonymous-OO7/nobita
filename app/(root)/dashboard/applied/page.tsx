@@ -17,7 +17,7 @@ const Applied = () => {
     makeApiCall(GetAllAppliedJobsList())
       .then((response) => {
         console.log(response, "response from applied jobs");
-        setJobsInfo(response.data);
+        setJobsInfo(response?.data);
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
@@ -30,7 +30,7 @@ const Applied = () => {
           Applied referrals..
         </p>
         <div className="grid grid-cols-1 gap-4">
-          {jobsInfo.map((job, index) => (
+          {jobsInfo?.map((job, index) => (
             <Card key={index} job={job} />
           ))}
         </div>
