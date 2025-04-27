@@ -174,7 +174,7 @@ const ReferralCard: React.FC<CardProps> = ({ referral, giveReferral }) => {
         </div>
         <p className="text-xs text-gray-500 font-poppins">
           Email: {referral.Owner?.Email || "N/A"}
-          {referral.Owner?.Phone || "N/A"}
+          {/* {referral.Owner?.Phone || "N/A"} */}
         </p>
       </div>
 
