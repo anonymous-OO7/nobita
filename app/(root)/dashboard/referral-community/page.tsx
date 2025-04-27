@@ -4,6 +4,7 @@ import {
   GetAllCommunityReferralsJobsList,
   GetAllSavedJobsList,
   RemoveSaveJobApi,
+  SendReferralQueryAPI,
 } from "@/apis";
 import useApi from "@/hooks/useApi";
 import useToast from "@/hooks/useToast";
@@ -14,10 +15,16 @@ import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import ReferralCard from "@/components/cards/ReferralCard"; // Import the updated ReferralCard
 import PageLoader from "@/components/common/PageLoader";
+import ReferralQueryModal from "@/components/pages/communityreferral/ReferralQueryApply";
+import { useDisclosure } from "@nextui-org/react";
 
 const Saved = () => {
   const { makeApiCall } = useApi();
   const [loading, setLoading] = useState(false);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [applyingReferral, setApplyingReferralInfo] =
+    React.useState<CommunityReferral>();
+
   // const [page, setPage] = useState(0); // page state seems unused
   const { showToast } = useToast();
   const router = useRouter();
@@ -71,12 +78,14 @@ const Saved = () => {
     [makeApiCall, showToast] // Add DeleteCommunityReferralApi to dependencies when implemented
   );
 
-  // Handler for viewing the job link
-  const handleViewJobLink = React.useCallback((jobLink: string) => {
-    console.log("Viewing job link:", jobLink);
-    // Open the job link in a new tab
-    window.open(jobLink, "_blank");
-  }, []);
+  const giveReferral = React.useCallback(
+    (referral: CommunityReferral) => {
+      console.log("community referral:", referral);
+      setApplyingReferralInfo(referral);
+      onOpen();
+    },
+    [onOpen]
+  );
 
   // Navigation handler to the "Ask Referral" page
   const navigateToAskReferral = React.useCallback(() => {
@@ -86,7 +95,11 @@ const Saved = () => {
   return (
     <div>
       <div className="container mx-auto py-10 px-4">
-        {/* Added horizontal padding */}
+        <ReferralQueryModal
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          applyingReferral={applyingReferral}
+        />
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <div>
             <p className="font-poppins  text-2xl my-8">
@@ -108,7 +121,6 @@ const Saved = () => {
             Ask referral
           </Button>
         </div>
-        {/* Display referrals in a responsive grid */}
         {loading ? (
           <>
             <p className="text-center text-gray-600">Loading...</p>
@@ -116,15 +128,9 @@ const Saved = () => {
           </>
         ) : referralsList.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Changed to 2-column grid on medium screens and up */}
-            {referralsList.map(
-              (
-                referral,
-                index // Use referral and index for clarity
-              ) => (
-                <ReferralCard referral={referral} />
-              )
-            )}
+            {referralsList.map((referral, index) => (
+              <ReferralCard referral={referral} giveReferral={giveReferral} />
+            ))}
           </div>
         ) : (
           <p className="text-center text-gray-600">

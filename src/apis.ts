@@ -396,3 +396,23 @@ export const GetAllCommunityReferralsJobsList = () => {
     },
   });
 };
+
+export const SendReferralQueryAPI = (
+  message: string,
+  requester_email: string
+) => {
+  const formData = new FormData();
+  formData.append("message", message);
+  formData.append("requester_email", requester_email);
+
+  return onePiece.post("/referral-give", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      user_id: `${localStorage.getItem("id")}`,
+      email: localStorage.getItem("email"),
+      name: localStorage.getItem("name"),
+      uuid: `${localStorage.getItem("uuid")}`,
+    },
+  });
+};

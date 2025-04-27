@@ -12,11 +12,12 @@ import { CommunityReferral } from "@/types";
 
 interface CardProps {
   referral: CommunityReferral;
+  giveReferral: (referral: CommunityReferral) => void;
 }
 
 const MAX_TEXT_LENGTH = 150;
 
-const ReferralCard: React.FC<CardProps> = ({ referral }) => {
+const ReferralCard: React.FC<CardProps> = ({ referral, giveReferral }) => {
   const [showFullDescription, setShowFullDescription] = React.useState(false);
   const [showFullCoverLetter, setShowFullCoverLetter] = React.useState(false);
 
@@ -76,6 +77,11 @@ const ReferralCard: React.FC<CardProps> = ({ referral }) => {
 
   const getTrimmedText = (text: string, maxLength: number) =>
     text.length <= maxLength ? text : text.slice(0, maxLength) + "...";
+
+  const sendReferralQueryrequest = React.useCallback(() => {
+    console.log("submitting referral request");
+    giveReferral(referral);
+  }, []);
 
   return (
     <div className="p-4 shadow-md rounded-md mb-4 border bg-white">
@@ -144,20 +150,20 @@ const ReferralCard: React.FC<CardProps> = ({ referral }) => {
           </div>
         )}
 
-        {/* Amount */}
         {referral.amount && (
           <div>
             <p className="text-sm font-semibold text-gray-700">
               Offered Amount:
             </p>
-            <p className="text-sm font-poppins text-black mt-1">
-              ₹{referral.amount}
+            <p className="text-lg font-poppins text-black mt-1">
+              <Chip variant="flat" color="success" size="sm">
+                ₹{referral.amount}
+              </Chip>
             </p>
           </div>
         )}
       </div>
 
-      {/* Owner Info */}
       <div className="mt-5 border-t pt-4">
         <div className="flex items-center gap-3 mb-1">
           <User2Icon size={18} color="black" />
@@ -167,7 +173,7 @@ const ReferralCard: React.FC<CardProps> = ({ referral }) => {
           </p>
         </div>
         <p className="text-xs text-gray-500 font-poppins">
-          Email: {referral.Owner?.Email || "N/A"} | Phone:{" "}
+          Email: {referral.Owner?.Email || "N/A"}
           {referral.Owner?.Phone || "N/A"}
         </p>
       </div>
@@ -190,6 +196,15 @@ const ReferralCard: React.FC<CardProps> = ({ referral }) => {
 
         <Button color="danger" variant="bordered" size="sm">
           <span className="text-sm font-poppins text-red-700">Delete</span>
+        </Button>
+
+        <Button
+          color="success"
+          variant="bordered"
+          size="sm"
+          onClick={sendReferralQueryrequest}
+        >
+          <span className="text-sm font-poppins text-black">Give Referral</span>
         </Button>
       </div>
 
