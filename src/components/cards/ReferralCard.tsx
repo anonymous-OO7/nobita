@@ -173,7 +173,7 @@ const ReferralCard: React.FC<CardProps> = ({ referral, giveReferral }) => {
           </p>
         </div>
         <p className="text-xs text-gray-500 font-poppins">
-          Email: {referral.Owner?.Email || "N/A"}
+          {/* Email: {referral.Owner?.Email || "N/A"} */}
           {/* {referral.Owner?.Phone || "N/A"} */}
         </p>
       </div>
@@ -194,10 +194,6 @@ const ReferralCard: React.FC<CardProps> = ({ referral, giveReferral }) => {
           </Button>
         )}
 
-        <Button color="danger" variant="bordered" size="sm">
-          <span className="text-sm font-poppins text-red-700">Delete</span>
-        </Button>
-
         <Button
           color="success"
           variant="bordered"
@@ -206,6 +202,12 @@ const ReferralCard: React.FC<CardProps> = ({ referral, giveReferral }) => {
         >
           <span className="text-sm font-poppins text-black">Give Referral</span>
         </Button>
+
+        {referral.Owner.Uuid == localStorage.getItem("uuid") ? (
+          <Button color="danger" variant="bordered" size="sm">
+            <span className="text-sm font-poppins text-red-700">Delete</span>
+          </Button>
+        ) : null}
       </div>
 
       {/* Footer */}

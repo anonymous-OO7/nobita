@@ -14,6 +14,7 @@ export const LoginApi = (email: string) => {
   return onePiece.post("/request-otp", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      "ngrok-skip-browser-warning": true,
     },
   });
 };
@@ -26,6 +27,7 @@ export const OtpSubmitApi = (email: string, otp: string) => {
   return onePiece.post("/verify-otp", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      "ngrok-skip-browser-warning": true,
     },
   });
 };
@@ -56,6 +58,7 @@ export const CreateUserApi = (
   return onePiece.post("/signup", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      "ngrok-skip-browser-warning": true,
     },
   });
 };
@@ -76,6 +79,7 @@ export const UserPostApi = (
   return onePiece.post("/api/posts/", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     },
   });
@@ -85,6 +89,7 @@ export const GetAllUserData = () => {
   return onePiece.get("/user", {
     headers: {
       "Content-Type": "text/plain",
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     },
   });
@@ -119,6 +124,7 @@ export const CreateJobApi = (
   return onePiece.post("/create-job", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
       uuid: `${localStorage.getItem("uuid")}`,
@@ -130,6 +136,7 @@ export const CreateJobApi = (
 export const GetAllJobsList = (page: number, limit: number, search: string) => {
   return onePiece.get(`/all-jobs`, {
     headers: {
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       page: page,
       limit: limit,
@@ -145,6 +152,7 @@ export const SaveJobApi = (job_id: string) => {
   return onePiece.post("/saver", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
       uuid: `${localStorage.getItem("uuid")}`,
@@ -159,6 +167,7 @@ export const RemoveSaveJobApi = (job_id: string) => {
   return onePiece.post("/unsave", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
       uuid: `${localStorage.getItem("uuid")}`,
@@ -168,6 +177,7 @@ export const RemoveSaveJobApi = (job_id: string) => {
 export const GetAllSavedJobsList = () => {
   return onePiece.get(`/saver`, {
     headers: {
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
     },
@@ -189,6 +199,7 @@ export const ApplyJobAPI = (
   return onePiece.post("/apply", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
       email: localStorage.getItem("email"),
@@ -201,6 +212,7 @@ export const ApplyJobAPI = (
 export const GetAllAppliedJobsList = () => {
   return onePiece.get(`/apply`, {
     headers: {
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
     },
@@ -210,6 +222,7 @@ export const GetAllAppliedJobsList = () => {
 export const GetMyJobsApi = () => {
   return onePiece.get("/myjobs", {
     headers: {
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       uuid: `${localStorage.getItem("uuid")}`,
     },
@@ -225,6 +238,7 @@ export const UpdateMyJobsStatusApi = (job_id: string, status: string) => {
   // Make the POST request to the API endpoint
   return onePiece.post("/myjobs", formData, {
     headers: {
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
     },
@@ -265,6 +279,7 @@ export const UpdateProfileApi = (
     },
     {
       headers: {
+        "ngrok-skip-browser-warning": true,
         Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
         user_id: localStorage.getItem("id") || "",
         email: localStorage.getItem("email") || "",
@@ -276,6 +291,7 @@ export const UpdateProfileApi = (
 export const GetProfileApi = () => {
   return onePiece.get("/get-profile", {
     headers: {
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       uuid: `${localStorage.getItem("uuid")}`,
       email: localStorage.getItem("email"),
@@ -299,6 +315,7 @@ export const FeedbackApi = (
     },
     {
       headers: {
+        "ngrok-skip-browser-warning": true,
         Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
         user_id: localStorage.getItem("id") || "",
         email: localStorage.getItem("email") || "",
@@ -313,6 +330,7 @@ export const SearchGetCompaniesApi = async (searchText: String) => {
       search: searchText,
     },
     headers: {
+      "ngrok-skip-browser-warning": true,
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
       uuid: `${localStorage.getItem("uuid")}`,
@@ -324,6 +342,7 @@ export const SearchGetCompaniesApi = async (searchText: String) => {
 export const GetAllUserAppliedJobsList = async () => {
   return onePiece.get(`/all-appliedjobs`, {
     headers: {
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
       user_id: localStorage.getItem("id") || "",
       email: localStorage.getItem("email") || "",
@@ -349,6 +368,7 @@ export const AddCompanyApi = async (
     },
     {
       headers: {
+        "ngrok-skip-browser-warning": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
         user_id: localStorage.getItem("id") || "",
@@ -378,6 +398,7 @@ export const AddReferralRequestApi = async (
     },
     {
       headers: {
+        "ngrok-skip-browser-warning": true,
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
         user_id: localStorage.getItem("id") || "",
@@ -391,6 +412,7 @@ export const AddReferralRequestApi = async (
 export const GetAllCommunityReferralsJobsList = () => {
   return onePiece.get(`/referralask`, {
     headers: {
+      "ngrok-skip-browser-warning": true,
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
     },
@@ -407,6 +429,7 @@ export const SendReferralQueryAPI = (
 
   return onePiece.post("/referral-give", formData, {
     headers: {
+      "ngrok-skip-browser-warning": true,
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       user_id: `${localStorage.getItem("id")}`,
