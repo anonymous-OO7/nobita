@@ -90,7 +90,7 @@ const Home: React.FC = () => {
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
-  }, [makeApiCall, limit, debouncedSearch]); // Add dependencies for re-fetching on changes
+  }, [makeApiCall]); // Add dependencies for re-fetching on changes
 
   const saveJob = React.useCallback(
     (jobUuid: string) => {
