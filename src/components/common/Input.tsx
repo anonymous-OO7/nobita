@@ -58,7 +58,7 @@ export default function Input({
   return (
     <>
       {label !== undefined && (
-        <Tooltip content={tooltip} size="md">
+        <Tooltip content={tooltip} size="md" color="foreground">
           <label className="block mb-2 text-sm font-medium text-gray-900">
             {label}
           </label>

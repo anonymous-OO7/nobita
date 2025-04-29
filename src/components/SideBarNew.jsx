@@ -119,8 +119,9 @@ export default function Sidebar({ children, setExpandedMain }) {
                 Credits
               </p>
               <Tooltip
-                content={"credits are used to apply for a referral"}
+                content={"*credits are used to apply for a referral"}
                 size="md"
+                color="foreground"
               >
                 <p className="text-black font-poppins font-light text-2xl">
                   {profileDetails?.applies != ""

@@ -15,7 +15,6 @@ import { CreateUserApi } from "@/apis"; // Ensure correct import
 import useToast from "@/hooks/useToast";
 import Image from "next/image";
 import Worklist from "../../../src/assets/logo.png";
-import { Tooltip } from "@heroui/react";
 import { AxiosError } from "axios";
 // Example options for the select
 const genderOptions: SelectType[] = [

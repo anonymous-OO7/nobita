@@ -455,7 +455,7 @@ const Card: React.FC<CardProps> = ({
         {FormatToLakhs(job.MaxPay)}
       </p> */}
       <p className="text-gray-700">
-        Annual Salary: ₹{job.MinPay} - ₹{job.MaxPay}
+        Annual Salary: ₹{job.MinPay}Lakh/Per Annum - ₹{job.MaxPay}Lakh/Per Annum
       </p>
       <p className="text-xs mt-3 font-poppins text-black">
         Posted {postedDate}
