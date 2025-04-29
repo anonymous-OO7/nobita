@@ -25,71 +25,39 @@ const Saved = () => {
   const [applyingReferral, setApplyingReferralInfo] =
     React.useState<CommunityReferral>();
 
-  // const [page, setPage] = useState(0); // page state seems unused
   const { showToast } = useToast();
   const router = useRouter();
 
-  // State to hold the list of community referrals
   const [referralsList, setReferralsList] = React.useState<CommunityReferral[]>(
     []
-  ); // Renamed jobsInfo to referralsList for clarity
+  );
 
-  // Fetch community referrals on component mount
   React.useEffect(() => {
     setLoading(true);
-    // Assuming GetAllCommunityReferralsJobsList fetches the CommunityReferral data
     makeApiCall(GetAllCommunityReferralsJobsList())
       .then((response: any) => {
-        // Use any if response structure is not strictly typed yet
-        console.log(response, "response from all community referrals jobs");
-        // Assuming the list of referrals is in response.data
         if (response?.data && Array.isArray(response.data)) {
           setReferralsList(response.data);
         } else {
-          console.error("API did not return an array of referrals:", response);
-          setReferralsList([]); // Set to empty array if data is not as expected
+          setReferralsList([]);
         }
       })
       .catch((error) => {
-        console.error("Error fetching community referrals:", error);
-        showToast("Failed to load referrals.", { type: "error" }); // Show error toast
+        showToast("Failed to load referrals.", { type: "error" });
       })
       .finally(() => setLoading(false));
-  }, [makeApiCall, showToast]); // Added showToast to dependency array
-
-  // Handler for deleting a referral (needs implementation)
-  const handleDeleteReferral = React.useCallback(
-    (uuid: string) => {
-      // Implement the API call to delete the referral with the given uuid
-      console.log("Attempting to delete referral with uuid:", uuid);
-      // Example placeholder:
-      // makeApiCall(DeleteCommunityReferralApi(uuid))
-      //   .then(() => {
-      //     showToast("Referral deleted successfully.", { type: "success" });
-      //     // Update the list by removing the deleted referral
-      //     setReferralsList(prevList => prevList.filter(r => r.uuid !== uuid));
-      //   })
-      //   .catch(error => {
-      //     console.error("Error deleting referral:", error);
-      //     showToast("Failed to delete referral.", { type: "error" });
-      //   });
-      showToast("Delete functionality not implemented yet.", { type: "info" });
-    },
-    [makeApiCall, showToast] // Add DeleteCommunityReferralApi to dependencies when implemented
-  );
+  }, [makeApiCall, showToast]);
 
   const giveReferral = React.useCallback(
     (referral: CommunityReferral) => {
-      console.log("community referral:", referral);
       setApplyingReferralInfo(referral);
       onOpen();
     },
     [onOpen]
   );
 
-  // Navigation handler to the "Ask Referral" page
   const navigateToAskReferral = React.useCallback(() => {
-    router.push("/dashboard/referral-community/referral-ask"); // Use push instead of replace if you want back navigation
+    router.push("/dashboard/referral-community/referral-ask");
   }, [router]);
 
   return (
@@ -100,18 +68,14 @@ const Saved = () => {
           onOpenChange={onOpenChange}
           applyingReferral={applyingReferral}
         />
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
           <div>
-            <p className="font-poppins  text-2xl my-8">
-              <span className="text-blue-600 font-poppins mr-3">
-                Get referred.
-              </span>
-              <span className="text-green-600 font-poppins mr-3">
-                Get noticed.
-              </span>
-              <span className="text-purple-600 font-poppins">Get hired.</span>
+            <p className="font-poppins text-2xl">
+              <span className="text-blue-600">Get referred.</span>
+              <span className="text-green-600">Get noticed.</span>
+              <span className="text-purple-600">Get hired.</span>
             </p>
-            <p className="font-poppins font-normal text-black text-base my-4">
+            <p className="font-poppins text-base text-black mt-4">
               List your profile on the referral marketplace and allow any of our
               referrers on Workist to refer you to their companies.
             </p>
@@ -121,15 +85,20 @@ const Saved = () => {
             Ask referral
           </Button>
         </div>
+
         {loading ? (
           <>
             <p className="text-center text-gray-600">Loading...</p>
             <PageLoader />
           </>
         ) : referralsList.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2  gap-4">
             {referralsList.map((referral, index) => (
-              <ReferralCard referral={referral} giveReferral={giveReferral} />
+              <ReferralCard
+                key={index}
+                referral={referral}
+                giveReferral={giveReferral}
+              />
             ))}
           </div>
         ) : (

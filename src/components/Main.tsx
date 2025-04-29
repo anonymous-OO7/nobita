@@ -67,19 +67,9 @@ export default function Main({ children }: Props) {
         </div>
       </Body> */}
       <Body sideView={<SidebarNew setExpandedMain={setExpandedMain} />}>
-        {/* <div className="px-4 bg-white py-6">
+        <div className="px-2 py-[14%] sm:px-4 sm:py-6 bg-white">
           <div
-            className=" mt-14 ml-[17%]"
-            // transition-all ${
-            //   expandedMain ? "sm:ml-72" : "sm:ml-24"
-            // }`}
-          >
-            {children}
-          </div>
-        </div> */}
-        <div className="px-4 bg-white py-6">
-          <div
-            className={`mt-14 ml-[17%] transition-all ${
+            className={`mt-0 ml-0 sm:mt-14 transition-all ${
               expandedMain ? "sm:ml-[17%]" : "sm:ml-24"
             }`}
           >

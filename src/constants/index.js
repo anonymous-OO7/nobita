@@ -1,14 +1,25 @@
+// import {
+//   Home,
+//   Search,
+//   CircleUserIcon,
+//   BadgeInfo,
+//   Wrench,
+//   BookmarkCheckIcon,
+//   BookText,
+//   TelescopeIcon,
+//   Telescope,
+// } from "lucide-react";
 import {
+  FeedBack,
   Home,
-  Search,
-  CircleUserIcon,
-  BadgeInfo,
-  Wrench,
-  BookmarkCheckIcon,
-  BookText,
-  TelescopeIcon,
-  Telescope,
-} from "lucide-react";
+  InvoicesSVG,
+  Marketing,
+  ProductSVG,
+  RentalScheduleSVG,
+  Transaction,
+} from "@/assets/images/Images";
+import { useRouter, usePathname } from "next/navigation";
+
 export const teamMembers = [
   {
     imageUrl: "https://source.unsplash.com/300x300/?businessman",
@@ -73,45 +84,6 @@ export const techList = [
     emoji: "🌟",
     followingCount: 23,
     followersCount: "85.2K",
-  },
-];
-
-export const sidebarLinks = [
-  {
-    imgURL: "/assets/home.svg",
-    route: "/dashboard",
-    label: "Home",
-    logocmp: <Home />,
-  },
-  {
-    imgURL: "/assets/search.svg",
-    route: "/dashboard/applied",
-    label: "Applied",
-    logocmp: <BookText />,
-  },
-  {
-    imgURL: "/assets/heart.svg",
-    route: "/dashboard/saved",
-    label: "Saved",
-    logocmp: <BookmarkCheckIcon />,
-  },
-  // {
-  //   imgURL: "/assets/community.svg",
-  //   route: "/dashboard/settings",
-  //   label: "Settings",
-  //   logocmp: <Wrench />,
-  // },
-  {
-    imgURL: "/assets/community.svg",
-    route: "/dashboard/myjobs",
-    label: "MyJobs",
-    logocmp: <Telescope />,
-  },
-  {
-    imgURL: "/assets/community.svg",
-    route: "/dashboard/feedback",
-    label: "Feedback",
-    logocmp: <Wrench />,
   },
 ];
 

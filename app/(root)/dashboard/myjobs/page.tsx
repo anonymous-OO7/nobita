@@ -28,7 +28,7 @@ const ActiveRentals = () => {
   }, [makeApiCall]);
 
   return (
-    <div className="text-black bg-pageBackground px-10 min-h-screen">
+    <div className="text-black bg-pageBackground px-2 min-h-screen">
       <Spacer size="sm" />
       <OrdersEpp eppOrders={jobs} loading={invoiceLoading} />
     </div>

@@ -130,17 +130,13 @@ const Home: React.FC = () => {
         applyingJob={applyingJob}
       />
 
-      <div className="container  mx-auto pb-5">
-        <p className="font-poppins font-semibold text-black text-2xl my-4">
-          {/* Adjusted text size slightly for variety */}
-          {/* Grouping "Get referred to over" and applying one color */}
+      <div className="container mx-auto pb-5  px-4 sm:px-0">
+        <p className="font-poppins font-semibold text-black text-xl sm:text-2xl my-2 sm:my-4">
           <span className="text-blue-600">Get referred to over</span>
-          {/* Example color */}
-          {/* Grouping "1000+ companies" and applying another color */}
           <span className="text-green-600"> 1000+ companies</span>
-          {/* Example color */}
         </p>
-        <p className="font-poppins font-normal text-black text-base my-4">
+
+        <p className="font-poppins font-normal text-black text-sm sm:text-base my-2 sm:my-4">
           Select a company you want a referral for, enter the URL for the job
           posting that you want, and send your profile off to our referrers!
         </p>
@@ -155,11 +151,11 @@ const Home: React.FC = () => {
                 <PageLoader />
               </div>
             }
-            useWindow={true} // Enable window scrolling
+            useWindow={true}
           >
             {jobsInfo?.map((job, index) => (
               <JobCard
-                key={job.Uuid || index} // Use a unique identifier if available
+                key={job.Uuid || index}
                 job={job}
                 onSave={saveJob}
                 onApply={onApplyJob}
@@ -167,8 +163,11 @@ const Home: React.FC = () => {
               />
             ))}
           </InfiniteScroll>
+
           {jobsInfo?.length === 0 && !loading && (
-            <p className="text-center text-gray-500">No jobs found.</p>
+            <p className="text-center text-gray-500 text-sm sm:text-base">
+              No jobs found.
+            </p>
           )}
         </div>
       </div>

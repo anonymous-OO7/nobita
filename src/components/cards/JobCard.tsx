@@ -33,6 +33,12 @@ const Card: React.FC<CardProps> = ({
   onApply,
   isApplied = false,
 }) => {
+  const MAX_TEXT_LENGTH = 350;
+  const [showFullDescription, setShowFullDescription] = React.useState(false);
+
+  const getTrimmedText = (text: string, maxLength: number) =>
+    text.length <= maxLength ? text : text.slice(0, maxLength) + "...";
+
   const backgroundColorClass =
     job.Status === "inactive" ||
     job.Status === "hired" ||
@@ -321,26 +327,22 @@ const Card: React.FC<CardProps> = ({
         </div>
 
         <div className="flex flex-row justify-center items-center gap-2">
-          {/* This is the parent div for the "Applied" Chip */}
-          {/* Added 'relative' class here */}
-          <div className="flex flex-row gap-2 relative">
-            {/* <p className="text-lg font-poppins text-green-400">At</p> */}
+          <div className="flex flex-col md:flex-row gap-2 relative">
             <Chip
               startContent={<IndianRupee color="black" size={22} />}
               variant="bordered"
               color="success"
               size="lg"
               className="p-2"
-              radius={"md"}
+              radius="md"
             >
               <p className="text-2xl font-semibold font-poppins text-black">
                 {job.Price}
               </p>
-              {/* Assuming job.Price is available */}
             </Chip>
-            {isApplied ? (
-              <div className="flex flex-row items-center  right-0 bg-green-500 z-10 rounded-xl px-1 text-right">
-                {/* This Chip's content needed the 'Applied' text */}
+
+            {isApplied && (
+              <div className="flex flex-row items-center right-0 bg-green-500 z-10 rounded-xl px-1 text-right">
                 <Chip
                   startContent={<Check size={20} color="white" />}
                   variant="flat"
@@ -353,7 +355,7 @@ const Card: React.FC<CardProps> = ({
                   </p>
                 </Chip>
               </div>
-            ) : null}
+            )}
           </div>
         </div>
       </div>
@@ -433,8 +435,20 @@ const Card: React.FC<CardProps> = ({
       </div>
 
       <p className="text-sm font-poppins text-black mt-10 max-h-[20vh] overflow-auto">
-        {formatText(job.Description)}
+        {showFullDescription
+          ? formatText(job.Description)
+          : formatText(getTrimmedText(job.Description, MAX_TEXT_LENGTH))}
       </p>
+      {job.Description.length > MAX_TEXT_LENGTH && (
+        <Button
+          variant="light"
+          size="sm"
+          className="px-1 text-blue-500 mt-1"
+          onClick={() => setShowFullDescription(!showFullDescription)}
+        >
+          {showFullDescription ? "View Less" : "View More"}
+        </Button>
+      )}
 
       <p className="text-gray-700">
         Annual Salary: ₹{FormatToLakhs(job.MinPay)} - ₹

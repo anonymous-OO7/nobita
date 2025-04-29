@@ -1,15 +1,84 @@
 "use client";
 
+import {
+  Home,
+  FeedBack,
+  InvoicesSVG,
+  Marketing,
+  ProductSVG,
+  RentalScheduleSVG,
+  Transaction,
+} from "@/assets/images/Images";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import { sidebarLinks } from "@/constants";
+import { gradients } from "../../../../src/assets/colors.js";
 
 function Bottombar() {
   const pathname = usePathname();
-  // backdrop-blur-lg
+
+  const sidebarLinks = [
+    {
+      imgURL: "/assets/home.svg",
+      route: "/dashboard",
+      label: "Home",
+      logocmp: <Home color={pathname === "/dashboard" ? "#fff" : "#683FDB"} />,
+    },
+    {
+      imgURL: "/assets/search.svg",
+      route: "/dashboard/applied",
+      label: "Applied",
+      logocmp: (
+        <InvoicesSVG
+          color={pathname === "/dashboard/applied" ? "#fff" : "#683FDB"}
+        />
+      ),
+    },
+    {
+      imgURL: "/assets/heart.svg",
+      route: "/dashboard/saved",
+      label: "Saved",
+      logocmp: (
+        <RentalScheduleSVG
+          color={pathname === "/dashboard/saved" ? "#fff" : "#683FDB"}
+        />
+      ),
+    },
+    {
+      imgURL: "/assets/community.svg",
+      route: "/dashboard/referral-community",
+      label: "Community",
+      logocmp: (
+        <Transaction
+          color={
+            pathname === "/dashboard/referral-community" ? "#fff" : "#683FDB"
+          }
+        />
+      ),
+    },
+    {
+      imgURL: "/assets/community.svg",
+      route: "/dashboard/myjobs",
+      label: "My Jobs",
+      logocmp: (
+        <ProductSVG
+          color={pathname === "/dashboard/myjobs" ? "#fff" : "#683FDB"}
+        />
+      ),
+    },
+    {
+      imgURL: "/assets/community.svg",
+      route: "/dashboard/feedback",
+      label: "Feedback",
+      logocmp: (
+        <FeedBack
+          color={pathname === "/dashboard/feedback" ? "#fff" : "#683FDB"}
+        />
+      ),
+    },
+  ];
+
   return (
-    <section className="fixed -bottom-0.5 z-10 w-full shadow-xl  bg-glassmorphism px-4 py-1 bg-white xs:px-7  sm:hidden">
+    <section className="fixed bottom-0 z-10 w-screen max-w-screen bg-white bg-glassmorphism px-4 py-2 shadow-xl sm:hidden">
       <div className="flex items-center justify-between gap-3 xs:gap-5">
         {sidebarLinks.map((link) => {
           const isActive =
@@ -21,20 +90,21 @@ function Bottombar() {
             <Link
               href={link.route}
               key={link.label}
-              className={` relative flex text-black flex-col items-center gap-2 rounded-lg px-2 py-1 sm:flex-1 sm:px-2 sm:py-2.5 ${
-                isActive && "bg-primary-300"
+              className={`relative flex flex-1 flex-col items-center gap-1 rounded-lg px-0.5 py-0.5 text-black ${
+                isActive ? "bg-primary-300" : ""
               }`}
+              style={{
+                background: isActive ? gradients?.sidebarActive : undefined,
+              }}
             >
-              {/* <Image
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMMbTeQ3avpXty_1plz1_iD07cPMGWQzX_Vg&usqp=CAU"
-                alt={link.label}
-                width={16}
-                height={16}
-                className='object-contain'
-              /> */}
               {link.logocmp}
-
-              <p className="text-sm text-black font-poppins ">{link.label}</p>
+              <p
+                className={`text-xs font-poppins transition-all font-rubik font-light   ${
+                  isActive ? "text-white" : "text-black"
+                }`}
+              >
+                {link.label}
+              </p>
             </Link>
           );
         })}

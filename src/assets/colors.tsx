@@ -17,4 +17,5 @@ export const gradients = {
   gradient1: "linear-gradient(45deg, #ff7300, #fe4a27)",
   gradient2: "linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%)",
   gradientbackground: "linear-gradient(45deg, #BFDAE6, #FAFAFA)",
+  sidebarActive: "linear-gradient(to right, #00004a 0%, #020839 100%)",
 };
