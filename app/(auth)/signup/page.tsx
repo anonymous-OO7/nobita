@@ -16,6 +16,7 @@ import useToast from "@/hooks/useToast";
 import Image from "next/image";
 import Worklist from "../../../src/assets/logo.png";
 import { Tooltip } from "@heroui/react";
+import { AxiosError } from "axios";
 // Example options for the select
 const genderOptions: SelectType[] = [
   { label: "Male", value: "male" },
@@ -94,13 +95,11 @@ export default function SignUp() {
           });
           navigateToHomePage();
         }
-      } catch (error) {
-        console.error("SignUp Error:- ", error);
-        if (
-          error?.response?.data?.message &&
-          error?.response?.data?.message != ""
-        ) {
-          showToast(error?.response?.data?.message, { type: "error" });
+      } catch (err: unknown) {
+        const error = err as AxiosError<{ message: string }>;
+
+        if (error?.response?.data?.message) {
+          showToast(error.response.data.message, { type: "error" });
         } else {
           showToast("Some error occurred!!", { type: "error" });
         }
