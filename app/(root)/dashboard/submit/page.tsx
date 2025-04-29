@@ -82,6 +82,7 @@ export default function SubmitJob() {
     maxPay: 0,
     price: 0,
     category: "referral",
+    job_url: "",
   });
   const dropdownData: SelectType[] = [
     { label: "Full Time", value: "fulltime" },
@@ -112,6 +113,7 @@ export default function SubmitJob() {
         maxPay,
         price,
         category,
+        job_url,
       } = values;
 
       setLoading(true);
@@ -127,7 +129,8 @@ export default function SubmitJob() {
           minPay,
           maxPay,
           price,
-          jobCategory
+          jobCategory,
+          job_url
         )
       )
         .then((response) => {
@@ -270,6 +273,11 @@ export default function SubmitJob() {
                 className="bg-white  p-1 text-black font-poppins font-light text-lg"
                 label="Job Location"
                 name="location"
+              />
+              <Input
+                className="bg-white  p-1 text-black font-poppins font-light text-lg"
+                label="Job Link (*optional)"
+                name="job_url"
               />
 
               <Spacer size="xs" />
