@@ -15,6 +15,7 @@ import { CreateUserApi } from "@/apis"; // Ensure correct import
 import useToast from "@/hooks/useToast";
 import Image from "next/image";
 import Worklist from "../../../src/assets/logo.png";
+import { Tooltip } from "@heroui/react";
 // Example options for the select
 const genderOptions: SelectType[] = [
   { label: "Male", value: "male" },
@@ -95,7 +96,14 @@ export default function SignUp() {
         }
       } catch (error) {
         console.error("SignUp Error:- ", error);
-        showToast("Some error occurred!!", { type: "error" });
+        if (
+          error?.response?.data?.message &&
+          error?.response?.data?.message != ""
+        ) {
+          showToast(error?.response?.data?.message, { type: "error" });
+        } else {
+          showToast("Some error occurred!!", { type: "error" });
+        }
       } finally {
         setLoading(false);
       }
@@ -106,10 +114,9 @@ export default function SignUp() {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     phone: Yup.string().required("Phone is required"),
+    username: Yup.string().required("Username is required"),
     password: Yup.string().required("Password is required"),
-    email: Yup.string()
-      .email("Invalid email format")
-      .required("Email is required"),
+    email: Yup.string().required("Email is required"),
     gender: Yup.string().required("Gender is required"),
     country: Yup.string().required("Country is required"),
   });
@@ -159,9 +166,10 @@ export default function SignUp() {
             />
             <Spacer size="xs" />
             <Input
-              label="Referal Code"
+              label="Referal Code (* enter referral code if any)"
               placeholder="Enter Referal Code"
               name="referal_code"
+              tooltip="*Optional Enter any referral code shared by your friend. You both will be rewarded by credits"
             />
 
             <Spacer size="xs" />

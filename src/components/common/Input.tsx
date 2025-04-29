@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useField } from "formik";
+import { Tooltip } from "@heroui/react";
 
 interface Props {
   label?: string;
@@ -12,6 +13,7 @@ interface Props {
   name: string;
   disabled?: boolean;
   onChange?: (name: string, event: string) => void;
+  tooltip?: string;
 }
 
 const sizes = {
@@ -34,6 +36,7 @@ export default function Input({
   size = "default",
   disabled,
   onChange,
+  tooltip = "",
 }: Props) {
   const finalSize = sizes[size];
 
@@ -55,9 +58,11 @@ export default function Input({
   return (
     <>
       {label !== undefined && (
-        <label className="block mb-2 text-sm font-medium text-gray-900">
-          {label}
-        </label>
+        <Tooltip content={tooltip} size="md">
+          <label className="block mb-2 text-sm font-medium text-gray-900">
+            {label}
+          </label>
+        </Tooltip>
       )}
       <input
         className={finalSize}

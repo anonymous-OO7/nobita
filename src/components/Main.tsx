@@ -5,23 +5,12 @@ import { ToastContainer } from "react-toastify";
 import { LocationProps } from "./Breadcrumb";
 import DashHeader from "./pages/dashboard/DashHeader";
 import Sidebar, { SidebarItem } from "./SideBarNew";
-import {
-  Search,
-  CircleUserIcon,
-  BadgeInfo,
-  Wrench,
-  BookmarkCheckIcon,
-  BookText,
-  Telescope,
-} from "lucide-react";
+
 import { useRouter, usePathname } from "next/navigation";
 import Bottombar from "./pages/dashboard/Bottombar";
 import CommonModal from "./pages/home/CommonModal";
 import { useDisclosure } from "@nextui-org/react";
 import {
-  Clients,
-  DocumentSVG,
-  EmployeeDirectorySvg,
   FeedBack,
   Home,
   InvoicesSVG,

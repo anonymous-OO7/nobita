@@ -9,6 +9,7 @@ import Image from "next/image";
 import { gradients } from "../../src/assets/colors";
 import useApi from "@/hooks/useApi";
 import { GetProfileApi } from "@/apis";
+import { Tooltip } from "@heroui/react";
 
 const SidebarContext = createContext();
 
@@ -117,9 +118,16 @@ export default function Sidebar({ children, setExpandedMain }) {
               <p className="text-black font-poppins font-semibold text-xl">
                 Credits
               </p>
-              <p className="text-black font-poppins font-light text-2xl">
-                {profileDetails?.applies != "" ? profileDetails?.applies : "--"}
-              </p>
+              <Tooltip
+                content={"credits are used to apply for a referral"}
+                size="md"
+              >
+                <p className="text-black font-poppins font-light text-2xl">
+                  {profileDetails?.applies != ""
+                    ? profileDetails?.applies
+                    : "--"}
+                </p>
+              </Tooltip>
             </div>
           </div>
 
