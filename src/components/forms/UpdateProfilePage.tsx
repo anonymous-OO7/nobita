@@ -11,6 +11,7 @@ import Button from "../Button";
 import Row from "../Row";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import Spacer from "../common/Spacer";
 
 const emptyProfileDetails: ProfileDetailsType = {
   email: "",
@@ -48,65 +49,65 @@ export default function UpdateProfilePage() {
       });
   }, [makeApiCall]);
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    uuid: Yup.string().required("UUID is required"),
-    name: Yup.string().required("Name is required"),
-    gender: Yup.string().required("Gender is required"),
-    country: Yup.string().required("Country is required"),
-    bio: Yup.string().required("Bio is required"),
-    expertise: Yup.string().required("Expertise is required"),
-    seniority: Yup.string().required("Seniority is required"),
-    current_organisation: Yup.string().required(
-      "Current Organisation is required"
-    ),
-    tagline: Yup.string().required("Tagline is required"),
-    skill: Yup.string().required("Skill is required"),
+  // const validationSchema = Yup.object().shape({
+  //   email: Yup.string().email("Invalid email").required("Email is required"),
+  //   uuid: Yup.string().required("UUID is required"),
+  //   name: Yup.string().required("Name is required"),
+  //   gender: Yup.string().required("Gender is required"),
+  //   country: Yup.string().required("Country is required"),
+  //   bio: Yup.string().required("Bio is required"),
+  //   expertise: Yup.string().required("Expertise is required"),
+  //   seniority: Yup.string().required("Seniority is required"),
+  //   current_organisation: Yup.string().required(
+  //     "Current Organisation is required"
+  //   ),
+  //   tagline: Yup.string().required("Tagline is required"),
+  //   skill: Yup.string().required("Skill is required"),
 
-    // work_experience validation - array of objects
-    work_experience: Yup.array().of(
-      Yup.object().shape({
-        role: Yup.string().required("Role is required"),
-        company: Yup.string().required("Company is required"),
-        employmentType: Yup.string().required("Employment type is required"),
-        duration: Yup.object().shape({
-          start: Yup.string().required("Start date is required"),
-          end: Yup.string().required("End date is required"),
-          years: Yup.number()
-            .required("Years are required")
-            .positive()
-            .integer(),
-        }),
-        location: Yup.string().required("Location is required"),
-        skills: Yup.array().of(Yup.string()).required("Skills are required"),
-      })
-    ),
+  //   // work_experience validation - array of objects
+  //   work_experience: Yup.array().of(
+  //     Yup.object().shape({
+  //       role: Yup.string().required("Role is required"),
+  //       company: Yup.string().required("Company is required"),
+  //       employmentType: Yup.string().required("Employment type is required"),
+  //       duration: Yup.object().shape({
+  //         start: Yup.string().required("Start date is required"),
+  //         end: Yup.string().required("End date is required"),
+  //         years: Yup.number()
+  //           .required("Years are required")
+  //           .positive()
+  //           .integer(),
+  //       }),
+  //       location: Yup.string().required("Location is required"),
+  //       skills: Yup.array().of(Yup.string()).required("Skills are required"),
+  //     })
+  //   ),
 
-    // Education validation - array of objects
-    education: Yup.array().of(
-      Yup.object().shape({
-        universityName: Yup.string().required("University name is required"),
-        degree: Yup.string().required("Degree is required"),
-        duration: Yup.object().shape({
-          start: Yup.string().required("Start date is required"),
-          end: Yup.string().required("End date is required"),
-          years: Yup.number()
-            .required("Years are required")
-            .positive()
-            .integer(),
-        }),
-        skills: Yup.array().of(Yup.string()).required("Skills are required"),
-      })
-    ),
+  //   // Education validation - array of objects
+  //   education: Yup.array().of(
+  //     Yup.object().shape({
+  //       universityName: Yup.string().required("University name is required"),
+  //       degree: Yup.string().required("Degree is required"),
+  //       duration: Yup.object().shape({
+  //         start: Yup.string().required("Start date is required"),
+  //         end: Yup.string().required("End date is required"),
+  //         years: Yup.number()
+  //           .required("Years are required")
+  //           .positive()
+  //           .integer(),
+  //       }),
+  //       skills: Yup.array().of(Yup.string()).required("Skills are required"),
+  //     })
+  //   ),
 
-    // social_urls validation - array of objects
-    social_urls: Yup.array().of(
-      Yup.object().shape({
-        platform: Yup.string().required("Platform is required"),
-        url: Yup.string().url("Invalid URL format").required("URL is required"),
-      })
-    ),
-  });
+  //   // social_urls validation - array of objects
+  //   social_urls: Yup.array().of(
+  //     Yup.object().shape({
+  //       platform: Yup.string().required("Platform is required"),
+  //       url: Yup.string().url("Invalid URL format").required("URL is required"),
+  //     })
+  //   ),
+  // });
 
   const handleSubmit = React.useCallback(
     ({
@@ -186,8 +187,9 @@ export default function UpdateProfilePage() {
         )
       )
         .then((response) => {
-          toast.success("Profile updated succesfully");
           console.log(response, "Responseof upload products");
+
+          toast.success("Profile updated succesfully");
         })
         .catch((error) => {
           toast.error(
@@ -226,6 +228,12 @@ export default function UpdateProfilePage() {
                 <Social profileData={profileDetails} />
               </Tab>
             </Tabs>
+            <Spacer size="xs" />
+            <Row justifyContent="center">
+              <Button color="primary" type="submit">
+                Submit
+              </Button>
+            </Row>
           </Form>
         </Formik>
       </div>

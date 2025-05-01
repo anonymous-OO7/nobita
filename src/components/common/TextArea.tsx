@@ -17,7 +17,7 @@ const sizes = {
   default:
     "bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
   large:
-    "block w-full p-8 text-black border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500",
+    "block w-full p-4 text-black border h-48 border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500",
   small:
     "block w-full p-2 text-black border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500",
 };
@@ -48,14 +48,14 @@ export default function Textarea({
   return (
     <>
       {label && (
-        <label className="block mb-2 text-sm font-normal text-dark font-poppins">
+        <label className="block mb-2 text-sm font-normal text-dark font-poppins  ">
           {label}
         </label>
       )}
       <textarea
         {...field}
         value={meta.value}
-        className={`${finalSize} resize-none`} // Added resize-none to disable resizing, remove if resizing is needed
+        className={`${finalSize} resize-none`}
         placeholder={placeholder}
         disabled={disabled}
         onChange={handleChange}

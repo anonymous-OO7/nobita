@@ -23,6 +23,7 @@ const Button: React.FC<Props> = ({
       disabled={disabled}
       aria-label="Button"
       {...props}
+      className="z-0"
     >
       {children}
     </RNButton>

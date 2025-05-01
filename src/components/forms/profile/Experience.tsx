@@ -2,444 +2,383 @@ import * as React from "react";
 import { useFormikContext, FieldArray } from "formik";
 import Spacer from "@/components/common/Spacer";
 import { Input as InputText } from "@nextui-org/input";
-import { EducationType, ProfileDetailsType, WorkExperienceType } from "@/types";
+import {
+  EducationType,
+  ProfileDetailsType,
+  SelectType,
+  WorkExperienceType,
+} from "@/types";
 import Row from "@/components/common/Row";
 import Button from "@/components/Button";
+import Select from "@/components/common/Select";
+import RDatePicker from "@/components/common/RNDatePicker";
+import { DateValue } from "@heroui/react";
 
 interface Props {
   profileData: ProfileDetailsType;
 }
 
+function Modal({
+  isOpen,
+  title,
+  children,
+  onCancel,
+  onSave,
+}: {
+  isOpen: boolean;
+  title: string;
+  children: React.ReactNode;
+  onCancel: () => void;
+  onSave: () => void;
+}) {
+  if (!isOpen) return null;
+  return (
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h2 className="text-xl mb-4">{title}</h2>
+        <div className="space-y-4">{children}</div>
+        <div className="flex justify-between mt-4">
+          <button onClick={onCancel} className="text-gray-500">
+            Cancel
+          </button>
+          <button onClick={onSave} className="text-blue-500">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Experience({ profileData }: Props) {
-  const formikContext = useFormikContext<{
+  const formik = useFormikContext<{
     expertise: string;
-    senioritylevel: string;
-    workExperience: WorkExperienceType[];
+    seniority: string;
+    work_experience: WorkExperienceType[];
     education: EducationType[];
   }>();
 
-  const { getFieldProps, setValues } = formikContext ?? {};
+  const [workModalOpen, setWorkModalOpen] = React.useState(false);
+  const [eduModalOpen, setEduModalOpen] = React.useState(false);
 
-  React.useEffect(() => {
-    if (profileData) {
-      setValues({
-        expertise: profileData.expertise || "",
-        senioritylevel: profileData.seniority || "",
-        workExperience: profileData.work_experience || [],
-        education: profileData.education || [],
-      });
-    }
-  }, [profileData, setValues]);
+  const fieldDropdowndata: SelectType[] = React.useMemo(
+    () => [
+      { value: "fulltime", label: "Full Time" },
+      { value: "part_time", label: "Part Time" },
+      { value: "internship", label: "Internship" },
+      { value: "trainee", label: "Trainee" },
+    ],
+    []
+  );
 
-  const [isWorkExperienceModalOpen, setIsWorkExperienceModalOpen] =
-    React.useState(false);
-  const [newWorkExperience, setNewWorkExperience] =
-    React.useState<WorkExperienceType>({
-      role: "",
-      company: "",
-      employmentType: "",
-      duration: { start: "", end: "", years: 0 },
-      location: "",
-      skills: [],
-    });
-
-  const [isEducationModalOpen, setIsEducationModalOpen] = React.useState(false);
-  const [newEducation, setNewEducation] = React.useState<EducationType>({
-    universityName: "",
-    degree: "",
-    duration: { start: "", end: "", years: 0 },
+  const [newWork, setNewWork] = React.useState<WorkExperienceType>({
+    role: "",
+    company: "",
+    employmentType: "",
+    duration: { start: "", end: "", years: 0, current: false },
+    location: "",
     skills: [],
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleWorkExperienceChange = (field: string, value: any) => {
-    // eslint-disable-next-line no-param-reassign
-    const fieldParts = field.split(".");
+  const [newEdu, setNewEdu] = React.useState<EducationType>({
+    universityName: "",
+    degree: "",
+    duration: { start: "", end: "", years: 0, current: false },
+    skills: [],
+  });
 
-    setNewWorkExperience((prev) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      let updatedWorkExperience = { ...prev };
+  React.useEffect(() => {
+    if (profileData) {
+      formik.setValues({
+        expertise: profileData.expertise || "",
+        seniority: profileData.seniority || "",
+        work_experience: profileData.work_experience || [],
+        education: profileData.education || [],
+      });
+    }
+  }, [profileData]);
 
-      fieldParts.reduce((obj, part, index) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if (index === fieldParts.length - 1) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          obj[part] = value;
+  const handleChange = <T,>(
+    setter: React.Dispatch<React.SetStateAction<T>>,
+    path: string,
+    value: any
+  ) => {
+    const parts = path.split(".");
+    setter((prev: any) => {
+      const updated = { ...prev };
+      parts.reduce((acc, key, idx) => {
+        if (idx === parts.length - 1) {
+          acc[key] = value;
         } else {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          obj[part] = obj[part] || {};
+          acc[key] = acc[key] || {};
         }
-        return obj[part];
-      }, updatedWorkExperience as any); // eslint-disable-line @typescript-eslint/no-explicit-any
-
-      return updatedWorkExperience;
+        return acc[key];
+      }, updated);
+      return updated;
     });
   };
 
-  const handleSaveWorkExperience = () => {
-    formikContext.setFieldValue("workExperience", [
-      ...formikContext.values.workExperience,
-      newWorkExperience,
+  const saveWorkExperience = () => {
+    formik.setFieldValue("work_experience", [
+      ...formik.values.work_experience,
+      newWork,
     ]);
-    setNewWorkExperience({
+    setNewWork({
       role: "",
       company: "",
       employmentType: "",
-      duration: { start: "", end: "", years: 0 },
+      duration: { start: "", end: "", years: 0, current: false },
       location: "",
       skills: [],
     });
-    setIsWorkExperienceModalOpen(false);
+    setWorkModalOpen(false);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleEducationChange = (field: string, value: any) => {
-    // eslint-disable-next-line no-param-reassign
-    const fieldParts = field.split(".");
-
-    setNewEducation((prev) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      let updatedEducation = { ...prev };
-
-      fieldParts.reduce((obj, part, index) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if (index === fieldParts.length - 1) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          obj[part] = value;
-        } else {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          obj[part] = obj[part] || {};
-        }
-        return obj[part];
-      }, updatedEducation as any); // eslint-disable-line @typescript-eslint/no-explicit-any
-
-      return updatedEducation;
-    });
-  };
-
-  const handleSaveEducation = () => {
-    formikContext.setFieldValue("education", [
-      ...formikContext.values.education,
-      newEducation,
-    ]);
-    setNewEducation({
+  const saveEducation = () => {
+    formik.setFieldValue("education", [...formik.values.education, newEdu]);
+    setNewEdu({
       universityName: "",
       degree: "",
-      duration: { start: "", end: "", years: 0 },
+      duration: { start: "", end: "", years: 0, current: false },
       skills: [],
     });
-    setIsEducationModalOpen(false);
+    setEduModalOpen(false);
   };
-
-  if (!formikContext) {
-    return null;
-  }
 
   return (
     <section className="space-y-8">
-      <div className="flex flex-col">
-        {/* Expertise & Seniority Inputs */}
-        <div className="flex flex-row space-x-4">
-          <div className="flex-1">
-            <InputText
-              label="Expertise"
-              placeholder="Enter expertise"
-              {...getFieldProps?.("expertise")}
-            />
-            <Spacer size="xs" />
-          </div>
-          <div className="flex-1">
-            <InputText
-              label="Seniority Level"
-              placeholder="Enter your seniority level"
-              {...getFieldProps?.("senioritylevel")}
-            />
-            <Spacer size="xs" />
-          </div>
-        </div>
-
-        {/* Work Experience Section */}
-        <div>
-          <div>
-            <p className="block mb-2 text-sm font-normal font-poppins mt-5 text-gray-900">
-              Work Experience
-            </p>
-          </div>
-
-          <FieldArray name="workExperience">
-            {({ insert, remove, push }) => (
-              <div className="space-y-4">
-                {formikContext.values.workExperience?.map(
-                  (experience, index) => (
-                    <div
-                      key={index}
-                      className="p-4 bg-white shadow-md rounded-lg border border-gray-200 flex justify-between items-start"
-                    >
-                      <div>
-                        <p className="text-lg font-semibold text-gray-900">
-                          {experience.role} at {experience.company}
-                        </p>
-                        <p className="text-gray-600 text-sm">
-                          {experience.employmentType}
-                        </p>
-                        <p className="text-gray-600 text-sm">
-                          {experience.location}
-                        </p>
-                        <p className="text-gray-600 text-sm">
-                          {experience.duration.start} -{" "}
-                          {experience.duration.end || "Present"}
-                        </p>
-                        <p className="text-gray-600 text-sm">
-                          <span className="font-medium">Years:</span>{" "}
-                          {experience.duration.years}
-                        </p>
-                        <p className="text-gray-600 text-sm">
-                          <span className="font-medium">Skills:</span>{" "}
-                          {experience.skills.join(", ")}
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => remove(index)}
-                        className="text-red-500 hover:text-red-700 font-medium"
-                      >
-                        ✖
-                      </button>
-                    </div>
-                  )
-                )}
-                <button
-                  type="button"
-                  onClick={() => setIsWorkExperienceModalOpen(true)}
-                  className="block w-full py-2 px-4 text-center bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition"
-                >
-                  + Add New Work Experience
-                </button>
-              </div>
-            )}
-          </FieldArray>
-
-          {isWorkExperienceModalOpen && (
-            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-              <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-                <h2 className="text-xl mb-4">Add Work Experience</h2>
-                <div className="space-y-4">
-                  <InputText
-                    label="Company Name"
-                    placeholder="Enter company name"
-                    value={newWorkExperience.company}
-                    onChange={(e) =>
-                      handleWorkExperienceChange("company", e.target.value)
-                    }
-                  />
-                  <InputText
-                    label="Role"
-                    placeholder="Enter role"
-                    value={newWorkExperience.role}
-                    onChange={(e) =>
-                      handleWorkExperienceChange("role", e.target.value)
-                    }
-                  />
-                  <InputText
-                    label="Employment Type"
-                    placeholder="Enter employment type"
-                    value={newWorkExperience.employmentType}
-                    onChange={(e) =>
-                      handleWorkExperienceChange(
-                        "employmentType",
-                        e.target.value
-                      )
-                    }
-                  />
-                  <InputText
-                    label="Location"
-                    placeholder="Enter location"
-                    value={newWorkExperience.location}
-                    onChange={(e) =>
-                      handleWorkExperienceChange("location", e.target.value)
-                    }
-                  />
-                  <InputText
-                    label="Start Date"
-                    placeholder="Enter start date"
-                    value={newWorkExperience.duration.start}
-                    onChange={(e) =>
-                      handleWorkExperienceChange(
-                        "duration.start",
-                        e.target.value
-                      )
-                    }
-                  />
-                  <InputText
-                    label="End Date"
-                    placeholder="Enter end date"
-                    value={newWorkExperience.duration.end}
-                    onChange={(e) =>
-                      handleWorkExperienceChange("duration.end", e.target.value)
-                    }
-                  />
-                  <InputText
-                    label="Skills"
-                    placeholder="Enter skills (comma separated)"
-                    value={newWorkExperience.skills.join(", ")}
-                    onChange={(e) =>
-                      handleWorkExperienceChange(
-                        "skills",
-                        e.target.value.split(",")
-                      )
-                    }
-                  />
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex justify-between mt-4">
-                  <button
-                    type="button"
-                    onClick={() => setIsWorkExperienceModalOpen(false)}
-                    className="text-gray-500"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSaveWorkExperience}
-                    className="text-blue-500"
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Education Section */}
-        <div>
-          <p className="block mb-2 text-sm font-normal font-poppins mt-5 text-gray-900">
-            Education
-          </p>
-          <FieldArray name="education">
-            {({ insert, remove, push }) => (
-              <div className="space-y-4">
-                {formikContext.values.education?.map((education, index) => (
-                  <div
-                    key={index}
-                    className="p-4 bg-white shadow-md rounded-lg border border-gray-200 flex justify-between items-start"
-                  >
-                    <div>
-                      <p className="text-lg font-semibold text-gray-900">
-                        {education.degree} from {education.universityName}
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        <span className="font-medium">Duration:</span>{" "}
-                        {education.duration.start} -{" "}
-                        {education.duration.end || "Present"}
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        <span className="font-medium">Years:</span>{" "}
-                        {education.duration.years}
-                      </p>
-                      <p className="text-gray-600 text-sm">
-                        <span className="font-medium">Skills:</span>{" "}
-                        {education.skills.join(", ")}
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => remove(index)}
-                      className="text-red-500 hover:text-red-700 font-medium"
-                    >
-                      ✖
-                    </button>
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => setIsEducationModalOpen(true)}
-                  className="block w-full py-2 px-4 text-center bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition"
-                >
-                  + Add New Education
-                </button>
-              </div>
-            )}
-          </FieldArray>
+      <div className="flex flex-row space-x-4">
+        <div className="flex-1">
+          <InputText
+            label="Expertise"
+            placeholder="Enter expertise"
+            {...formik.getFieldProps("expertise")}
+          />
           <Spacer size="xs" />
-          <Row justifyContent="center">
-            <Button color="primary" type="submit">
-              Submit
-            </Button>
-          </Row>
-
-          {/* Modal for adding new Education */}
-          {isEducationModalOpen && (
-            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-              <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-                <h2 className="text-xl mb-4">Add Education</h2>
-                <div className="space-y-4">
-                  <InputText
-                    label="University Name"
-                    placeholder="Enter university name"
-                    value={newEducation.universityName}
-                    onChange={(e) =>
-                      handleEducationChange("universityName", e.target.value)
-                    }
-                  />
-                  <InputText
-                    label="Degree"
-                    placeholder="Enter degree"
-                    value={newEducation.degree}
-                    onChange={(e) =>
-                      handleEducationChange("degree", e.target.value)
-                    }
-                  />
-                  <InputText
-                    label="Start Date"
-                    placeholder="Enter start date"
-                    value={newEducation.duration.start}
-                    onChange={(e) =>
-                      handleEducationChange("duration.start", e.target.value)
-                    }
-                  />
-                  <InputText
-                    label="End Date"
-                    placeholder="Enter end date"
-                    value={newEducation.duration.end}
-                    onChange={(e) =>
-                      handleEducationChange("duration.end", e.target.value)
-                    }
-                  />
-                  <InputText
-                    label="Skills"
-                    placeholder="Enter skills (comma separated)"
-                    value={newEducation.skills.join(", ")}
-                    onChange={(e) =>
-                      handleEducationChange("skills", e.target.value.split(","))
-                    }
-                  />
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex justify-between mt-4">
-                  <button
-                    type="button"
-                    onClick={() => setIsEducationModalOpen(false)}
-                    className="text-gray-500"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleSaveEducation}
-                    className="text-blue-500"
-                  >
-                    Save
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+        </div>
+        <div className="flex-1">
+          <InputText
+            label="Seniority Level"
+            placeholder="Enter seniority level"
+            {...formik.getFieldProps("seniority")}
+          />
+          <Spacer size="xs" />
         </div>
       </div>
+
+      <div>
+        <p className="text-sm font-normal font-poppins mt-5 text-gray-900">
+          Work Experience
+        </p>
+        <FieldArray name="work_experience">
+          {({ remove }) => (
+            <div className="space-y-4">
+              {formik.values.work_experience?.map((exp, i) => (
+                <div
+                  key={i}
+                  className="p-5 bg-white shadow-md rounded-xl border border-gray-200 flex justify-between items-start gap-4 font-poppins"
+                >
+                  <div className="space-y-1.5">
+                    <h3 className="text-lg font-semibold text-gray-900 capitalize">
+                      {exp.role} at{" "}
+                      <span className="text-blue-600">{exp.company}</span>
+                    </h3>
+                    <p className="text-sm text-gray-700 capitalize">
+                      {exp.employmentType}
+                    </p>
+                    <p className="text-sm text-gray-700 capitalize">
+                      {exp.location}
+                    </p>
+                    <p className="text-sm text-gray-700 capitalize">
+                      {exp.duration.start} – {exp.duration.end || "Present"}
+                    </p>
+                    <p className="text-sm text-gray-700">
+                      <span className="font-medium text-gray-800">Years:</span>{" "}
+                      {exp.duration.years}
+                    </p>
+                    <p className="text-sm text-gray-700 capitalize">
+                      <span className="font-medium text-gray-800">Skills:</span>{" "}
+                      {exp.skills.join(", ")}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => remove(i)}
+                    className="text-red-500 hover:text-red-700 font-semibold text-lg transition"
+                  >
+                    ✖
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setWorkModalOpen(true)}
+                className="w-64 py-2.5 px-6 bg-blue-600 text-white text-sm font-medium font-poppins rounded-lg shadow hover:bg-blue-700 transition-all duration-200"
+              >
+                + Add New Work Experience
+              </button>
+            </div>
+          )}
+        </FieldArray>
+      </div>
+
+      <div>
+        <p className="text-sm font-normal font-poppins mt-5 text-gray-900">
+          Education
+        </p>
+        <FieldArray name="education">
+          {({ remove }) => (
+            <div className="space-y-4">
+              {formik.values.education?.map((edu, i) => (
+                <div
+                  key={i}
+                  className="p-5 bg-white shadow-md rounded-xl border border-gray-200 flex justify-between items-start gap-4 font-poppins"
+                >
+                  <div className="space-y-1.5">
+                    <p className="text-lg font-semibold text-gray-900 capitalize">
+                      {edu.degree} from {edu.universityName}
+                    </p>
+                    <p className="text-sm text-gray-600 capitalize">
+                      <span className="font-medium">Duration:</span>{" "}
+                      {edu.duration.start} - {edu.duration.end || "Present"}
+                    </p>
+                    <p className="text-sm text-gray-600 capitalize">
+                      <span className="font-medium">Years:</span>{" "}
+                      {edu.duration.years}
+                    </p>
+                    <p className="text-sm text-gray-600 capitalize">
+                      <span className="font-medium">Skills:</span>{" "}
+                      {edu.skills.join(", ")}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => remove(i)}
+                    className="text-red-500 hover:text-red-700 font-semibold text-lg transition"
+                  >
+                    ✖
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => setEduModalOpen(true)}
+                className="w-64 py-2.5 px-5 bg-blue-600 text-white font-poppins font-semibold rounded-lg shadow hover:bg-blue-700 transition duration-200"
+              >
+                + Add New Education
+              </button>
+            </div>
+          )}
+        </FieldArray>
+      </div>
+
+      <Modal
+        isOpen={workModalOpen}
+        title="Add Work Experience"
+        onCancel={() => setWorkModalOpen(false)}
+        onSave={saveWorkExperience}
+      >
+        <InputText
+          label="Title (role)"
+          value={newWork.role}
+          onChange={(e) => handleChange(setNewWork, "role", e.target.value)}
+        />
+        <InputText
+          label="Company Name"
+          value={newWork.company}
+          onChange={(e) => handleChange(setNewWork, "company", e.target.value)}
+        />
+        <Spacer size="sm" />
+        <Select
+          label="Employment Type"
+          placeholder="Select type"
+          item={fieldDropdowndata}
+          name="field"
+          size="sm"
+          onChange={(e) =>
+            handleChange(setNewWork, "employmentType", e.target.value)
+          }
+        />
+        <InputText
+          label="Location"
+          value={newWork.location}
+          onChange={(e) => handleChange(setNewWork, "location", e.target.value)}
+        />
+        <RDatePicker
+          name="start_date"
+          placeholder="Start Date"
+          label="Start Date"
+          onDateChange={(val) => {
+            handleChange(setNewWork, "duration.start", val ?? "");
+          }}
+        />
+        <RDatePicker
+          name="end_date"
+          placeholder="End Date"
+          label="End Date"
+          onDateChange={(val) =>
+            handleChange(setNewWork, "duration.end", val ?? "")
+          }
+        />
+        <InputText
+          label="Skills"
+          placeholder="Comma separated"
+          value={newWork.skills.join(", ")}
+          onChange={(e) =>
+            handleChange(
+              setNewWork,
+              "skills",
+              e.target.value.split(",").map((s) => s.trim())
+            )
+          }
+        />
+      </Modal>
+
+      <Modal
+        isOpen={eduModalOpen}
+        title="Add Education"
+        onCancel={() => setEduModalOpen(false)}
+        onSave={saveEducation}
+      >
+        <InputText
+          label="University Name"
+          value={newEdu.universityName}
+          onChange={(e) =>
+            handleChange(setNewEdu, "universityName", e.target.value)
+          }
+        />
+        <InputText
+          label="Degree"
+          value={newEdu.degree}
+          onChange={(e) => handleChange(setNewEdu, "degree", e.target.value)}
+        />
+        <RDatePicker
+          name="edu_start_date"
+          placeholder="Start Date"
+          label="Start Date"
+          onDateChange={(val) =>
+            handleChange(setNewEdu, "duration.start", val ?? "")
+          }
+        />
+        <RDatePicker
+          name="edu_end_date"
+          placeholder="End Date"
+          label="End Date"
+          onDateChange={(val) =>
+            handleChange(setNewEdu, "duration.end", val ?? "")
+          }
+        />
+        <InputText
+          label="Skills"
+          placeholder="Comma separated"
+          value={newEdu.skills.join(", ")}
+          onChange={(e) =>
+            handleChange(
+              setNewEdu,
+              "skills",
+              e.target.value.split(",").map((s) => s.trim())
+            )
+          }
+        />
+      </Modal>
     </section>
   );
 }

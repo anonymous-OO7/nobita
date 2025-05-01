@@ -197,6 +197,7 @@ export interface WorkExperienceType {
     start: string;
     end: string;
     years: number;
+    current: boolean;
   };
   location: string;
   skills: string[];
@@ -209,6 +210,7 @@ export interface EducationType {
     start: string;
     end: string;
     years: number;
+    current: boolean;
   };
   skills: string[];
 }

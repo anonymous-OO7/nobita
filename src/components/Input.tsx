@@ -26,6 +26,7 @@ export default function Input({
   minLength,
   hidden = false,
   inputMode = "none",
+  readOnly = false,
 }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [field, meta, helpers] = useField(name);
@@ -66,6 +67,11 @@ export default function Input({
       minLength={minLength}
       hidden={hidden}
       inputMode={inputMode}
+      readOnly={readOnly}
+      classNames={{
+        label: "text-black/50 dark:text-white/90",
+        input: ["bg-transparent", "text-black font-poppins font-normal "],
+      }}
     />
   );
 }

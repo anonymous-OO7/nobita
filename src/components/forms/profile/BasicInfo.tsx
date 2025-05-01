@@ -55,13 +55,14 @@ export default function BasicInfo({ profileData }: Props) {
             className="text-black font-poppins font-normal text-base"
             placeholder="Enter email"
             {...getFieldProps?.("email")}
+            readOnly={true}
           />
         </div>
 
         <div className="flex flex-row  gap-2 mb-4 ">
           <Input
             label="Gender"
-            placeholder="Enter gender (e.g., Male, Female, Other)"
+            placeholder="Enter gender"
             {...getFieldProps?.("gender")}
           />
           <Spacer size="xs" />
@@ -75,14 +76,8 @@ export default function BasicInfo({ profileData }: Props) {
           label="Bio"
           placeholder="Enter your bio"
           {...getFieldProps?.("bio")}
+          size="large"
         />
-        <Spacer size="xs" />
-
-        <Row justifyContent="center">
-          <Button color="primary" type="submit">
-            Submit
-          </Button>
-        </Row>
       </div>
     </section>
   );
