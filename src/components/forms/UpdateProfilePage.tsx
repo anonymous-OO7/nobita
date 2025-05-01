@@ -217,6 +217,9 @@ export default function UpdateProfilePage() {
               aria-label="Options"
               selectedKey={selected.toString()}
               onSelectionChange={setSelected}
+              // className="bg-slate-400"
+              variant={"underlined"}
+              color="success"
             >
               <Tab key="basicinfo-tab" title="Basic Info">
                 <BasicInfo profileData={profileDetails} />
@@ -230,7 +233,7 @@ export default function UpdateProfilePage() {
             </Tabs>
             <Spacer size="xs" />
             <Row justifyContent="center">
-              <Button color="primary" type="submit">
+              <Button color="default" type="submit">
                 Submit
               </Button>
             </Row>
