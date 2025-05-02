@@ -9,6 +9,17 @@ const Footer = () => {
   const navigateToPricing = React.useCallback(() => {
     router.push(`/pricing`);
   }, [router]);
+
+  const navigateToCancellationPolicy = React.useCallback(() => {
+    router.push(`/cancellation-refundpolicy`);
+  }, [router]);
+  const navigateToTermsAndConditions = React.useCallback(() => {
+    router.push(`/terms-and-conditions`);
+  }, [router]);
+
+  const navigateToPrivacyPolicy = React.useCallback(() => {
+    router.push(`/privacypolicy`);
+  }, [router]);
   return (
     <footer className="bg-white" aria-labelledby="footer-heading">
       <footer className="bg-white pt-4 sm:pt-6 lg:pt-8">
@@ -284,19 +295,27 @@ const Footer = () => {
                 <nav className="flex flex-col gap-4">
                   <div>
                     <a
-                      href="#"
+                      onClick={navigateToTermsAndConditions}
                       className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
                     >
-                      Terms of Service
+                      Terms and conditions
                     </a>
                   </div>
 
                   <div>
                     <a
-                      href="#"
+                      onClick={navigateToPrivacyPolicy}
                       className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
                     >
                       Privacy Policy
+                    </a>
+                  </div>
+                  <div>
+                    <a
+                      onClick={navigateToCancellationPolicy}
+                      className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
+                    >
+                      Cancellation and refund
                     </a>
                   </div>
 
