@@ -251,7 +251,7 @@ const Footer = () => {
                 <nav className="flex flex-col gap-4">
                   <div>
                     <a
-                      href="#"
+                      href="#contactus"
                       className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
                     >
                       Contact
