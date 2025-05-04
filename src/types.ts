@@ -302,3 +302,28 @@ export type CommunityReferral = {
     Uuid: string;
   };
 };
+
+export interface LatestPaymentType {
+  CreatedAt: string;
+  DeletedAt: string | null;
+  ID: number;
+  UpdatedAt: string;
+  cart_details: any; // Or a more specific type if you know the structure
+  cf_order_id: string;
+  credit_added: number;
+  customer_email: string;
+  customer_id: string;
+  customer_name: string;
+  customer_phone: string;
+  email: string;
+  order_amount: number;
+  order_currency: string;
+  order_id: string;
+  order_meta: any;
+  order_note: string | null;
+  order_status: string;
+  order_tags: any;
+  payment_session_id: string;
+  terminal_data: any;
+  uuid: string; // Assuming this is the payment's UUID
+}

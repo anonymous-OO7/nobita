@@ -6,6 +6,7 @@ import useApi from "@/hooks/useApi";
 import useToast from "@/hooks/useToast";
 import { GetPaymentAPI, PaymentVerifyAPI } from "@/apis";
 import { Coins, Zap, ShieldCheck, TrendingUp, Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Payment = () => {
   const [orderId, setOrderId] = useState("");
@@ -16,6 +17,11 @@ const Payment = () => {
 
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
+  const router = useRouter();
+
+  const navigateToPaymentSuccessPage = React.useCallback(() => {
+    router.replace("/payment-success");
+  }, [router]);
 
   const verifyPayment = useCallback(
     async (orderIdToVerify) => {
@@ -34,6 +40,8 @@ const Payment = () => {
             response.status_code === 200
           ) {
             showToast("Payment successful! 🎉", { type: "success" });
+            navigateToPaymentSuccessPage();
+
             return;
           } else {
             showToast("Payment could not be verified.", { type: "error" });

@@ -475,3 +475,14 @@ export const PaymentVerifyAPI = (order_id: string) => {
     }
   );
 };
+
+export const GetLatestpaymentApi = () => {
+  return onePiece.get("/payment", {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+      email: localStorage.getItem("email"),
+    },
+  });
+};
