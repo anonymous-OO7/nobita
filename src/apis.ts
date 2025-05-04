@@ -440,3 +440,38 @@ export const SendReferralQueryAPI = (
     },
   });
 };
+
+//payment
+export const GetPaymentAPI = (order_amount: string, order_currency: string) => {
+  const formData = new FormData();
+  formData.append("order_amount", order_amount);
+  formData.append("order_currency", order_currency);
+  return onePiece.post(`/payment`, formData, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      user_id: `${localStorage.getItem("id")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+      email: localStorage.getItem("email"),
+    },
+  });
+};
+
+export const PaymentVerifyAPI = (order_id: string) => {
+  return onePiece.post(
+    "/payment-verify",
+    { order_id: order_id },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        user_id: `${localStorage.getItem("id")}`,
+        email: localStorage.getItem("email"),
+        name: localStorage.getItem("name"),
+        uuid: `${localStorage.getItem("uuid")}`,
+      },
+    }
+  );
+};

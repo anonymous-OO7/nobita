@@ -6,9 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:staging": "env-cmd -f .env.staging next build",
+    "start:staging": "env-cmd -f .env.staging next start",
+    "build:prod": "env-cmd -f .env.production next build",
+    "start:prod": "env-cmd -f .env.production next start"
   },
   "dependencies": {
+    "@cashfreepayments/cashfree-js": "^1.0.5",
     "@emailjs/browser": "^4.4.1",
     "@heroui/react": "^2.7.6",
     "@nextui-org/react": "^2.4.6",
@@ -40,6 +45,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-infinite-scroller": "^1.2.5",
+    "env-cmd": "^10.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
