@@ -5,7 +5,6 @@ import { load } from "@cashfreepayments/cashfree-js";
 import useApi from "@/hooks/useApi";
 import useToast from "@/hooks/useToast";
 import { GetPaymentAPI, PaymentVerifyAPI } from "@/apis";
-import { AxiosError } from "axios";
 import { Coins, Zap, ShieldCheck, TrendingUp, Star } from "lucide-react";
 
 const Payment = () => {
@@ -14,11 +13,12 @@ const Payment = () => {
   const [basicLoading, setBasicLoading] = useState(false);
   const [proLoading, setProLoading] = useState(false);
   const [ultimateLoading, setUltimateLoading] = useState(false);
+
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
 
   const verifyPayment = useCallback(
-    async (orderIdToVerify: string) => {
+    async (orderIdToVerify) => {
       let attempts = 0;
       const maxAttempts = 5;
 
@@ -29,7 +29,6 @@ const Payment = () => {
             response,
             `Attempt ${attempts + 1} - payment verify response`
           );
-
           if (
             response.order_status === "PAID" ||
             response.status_code === 200
@@ -40,9 +39,9 @@ const Payment = () => {
             showToast("Payment could not be verified.", { type: "error" });
             return;
           }
-        } catch (err: unknown) {
+        } catch (err) {
           attempts++;
-          const error = err as AxiosError<{ message: string }>;
+          const error = err;
           const message =
             error?.response?.data?.message ||
             `Attempt ${attempts} failed. Retrying...`;
@@ -54,7 +53,6 @@ const Payment = () => {
               type: "error",
             });
           } else {
-            // Wait for 5 seconds before retrying
             await new Promise((resolve) => setTimeout(resolve, 5000));
           }
         }
@@ -64,7 +62,7 @@ const Payment = () => {
   );
 
   const handleBuyNow = useCallback(
-    async (orderAmount: number, orderCurrency: string, packType: string) => {
+    async (orderAmount, orderCurrency, packType) => {
       if (packType === "basic") setBasicLoading(true);
       if (packType === "pro") setProLoading(true);
       if (packType === "ultimate") setUltimateLoading(true);
@@ -89,12 +87,24 @@ const Payment = () => {
           const res = await cashfree.checkout(checkoutOptions);
           console.log("Payment result:", res);
 
-          verifyPayment(data.order_id);
+          if (data.order_id) {
+            verifyPayment(data.order_id);
+          } else {
+            console.error(
+              "Original order_id is missing in the backend response."
+            );
+            showToast(
+              "Payment initiated, but could not get original order ID for verification.",
+              { type: "warning" }
+            );
+          }
         } else {
-          showToast("Failed to get session ID", { type: "error" });
+          showToast("Failed to get session ID or order ID from backend", {
+            type: "error",
+          });
         }
-      } catch (err: unknown) {
-        const error = err as AxiosError<{ message: string }>;
+      } catch (err) {
+        const error = err;
         showToast(error?.response?.data?.message || "Some error occurred!", {
           type: "error",
         });
@@ -130,12 +140,13 @@ const Payment = () => {
             </p>
             <p className="mt-6 flex items-baseline gap-x-1">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                ₹149*
+                {/* ₹149* */}
+                ₹1*
               </span>
             </p>
             <button
-              // onClick={() => handleBuyNow(149, "INR", "basic")}
-              onClick={() => handleBuyNow(1, "INR", "basic")}
+              // onClick={() => handleBuyNow(149, "INR", "basic")} // Original amount commented out
+              onClick={() => handleBuyNow(1, "INR", "basic")} // Test amount
               disabled={basicLoading}
               className="text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300 mt-6 block rounded-md py-2 px-3 text-center text-base font-medium leading-6"
             >
@@ -166,12 +177,13 @@ const Payment = () => {
             </p>
             <p className="mt-6 flex items-baseline gap-x-1">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                ₹649*
+                {/* ₹649* */}
+                ₹2*
               </span>
             </p>
             <button
-              // onClick={() => handleBuyNow(649, "INR", "pro")}
-              onClick={() => handleBuyNow(2, "INR", "pro")}
+              // onClick={() => handleBuyNow(649, "INR", "pro")} // Original amount commented out
+              onClick={() => handleBuyNow(2, "INR", "pro")} // Test amount
               disabled={proLoading}
               className="bg-blue-600 text-white shadow-sm hover:bg-blue-500 mt-6 block rounded-md py-2 px-3 text-center text-base font-medium leading-6"
             >
@@ -202,12 +214,13 @@ const Payment = () => {
             </p>
             <p className="mt-6 flex items-baseline gap-x-1">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                ₹2699*
+                {/* ₹2699* */}
+                ₹3*
               </span>
             </p>
             <button
-              // onClick={() => handleBuyNow(2699, "INR", "ultimate")}
-              onClick={() => handleBuyNow(3, "INR", "ultimate")}
+              // onClick={() => handleBuyNow(2699, "INR", "ultimate")} // Original amount commented out
+              onClick={() => handleBuyNow(3, "INR", "ultimate")} // Test amount
               disabled={ultimateLoading}
               className="text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300 mt-6 block rounded-md py-2 px-3 text-center text-base font-medium leading-6"
             >
