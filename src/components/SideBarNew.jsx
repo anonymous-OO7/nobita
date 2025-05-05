@@ -124,9 +124,7 @@ export default function Sidebar({ children, setExpandedMain }) {
                 color="foreground"
               >
                 <p className="text-black font-poppins font-light text-2xl">
-                  {profileDetails?.applies != ""
-                    ? profileDetails?.applies
-                    : "--"}
+                  {profileDetails?.applies}
                 </p>
               </Tooltip>
             </div>

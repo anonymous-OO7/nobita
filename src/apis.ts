@@ -486,3 +486,14 @@ export const GetLatestpaymentApi = () => {
     },
   });
 };
+
+export const GetAllUserCredits = async () => {
+  return onePiece.get(`/remaining-credits`, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+      email: localStorage.getItem("email") || "",
+    },
+  });
+};

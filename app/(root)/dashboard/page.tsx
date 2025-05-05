@@ -5,13 +5,19 @@ import React, { useEffect, useState, useCallback } from "react";
 import useApi from "@/hooks/useApi";
 import useTokenCheck from "@/hooks/useTokenCheck";
 import JobCard from "@/components/cards/JobCard";
-import { GetAllJobsList, GetAllUserAppliedJobsList, SaveJobApi } from "@/apis";
+import {
+  GetAllJobsList,
+  GetAllUserAppliedJobsList,
+  GetAllUserCredits,
+  SaveJobApi,
+} from "@/apis";
 import { Job } from "@/types";
 import useToast from "@/hooks/useToast";
 import JobApplicationModal from "@/components/pages/home/JobApply";
 import { useDisclosure } from "@nextui-org/react";
 import InfiniteScroll from "react-infinite-scroller";
 import PageLoader from "@/components/common/PageLoader";
+import { useRouter } from "next/navigation";
 
 const Home: React.FC = () => {
   useTokenCheck();
@@ -32,6 +38,8 @@ const Home: React.FC = () => {
   const [jobsInfo, setJobsInfo] = React.useState<Job[]>([]);
   const [applyingJob, setApplyingJobInfo] = React.useState<Job>();
   const [allAppliedJobs, setAllAppliedJobs] = React.useState<string[]>([]);
+  const [remainingCredits, setremainingCredits] = React.useState<number>(0);
+  const router = useRouter();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -75,22 +83,33 @@ const Home: React.FC = () => {
   }, [makeApiCall, debouncedSearch]);
 
   React.useEffect(() => {
+    makeApiCall(GetAllUserCredits())
+      .then((response) => {
+        console.log(response, "all credits of user");
+        setremainingCredits(response?.credits_remaining);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [makeApiCall, debouncedSearch]);
+
+  React.useEffect(() => {
     setLoading(true);
     setPage(0);
     setJobsInfo([]);
-    setHasMore(true); // Reset hasMore
-    makeApiCall(GetAllJobsList(1, limit, debouncedSearch)) // Fetch the first page
+    setHasMore(true);
+    makeApiCall(GetAllJobsList(1, limit, debouncedSearch))
       .then((response) => {
         console.log(response, "response from all jobs");
         setJobsInfo(response?.data);
         setTotalPages(response?.total_pages || 1);
         setTotalItems(response?.total_items || 0);
-        setHasMore(response?.total_pages > 1); // Check if there are more pages
-        setPage(1); // Set page to 1 after fetching the first page
+        setHasMore(response?.total_pages > 1);
+        setPage(1);
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
-  }, [makeApiCall]); // Add dependencies for re-fetching on changes
+  }, [makeApiCall]);
 
   const saveJob = React.useCallback(
     (jobUuid: string) => {
@@ -112,14 +131,19 @@ const Home: React.FC = () => {
   const onApplyJob = React.useCallback(
     (job: Job) => {
       console.log("applying job", job);
-      if (allAppliedJobs?.includes(job?.Uuid)) {
-        showToast("Already applied!!", { type: "info" });
+      if (remainingCredits <= 0) {
+        router.replace("/pricing");
+        showToast("No credits left!", { type: "error" });
       } else {
-        setApplyingJobInfo(job);
-        onOpen();
+        if (allAppliedJobs?.includes(job?.Uuid)) {
+          showToast("Already applied!!", { type: "info" });
+        } else {
+          setApplyingJobInfo(job);
+          onOpen();
+        }
       }
     },
-    [onOpen, allAppliedJobs]
+    [onOpen, allAppliedJobs, remainingCredits, router]
   );
 
   return (
