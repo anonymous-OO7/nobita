@@ -334,7 +334,7 @@ const Card: React.FC<CardProps> = ({
               color="success"
               size="lg"
               className="p-2"
-              radius="md"
+              radius="sm"
             >
               <p className="text-2xl font-semibold font-poppins text-black">
                 {job.Price}
@@ -342,18 +342,17 @@ const Card: React.FC<CardProps> = ({
             </Chip>
 
             {isApplied && (
-              <div className="flex flex-row items-center right-0 bg-green-500 z-10 rounded-xl px-1 text-right">
-                <Chip
-                  startContent={<Check size={20} color="white" />}
-                  variant="flat"
-                  color="primary"
+              <div className="flex flex-row items-center right-0 bg-green-500 z-10 rounded px-1 text-right">
+                <Button
+                  startContent={<CircleCheckBig size={20} color="white" />}
+                  variant="light"
                   size="sm"
-                  className="p-1"
+                  className="px-1 text-blue-500"
                 >
                   <p className="text-xs font-light font-poppins text-white">
                     Applied
                   </p>
-                </Chip>
+                </Button>
               </div>
             )}
           </div>

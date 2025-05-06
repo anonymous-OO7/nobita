@@ -94,7 +94,7 @@ export default function DashHeader({
       <NavbarContent justify="start">
         <NavbarBrand>
           <Image src={Logo2} alt="logo" width={120} />
-          <p className=" text-black font-semibold font-poppins sm:block  ">
+          <p className=" text-black font-normal font-poppins sm:block  ">
             {data?.college != "" ? data?.college : "---"}
           </p>
         </NavbarBrand>
@@ -176,10 +176,10 @@ export default function DashHeader({
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold text-black font-poppins">
+              <p className="font-normal text-black font-poppins">
                 Signed in as
               </p>
-              <p className="font-semibold text-black font-poppins">
+              <p className="font-normal text-black font-poppins">
                 {name != "" ? name : ""}
               </p>
             </DropdownItem>
@@ -187,7 +187,7 @@ export default function DashHeader({
             <DropdownItem key="help_and_feedback">
               <p
                 onClick={navigateSavedJobs}
-                className="font-semibold text-black font-poppins"
+                className="font-normal text-black font-poppins"
               >
                 Saved
               </p>
@@ -196,7 +196,7 @@ export default function DashHeader({
             <DropdownItem key="help_and_feedback">
               <p
                 onClick={navigateMyJobs}
-                className="font-semibold text-black font-poppins"
+                className="font-normal text-black font-poppins"
               >
                 My Jobs
               </p>
@@ -205,19 +205,19 @@ export default function DashHeader({
             <DropdownItem key="help_and_feedback">
               <p
                 onClick={handleUpdateProfile}
-                className="font-semibold text-black font-poppins"
+                className="font-normal text-black font-poppins"
               >
                 Update Profile
               </p>
             </DropdownItem>
 
             <DropdownItem key="help_and_feedback">
-              <p className="font-semibold text-black font-poppins">
+              <p className="font-normal text-black font-poppins">
                 Help & Feedback
               </p>
             </DropdownItem>
             <DropdownItem key="logout" color="danger" onClick={handleLogout}>
-              <p className="font-semibold text-black font-poppins">Log Out</p>
+              <p className="font-normal text-black font-poppins">Log Out</p>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
