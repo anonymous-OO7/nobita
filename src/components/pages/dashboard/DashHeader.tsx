@@ -24,6 +24,9 @@ import { useRouter } from "next/navigation";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
 import { Search } from "lucide-react";
 import Logo2 from "../../../assets/workistheadline.svg";
+import { ProfileDetailsType } from "@/types";
+import { Star } from "lucide-react";
+
 interface UserData {
   id: number;
   name: string;
@@ -38,8 +41,12 @@ interface UserData {
 }
 interface DashHeaderProps {
   onOpen: () => void;
+  profileDetails: ProfileDetailsType;
 }
-export default function DashHeader({ onOpen }: DashHeaderProps) {
+export default function DashHeader({
+  onOpen,
+  profileDetails,
+}: DashHeaderProps) {
   const router = useRouter();
   const name = nextLocalStorage()?.getItem("name") ?? "";
 
@@ -52,6 +59,16 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
 
   const handleUpdateProfile = React.useCallback(() => {
     router.replace("/dashboard/profile");
+    // onOpen();
+  }, [router, onOpen]);
+
+  const navigateSavedJobs = React.useCallback(() => {
+    router.replace("/dashboard/saved");
+    // onOpen();
+  }, [router, onOpen]);
+
+  const navigateMyJobs = React.useCallback(() => {
+    router.replace("/dashboard/myjobs");
     // onOpen();
   }, [router, onOpen]);
 
@@ -114,13 +131,23 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
           startContent={<SearchIcon />}
           type="search"
         /> */}
-        <div>
+        <div className="hidden sm:flex">
           <Link href="/dashboard/submit">
             <Button
-              className=" hover:bg-stone-300 bg-buttonPrimary p-2 shadow-md text-white rounded-md font-poppins font-normal my-4"
+              className="hover:bg-stone-300 bg-buttonPrimary p-2 shadow-md text-white rounded-md font-poppins font-normal"
               endContent={<Add />}
             >
-              Create Job Referal
+              Create Job Referral
+            </Button>
+          </Link>
+        </div>
+        <div>
+          <Link href="/pricing">
+            <Button
+              className="hover:bg-stone-300 bg-buttonPrimary p-2 py-4 shadow-md text-white text-xs rounded-md font-poppins font-normal"
+              startContent={<Star size={16} />}
+            >
+              credits {profileDetails.applies}
             </Button>
           </Link>
         </div>
@@ -154,6 +181,24 @@ export default function DashHeader({ onOpen }: DashHeaderProps) {
               </p>
               <p className="font-semibold text-black font-poppins">
                 {name != "" ? name : ""}
+              </p>
+            </DropdownItem>
+
+            <DropdownItem key="help_and_feedback">
+              <p
+                onClick={navigateSavedJobs}
+                className="font-semibold text-black font-poppins"
+              >
+                Saved
+              </p>
+            </DropdownItem>
+
+            <DropdownItem key="help_and_feedback">
+              <p
+                onClick={navigateMyJobs}
+                className="font-semibold text-black font-poppins"
+              >
+                My Jobs
               </p>
             </DropdownItem>
 

@@ -1,12 +1,10 @@
 "use client";
-import * as React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Body from "./Body";
 import { ToastContainer } from "react-toastify";
-import { LocationProps } from "./Breadcrumb";
 import DashHeader from "./pages/dashboard/DashHeader";
 import Sidebar, { SidebarItem } from "./SideBarNew";
-
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Bottombar from "./pages/dashboard/Bottombar";
 import CommonModal from "./pages/home/CommonModal";
 import { useDisclosure } from "@nextui-org/react";
@@ -14,27 +12,51 @@ import {
   FeedBack,
   Home,
   InvoicesSVG,
-  Marketing,
   ProductSVG,
   RentalScheduleSVG,
   Transaction,
 } from "../assets/images/Images";
+import useApi from "@/hooks/useApi";
+import { GetProfileApi } from "@/apis";
+import { ProfileDetailsType } from "@/types";
+
+const emptyProfileDetails = {
+  email: "",
+  uuid: "",
+  name: "",
+  gender: "",
+  country: "",
+  bio: "",
+  expertise: "",
+  seniority: "",
+  work_experience: [],
+  education: [],
+  current_organisation: "",
+  tagline: "",
+  skill: [],
+  social_urls: [],
+  referal_code: "",
+  applies: 0,
+};
+
 interface Props {
   children: React.ReactNode;
-  locations?: LocationProps[];
 }
 
 export default function Main({ children }: Props) {
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure(); // eslint-disable-line
-  const [modaltype, setModaltype] = React.useState(""); // eslint-disable-line
-  const [loading, setLoading] = React.useState(false); // eslint-disable-line
+  const [profileDetails, setProfileDetails] =
+    useState<ProfileDetailsType>(emptyProfileDetails);
+  const { makeApiCall } = useApi();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [expandedMain, setExpandedMain] = useState(true);
 
-  const [expandedMain, setExpandedMain] = React.useState(true);
-  const onopentoggle = React.useCallback(() => {}, []);
-
-  const oncloseModal = React.useCallback(() => {
-    onClose();
-  }, [onClose]);
+  useEffect(() => {
+    makeApiCall(GetProfileApi())
+      .then((response) => {
+        setProfileDetails(response?.data);
+      })
+      .catch((error) => console.error(error));
+  }, [makeApiCall]);
 
   return (
     <>
@@ -42,34 +64,31 @@ export default function Main({ children }: Props) {
       <CommonModal
         onOpen={onOpen}
         isOpen={isOpen}
-        onOpenChange={onopentoggle}
-        type={modaltype}
-        loading={loading}
-        onClose={oncloseModal}
+        onOpenChange={() => {}}
+        type=""
+        loading={false}
+        onClose={onClose}
       />
 
       <div
-        className={`fixed top-0 left-0 right-0 transition-all   ${
+        className={`fixed top-0 left-0 right-0 transition-all z-30 ${
           expandedMain ? "sm:ml-[17%]" : "sm:ml-24"
-        } `}
+        }`}
       >
-        <DashHeader onOpen={onOpen} />
+        <DashHeader onOpen={onOpen} profileDetails={profileDetails} />
       </div>
-      {/* <Body sideView={<SidebarNew setExpandedMain={setExpandedMain} />}>
-        <div className="px-4 bg-white py-6">
-          <div
-            className={`mt-14 ml-[17%] transition-all ${
-              expandedMain ? "sm:ml-72" : "sm:ml-24"
-            }`}
-          >
-            {children}
-          </div>
-        </div>
-      </Body> */}
-      <Body sideView={<SidebarNew setExpandedMain={setExpandedMain} />}>
+
+      <Body
+        sideView={
+          <SidebarNew
+            setExpandedMain={setExpandedMain}
+            profileDetails={profileDetails}
+          />
+        }
+      >
         <div className="px-2 py-[14%] sm:px-4 sm:py-6 bg-white">
           <div
-            className={`mt-0 ml-0 sm:mt-14 transition-all ${
+            className={`mt-0 ml-0 sm:mt-20  transition-all ${
               expandedMain ? "sm:ml-[17%]" : "sm:ml-24"
             }`}
           >
@@ -77,24 +96,27 @@ export default function Main({ children }: Props) {
           </div>
         </div>
       </Body>
+
       <Bottombar />
     </>
   );
 }
 
+// Embedded SidebarNew
 function SidebarNew({
   setExpandedMain,
+  profileDetails,
 }: {
   setExpandedMain: (expanded: boolean) => void;
+  profileDetails: ProfileDetailsType;
 }) {
-  const router = useRouter(); // eslint-disable-line
   const pathname = usePathname();
 
   return (
-    <Sidebar setExpandedMain={setExpandedMain}>
+    <Sidebar setExpandedMain={setExpandedMain} profileDetails={profileDetails}>
       <SidebarItem
         icon={<Home color={pathname === "/dashboard" ? "#fff" : "#683FDB"} />}
-        text={"Home"}
+        text="Home"
         alert={pathname === "/dashboard"}
         active={pathname === "/dashboard"}
         href="/dashboard"
@@ -107,7 +129,7 @@ function SidebarNew({
             }
           />
         }
-        text={"Community"}
+        text="Community"
         alert={pathname === "/dashboard/referral-community"}
         active={pathname === "/dashboard/referral-community"}
         href="/dashboard/referral-community"
@@ -118,7 +140,7 @@ function SidebarNew({
             color={pathname === "/dashboard/applied" ? "#fff" : "#683FDB"}
           />
         }
-        text={"Applied"}
+        text="Applied"
         alert={pathname === "/dashboard/applied"}
         active={pathname === "/dashboard/applied"}
         href="/dashboard/applied"
@@ -129,38 +151,29 @@ function SidebarNew({
             color={pathname === "/dashboard/saved" ? "#fff" : "#683FDB"}
           />
         }
-        text={"Saved"}
+        text="Saved"
         alert={pathname === "/dashboard/saved"}
         active={pathname === "/dashboard/saved"}
         href="/dashboard/saved"
       />
-
-      {/* <SidebarItem
-        icon={<Wrench />}
-        text={"Settings"}
-        alert={pathname === "/dashboard/settings"}
-        active={pathname === "/dashboard/settings"}
-        href="/dashboard/settings"
-      /> */}
       <SidebarItem
         icon={
           <ProductSVG
             color={pathname === "/dashboard/myjobs" ? "#fff" : "#683FDB"}
           />
         }
-        text={"My Jobs"}
+        text="My Jobs"
         alert={pathname === "/dashboard/myjobs"}
         active={pathname === "/dashboard/myjobs"}
         href="/dashboard/myjobs"
       />
-
       <SidebarItem
         icon={
           <FeedBack
             color={pathname === "/dashboard/feedback" ? "#fff" : "#683FDB"}
           />
         }
-        text={"Feedback"}
+        text="Feedback"
         alert={pathname === "/dashboard/feedback"}
         active={pathname === "/dashboard/feedback"}
         href="/dashboard/feedback"

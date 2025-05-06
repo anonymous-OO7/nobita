@@ -13,28 +13,7 @@ import { Tooltip } from "@heroui/react";
 
 const SidebarContext = createContext();
 
-const emptyProfileDetails = {
-  email: "",
-  uuid: "",
-  name: "",
-  gender: "",
-  country: "",
-  bio: "",
-  expertise: "",
-  seniority: "",
-  seniority: "",
-  seniority: "",
-  work_experience: [],
-  education: [],
-  current_organisation: "",
-  tagline: "",
-  skill: [],
-  social_urls: [],
-  referal_code: "",
-  applies: 0,
-};
-
-export default function Sidebar({ children, setExpandedMain }) {
+export default function Sidebar({ children, setExpandedMain, profileDetails }) {
   const [expanded, setExpanded] = useState(true);
   const { makeApiCall } = useApi();
 
@@ -43,21 +22,6 @@ export default function Sidebar({ children, setExpandedMain }) {
   const name = nextLocalStorage()?.getItem("name") ?? "";
 
   const [data, setData] = React.useState();
-
-  const [profileDetails, setProfileDetails] =
-    React.useState(emptyProfileDetails);
-
-  React.useEffect(() => {
-    const storedData = nextLocalStorage()?.getItem("user_data");
-    if (storedData) {
-      try {
-        const parsedData = JSON.parse(storedData);
-        setData(parsedData);
-      } catch (error) {
-        console.log("USER DATA NOT PARSED");
-      }
-    }
-  }, []);
 
   React.useEffect(() => {
     makeApiCall(GetProfileApi())

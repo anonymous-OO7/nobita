@@ -327,3 +327,22 @@ export interface LatestPaymentType {
   terminal_data: any;
   uuid: string; // Assuming this is the payment's UUID
 }
+
+export interface ProfileDetailsType {
+  email: string;
+  uuid: string;
+  name: string;
+  gender: string;
+  country: string;
+  bio: string;
+  expertise: string;
+  seniority: string;
+  work_experience: WorkExperienceType[];
+  education: EducationType[];
+  current_organisation: string;
+  tagline: string;
+  skill: string[];
+  social_urls: SocialUrlType[];
+  referal_code: string;
+  applies: number;
+}

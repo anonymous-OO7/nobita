@@ -28,6 +28,8 @@ const emptyProfileDetails: ProfileDetailsType = {
   tagline: "",
   skill: [],
   social_urls: [],
+  applies: 0,
+  referal_code: "",
 };
 
 export default function UpdateProfilePage() {

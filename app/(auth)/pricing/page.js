@@ -71,6 +71,14 @@ const Payment = () => {
 
   const handleBuyNow = useCallback(
     async (orderAmount, orderCurrency, packType) => {
+      if (
+        localStorage.getItem("email") == "" ||
+        localStorage.getItem("uuid") == "" ||
+        localStorage.getItem("authToken") == ""
+      ) {
+        router.replace("/login");
+        return;
+      }
       if (packType === "basic") setBasicLoading(true);
       if (packType === "pro") setProLoading(true);
       if (packType === "ultimate") setUltimateLoading(true);
@@ -126,15 +134,18 @@ const Payment = () => {
   );
 
   return (
-    <section className="flex items-center justify-center pb-10 bg-white">
+    <section className="flex items-center justify-center bg-white">
       <div
         className="p-4 sm:px-10 flex flex-col justify-center items-center text-base min-h-screen mx-auto"
         id="pricing"
       >
-        <h3 className="text-4xl font-semibold text-center text-black font-poppins flex gap-2 justify-center mb-4 mt-7">
+        <h3 className="text-xl sm:text-4xl font-semibold text-center text-black font-poppins flex gap-2 justify-center mb-4 mt-7">
           Get Workist Credits – Buy Chances to Apply for Referrals!
         </h3>
 
+        <h1 className="text-base sm:text-xl font-semibold text-center text-black font-poppins flex gap-2 justify-center mb-4 mt-2">
+          Credits let you apply to referrals. Want more? checkout the plans now
+        </h1>
         <div className="isolate mx-auto grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {/* BASIC PLAN */}
           <div className="ring-1 ring-gray-200 rounded-3xl p-8 xl:p-10">
