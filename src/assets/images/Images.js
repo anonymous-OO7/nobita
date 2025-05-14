@@ -31,9 +31,9 @@ export const DashboardSVG = ({ color = "#00006D" }) => (
 
 export const RentalScheduleSVG = ({ color = "#00006D" }) => (
   <svg
-    width="32"
-    height="32"
-    viewBox="0 0 32 32"
+    width="22"
+    height="22"
+    viewBox="0 0 24 24"
     fill={color}
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -202,8 +202,8 @@ export const InventorySVG = ({ color = "#00006D" }) => (
 
 export const InvoicesSVG = ({ color = "#00006D" }) => (
   <svg
-    width="32"
-    height="32"
+    width="24"
+    height="24"
     viewBox="0 0 32 32"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -441,8 +441,8 @@ export const CoinBag = () => (
 
 export const Home = ({ color = "#683FDB" }) => (
   <svg
-    width="34"
-    height="34"
+    width="28"
+    height="28"
     viewBox="0 0 28 28"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -456,8 +456,8 @@ export const Home = ({ color = "#683FDB" }) => (
 
 export const Transaction = ({ color = "#683FDB" }) => (
   <svg
-    width="34"
-    height="34"
+    width="24"
+    height="24"
     viewBox="0 0 28 28"
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
@@ -482,9 +482,9 @@ export const Transaction = ({ color = "#683FDB" }) => (
 
 export const FeedBack = ({ color = "#683FDB" }) => (
   <svg
-    width="34"
-    height="34"
-    viewBox="0 0 28 28"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
   >

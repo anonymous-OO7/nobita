@@ -152,7 +152,7 @@ export function SidebarItem({ icon, text, active, alert, href }) {
       >
         {icon}
         <span
-          className={`overflow-hidden transition-all font-rubik font-light ${
+          className={`overflow-hidden transition-all text-sm font-rubik font-light ${
             expanded ? "w-52 ml-3" : "w-0"
           }  ${
             active

@@ -71,16 +71,16 @@ const Header = () => {
         <div className="flex space-x-2">
           <button
             onClick={navigateToLogin}
-            className="bg-white text-black border border-black px-4 py-2 rounded-xl hover:bg-black hover:text-white font-poppins"
+            className="bg-white text-black border border-black px-4 py-1 rounded-md hover:bg-black hover:text-white font-poppins"
           >
             Login
           </button>
-          <button
+          {/* <button
             onClick={navigateToSignup}
             className="bg-white  sm:block text-black border border-black px-4 py-2 rounded-xl hover:bg-black hover:text-white font-poppins"
           >
             Sign Up
-          </button>
+          </button> */}
         </div>
       </div>
     </header>

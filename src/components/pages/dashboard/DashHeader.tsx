@@ -217,7 +217,7 @@ export default function DashHeader({
               </p>
             </DropdownItem>
             <DropdownItem key="logout" color="danger" onClick={handleLogout}>
-              <p className="font-normal text-black font-poppins">Log Out</p>
+              <p className="font-normal text-danger font-poppins">Log Out</p>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
