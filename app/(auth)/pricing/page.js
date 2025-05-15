@@ -159,13 +159,13 @@ const Payment = () => {
             </p>
             <p className="mt-6 flex items-baseline gap-x-1">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                {/* ₹149* */}
-                ₹1*
+                ₹499*
+                {/* ₹1* */}
               </span>
             </p>
             <button
-              // onClick={() => handleBuyNow(149, "INR", "basic")} // Original amount commented out
-              onClick={() => handleBuyNow(1, "INR", "basic")} // Test amount
+              onClick={() => handleBuyNow(499, "INR", "basic")} // Original amount commented out
+              // onClick={() => handleBuyNow(1, "INR", "basic")} // Test amount
               disabled={basicLoading}
               className="text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300 mt-6 block rounded-md py-2 px-3 text-center text-base font-medium leading-6"
             >
@@ -196,13 +196,13 @@ const Payment = () => {
             </p>
             <p className="mt-6 flex items-baseline gap-x-1">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                {/* ₹649* */}
-                ₹2*
+                ₹1999*
+                {/* ₹2* */}
               </span>
             </p>
             <button
-              // onClick={() => handleBuyNow(649, "INR", "pro")} // Original amount commented out
-              onClick={() => handleBuyNow(2, "INR", "pro")} // Test amount
+              onClick={() => handleBuyNow(1999.0, "INR", "pro")} // Original amount commented out
+              // onClick={() => handleBuyNow(2, "INR", "pro")} // Test amount
               disabled={proLoading}
               className="bg-blue-600 text-white shadow-sm hover:bg-blue-500 mt-6 block rounded-md py-2 px-3 text-center text-base font-medium leading-6"
             >
@@ -233,13 +233,13 @@ const Payment = () => {
             </p>
             <p className="mt-6 flex items-baseline gap-x-1">
               <span className="text-5xl font-bold tracking-tight text-gray-900">
-                {/* ₹2699* */}
-                ₹3*
+                ₹4499*
+                {/* ₹3* */}
               </span>
             </p>
             <button
-              // onClick={() => handleBuyNow(2699, "INR", "ultimate")} // Original amount commented out
-              onClick={() => handleBuyNow(3, "INR", "ultimate")} // Test amount
+              onClick={() => handleBuyNow(4499.0, "INR", "ultimate")} // Original amount commented out
+              // onClick={() => handleBuyNow(3, "INR", "ultimate")} // Test amount
               disabled={ultimateLoading}
               className="text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300 mt-6 block rounded-md py-2 px-3 text-center text-base font-medium leading-6"
             >
