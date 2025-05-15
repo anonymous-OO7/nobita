@@ -14,8 +14,8 @@ const baseOnePieceURLS =
     ? "http://192.168.68.111:8080/"
     : // ? "http://192.168.68.113:8080/"
 
-      "https://c344-103-248-173-69.ngrok-free.app";
-// "https://3de9-2405-201-4036-c86d-71cc-67-121e-ac47.ngrok-free.app";
+      "https://bfc4-103-248-173-69.ngrok-free.app";
+// "https://8fe2-180-151-243-84.ngrok-free.app";
 
 const baseBakiURL =
   getEnviromentVariable() === "staging"
