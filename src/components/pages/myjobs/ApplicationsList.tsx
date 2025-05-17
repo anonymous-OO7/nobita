@@ -24,13 +24,13 @@ import useApi from "@/hooks/useApi";
 import useToast from "@/hooks/useToast";
 import DropDownSingle from "./SelectionDropdown";
 import { UpdateApplicantJobsStatusRemarkApi } from "@/apis";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
   applicants: Applications[];
   loading: boolean;
   onOpen: () => void;
   onRowAction: (clientId: React.Key) => void;
-  application_uuid: string;
 }
 
 const COLUMNS = [
@@ -49,10 +49,13 @@ export default function ApplicationsList({
   loading,
   onOpen,
   onRowAction,
-  application_uuid,
 }: Props) {
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
+
+  const searchParams = useSearchParams();
+
+  const application_uuid = searchParams?.get("id") ?? "";
 
   const [filterValue, setFilterValue] = React.useState("");
   const [rowsPerPage, setRowsPerPage] = React.useState(20);
