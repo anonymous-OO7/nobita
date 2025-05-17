@@ -159,12 +159,23 @@ function SidebarNew({
       <SidebarItem
         icon={
           <ProductSVG
-            color={pathname === "/dashboard/myjobs" ? "#fff" : "#683FDB"}
+            color={
+              pathname === "/dashboard/myjobs" ||
+              pathname.includes("/myjobs/applications")
+                ? "#fff"
+                : "#683FDB"
+            }
           />
         }
         text="My Jobs"
-        alert={pathname === "/dashboard/myjobs"}
-        active={pathname === "/dashboard/myjobs"}
+        alert={
+          pathname === "/dashboard/myjobs" ||
+          pathname.includes("/myjobs/applications")
+        }
+        active={
+          pathname === "/dashboard/myjobs" ||
+          pathname.includes("/myjobs/applications")
+        }
         href="/dashboard/myjobs"
       />
       <SidebarItem

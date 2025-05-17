@@ -433,17 +433,25 @@ const Card: React.FC<CardProps> = ({
         </div>
       </div>
 
-      <p className="text-sm font-poppins text-black mt-10 max-h-[20vh] overflow-auto">
-        {showFullDescription
-          ? formatText(job.Description)
-          : formatText(getTrimmedText(job.Description, MAX_TEXT_LENGTH))}
-      </p>
+      <div className="mt-4 max-w-full">
+        <div
+          className="prose max-w-none max-h-[200px] overflow-auto rounded-md p-2  text-black"
+          dangerouslySetInnerHTML={{
+            __html: showFullDescription
+              ? job.Description
+              : job.Description.length > MAX_TEXT_LENGTH
+              ? job.Description.slice(0, MAX_TEXT_LENGTH) + "..."
+              : job.Description,
+          }}
+        />
+      </div>
+
       {job.Description.length > MAX_TEXT_LENGTH && (
         <Button
           variant="light"
           size="sm"
           className="px-1 text-blue-500 mt-1"
-          onClick={() => setShowFullDescription(!showFullDescription)}
+          onPress={() => setShowFullDescription(!showFullDescription)}
         >
           {showFullDescription ? "View Less" : "View More"}
         </Button>

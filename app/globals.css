@@ -31,3 +31,9 @@ body {
     text-wrap: balance;
   }
 }
+
+
+.ql-editor {
+  overflow-y: auto;
+  height: 100% !important;
+}

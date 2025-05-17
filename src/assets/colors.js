@@ -10,6 +10,15 @@ export const Colors = {
   light: "#f8f9fa",
   dark: "#343a40",
   buttonPrimary: "#020839",
+  textprimary: "#683FDB",
+  textBase: "#333333",
+  textLink: "#2775EB",
+  secondryLinkColor: "#68696F",
+  textColorGrey: "#68696F",
+  tableHeaderColor: "#2C2D33",
+  textColorSecondary: "#45464E",
+  bgButtonGreen: "#d2eace",
+  buttonBackground: "#00006D",
 };
 
 // You can also define additional color variables or gradients here

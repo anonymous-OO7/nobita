@@ -203,7 +203,6 @@ export const ApplyJobAPI = (
       "ngrok-skip-browser-warning": "69420",
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      user_id: `${localStorage.getItem("id")}`,
       email: localStorage.getItem("email"),
       name: localStorage.getItem("name"),
       uuid: `${localStorage.getItem("uuid")}`,
@@ -216,7 +215,7 @@ export const GetAllAppliedJobsList = () => {
     headers: {
       "ngrok-skip-browser-warning": "69420",
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      user_id: `${localStorage.getItem("id")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
     },
   });
 };
@@ -345,7 +344,7 @@ export const GetAllUserAppliedJobsList = async () => {
     headers: {
       "ngrok-skip-browser-warning": "69420",
       Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
-      user_id: localStorage.getItem("id") || "",
+      uuid: `${localStorage.getItem("uuid")}`,
       email: localStorage.getItem("email") || "",
     },
   });
@@ -494,6 +493,38 @@ export const GetAllUserCredits = async () => {
       Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
       uuid: `${localStorage.getItem("uuid")}`,
       email: localStorage.getItem("email") || "",
+    },
+  });
+};
+
+export const GetAllApplicationsJobsList = (job_uuid: string) => {
+  return onePiece.get(`/applications-jobid`, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      uuid: job_uuid,
+    },
+  });
+};
+
+export const UpdateApplicantJobsStatusRemarkApi = (
+  applicant_id: string,
+  job_id: string,
+  remark: string,
+  status: string
+) => {
+  // Create a new FormData object and append all required fields
+  const formData = new FormData();
+  formData.append("uuid", applicant_id);
+  formData.append("job_id", job_id);
+  formData.append("remark", remark);
+  formData.append("status", status);
+
+  // Make the POST request to the API endpoint
+  return onePiece.post("/applications-update", formData, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     },
   });
 };

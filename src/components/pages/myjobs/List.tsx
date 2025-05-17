@@ -21,6 +21,8 @@ import useApi from "../../../hooks/useApi";
 import { UpdateMyJobsStatusApi } from "../../../../src/apis";
 import useToast from "../../../../src/hooks/useToast";
 import { formatDateIntl } from "../../../utils/utils";
+import Action from "./Action";
+import { useRouter } from "next/navigation";
 
 interface Props {
   eppOrders: JobListing[];
@@ -53,6 +55,10 @@ const COLUMNS = [
     name: "Status",
     key: "status",
   },
+  {
+    name: "Action",
+    key: "action",
+  },
 ];
 
 export default function OrdersEpp({ eppOrders, loading }: Props) {
@@ -61,6 +67,7 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
   const role = secureLocalStorage.getItem("role");
+  const router = useRouter();
 
   const dropdownData: DropdownType[] = React.useMemo(
     () => [
@@ -177,6 +184,14 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
     [dropdownData, handleStatusChange]
   );
 
+  const handleViewOrders = React.useCallback(
+    (item: JobListing) => {
+      router.push(
+        `/dashboard/myjobs/applications?id=${encodeURIComponent(item.Uuid)}`
+      );
+    },
+    [router]
+  );
   const renderCell = React.useCallback(
     (job: JobListing, columnKey: React.Key) => {
       const index = eppOrders.map((object) => object.ID).indexOf(job.ID);
@@ -228,7 +243,7 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
         case "action":
           return (
             <div className="flex">
-              {/* <Action item={client} downloadInvoice={downloadInvoice} /> */}
+              <Action item={job} onViewOrders={handleViewOrders} />
             </div>
           );
       }

@@ -346,3 +346,16 @@ export interface ProfileDetailsType {
   referal_code: string;
   applies: number;
 }
+
+export interface Applications {
+  applicant_id: string;
+  profile: {
+    uuid: string;
+    name: string;
+    email: string;
+  };
+  time: number;
+  cover: string;
+  status: string;
+  remark: string;
+}

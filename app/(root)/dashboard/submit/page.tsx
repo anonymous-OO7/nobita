@@ -14,6 +14,7 @@ import Textarea from "@/components/common/TextArea";
 import Row from "@/components/common/Row";
 import SearchSelect from "@/components/common/SearchSelect";
 import { useRouter } from "next/navigation";
+import RichTextEditor from "@/components/formikui/RichTextEditor";
 
 const validationSchema = Yup.object().shape({
   companyName: Yup.string().required("Company Name is required"),
@@ -282,11 +283,12 @@ export default function SubmitJob() {
 
               <Spacer size="xs" />
 
-              <Textarea
+              <RichTextEditor
                 name="description"
                 label="Description"
+                placeholder="Write something..."
                 size="large"
-                // className="text-black font-poppins font-light text-lg"
+                helperText="You can use bold, italics, lists, etc."
               />
               <Spacer size="xs" />
 
