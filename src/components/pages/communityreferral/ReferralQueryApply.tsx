@@ -65,7 +65,7 @@ const ReferralQueryModal: React.FC<JobApplicationModalProps> = ({
       const { message } = values;
 
       return makeApiCall(
-        SendReferralQueryAPI(message, applyingReferral.Owner.Email)
+        SendReferralQueryAPI(message, applyingReferral.profile.email)
       )
         .then((response) => {
           if (response?.status === true) {
@@ -107,7 +107,7 @@ const ReferralQueryModal: React.FC<JobApplicationModalProps> = ({
             {({ isSubmitting }) => (
               <Form>
                 <ModalHeader className="flex flex-col gap-1 text-black font-poppins">
-                  Send a message to {applyingReferral?.Owner.Name}
+                  Send a message to {applyingReferral?.profile.name}
                 </ModalHeader>
 
                 <ModalBody>
