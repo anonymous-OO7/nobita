@@ -107,7 +107,12 @@ export const CreateJobApi = (
   maxPay: number,
   price: number,
   category: string,
-  job_url: string
+  job_url: string,
+  minExperience: number,
+  maxExperience: number,
+  remote: boolean,
+  hybrid: boolean,
+  skills: string[] // Array of strings
 ) => {
   const formData = new FormData();
   formData.append("status", status);
@@ -122,6 +127,17 @@ export const CreateJobApi = (
   formData.append("price", price.toString());
   formData.append("category", category);
   formData.append("job_url", job_url);
+
+  // New fields
+  formData.append("min_experience", minExperience.toString());
+  formData.append("max_experience", maxExperience.toString());
+  formData.append("remote", remote.toString());
+  formData.append("hybrid", hybrid.toString());
+
+  // Convert skills array to JSON string
+  if (skills && skills.length > 0) {
+    formData.append("skills", JSON.stringify(skills));
+  }
 
   return onePiece.post("/create-job", formData, {
     headers: {
@@ -230,13 +246,19 @@ export const GetMyJobsApi = () => {
   });
 };
 
-export const UpdateMyJobsStatusApi = (job_id: string, status: string) => {
-  // Create a new FormData object and append all required fields
+export const UpdateMyJobsStatusApi = (
+  job_id: string,
+  status: string,
+  price: number
+) => {
   const formData = new FormData();
   formData.append("id", job_id);
   formData.append("status", status);
 
-  // Make the POST request to the API endpoint
+  if (price !== undefined) {
+    formData.append("price", price.toString());
+  }
+
   return onePiece.post("/myjobs", formData, {
     headers: {
       "ngrok-skip-browser-warning": "69420",

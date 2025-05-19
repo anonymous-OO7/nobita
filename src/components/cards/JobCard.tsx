@@ -303,6 +303,17 @@ const Card: React.FC<CardProps> = ({
     ));
   };
 
+  const parsedSkills: string[] = React.useMemo(() => {
+    if (Array.isArray(job.skills)) {
+      return job.skills;
+    }
+    try {
+      return JSON.parse(job.skills as string);
+    } catch {
+      return [];
+    }
+  }, [job.skills]);
+
   return (
     <div className="p-4  shadow-md rounded-md mb-4 border">
       <div className=" flex flex-row justify-between items-center">
@@ -328,7 +339,7 @@ const Card: React.FC<CardProps> = ({
 
         <div className="flex flex-row justify-center items-center gap-2">
           <div className="flex flex-col md:flex-row gap-2 relative">
-            <Chip
+            {/* <Chip
               startContent={<IndianRupee color="black" size={22} />}
               variant="bordered"
               color="success"
@@ -339,7 +350,7 @@ const Card: React.FC<CardProps> = ({
               <p className="text-2xl font-semibold font-poppins text-black">
                 {job.Price}
               </p>
-            </Chip>
+            </Chip> */}
 
             {isApplied && (
               <div className="flex flex-row items-center right-0 bg-green-500 z-10 rounded px-1 text-right">
@@ -464,6 +475,45 @@ const Card: React.FC<CardProps> = ({
       <p className="text-gray-700">
         Annual Salary: ₹{job.MinPay}Lakh/Per Annum - ₹{job.MaxPay}Lakh/Per Annum
       </p>
+      <p className="text-gray-700 mt-1">
+        Experience Required: {job.MinExperience} - {job.MaxExperience} years
+      </p>
+
+      <p className="text-gray-700 mt-1">
+        Work Type:
+        {job.remote && <span> Remote</span>}
+        {job.hybrid && <span> {job.remote ? " / Hybrid" : "Hybrid"}</span>}
+        {!job.remote && !job.hybrid && <span> On-site</span>}
+      </p>
+
+      {parsedSkills.length > 0 && (
+        <div className="my-2 flex flex-wrap gap-2">
+          {parsedSkills.map((skill, index) => (
+            <Chip
+              key={index}
+              color="primary"
+              variant="bordered"
+              size="sm"
+              className="px-2 py-1"
+            >
+              <p className="text-xs font-poppins text-black">{skill}</p>
+            </Chip>
+          ))}
+        </div>
+      )}
+
+      {job.JobUrl && (
+        <p className="mt-2 text-sm font-poppins text-blue-500">
+          <a href={job.JobUrl} target="_blank" rel="noopener noreferrer">
+            View Job Posting
+          </a>
+        </p>
+      )}
+
+      <p className="text-xs mt-1 font-poppins text-black capitalize">
+        Category: {job.Category?.replace("_", " ")}
+      </p>
+
       <p className="text-xs mt-3 font-poppins text-black">
         Posted {postedDate}
       </p>

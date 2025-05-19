@@ -23,6 +23,7 @@ import useToast from "../../../../src/hooks/useToast";
 import { formatDateIntl } from "../../../utils/utils";
 import Action from "./Action";
 import { useRouter } from "next/navigation";
+import UpdatePrice from "./UpdatePrice";
 
 interface Props {
   eppOrders: JobListing[];
@@ -43,7 +44,7 @@ const COLUMNS = [
     key: "location",
   },
   {
-    name: "Price",
+    name: "Price of referring",
     key: "price",
   },
   {
@@ -145,15 +146,17 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
   // }, []);
 
   const onSaveClaimStatus = React.useCallback(
-    (status: string, currentOrder: JobListing) => {
+    (status: string, currentOrder: JobListing, price: number) => {
       console.log(currentOrder, "payload sending to update");
 
-      makeApiCall(UpdateMyJobsStatusApi(currentOrder.ID.toString(), status))
+      makeApiCall(
+        UpdateMyJobsStatusApi(currentOrder.ID.toString(), status, price)
+      )
         .then(() => {
-          showToast("Status updated successfully", { type: "success" });
+          showToast("updated successfully", { type: "success" });
         })
         .catch(() => {
-          showToast("Status updation failed", { type: "error" });
+          showToast("updation failed", { type: "error" });
         });
     },
     [makeApiCall, showToast]
@@ -162,7 +165,7 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
   const handleStatusChange = React.useCallback(
     // eslint-disable-next-line
     (data: any, item: JobListing) => {
-      onSaveClaimStatus(data, item);
+      onSaveClaimStatus(data, item, item.Price);
     },
     [onSaveClaimStatus]
   );
@@ -192,6 +195,14 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
     },
     [router]
   );
+
+  const handleSubmitPrice = React.useCallback(
+    (price: number, currentOrder: JobListing) => {
+      onSaveClaimStatus(currentOrder.Status, currentOrder, price);
+    },
+    []
+  );
+
   const renderCell = React.useCallback(
     (job: JobListing, columnKey: React.Key) => {
       const index = eppOrders.map((object) => object.ID).indexOf(job.ID);
@@ -226,11 +237,7 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
             </div>
           );
         case "price":
-          return (
-            <div className="flex flex-col">
-              <p className="text-bold text-sm capitalize">{job.Price}</p>
-            </div>
-          );
+          return <UpdatePrice job={job} onSubmitPrice={handleSubmitPrice} />;
 
         case "status":
           return (

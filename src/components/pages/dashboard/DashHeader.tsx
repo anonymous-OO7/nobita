@@ -137,7 +137,7 @@ export default function DashHeader({
               className="hover:bg-stone-300 bg-buttonPrimary p-2 shadow-md text-white rounded-md font-poppins font-normal"
               endContent={<Add />}
             >
-              Create Job Referral
+              Create Job
             </Button>
           </Link>
         </div>

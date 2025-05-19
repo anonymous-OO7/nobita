@@ -19,6 +19,7 @@ export default function Select({
   size,
   labelPlacement = "outside",
   onSelect,
+  multiple = false,
   ...props
 }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -26,6 +27,7 @@ export default function Select({
 
   const onChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
+      console.log(event);
       helpers.setValue(event.target.value);
       onSelect?.(event.target.value);
     },
@@ -40,6 +42,7 @@ export default function Select({
       className={className}
       onChange={onChange}
       size={size}
+      multiple={multiple}
       labelPlacement={labelPlacement}
       errorMessage={meta.touched && meta.error !== undefined && meta.error}
       isInvalid={meta.touched && meta.error !== undefined ? true : false}

@@ -186,6 +186,13 @@ export type Job = {
   MinPay: number;
   MaxPay: number;
   Price: number;
+  MinExperience: number;
+  MaxExperience: number;
+  remote: boolean;
+  hybrid: boolean;
+  skills: string | string[];
+  JobUrl: string;
+  Category: string;
   company: Company;
 };
 
