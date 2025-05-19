@@ -89,8 +89,8 @@ const ReferralCard: React.FC<CardProps> = ({ referral, giveReferral }) => {
       <div className="flex justify-between items-start flex-col sm:flex-row sm:items-center gap-3">
         <div className="flex flex-row items-center gap-4">
           <Avatar
-            src={referral.Company?.logo_url}
-            alt={referral.Company?.name}
+            src={referral.company?.logo_url}
+            alt={referral.company?.name}
             size="lg"
             radius="sm"
           />
@@ -98,7 +98,7 @@ const ReferralCard: React.FC<CardProps> = ({ referral, giveReferral }) => {
             <h2 className="text-xl font-semibold font-poppins text-black">
               {referral.job_role}
             </h2>
-            <p className="text-sm text-gray-600">{referral.Company?.name}</p>
+            <p className="text-sm text-gray-600">{referral.company?.name}</p>
           </div>
         </div>
         {renderStatusChip(referral.status)}
@@ -169,7 +169,7 @@ const ReferralCard: React.FC<CardProps> = ({ referral, giveReferral }) => {
           <User2Icon size={18} color="black" />
           <p className="text-sm font-semibold text-gray-700">
             Requested by{" "}
-            <span className="text-black">{referral.Owner?.Name}</span>
+            <span className="text-black">{referral.profile?.name}</span>
           </p>
         </div>
         <p className="text-xs text-gray-500 font-poppins">
@@ -203,7 +203,7 @@ const ReferralCard: React.FC<CardProps> = ({ referral, giveReferral }) => {
           <span className="text-sm font-poppins text-black">Give Referral</span>
         </Button>
 
-        {referral.Owner.Uuid == localStorage.getItem("uuid") ? (
+        {referral.profile.uuid == localStorage.getItem("uuid") ? (
           <Button color="danger" variant="bordered" size="sm">
             <span className="text-sm font-poppins text-red-700">Delete</span>
           </Button>

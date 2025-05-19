@@ -256,15 +256,15 @@ export type CommunityReferral = {
   DeletedAt: string | null;
   uuid: string;
   code: string;
-  cover_letter: string;
   description: string;
   job_link: string;
+  cover_letter: string;
   job_role: string;
+  status: string;
   owner_uuid: string;
   amount: string;
-  status: string;
 
-  Company: {
+  company: {
     ID: number;
     CreatedAt: string;
     UpdatedAt: string;
@@ -273,7 +273,7 @@ export type CommunityReferral = {
     name: string;
     uuid: string;
     code: string;
-    company_description: string;
+    description: string;
     website_url: string;
     industry: string;
     company_size: string;
@@ -288,25 +288,31 @@ export type CommunityReferral = {
     subscription_plan: string;
     status: string;
     glassdoor_url: string;
+    uploaded_by: string;
   };
 
-  Owner: {
+  profile: {
     ID: number;
     CreatedAt: string;
     UpdatedAt: string;
     DeletedAt: string | null;
-    Name: string;
-    Email: string;
-    Password: string;
-    Role: string;
-    Username: string;
-    Phone: string;
-    Gender: string;
-    Organisation: string;
-    Title: string;
-    Country: string;
-    Otp: string;
-    Uuid: string;
+    email: string;
+    uuid: string;
+    name: string;
+    gender: string;
+    country: string;
+    bio: string;
+    expertise: string;
+    seniority: string;
+    work_experience: string;
+    education: string;
+    current_organisation: string;
+    tagline: string;
+    skill: string;
+    social_url: string;
+    referal_code: string;
+    referred_by: string;
+    applies: number;
   };
 };
 

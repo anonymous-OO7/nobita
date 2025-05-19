@@ -14,7 +14,7 @@ const baseOnePieceURLS =
     ? "http://192.168.68.111:8080/"
     : // ? "http://192.168.68.113:8080/"
 
-      // "https://8fe2-180-151-243-84.ngrok-free.app";
+      // "https://0633-103-248-173-178.ngrok-free.app";
       "https://179b-103-248-173-178.ngrok-free.app";
 
 const baseBakiURL =
