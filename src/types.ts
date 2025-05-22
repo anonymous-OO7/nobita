@@ -264,7 +264,7 @@ export type CommunityReferral = {
   owner_uuid: string;
   amount: string;
 
-  company: {
+  Company: {
     ID: number;
     CreatedAt: string;
     UpdatedAt: string;
@@ -291,7 +291,7 @@ export type CommunityReferral = {
     uploaded_by: string;
   };
 
-  profile: {
+  Profile: {
     ID: number;
     CreatedAt: string;
     UpdatedAt: string;
@@ -315,7 +315,6 @@ export type CommunityReferral = {
     applies: number;
   };
 };
-
 export interface LatestPaymentType {
   CreatedAt: string;
   DeletedAt: string | null;
