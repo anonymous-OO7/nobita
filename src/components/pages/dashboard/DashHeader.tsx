@@ -26,6 +26,7 @@ import { Search } from "lucide-react";
 import Logo2 from "../../../assets/workistheadline.svg";
 import { ProfileDetailsType } from "@/types";
 import { Star } from "lucide-react";
+import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 
 interface UserData {
   id: number;
@@ -132,24 +133,41 @@ export default function DashHeader({
           type="search"
         /> */}
         <div className="hidden sm:flex">
-          <Link href="/dashboard/submit">
+          {/* <Link href="/dashboard/submit">
             <Button
               className="hover:bg-stone-300 bg-buttonPrimary p-2 shadow-md text-white rounded-md font-poppins font-normal"
               endContent={<Add />}
             >
               Create Job
             </Button>
-          </Link>
+          </Link> */}
+          <button
+            onClick={() => (window.location.href = "/dashboard/submit")}
+            className="hover:bg-stone-300 bg-buttonPrimary py-1 px-2 shadow-md text-white text-xs rounded-md font-poppins font-normal flex items-center gap-2"
+          >
+            Create Job
+            <Add />
+          </button>
         </div>
         <div>
-          <Link href="/pricing">
+          {/* <Link href="/pricing">
             <Button
               className="hover:bg-stone-300 bg-buttonPrimary p-2 py-4 shadow-md text-white text-xs rounded-md font-poppins font-normal"
               startContent={<Star size={16} />}
             >
               credits {profileDetails.applies}
             </Button>
-          </Link>
+          </Link> */}
+
+          <button
+            onClick={() => (window.location.href = "/pricing")}
+            className="hover:bg-stone-300 bg-buttonPrimary p-2 py-2 shadow-md text-white text-xs rounded-md font-poppins font-normal flex items-center gap-2"
+          >
+            <span className="whitespace-nowrap">
+              Credits {profileDetails.applies}
+            </span>
+            <Star size={18} />
+          </button>
         </div>
 
         <Button
@@ -162,65 +180,58 @@ export default function DashHeader({
           <Image height={18} src={BellIcon} alt="File" />
         </Button>
 
-        <Dropdown placement="bottom-end">
-          <DropdownTrigger>
+        <Popover placement="bottom-end" showArrow>
+          <PopoverTrigger>
             <Avatar
               isBordered
               as="button"
               className="transition-transform"
               color="secondary"
-              name="Jason Hughes"
+              name="User Avatar"
               size="sm"
               src="https://cdn1.vectorstock.com/i/1000x1000/77/10/men-faceless-profile-vector-13567710.jpg"
             />
-          </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-normal text-black font-poppins">
-                Signed in as
-              </p>
-              <p className="font-normal text-black font-poppins">
-                {name != "" ? name : ""}
-              </p>
-            </DropdownItem>
-
-            <DropdownItem key="help_and_feedback">
-              <p
+          </PopoverTrigger>
+          <PopoverContent className="p-2 w-[60vw] sm:w-[40vw] md:w-[30vw] lg:w-[20vw] max-w-xs">
+            <div className="space-y-1">
+              <div className="px-3 py-2 text-left text-sm">
+                <p className="text-black font-poppins">Signed in as</p>
+                <p className="text-black font-poppins">{name || "---"}</p>
+              </div>
+              <hr />
+              <button
                 onClick={navigateSavedJobs}
-                className="font-normal text-black font-poppins"
+                className="w-full text-left px-3 py-2 hover:bg-stone-100 rounded-md text-sm text-black font-poppins"
               >
                 Saved
-              </p>
-            </DropdownItem>
-
-            <DropdownItem key="help_and_feedback">
-              <p
+              </button>
+              <button
                 onClick={navigateMyJobs}
-                className="font-normal text-black font-poppins"
+                className="w-full text-left px-3 py-2 hover:bg-stone-100 rounded-md text-sm text-black font-poppins"
               >
                 My Jobs
-              </p>
-            </DropdownItem>
-
-            <DropdownItem key="help_and_feedback">
-              <p
+              </button>
+              <button
                 onClick={handleUpdateProfile}
-                className="font-normal text-black font-poppins"
+                className="w-full text-left px-3 py-2 hover:bg-stone-100 rounded-md text-sm text-black font-poppins"
               >
                 Update Profile
-              </p>
-            </DropdownItem>
-
-            <DropdownItem key="help_and_feedback">
-              <p className="font-normal text-black font-poppins">
+              </button>
+              <button
+                onClick={() => alert("Coming soon!")}
+                className="w-full text-left px-3 py-2 hover:bg-stone-100 rounded-md text-sm text-black font-poppins"
+              >
                 Help & Feedback
-              </p>
-            </DropdownItem>
-            <DropdownItem key="logout" color="danger" onClick={handleLogout}>
-              <p className="font-normal text-danger font-poppins">Log Out</p>
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+              </button>
+              <button
+                onClick={handleLogout}
+                className="w-full text-left px-3 py-2 hover:bg-red-100 rounded-md text-sm text-red-600 font-poppins"
+              >
+                Log Out
+              </button>
+            </div>
+          </PopoverContent>
+        </Popover>
       </NavbarContent>
     </Navbar>
   );
