@@ -68,16 +68,14 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full mb-20">
-      <div className="contact-form bg-white shadow-lg rounded-lg p-6 w-full border border-gray-200">
-        <form
-          onSubmit={handleSubmit}
-          className="form-content relative flex flex-col justify-center"
-        >
-          <h2 className="text-2xl font-normal text-black mb-4">Contact Us</h2>
-          <div className="form-inputs flex flex-col justify-between mb-4 w-3/4 sm:w-full">
+    <div className="flex justify-center px-4 sm:px-6 mb-20">
+      <div className="w-full max-w-2xl bg-white shadow-xl rounded-3xl p-8 border border-gray-200">
+        <form onSubmit={handleSubmit} className="form-content space-y-6">
+          <h2 className="text-3xl font-semibold text-gray-900">Contact Us</h2>
+
+          <div className="space-y-4">
             <input
-              className="input-field shadow-sm px-4 py-3 rounded-lg border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 my-2 text-black font-medium"
+              className="w-full px-5 py-3 rounded-xl border border-gray-300 shadow-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#007aff] focus:border-[#007aff] transition"
               id="name"
               type="text"
               name="name"
@@ -87,7 +85,7 @@ const ContactForm = () => {
               required
             />
             <input
-              className="input-field shadow-sm px-4 py-3 rounded-lg border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 my-2 text-black font-medium"
+              className="w-full px-5 py-3 rounded-xl border border-gray-300 shadow-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#007aff] focus:border-[#007aff] transition"
               id="email"
               type="email"
               name="email"
@@ -96,11 +94,9 @@ const ContactForm = () => {
               onChange={handleChange}
               required
             />
-          </div>
-          <div className="form-textarea flex flex-row justify-center items-center mt-2 mb-4 w-3/4 sm:w-full">
             <textarea
               rows="6"
-              className="textarea-field w-full h-40 px-4 py-3 shadow-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-black font-medium"
+              className="w-full px-5 py-3 rounded-xl border border-gray-300 shadow-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#007aff] focus:border-[#007aff] transition resize-none"
               id="message"
               name="message"
               placeholder="Your Message"
@@ -109,18 +105,17 @@ const ContactForm = () => {
               required
             />
           </div>
-          <div className="form-button flex items-center justify-center w-full">
+
+          <div className="flex justify-center">
             <button
-              className="submit-button rounded-lg p-5 bg-[#00006A] text-white font-semibold py-3 hover:bg-[#00004A] transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               type="submit"
               disabled={isLoading}
+              className="bg-white text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-black transition px-6 py-3 rounded-full font-medium shadow-md disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {isLoading ? (
-                <Loader />
+                <Loader className="animate-spin w-5 h-5" />
               ) : (
-                <div className="text-sm font-normal text-black shadow-lg bg-blue-600 p-3">
-                  Send Message
-                </div>
+                "Send Message"
               )}
             </button>
           </div>
