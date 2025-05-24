@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 "use client";
 import React from "react";
 import styled, { keyframes, css } from "styled-components";
@@ -29,38 +28,36 @@ function ClientsAnimation() {
   ];
 
   return (
-    <AppContainer className=" w-screen overflow-hidden">
+    <AppContainer>
       <Wrapper>
-        {/* <Text>With Great Outcomes.</Text> */}
-        {/* <Note>Our customers have gotten offers from awesome companies.</Note> */}
-        <Marquee className=" w-[1300px] sm:w-[2000px]">
+        <Marquee>
           <MarqueeGroup>
-            {row1.map((el) => (
-              <ImageGroup>
-                <Image src={el} />
+            {row1.map((el, index) => (
+              <ImageGroup key={`row1-${index}`}>
+                <Image src={el} alt={`Company ${index + 1}`} />
               </ImageGroup>
             ))}
           </MarqueeGroup>
           <MarqueeGroup>
-            {row1.map((el) => (
-              <ImageGroup>
-                <Image src={el} />
+            {row1.map((el, index) => (
+              <ImageGroup key={`row1-repeat-${index}`}>
+                <Image src={el} alt={`Company repeat ${index + 1}`} />
               </ImageGroup>
             ))}
           </MarqueeGroup>
         </Marquee>
-        <Marquee className=" w-[1300px] sm:w-[2000px]">
+        <Marquee>
           <MarqueeGroup2>
-            {row2.map((el) => (
-              <ImageGroup>
-                <Image src={el} />
+            {row2.map((el, index) => (
+              <ImageGroup key={`row2-${index}`}>
+                <Image src={el} alt={`Company ${index + 1}`} />
               </ImageGroup>
             ))}
           </MarqueeGroup2>
           <MarqueeGroup2>
-            {row2.map((el) => (
-              <ImageGroup>
-                <Image src={el} />
+            {row2.map((el, index) => (
+              <ImageGroup key={`row2-repeat-${index}`}>
+                <Image src={el} alt={`Company repeat ${index + 1}`} />
               </ImageGroup>
             ))}
           </MarqueeGroup2>
@@ -72,59 +69,44 @@ function ClientsAnimation() {
 
 export default ClientsAnimation;
 
+// STYLES
+
 const AppContainer = styled.div`
-  //   width: 100vw;
-  height: 30vh;
+  width: 100vw;
+  height: auto;
   color: #000000;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  padding: 2rem 0;
 `;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: fit-content;
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-`;
-
-const Text = styled.div`
-  font-size: 35px;
-  font-weight: 500;
-  margin-bottom: 10px;
-  color: #02203c;
-`;
-
-const Note = styled.div`
-  font-size: 18px;
-  font-weight: 200;
-  margin-bottom: 40px;
-  color: #7c8e9a;
+  align-items: center;
 `;
 
 const Marquee = styled.div`
   display: flex;
-  // width: 1200px;
   overflow: hidden;
-  user-select: none;
-
   mask-image: linear-gradient(
     to right,
-    hsl(0 0% 0% / 0),
-    hsl(0 0% 0% / 1) 10%,
-    hsl(0 0% 0% / 1) 90%,
-    hsl(0 0% 0% / 0)
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 1) 10%,
+    rgba(0, 0, 0, 1) 90%,
+    rgba(0, 0, 0, 0)
   );
+  width: 100%;
 `;
 
 const scrollX = keyframes`
-  from {
-    left: translateX(0);
+  0% {
+    transform: translateX(0);
   }
-  to {
+  100% {
     transform: translateX(-100%);
   }
 `;
@@ -142,6 +124,7 @@ const common = css`
 const MarqueeGroup = styled.div`
   ${common}
 `;
+
 const MarqueeGroup2 = styled.div`
   ${common}
   animation-direction: reverse;
@@ -151,17 +134,28 @@ const MarqueeGroup2 = styled.div`
 const ImageGroup = styled.div`
   display: grid;
   place-items: center;
-  width: clamp(10rem, 1rem + 40vmin, 30rem);
-  padding: calc(clamp(10rem, 1rem + 30vmin, 30rem) / 10);
+  width: clamp(10rem, 20vw, 18rem);
+  padding: 1rem;
+
+  @media (max-width: 768px) {
+    width: clamp(12rem, 40vw, 20rem);
+  }
+
+  @media (max-width: 480px) {
+    width: clamp(14rem, 60vw, 22rem);
+  }
 `;
 
 const Image = styled.img`
   object-fit: contain;
   width: 100%;
-  height: 100%;
-  /* border: 1px solid black; */
-  border-radius: 0.5rem;
+  height: auto;
+  border-radius: 0.75rem;
   aspect-ratio: 16/9;
-  padding: 5px 20px;
-  // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;

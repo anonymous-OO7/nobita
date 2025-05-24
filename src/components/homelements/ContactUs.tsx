@@ -75,9 +75,9 @@ const Contact = () => {
     <>
       <section
         id="contactus"
-        className="relative z-10 overflow-hidden bg-white py-20  px-10 lg:py-[120px]"
+        className="w-[100%] flex justify-center items-center"
       >
-        <div className="container">
+        <div className=" container relative z-10 overflow-hidden bg-white w-[90%] py-20  px-10 lg:py-[120px]">
           <div className="-mx-4 flex flex-wrap lg:justify-between">
             <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
               <div className="mb-12 max-w-[570px] lg:mb-0">

@@ -7,7 +7,7 @@ import ProfileCard from "./DiscoverPeople";
 const TechContent = () => {
   return (
     <div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center bg-stone-200">
         <div className=" w-[80%] ">
           <div className=" text-lg text-black py-2">
             <span className="text-xl font-normal font-poppins">Make a</span>{" "}
@@ -15,29 +15,60 @@ const TechContent = () => {
               meaningful impact in
             </span>
           </div>
+          <div className="flex flex-wrap justify-start gap-3 my-4">
+            {/* Mobile: Show only a few */}
+            <div className="block sm:hidden gap-2">
+              {[
+                "Data",
+                "Web",
+                "AI/ML",
+                "Product",
+                "Design",
+                "Marketing",
+                "Sales",
+                "Operations",
+              ].map((field) => (
+                <button
+                  key={field}
+                  className="px-4 py-2 mb-2 mr-1 rounded-full border border-[#0071e3] bg-white text-[#0071e3] hover:bg-[#0071e3] hover:text-white font-poppins text-sm transition"
+                >
+                  {field}
+                </button>
+              ))}
+            </div>
 
-          <div className="flex flex-wrap justify-between my-4 ">
-            <button className="w-auto sm:min-w-28 px-4 py-3 rounded-full bg-white hover:bg-[#333] text-black hover:text-white text-center font-poppins text-base mb-2 sm:mb-0">
-              <p className="font-poppins font-normal text-base sm:text-xl">
-                Data
-              </p>
-            </button>
-            <button className="w-auto px-8 py-3 rounded-full bg-white hover:bg-[#333] text-black hover:text-white text-center font-poppins text-base mb-2 sm:mb-0">
-              <p className="font-poppins font-normal text-xl">Network</p>
-            </button>
-            <button className="w-auto px-8 py-3 rounded-full bg-white hover:bg-[#333] text-black hover:text-white text-center font-poppins text-base mb-2 sm:mb-0">
-              <p className="font-poppins font-normal text-xl">Deep Learning</p>
-            </button>
-
-            <button className="w-auto px-8 py-3 rounded-full bg-white hover:bg-[#333] text-black hover:text-white text-center font-poppins text-base mb-2 sm:mb-0">
-              <p className="font-poppins font-normal text-xl">Web</p>
-            </button>
-            <button className="w-auto px-8 py-3 rounded-full bg-white hover:bg-[#333] text-black hover:text-white text-center font-poppins text-base mb-2 sm:mb-0">
-              <p className="font-poppins font-normal text-xl">Algorithm</p>
-            </button>
-            <button className="w-auto px-8 py-3 rounded-full bg-white hover:bg-[#333] text-black hover:text-white text-center font-poppins text-base mb-2 sm:mb-0">
-              <p className="font-poppins font-normal text-xl">Cybersecurity</p>
-            </button>
+            {/* Tablet and up: Show all */}
+            <div className="hidden sm:flex flex-wrap gap-3">
+              {[
+                "Data",
+                "Network",
+                "Deep Learning",
+                "Web",
+                "Algorithm",
+                "Cybersecurity",
+                "AI/ML",
+                "Frontend",
+                "Backend",
+                "Cloud",
+                "DevOps",
+                "Mobile",
+                "Blockchain",
+                "Product",
+                "Design",
+                "Marketing",
+                "Sales",
+                "Operations",
+                "HR",
+                "Finance",
+              ].map((field) => (
+                <button
+                  key={field}
+                  className="px-4 py-2 rounded-full border border-[#0071e3] bg-white text-[#0071e3] hover:bg-[#0071e3] hover:text-white font-poppins text-sm transition"
+                >
+                  {field}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className=" text-lg text-black py-2">

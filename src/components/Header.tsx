@@ -1,88 +1,197 @@
-// components/Header.js
 "use client";
-import React, { useState, useEffect } from "react";
-import { Logo } from "@/assets/images/Logo";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Hamburger from "hamburger-react";
 import LogoWorkist from "../assets/workistlogo.svg";
-import RojgarMitra from "../assets/rm.png";
 
 const Header = () => {
-  const [isHeaderFixed, setIsHeaderFixed] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 40) {
-        setIsHeaderFixed(false);
-      } else {
-        setIsHeaderFixed(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setShowHeader(window.scrollY > 80);
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const navButtonClass =
+    "text-[#000] hover:text-[#0071e3] font-medium text-base";
 
-  const navigateToLogin = React.useCallback(() => {
-    router.push(`/login`);
-  }, [router]);
-  const navigateToSignup = React.useCallback(() => {
-    router.push(`/signup`);
-  }, [router]);
-
-  const navigateToPricing = React.useCallback(() => {
-    router.push(`/pricing`);
-  }, [router]);
   return (
     <header
-      className={`px-4 py-2 sm:py-4 flex justify-center transition-all duration-300 ease-in-out ${
-        isHeaderFixed
-          ? "fixed top-0 left-0 right-0 bg-white shadow-md z-20 "
-          : ""
+      className={`fixed w-full top-0 inset-x-0 z-30 bg-white transition-transform duration-300 ease-out ${
+        showHeader ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="flex justify-between items-center w-full sm:w-[90%] mx-auto">
+      <div className="flex justify-between items-center px-4 sm:px-8 py-1 ">
+        {/* Logo */}
         <div className="flex items-center">
-          {/* Adjust the width and height classes as needed */}
-          {/* <Logo className={`w-20 sm:w-32 ${isHeaderFixed ? "w-12" : ""}`} /> */}
-          <Image
-            src={LogoWorkist}
-            alt="logo"
-            className={`w-14 sm:w-24 ${isHeaderFixed ? "w-12" : ""}`}
-          />
+          <button onClick={() => router.push("/")}>
+            <Image
+              src={LogoWorkist}
+              alt="logo"
+              className="w-20 sm:w-24 lg:w-24 h-auto"
+              priority
+            />
+          </button>
         </div>
-        <div>
-          <div className="flex flex-row justify-center items-center">
-            <h1 className="text-black text-base font-light font-poppins">
-              What is inside
-            </h1>
-            {/* <h1
-              onClick={navigateToPricing}
-              className="text-black text-base font-semibold font-poppins ml-4 hover:underline hover:cursor-pointer"
-            >
-              Pricing
-            </h1> */}
-          </div>
-        </div>
-        <div className="flex space-x-2">
+
+        {/* MOBILE ONLY: Buttons in middle */}
+        <div className="flex-1 flex justify-center items-center space-x-2 lg:hidden">
           <button
-            onClick={navigateToLogin}
-            className="bg-white text-black border border-black px-4 py-1 rounded-md hover:bg-black hover:text-white font-poppins"
+            onClick={() =>
+              window.open(
+                "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
+                "_blank"
+              )
+            }
+            className="text-sm border border-[#0071e3] text-[#0071e3] px-3 py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
+          >
+            Become a Referrer
+          </button>
+          <button
+            onClick={() => router.push("/login")}
+            className="text-sm bg-[#0071e3] text-white px-3 py-1.5 rounded-md hover:bg-[#005bb5] transition"
           >
             Login
           </button>
-          {/* <button
-            onClick={navigateToSignup}
-            className="bg-white  sm:block text-black border border-black px-4 py-2 rounded-xl hover:bg-black hover:text-white font-poppins"
+        </div>
+
+        {/* Desktop Menu */}
+        <nav className="hidden lg:flex items-center space-x-6">
+          <button
+            onClick={() =>
+              window.open(
+                "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
+                "_blank"
+              )
+            }
+            className="border border-[#0071e3] text-[#0071e3] px-4 py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
           >
-            Sign Up
-          </button> */}
+            Become a Referrer
+          </button>
+          <button onClick={() => router.push("/")} className={navButtonClass}>
+            Home
+          </button>
+          <button
+            onClick={() => router.push("/aboutus")}
+            className={navButtonClass}
+          >
+            About Us
+          </button>
+          <button
+            onClick={() => router.push("/services")}
+            className={navButtonClass}
+          >
+            Solutions
+          </button>
+          <button
+            onClick={() => router.push("/blogs")}
+            className={navButtonClass}
+          >
+            Blogs
+          </button>
+          <button
+            onClick={() => router.push("/industries")}
+            className={navButtonClass}
+          >
+            Industries
+          </button>
+          <button
+            onClick={() =>
+              window.open(
+                "https://connectrpl.zohorecruit.in/jobs/Careers",
+                "_blank"
+              )
+            }
+            className={navButtonClass}
+          >
+            Careers
+          </button>
+          <button
+            onClick={() => router.push("/reachus")}
+            className={navButtonClass}
+          >
+            Reach Us
+          </button>
+
+          {/* Desktop Buttons */}
+          <button
+            onClick={() => router.push("/login")}
+            className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
+          >
+            Login
+          </button>
+        </nav>
+
+        {/* Mobile Hamburger */}
+        <div className="lg:hidden flex items-center">
+          <Hamburger size={20} toggled={isMenuOpen} toggle={setIsMenuOpen} />
         </div>
       </div>
+
+      {/* Mobile Dropdown */}
+      {isMenuOpen && (
+        <div className="lg:hidden px-4 pb-4 space-y-2 bg-white border-t">
+          {[
+            { text: "Home", link: "/" },
+            { text: "About Us", link: "/aboutus" },
+            { text: "Solutions", link: "/services" },
+            { text: "Blogs", link: "/blogs" },
+            { text: "Industries", link: "/industries" },
+            { text: "Reach Us", link: "/reachus" },
+          ].map((item) => (
+            <button
+              key={item.text}
+              onClick={() => {
+                setIsMenuOpen(false);
+                router.push(item.link);
+              }}
+              className="block w-full text-left text-black text-sm font-medium py-1"
+            >
+              {item.text}
+            </button>
+          ))}
+          <button
+            onClick={() =>
+              window.open(
+                "https://connectrpl.zohorecruit.in/jobs/Careers",
+                "_blank"
+              )
+            }
+            className="block w-full text-left text-black text-sm font-medium py-1"
+          >
+            Careers
+          </button>
+
+          {/* Mobile Buttons inside dropdown as well (optional, can remove if you want) */}
+          <button
+            onClick={() =>
+              window.open(
+                "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
+                "_blank"
+              )
+            }
+            className="text-sm border border-[#0071e3] text-[#0071e3] w-full text-center py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
+          >
+            Become a Referrer
+          </button>
+          <button
+            onClick={() => {
+              setIsMenuOpen(false);
+              router.push("/login");
+            }}
+            className="text-sm bg-[#0071e3] text-white w-full text-center py-1.5 rounded-md hover:bg-[#005bb5] transition"
+          >
+            Login
+          </button>
+        </div>
+      )}
     </header>
   );
 };
