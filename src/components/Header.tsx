@@ -75,49 +75,22 @@ const Header = () => {
           >
             Become a Referrer
           </button>
-          <button onClick={() => router.push("/")} className={navButtonClass}>
-            Home
-          </button>
+
+          <a href="#" className="hover:text-white" aria-label="Instagram">
+            <button>Home</button>
+          </a>
+
           <button
-            onClick={() => router.push("/aboutus")}
+            onClick={() => router.push("/pricing")}
             className={navButtonClass}
           >
-            About Us
+            Pricing
           </button>
           <button
-            onClick={() => router.push("/services")}
-            className={navButtonClass}
+            onClick={() => router.push("/signup")}
+            className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
           >
-            Solutions
-          </button>
-          <button
-            onClick={() => router.push("/blogs")}
-            className={navButtonClass}
-          >
-            Blogs
-          </button>
-          <button
-            onClick={() => router.push("/industries")}
-            className={navButtonClass}
-          >
-            Industries
-          </button>
-          <button
-            onClick={() =>
-              window.open(
-                "https://connectrpl.zohorecruit.in/jobs/Careers",
-                "_blank"
-              )
-            }
-            className={navButtonClass}
-          >
-            Careers
-          </button>
-          <button
-            onClick={() => router.push("/reachus")}
-            className={navButtonClass}
-          >
-            Reach Us
+            Sign Up
           </button>
 
           {/* Desktop Buttons */}
@@ -157,15 +130,7 @@ const Header = () => {
               {item.text}
             </button>
           ))}
-          <button
-            onClick={() =>
-              window.open(
-                "https://connectrpl.zohorecruit.in/jobs/Careers",
-                "_blank"
-              )
-            }
-            className="block w-full text-left text-black text-sm font-medium py-1"
-          >
+          <button className="block w-full text-left text-black text-sm font-medium py-1">
             Careers
           </button>
 
