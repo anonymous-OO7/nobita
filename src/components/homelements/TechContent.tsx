@@ -7,8 +7,8 @@ import ProfileCard from "./DiscoverPeople";
 const TechContent = () => {
   return (
     <div>
-      <div className="flex justify-center items-center bg-stone-200">
-        <div className=" w-[80%] ">
+      <div className="flex justify-center items-center ">
+        <div className=" w-[80%] mt-8">
           <div className=" text-lg text-black py-2">
             <span className="text-xl font-normal font-poppins">Make a</span>{" "}
             <span className="text-xl font-bold font-poppins">

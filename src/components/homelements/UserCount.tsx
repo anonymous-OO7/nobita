@@ -23,7 +23,7 @@ const UserCount = () => {
                   {inView && <CountUp end={1000} duration={2} suffix="+" />}
                 </div>
                 <div className="text-sm font-medium font-poppins">
-                  Compass has over 100+ daily visitors. Target: 10k+ monthly.
+                  Workist has over 100+ daily visitors.
                 </div>
               </div>
             </div>

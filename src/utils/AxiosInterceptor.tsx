@@ -11,11 +11,11 @@ interface Props {
 
 const baseOnePieceURLS =
   getEnviromentVariable() === "staginga"
-    ? "http://192.168.68.111:8080/"
+    ? "https://1b3c-103-208-105-224.ngrok-free.app"
     : // ? "http://192.168.68.113:8080/"
 
-      "https://aa3c-103-248-173-178.ngrok-free.app";
-// "https://9cb9-103-248-173-53.ngrok-free.app";
+      // "https://aa3c-103-248-173-178.ngrok-free.app";
+      "https://1b3c-103-208-105-224.ngrok-free.app";
 
 const baseBakiURL =
   getEnviromentVariable() === "staging"
