@@ -4,6 +4,7 @@ import "../globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Script from "next/script";
+import AdSense from "@/components/AdSense";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,6 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENTID} />
+      </head>
       <ToastContainer />
       <body className={`${poppins.variable}`}>
         {/* <Script

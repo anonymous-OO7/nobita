@@ -22,7 +22,6 @@ export default function About() {
           <FrontContent />
           <TechContent />
           <Clients />
-
           <Testimonials />
           {/* <Founders /> */}
           <UserCount />

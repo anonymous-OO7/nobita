@@ -2,6 +2,7 @@
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import useToast from "@/hooks/useToast";
+import AdBanner from "../advertisement/AdBanner";
 
 const Contact = () => {
   const [open, setOpen] = useState(false);
@@ -1027,6 +1028,13 @@ const Contact = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="bg-black mb-5">
+          <AdBanner
+            dataAdFormat="auto"
+            dataFullWidthResponsive={true}
+            dataAdSlot="4284247248"
+          />
         </div>
       </section>
     </>
