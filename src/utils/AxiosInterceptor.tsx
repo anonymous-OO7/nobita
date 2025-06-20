@@ -11,7 +11,7 @@ interface Props {
 
 const baseOnePieceURLS =
   getEnviromentVariable() === "staginga"
-    ? "https://d8cf-180-151-243-63.ngrok-free.app"
+    ? "https://0796-180-151-243-63.ngrok-free.app"
     : // ? "http://192.168.68.113:8080/"
 
       // "https://aa3c-103-248-173-178.ngrok-free.app";
