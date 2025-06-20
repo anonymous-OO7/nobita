@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "../globals.css";
 import { Providers } from "./providers";
 import "react-toastify/dist/ReactToastify.css";
+import Script from "next/script";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,6 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable}`}>
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.PUBLIC_GOOGLE_ADSENSE_CLIENTID}`}
+          crossOrigin="anonymous"
+        ></Script>
         <Providers>
           <main>{children}</main>
         </Providers>
