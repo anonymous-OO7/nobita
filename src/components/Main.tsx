@@ -129,7 +129,7 @@ function SidebarNew({
             }
           />
         }
-        text="Community"
+        text="Referral"
         alert={pathname === "/dashboard/referral-community"}
         active={pathname === "/dashboard/referral-community"}
         href="/dashboard/referral-community"

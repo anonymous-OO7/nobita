@@ -14,7 +14,6 @@ import {
   Dropdown,
   DropdownMenu,
   Avatar,
-  Button,
 } from "@nextui-org/react";
 import { Logo } from "../../../assets/Logo";
 import { Add } from "@/assets/Add";
@@ -27,6 +26,8 @@ import Logo2 from "../../../assets/workistheadline.svg";
 import { ProfileDetailsType } from "@/types";
 import { Star } from "lucide-react";
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
+import Button from "@/components/Button";
+import { usePathname } from "next/navigation";
 
 interface UserData {
   id: number;
@@ -50,6 +51,7 @@ export default function DashHeader({
 }: DashHeaderProps) {
   const router = useRouter();
   const name = nextLocalStorage()?.getItem("name") ?? "";
+  const pathname = usePathname();
 
   // const userData = JSON.parse(nextLocalStorage()?.getItem("user_data") ?? "");
 
@@ -72,6 +74,10 @@ export default function DashHeader({
     router.replace("/dashboard/myjobs");
     // onOpen();
   }, [router, onOpen]);
+
+  const navigateToAskReferral = React.useCallback(() => {
+    router.push("/dashboard/referral-community/referral-ask");
+  }, [router]);
 
   const [data, setData] = React.useState<UserData>();
 
@@ -132,33 +138,26 @@ export default function DashHeader({
           startContent={<SearchIcon />}
           type="search"
         /> */}
-        <div className="hidden sm:flex">
-          {/* <Link href="/dashboard/submit">
-            <Button
-              className="hover:bg-stone-300 bg-buttonPrimary p-2 shadow-md text-white rounded-md font-poppins font-normal"
-              endContent={<Add />}
+        {pathname.includes("/dashboard/referral-community") && (
+          <div className="hidden sm:flex gap-2">
+            <button
+              onClick={() => (window.location.href = "/dashboard/submit")}
+              className="hover:bg-stone-300 bg-buttonPrimary py-1 px-2 shadow-md text-white text-xs rounded-md font-poppins font-normal flex items-center gap-2"
             >
-              Create Job
-            </Button>
-          </Link> */}
-          <button
-            onClick={() => (window.location.href = "/dashboard/submit")}
-            className="hover:bg-stone-300 bg-buttonPrimary py-1 px-2 shadow-md text-white text-xs rounded-md font-poppins font-normal flex items-center gap-2"
-          >
-            Create Job
-            <Add />
-          </button>
-        </div>
-        <div>
-          {/* <Link href="/pricing">
+              Add referal
+              <Add />
+            </button>
             <Button
-              className="hover:bg-stone-300 bg-buttonPrimary p-2 py-4 shadow-md text-white text-xs rounded-md font-poppins font-normal"
-              startContent={<Star size={16} />}
+              className="flex flex-row justify-center items-center"
+              onClick={navigateToAskReferral}
+              color="default"
             >
-              credits {profileDetails.applies}
+              Ask referral
             </Button>
-          </Link> */}
+          </div>
+        )}
 
+        <div>
           <button
             onClick={() => (window.location.href = "/pricing")}
             className="hover:bg-stone-300 bg-buttonPrimary p-2 py-2 shadow-md text-white text-xs rounded-md font-poppins font-normal flex items-center gap-2"
@@ -171,9 +170,8 @@ export default function DashHeader({
         </div>
 
         <Button
-          isIconOnly
           color="warning"
-          variant="faded"
+          variant="solid"
           aria-label="Take a photo"
           className="h-8 "
         >

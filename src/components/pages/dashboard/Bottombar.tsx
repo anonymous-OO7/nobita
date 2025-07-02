@@ -28,7 +28,7 @@ function Bottombar() {
     {
       imgURL: "/assets/community.svg",
       route: "/dashboard/referral-community",
-      label: "Community",
+      label: "Referral",
       logocmp: (
         <Transaction
           color={
