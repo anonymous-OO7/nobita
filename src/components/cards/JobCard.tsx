@@ -1,29 +1,28 @@
 import { Job } from "@/types";
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Button, Chip } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import {
   CircleCheck,
-  Pin,
-  Save,
+  CircleCheckBig,
   CircleX,
+  Check,
   TagIcon,
   GemIcon,
   AwardIcon,
   ChartNoAxesCombined,
-  Check,
   UsersRound,
-  IndianRupee,
   Building2Icon,
-  CircleCheckBig,
 } from "lucide-react";
 import { CiLocationOn } from "react-icons/ci";
 import Image from "next/image";
-import { FormatToLakhs } from "@/utils/utils";
+import Button from "../Button";
+
 interface CardProps {
   job: Job;
   onSave: (uuid: string) => void;
   onApply: (job: Job) => void;
+  onViewDetails: (job: Job) => void;
   isApplied: boolean;
 }
 
@@ -31,14 +30,9 @@ const Card: React.FC<CardProps> = ({
   job,
   onSave,
   onApply,
+  onViewDetails,
   isApplied = false,
 }) => {
-  const MAX_TEXT_LENGTH = 350;
-  const [showFullDescription, setShowFullDescription] = React.useState(false);
-
-  const getTrimmedText = (text: string, maxLength: number) =>
-    text.length <= maxLength ? text : text.slice(0, maxLength) + "...";
-
   const backgroundColorClass =
     job.Status === "inactive" ||
     job.Status === "hired" ||
@@ -50,7 +44,7 @@ const Card: React.FC<CardProps> = ({
     addSuffix: true,
   });
 
-  const renderJobType = React.useCallback((value: string) => {
+  const renderJobType = (value: string) => {
     switch (value) {
       case "active":
         return (
@@ -107,51 +101,25 @@ const Card: React.FC<CardProps> = ({
           </Chip>
         );
     }
-  }, []);
+  };
 
-  const growinfFast = React.useCallback((value: boolean) => {
-    switch (value) {
-      case true:
-        return (
-          <Chip
-            startContent={<ChartNoAxesCombined size={18} />}
-            variant="bordered"
-            color="warning"
-            size="sm"
-            className="p-2 -z-0"
-          >
-            <p className="text-sm font-poppins text-black">Growing Fast</p>
-          </Chip>
-        );
-      case false:
-        return (
-          <Chip
-            startContent={<ChartNoAxesCombined size={18} />}
-            variant="bordered"
-            color="success"
-            size="sm"
-            className="p-2 -z-0"
-          >
-            <p className="text-sm font-poppins text-black">Well Established</p>
-          </Chip>
-        );
+  const growinfFast = (value: boolean) => {
+    return (
+      <Chip
+        startContent={<ChartNoAxesCombined size={18} />}
+        variant="bordered"
+        color={value ? "warning" : "success"}
+        size="sm"
+        className="p-2 -z-0"
+      >
+        <p className="text-sm font-poppins text-black">
+          {value ? "Growing Fast" : "Well Established"}
+        </p>
+      </Chip>
+    );
+  };
 
-      default:
-        return (
-          <Chip
-            startContent={<ChartNoAxesCombined size={18} />}
-            variant="flat"
-            color="warning"
-            size="sm"
-            className="p-2 -z-0"
-          >
-            <p className="text-sm font-poppins text-black">Growing Fast</p>
-          </Chip>
-        );
-    }
-  }, []);
-
-  const renderType = React.useCallback((value: string) => {
+  const renderType = (value: string) => {
     switch (value) {
       case "fulltime":
         return (
@@ -160,35 +128,13 @@ const Card: React.FC<CardProps> = ({
             variant="flat"
             color="primary"
             size="sm"
-            className=" p-1"
+            className="p-1"
           >
             <p className="text-sm font-poppins text-black">Full-Time</p>
           </Chip>
         );
       case "contract":
-        return (
-          <Chip
-            startContent={<ChartNoAxesCombined size={18} />}
-            variant="flat"
-            color="warning"
-            size="sm"
-            className=" p-1"
-          >
-            <p className="text-sm font-poppins text-black">Contract</p>
-          </Chip>
-        );
       case "internship":
-        return (
-          <Chip
-            startContent={<ChartNoAxesCombined size={18} />}
-            variant="flat"
-            color="warning"
-            size="sm"
-            className=" p-1"
-          >
-            <p className="text-sm font-poppins text-black">Internship</p>
-          </Chip>
-        );
       case "freelance":
         return (
           <Chip
@@ -196,12 +142,13 @@ const Card: React.FC<CardProps> = ({
             variant="flat"
             color="warning"
             size="sm"
-            className=" p-1"
+            className="p-1"
           >
-            <p className="text-sm font-poppins text-black">Freelance</p>
+            <p className="text-sm font-poppins text-black">
+              {value.charAt(0).toUpperCase() + value.slice(1)}
+            </p>
           </Chip>
         );
-
       default:
         return (
           <Chip
@@ -209,104 +156,64 @@ const Card: React.FC<CardProps> = ({
             variant="flat"
             color="primary"
             size="sm"
-            className=" p-1"
+            className="p-1"
           >
             <p className="text-sm font-poppins text-black">Full-Time</p>
           </Chip>
         );
     }
-  }, []);
+  };
 
-  const renderPriceTag = React.useCallback((price: number) => {
-    let chipProps: {
-      startContent: React.ReactNode;
-      color:
-        | "default"
-        | "secondary"
-        | "primary"
-        | "danger"
-        | "success"
-        | "warning"
-        | undefined;
-      variant:
-        | "flat"
-        | "solid"
-        | "bordered"
-        | "light"
-        | "faded"
-        | "shadow"
-        | "dot"
-        | undefined;
-      size: "sm" | "md" | "lg" | undefined;
-      content: string;
-    } = {
-      startContent: null,
-      color: "default",
-      variant: "flat",
-      size: "sm",
-      content: "Unknown",
-    };
-
+  const renderPriceTag = (price: number) => {
     if (price < 2000) {
-      chipProps = {
-        startContent: <TagIcon size={18} />,
-        color: "secondary",
-        variant: "flat",
-        size: "sm",
-        content: "Affordable",
-      };
+      return (
+        <Chip
+          startContent={<TagIcon size={18} />}
+          color="secondary"
+          variant="flat"
+          size="sm"
+        >
+          <p className="text-sm font-poppins text-black">Affordable</p>
+        </Chip>
+      );
     } else if (price >= 1000 && price < 2000) {
-      chipProps = {
-        startContent: <AwardIcon size={18} />,
-        color: "secondary",
-        variant: "flat",
-        size: "sm",
-        content: "Competitive Pricing",
-      };
+      return (
+        <Chip
+          startContent={<AwardIcon size={18} />}
+          color="secondary"
+          variant="flat"
+          size="sm"
+        >
+          <p className="text-sm font-poppins text-black">Competitive Pricing</p>
+        </Chip>
+      );
     } else if (price >= 2000 && price < 5000) {
-      chipProps = {
-        startContent: <GemIcon size={18} />,
-        color: "primary",
-        variant: "flat",
-        size: "sm",
-        content: "Premium",
-      };
-    } else if (price >= 5000) {
-      chipProps = {
-        startContent: <GemIcon size={18} />,
-        color: "danger",
-        variant: "flat",
-        size: "sm",
-        content: "Rare",
-      };
+      return (
+        <Chip
+          startContent={<GemIcon size={18} />}
+          color="primary"
+          variant="flat"
+          size="sm"
+        >
+          <p className="text-sm font-poppins text-black">Premium</p>
+        </Chip>
+      );
+    } else {
+      return (
+        <Chip
+          startContent={<GemIcon size={18} />}
+          color="danger"
+          variant="flat"
+          size="sm"
+        >
+          <p className="text-sm font-poppins text-black">Rare</p>
+        </Chip>
+      );
     }
-
-    return (
-      <Chip
-        startContent={chipProps.startContent}
-        color={chipProps.color}
-        variant={chipProps.variant}
-        size={chipProps.size}
-      >
-        <p className="text-sm font-poppins text-black">{chipProps.content}</p>
-      </Chip>
-    );
-  }, []);
-
-  // Function to render description with newlines and spaces preserved
-  const formatText = (text: string) => {
-    return text.split("\n").map((line, index) => (
-      <span key={index}>
-        {line}
-        <br />
-      </span>
-    ));
   };
 
   const parsedSkills: string[] = React.useMemo(() => {
-    if (Array.isArray(job.skills)) {
-      return job.skills;
-    }
+    if (Array.isArray(job.skills)) return job.skills;
     try {
       return JSON.parse(job.skills as string);
     } catch {
@@ -315,179 +222,117 @@ const Card: React.FC<CardProps> = ({
   }, [job.skills]);
 
   return (
-    <div className="p-4  shadow-md rounded-md mb-4 border">
-      <div className=" flex flex-row justify-between items-center">
-        <div className="flex flex-col sm:flex-row gap-3 justify-start sm:items-center">
-          <div className="flex flex-row items-center gap-2">
-            {job?.company?.logo_url && job?.company?.logo_url != "" ? (
-              <Image
-                src={job?.company?.logo_url}
-                width={60}
-                height={60}
-                alt="Picture of the author"
-              />
-            ) : (
-              <Building2Icon color="black" size={30} />
-            )}
-            <h2 className="font-semibold text-xl font-poppins text-black">
-              {job.Position}
-            </h2>
+    <div className="p-5 shadow-md rounded-md mb-6 border bg-white">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+        <div className="flex items-center gap-3">
+          {job?.company?.logo_url ? (
+            <Image
+              src={job?.company?.logo_url}
+              width={50}
+              height={50}
+              alt="Company Logo"
+              className="rounded-md"
+            />
+          ) : (
+            <Building2Icon color="black" size={30} />
+          )}
+          <div>
+            <h2 className="text-lg font-medium text-black">{job.Position}</h2>
+            <p className="text-sm text-gray-600">{job.company.name}</p>
           </div>
-
+        </div>
+        <div className="flex flex-row flex-wrap gap-2">
           {renderType(job?.Type)}
+          {renderJobType(job.Status)}
+          {growinfFast(parseInt(job.company.company_size) > 500 ? false : true)}
         </div>
+      </div>
 
-        <div className="flex flex-row justify-center items-center gap-2">
-          <div className="flex flex-col md:flex-row gap-2 relative">
-            {/* <Chip
-              startContent={<IndianRupee color="black" size={22} />}
-              variant="bordered"
+      <div className="mt-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+        <div className="flex items-center gap-2 text-sm text-gray-700">
+          <CiLocationOn className="text-black" />
+          <span>{job.Location}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Chip
+            startContent={<UsersRound size={16} />}
+            variant="flat"
+            color="default"
+            size="sm"
+          >
+            <span className="text-sm text-black">
+              {job.company.company_size}+ Employees
+            </span>
+          </Chip>
+          {renderPriceTag(job.Price)}
+          {isApplied && (
+            <Chip
+              startContent={<CircleCheckBig size={16} />}
               color="success"
-              size="lg"
-              className="p-2"
-              radius="sm"
+              variant="flat"
+              size="sm"
+              className="bg-green-500 text-white"
             >
-              <p className="text-2xl font-semibold font-poppins text-black">
-                {job.Price}
-              </p>
-            </Chip> */}
+              Applied
+            </Chip>
+          )}
+        </div>
+      </div>
 
-            {isApplied && (
-              <div className="flex flex-row items-center right-0 bg-green-500 z-10 rounded px-1 text-right">
-                <Button
-                  startContent={<CircleCheckBig size={20} color="white" />}
-                  variant="light"
-                  size="sm"
-                  className="px-1 text-blue-500"
-                >
-                  <p className="text-xs font-light font-poppins text-white">
-                    Applied
-                  </p>
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className=" flex flex-row gap-1 items-center mt-3">
-        <p className="text-sm font-poppins text-black">{job.company.name}</p>
-        <div className=" flex flex-row gap-1 items-center">
-          <CiLocationOn className="h-4 w-4 text-black" />
-          <p className="text-xs font-poppins text-black">{job.Location}</p>
-        </div>
-      </div>
-      <div className="my-3">
-        <Chip
-          startContent={<UsersRound size={18} />}
-          variant="flat"
-          color="default"
-          size="sm"
-          className="px-2"
-        >
-          <p className="text-sm font-poppins text-black">
-            {job.company.company_size}+ Employees
+      <div className="mt-4 flex justify-between items-center flex-wrap gap-4">
+        <div className="text-sm text-gray-700">
+          <p>
+            {job.MinExperience} - {job.MaxExperience} yrs • ₹{job.MinPay}L - ₹
+            {job.MaxPay}L •{" "}
+            {job.remote ? "Remote" : job.hybrid ? "Hybrid" : "On-site"}
           </p>
-        </Chip>
-      </div>
-
-      <div className="flex flex-row justify-between items-center">
-        <div className="flex flex-wrap gap-4 md:flex-nowrap">
-          <div className="w-full md:w-auto">{renderJobType(job.Status)}</div>
-          <div className="w-full md:w-auto">{renderPriceTag(job.Price)}</div>
-          <div className="w-full md:w-auto">
-            {growinfFast(
-              parseInt(job.company.company_size) > 500 ? false : true
-            )}
-          </div>
         </div>
-        <div className="flex flex-row justify-center items-center gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Button
             color="primary"
-            variant="bordered"
+            variant="outline"
             onClick={() => onSave(job.Uuid)}
+            size="sm"
           >
-            <p className="text-sm font-poppins text-blue-400">Save</p>
+            <span className="text-sm font-normal text-blue-500">Save</span>
           </Button>
           <Button
-            className={`rounded-lg p-4 ${backgroundColorClass}`}
+            color="secondary"
+            variant="outline"
+            onClick={() => onViewDetails(job)}
+            size="sm"
+          >
+            <span className="text-sm font-medium text-secondary">
+              View Details
+            </span>
+          </Button>
+          <Button
+            className={`rounded-md ${backgroundColorClass}`}
             color={
-              job.Status === "inactive" ||
-              job.Status === "hired" ||
-              job.Status === "closed"
+              ["inactive", "hired", "closed"].includes(job.Status)
                 ? "danger"
                 : "primary"
             }
             variant={
-              job.Status === "inactive" ||
-              job.Status === "hired" ||
-              job.Status === "closed"
+              ["inactive", "hired", "closed"].includes(job.Status)
                 ? "solid"
-                : "flat"
+                : "ghost"
             }
+            size="sm"
             onClick={() => onApply(job)}
-            disabled={
-              job.Status === "inactive" ||
-              job.Status === "hired" ||
-              job.Status === "closed"
-                ? true
-                : false
-            }
+            disabled={["inactive", "hired", "closed"].includes(job.Status)}
           >
-            <p className="text-sm font-poppins text-white capitalize">
-              {job.Status === "inactive" ||
-              job.Status === "hired" ||
-              job.Status === "closed"
+            <span className="text-sm text-white font-medium">
+              {["inactive", "hired", "closed"].includes(job.Status)
                 ? job.Status
                 : "Apply"}
-            </p>
+            </span>
           </Button>
         </div>
       </div>
 
-      <div className="mt-4 max-w-full">
-        <div
-          className="prose max-w-none max-h-[200px] overflow-auto rounded-md p-2  text-black"
-          dangerouslySetInnerHTML={{
-            __html: showFullDescription
-              ? job.Description
-              : job.Description.length > MAX_TEXT_LENGTH
-              ? job.Description.slice(0, MAX_TEXT_LENGTH) + "..."
-              : job.Description,
-          }}
-        />
-      </div>
-
-      {job.Description.length > MAX_TEXT_LENGTH && (
-        <Button
-          variant="light"
-          size="sm"
-          className="px-1 text-blue-500 mt-1"
-          onPress={() => setShowFullDescription(!showFullDescription)}
-        >
-          {showFullDescription ? "View Less" : "View More"}
-        </Button>
-      )}
-
-      {/* <p className="text-gray-700">
-        Annual Salary: ₹{FormatToLakhs(job.MinPay)} - ₹
-        {FormatToLakhs(job.MaxPay)}
-      </p> */}
-      <p className="text-gray-700">
-        Annual Salary: ₹{job.MinPay}Lakh/Per Annum - ₹{job.MaxPay}Lakh/Per Annum
-      </p>
-      <p className="text-gray-700 mt-1">
-        Experience Required: {job.MinExperience} - {job.MaxExperience} years
-      </p>
-
-      <p className="text-gray-700 mt-1">
-        Work Type:
-        {job.remote && <span> Remote</span>}
-        {job.hybrid && <span> {job.remote ? " / Hybrid" : "Hybrid"}</span>}
-        {!job.remote && !job.hybrid && <span> On-site</span>}
-      </p>
-
       {parsedSkills.length > 0 && (
-        <div className="my-2 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-2">
           {parsedSkills.map((skill, index) => (
             <Chip
               key={index}
@@ -496,27 +341,27 @@ const Card: React.FC<CardProps> = ({
               size="sm"
               className="px-2 py-1"
             >
-              <p className="text-xs font-poppins text-black">{skill}</p>
+              <span className="text-xs text-black">{skill}</span>
             </Chip>
           ))}
         </div>
       )}
 
       {job.JobUrl && (
-        <p className="mt-2 text-sm font-poppins text-blue-500">
+        <p className="mt-3 text-sm text-blue-600 font-medium">
           <a href={job.JobUrl} target="_blank" rel="noopener noreferrer">
             View Job Posting
           </a>
         </p>
       )}
 
-      <p className="text-xs mt-1 font-poppins text-black capitalize">
-        Category: {job.Category?.replace("_", " ")}
-      </p>
-
-      <p className="text-xs mt-3 font-poppins text-black">
-        Posted {postedDate}
-      </p>
+      <div className="mt-2 text-xs text-gray-500">
+        <p>
+          <span className="font-medium text-black">Category:</span>{" "}
+          {job.Category?.replace("_", " ")}
+        </p>
+        <p>Posted {postedDate}</p>
+      </div>
     </div>
   );
 };

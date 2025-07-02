@@ -88,7 +88,7 @@ export default function Main({ children }: Props) {
       >
         <div className="px-2 py-[14%] sm:px-4 sm:py-6 bg-white">
           <div
-            className={`mt-0 ml-0 sm:mt-20  transition-all ${
+            className={`mt-0 ml-0   transition-all ${
               expandedMain ? "sm:ml-[17%]" : "sm:ml-24"
             }`}
           >

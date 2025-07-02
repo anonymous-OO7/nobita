@@ -15,30 +15,28 @@ const FrontContent = () => {
             </div>
           </div>
 
-          <div className="md:w-1/2 ">
+          <div className="px-6 md:p-0 md:w-1/2 ">
             <div className="text-lg sm:text-xl md:text-2xl lg:text-4xl text-black">
               <span className="text-4xl  md:text-5xl lg:text-7xl font-normal font-poppins">
-                Unlock Your Career Potential
-              </span>{" "}
+                We connect you to the right job
+              </span>
               <span className="text-4xl  md:text-5xl lg:text-7xl font-bold font-poppins">
-                with the Power of
+                every step of the way
               </span>
               <br />
-              <span className="text-4xl  md:text-5xl lg:text-7xl font-bold font-poppins">
-                Referrals
-              </span>
             </div>
           </div>
+        </div>
+        <div className="text-left mt-5 text-lg font-normal font-poppins text-black px-4">
+          From tech to finance, healthcare to marketing, our platform connects
+          you with professionals in over 50 industries.
         </div>
         <div className="text-left text-lg font-normal font-poppins text-black p-4">
           Did you know that referred candidates are 5 times more likely to be
           hired? Leverage the network of industry experts to get your foot in
           the door.
         </div>
-        <div className="text-left text-lg font-normal font-poppins text-black px-4">
-          From tech to finance, healthcare to marketing, our platform connects
-          you with professionals in over 50 industries.
-        </div>
+
         <div className="text-left text-lg font-normal font-poppins text-black px-4 hidden sm:block">
           Find the perfect referral to match your career goals.
         </div>
