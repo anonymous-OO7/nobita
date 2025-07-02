@@ -12,7 +12,7 @@ import {
   SortDescriptor,
   Chip,
 } from "@nextui-org/react";
-import { CiFilter, CiSearch } from "react-icons/ci";
+import { CiSearch } from "react-icons/ci";
 import Button from "../../Button";
 import Spacer from "../../Spacer";
 import { Colors } from "@/assets/colors";
@@ -445,8 +445,8 @@ export default function ApplicationsList({
             <Row>
               <Button
                 color="default"
-                variant="bordered"
-                startContent={<CiFilter size={18} />}
+                variant="outline"
+                // startContent={<CiFilter size={18} />}
                 className="font-rubik"
                 size="sm"
                 radius="sm"

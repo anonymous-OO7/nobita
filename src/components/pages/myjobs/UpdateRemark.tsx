@@ -39,7 +39,7 @@ export default function UpdateRemarks({ application, onSubmitRemark }: Props) {
           name="remark"
           size="sm"
           endContent={
-            <Button isIconOnly variant="light">
+            <Button variant="solid">
               <Image src={Send} alt="send" />
             </Button>
           }

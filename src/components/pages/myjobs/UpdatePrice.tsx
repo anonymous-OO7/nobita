@@ -39,7 +39,7 @@ export default function UpdatePrice({ job, onSubmitPrice }: Props) {
           name="price"
           size="sm"
           endContent={
-            <Button isIconOnly variant="light">
+            <Button variant="ghost">
               <Image src={Send} alt="send" />
             </Button>
           }

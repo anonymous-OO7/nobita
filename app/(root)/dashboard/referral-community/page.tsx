@@ -81,7 +81,7 @@ const Saved = () => {
             </p>
           </div>
 
-          <Button onPress={navigateToAskReferral} color="secondary">
+          <Button onClick={navigateToAskReferral} color="secondary">
             Ask referral
           </Button>
         </div>
