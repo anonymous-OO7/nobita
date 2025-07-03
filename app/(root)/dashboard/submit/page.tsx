@@ -207,7 +207,7 @@ export default function SubmitJob() {
 
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-2xl  mt-20">
         <h2 className="mb-4 text-2xl font-normal text-gray-900">
           Create a Job Referal
         </h2>

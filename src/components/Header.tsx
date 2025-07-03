@@ -10,15 +10,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     setShowHeader(window.scrollY > 80);
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
   const navButtonClass =
     "text-[#000] hover:text-[#0071e3] font-medium text-base";
 
@@ -76,9 +67,9 @@ const Header = () => {
             Become a Referrer
           </button>
 
-          <a href="#" className="hover:text-white" aria-label="Instagram">
-            <button>Home</button>
-          </a>
+          <button onClick={() => router.push("/")} className={navButtonClass}>
+            Home
+          </button>
 
           <button
             onClick={() => router.push("/pricing")}
@@ -86,20 +77,38 @@ const Header = () => {
           >
             Pricing
           </button>
-          <button
-            onClick={() => router.push("/signup")}
-            className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
-          >
-            Sign Up
-          </button>
 
-          {/* Desktop Buttons */}
-          <button
-            onClick={() => router.push("/login")}
-            className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
-          >
-            Login
-          </button>
+          {/* Recruiter Buttons */}
+          <div className="flex items-center space-x-2 border-l border-gray-200 pl-4 ml-2">
+            <button
+              onClick={() => router.push("/signup?is_recruiter=true")}
+              className="bg-purple-600 text-white px-4 py-1.5 rounded-md hover:bg-purple-700 transition"
+            >
+              Recruiter Sign Up
+            </button>
+            <button
+              onClick={() => router.push("/login?is_recruiter=true")}
+              className="bg-purple-600 text-white px-4 py-1.5 rounded-md hover:bg-purple-700 transition"
+            >
+              Recruiter Login
+            </button>
+          </div>
+
+          {/* Regular Buttons */}
+          <div className="flex items-center space-x-2 border-l border-gray-200 pl-4 ml-2">
+            <button
+              onClick={() => router.push("/signup")}
+              className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
+            >
+              Job Seeker Sign Up
+            </button>
+            <button
+              onClick={() => router.push("/login")}
+              className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
+            >
+              Job Seeker Login
+            </button>
+          </div>
         </nav>
 
         {/* Mobile Hamburger */}
@@ -113,11 +122,7 @@ const Header = () => {
         <div className="lg:hidden px-4 pb-4 space-y-2 bg-white border-t">
           {[
             { text: "Home", link: "/" },
-            { text: "About Us", link: "/aboutus" },
-            { text: "Solutions", link: "/services" },
-            { text: "Blogs", link: "/blogs" },
-            { text: "Industries", link: "/industries" },
-            { text: "Reach Us", link: "/reachus" },
+            { text: "Pricing", link: "/pricing" },
           ].map((item) => (
             <button
               key={item.text}
@@ -130,11 +135,7 @@ const Header = () => {
               {item.text}
             </button>
           ))}
-          <button className="block w-full text-left text-black text-sm font-medium py-1">
-            Careers
-          </button>
 
-          {/* Mobile Buttons inside dropdown as well (optional, can remove if you want) */}
           <button
             onClick={() =>
               window.open(
@@ -146,6 +147,37 @@ const Header = () => {
           >
             Become a Referrer
           </button>
+
+          {/* Recruiter Buttons - Mobile */}
+          <button
+            onClick={() => {
+              setIsMenuOpen(false);
+              router.push("/signup?is_recruiter=true");
+            }}
+            className="text-sm bg-purple-600 text-white w-full text-center py-1.5 rounded-md hover:bg-purple-700 transition"
+          >
+            Recruiter Sign Up
+          </button>
+          <button
+            onClick={() => {
+              setIsMenuOpen(false);
+              router.push("/login?is_recruiter=true");
+            }}
+            className="text-sm bg-purple-600 text-white w-full text-center py-1.5 rounded-md hover:bg-purple-700 transition"
+          >
+            Recruiter Login
+          </button>
+
+          {/* Regular Buttons - Mobile */}
+          <button
+            onClick={() => {
+              setIsMenuOpen(false);
+              router.push("/signup");
+            }}
+            className="text-sm bg-[#0071e3] text-white w-full text-center py-1.5 rounded-md hover:bg-[#005bb5] transition"
+          >
+            Job Seeker Sign Up
+          </button>
           <button
             onClick={() => {
               setIsMenuOpen(false);
@@ -153,7 +185,7 @@ const Header = () => {
             }}
             className="text-sm bg-[#0071e3] text-white w-full text-center py-1.5 rounded-md hover:bg-[#005bb5] transition"
           >
-            Login
+            Job Seeker Login
           </button>
         </div>
       )}

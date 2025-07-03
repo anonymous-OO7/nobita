@@ -6,17 +6,17 @@ import * as Yup from "yup";
 import Input from "@/components/common/Input";
 import Spacer from "@/components/common/Spacer";
 import { LoadingIcon } from "@/assets/images/Loading";
-import { useRouter } from "next/navigation";
 import Select from "@/components/common/Select";
 import { SelectType } from "@/types";
 import useApi from "@/hooks/useApi";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
-import { CreateUserApi } from "@/apis"; // Ensure correct import
+import { CreateUserApi } from "@/apis";
 import useToast from "@/hooks/useToast";
 import Image from "next/image";
 import Worklist from "../../../src/assets/logo.png";
 import { AxiosError } from "axios";
-// Example options for the select
+import { useRouter, useSearchParams } from "next/navigation";
+
 const genderOptions: SelectType[] = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },
@@ -31,10 +31,12 @@ const INITIAL_VALUES = {
   referal_code: "",
   country: "",
   username: "",
-  role: "normal",
+  role: "normal", // Default role
 };
 
 export default function SignUp() {
+  const searchParams = useSearchParams();
+  const isRecruiter = searchParams?.get("is_recruiter") === "true";
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
   const emailLocal = nextLocalStorage()?.getItem("email");
@@ -47,39 +49,35 @@ export default function SignUp() {
       router.replace("/login");
     }
   }, [emailLocal, router]);
-  const Gender: SelectType[] = [
-    {
-      label: "Male",
-      value: "male",
-    },
-    {
-      label: "Female",
-      value: "female",
-    },
-  ];
+
   const navigateToHomePage = React.useCallback(() => {
-    router.replace("/dashboard");
-  }, [router]);
+    // Redirect to different pages based on role
+    const homePage = isRecruiter ? "/recruiter" : "/dashboard";
+    router.replace(homePage);
+  }, [router, isRecruiter]);
 
   const handleSubmit = React.useCallback(
     async (values: typeof INITIAL_VALUES) => {
       setLoading(true);
 
+      // Set role based on isRecruiter flag
+      const userRole = isRecruiter ? "recruiter" : "normal";
+      const submissionValues = { ...values, role: userRole };
+
       try {
         const response = await makeApiCall(
           CreateUserApi(
-            values.email,
-            values.password,
-            values.name,
-            values.role,
-            values.username,
-            values.phone,
-            values.gender,
-            values.referal_code,
-            values.country
+            submissionValues.email,
+            submissionValues.password,
+            submissionValues.name,
+            submissionValues.role,
+            submissionValues.username,
+            submissionValues.phone,
+            submissionValues.gender,
+            submissionValues.referal_code,
+            submissionValues.country
           )
         );
-        console.log(response, "RESPONSE OF USER CREATION");
 
         if (response?.status === true) {
           localStorage.setItem("authToken", response?.token);
@@ -96,7 +94,6 @@ export default function SignUp() {
         }
       } catch (err: unknown) {
         const error = err as AxiosError<{ message: string }>;
-
         if (error?.response?.data?.message) {
           showToast(error.response.data.message, { type: "error" });
         } else {
@@ -106,7 +103,7 @@ export default function SignUp() {
         setLoading(false);
       }
     },
-    [makeApiCall, navigateToHomePage, showToast]
+    [makeApiCall, navigateToHomePage, showToast, isRecruiter]
   );
 
   const validationSchema = Yup.object().shape({
@@ -128,8 +125,14 @@ export default function SignUp() {
           className={`w-14 sm:w-24 rounded-xl mb-4`}
         />
         <h2 className="mb-4 text-2xl font-poppins font-normal text-gray-900">
-          Sign Up
+          {isRecruiter ? "Recruiter Sign Up" : "Job Seeker Sign Up"}
         </h2>
+        <p className="mb-6 text-gray-600">
+          {isRecruiter
+            ? "Create your recruiter account to find the best candidates for your company."
+            : "Create your account to find your dream job and connect with employers."}
+        </p>
+
         <Formik
           initialValues={INITIAL_VALUES}
           onSubmit={handleSubmit}
@@ -149,6 +152,7 @@ export default function SignUp() {
               label="Password"
               placeholder="Enter Password"
               name="password"
+              type="password"
             />
             <Spacer size="xs" />
             <Input label="Phone Number" placeholder="Phone" name="phone" />
@@ -169,10 +173,19 @@ export default function SignUp() {
               name="referal_code"
               tooltip="*Optional Enter any referral code shared by your friend. You both will be rewarded by credits"
             />
-
             <Spacer size="xs" />
             <Input label="Country" placeholder="Country" name="country" />
             <Spacer size="xs" />
+
+            {isRecruiter && (
+              <>
+                <p className="text-sm text-gray-500 mb-4">
+                  By signing up as a recruiter, you agree to our terms of
+                  service for employers.
+                </p>
+              </>
+            )}
+
             <div className="flex justify-center items-center">
               {loading ? (
                 <button
@@ -188,7 +201,9 @@ export default function SignUp() {
                   type="submit"
                   className="px-5 py-2.5 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  Submit
+                  {isRecruiter
+                    ? "Sign Up as Recruiter"
+                    : "Sign Up as Job Seeker"}
                 </button>
               )}
             </div>

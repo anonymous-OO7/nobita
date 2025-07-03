@@ -1,4 +1,4 @@
-import { gradients } from "@/assets/colors";
+import { Colors, gradients } from "@/assets/colors";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Clients from "@/components/homelements/Clients";
@@ -15,7 +15,7 @@ export default function About() {
     <div>
       <div
         className="flex flex-col min-h-screen "
-        style={{ background: gradients.gradientbackground }}
+        style={{ background: Colors.light }}
       >
         <Header />
         <div className="flex-grow">
