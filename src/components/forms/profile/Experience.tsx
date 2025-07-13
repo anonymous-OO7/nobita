@@ -8,11 +8,10 @@ import {
   SelectType,
   WorkExperienceType,
 } from "@/types";
-import Row from "@/components/common/Row";
-import Button from "@/components/Button";
 import Select from "@/components/common/Select";
 import RDatePicker from "@/components/common/RNDatePicker";
-import { DateValue } from "@heroui/react";
+import SearchSelect from "@/components/formikui/SearchSelectMultiselect";
+import { expertiseSkillsOptions } from "../../../assets/data/index";
 
 interface Props {
   profileData: ProfileDetailsType;
@@ -35,13 +34,16 @@ function Modal({
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h2 className="text-xl mb-4">{title}</h2>
+        <h2 className="text-xl mb-4 font-semibold text-gray-900">{title}</h2>
         <div className="space-y-4">{children}</div>
-        <div className="flex justify-between mt-4">
-          <button onClick={onCancel} className="text-gray-500">
+        <div className="flex justify-between mt-6">
+          <button onClick={onCancel} className="text-gray-500 hover:underline">
             Cancel
           </button>
-          <button onClick={onSave} className="text-blue-500">
+          <button
+            onClick={onSave}
+            className="text-blue-600 font-semibold hover:underline"
+          >
             Save
           </button>
         </div>
@@ -70,6 +72,21 @@ export default function Experience({ profileData }: Props) {
     ],
     []
   );
+
+  const seniorityOptions = [
+    { value: "", label: "Select seniority level" },
+    { value: "intern", label: "Intern" },
+    { value: "entry", label: "Entry-level" },
+    { value: "junior", label: "Junior" },
+    { value: "mid", label: "Mid-level" },
+    { value: "senior", label: "Senior" },
+    { value: "lead", label: "Lead" },
+    { value: "manager", label: "Manager" },
+    { value: "director", label: "Director" },
+    { value: "vp", label: "Vice President" },
+    { value: "c_level", label: "C-Level Executive" },
+    { value: "founder", label: "Founder / Co-founder" },
+  ];
 
   const [newWork, setNewWork] = React.useState<WorkExperienceType>({
     role: "",
@@ -146,7 +163,7 @@ export default function Experience({ profileData }: Props) {
   };
 
   return (
-    <section className="space-y-8">
+    <section className="space-y-10">
       <div className="flex flex-row space-x-4">
         <div className="flex-1">
           <InputText
@@ -154,15 +171,24 @@ export default function Experience({ profileData }: Props) {
             placeholder="Enter expertise"
             {...formik.getFieldProps("expertise")}
           />
-          <Spacer size="xs" />
+
+          <SearchSelect
+            name="expertise"
+            label="Technical Expertise"
+            options={expertiseSkillsOptions}
+            isMulti
+            placeholder="Search skills..."
+            isRequired
+          />
         </div>
         <div className="flex-1">
-          <InputText
+          <Select
             label="Seniority Level"
-            placeholder="Enter seniority level"
+            placeholder="Select seniority level"
+            item={seniorityOptions}
+            size="sm"
             {...formik.getFieldProps("seniority")}
           />
-          <Spacer size="xs" />
         </div>
       </div>
 
@@ -288,10 +314,10 @@ export default function Experience({ profileData }: Props) {
         />
         <Spacer size="sm" />
         <Select
+          name="employmentType"
           label="Employment Type"
           placeholder="Select type"
           item={fieldDropdowndata}
-          name="field"
           size="sm"
           onChange={(e) =>
             handleChange(setNewWork, "employmentType", e.target.value)
@@ -318,15 +344,18 @@ export default function Experience({ profileData }: Props) {
             handleChange(setNewWork, "duration.end", val ?? "")
           }
         />
-        <InputText
+        <SearchSelect
+          name="work_skills"
           label="Skills"
-          placeholder="Comma separated"
-          value={newWork.skills.join(", ")}
-          onChange={(e) =>
+          options={expertiseSkillsOptions}
+          isMulti
+          placeholder="Select skills..."
+          value={newWork.skills}
+          onChange={(selected) =>
             handleChange(
               setNewWork,
               "skills",
-              e.target.value.split(",").map((s) => s.trim())
+              selected.map((opt: any) => opt.value)
             )
           }
         />
@@ -366,15 +395,18 @@ export default function Experience({ profileData }: Props) {
             handleChange(setNewEdu, "duration.end", val ?? "")
           }
         />
-        <InputText
+        <SearchSelect
+          name="edu_skills"
           label="Skills"
-          placeholder="Comma separated"
-          value={newEdu.skills.join(", ")}
-          onChange={(e) =>
+          options={expertiseSkillsOptions}
+          isMulti
+          placeholder="Select skills..."
+          value={newEdu.skills}
+          onChange={(selected) =>
             handleChange(
               setNewEdu,
               "skills",
-              e.target.value.split(",").map((s) => s.trim())
+              selected.map((opt: any) => opt.value)
             )
           }
         />

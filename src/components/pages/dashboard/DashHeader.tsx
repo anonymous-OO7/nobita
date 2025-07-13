@@ -163,7 +163,7 @@ export default function DashHeader({
             className="hover:bg-stone-300 bg-buttonPrimary p-2 py-2 shadow-md text-white text-xs rounded-md font-poppins font-normal flex items-center gap-2"
           >
             <span className="whitespace-nowrap">
-              Credits {profileDetails.applies}
+              Credits {profileDetails?.applies}
             </span>
             <Star size={18} />
           </button>

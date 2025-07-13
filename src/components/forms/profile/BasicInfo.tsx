@@ -6,6 +6,7 @@ import { ProfileDetailsType } from "@/types";
 import Textarea from "@/components/common/TextArea";
 import Row from "@/components/common/Row";
 import Button from "../../Button";
+import RichTextEditor from "@/components/formikui/RichTextEditor";
 
 interface Props {
   profileData: ProfileDetailsType;
@@ -72,11 +73,12 @@ export default function BasicInfo({ profileData }: Props) {
             {...getFieldProps?.("country")}
           />
         </div>
-        <Textarea
+        <RichTextEditor
           label="Bio"
           placeholder="Enter your bio"
-          {...getFieldProps?.("bio")}
           size="large"
+          helperText="You can use bold, italics, lists, etc."
+          {...getFieldProps?.("bio")}
         />
       </div>
     </section>

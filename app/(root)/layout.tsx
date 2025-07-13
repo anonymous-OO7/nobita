@@ -5,6 +5,7 @@ import { Providers } from "./providers";
 import "react-toastify/dist/ReactToastify.css";
 import Script from "next/script";
 import AdSense from "@/components/AdSense";
+import { Suspense } from "react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -29,19 +30,21 @@ export default function RootLayout({
         <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENTID} />
       </head>
       <body className={`${poppins.variable}`}>
-        {/* <Script
+        <Suspense>
+          {/* <Script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.PUBLIC_GOOGLE_ADSENSE_CLIENTID}`}
           crossOrigin="anonymous"
         ></Script> */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-          data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENTID}
-        ></script>
-        <Providers>
-          <main>{children}</main>
-        </Providers>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+            data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENTID}
+          ></script>
+          <Providers>
+            <main>{children}</main>
+          </Providers>
+        </Suspense>
       </body>
     </html>
   );

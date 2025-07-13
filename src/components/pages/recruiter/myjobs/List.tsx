@@ -17,13 +17,14 @@ import secureLocalStorage from "react-secure-storage";
 import Spacer from "@/components/Spacer";
 import { DropdownType, JobListing } from "@/types.js";
 import DropDownSingle from "./SelectionDropdown";
-import useApi from "../../../hooks/useApi";
-import { UpdateMyJobsStatusApi } from "../../../../src/apis";
-import useToast from "../../../../src/hooks/useToast";
-import { formatDateIntl } from "../../../utils/utils";
+
 import Action from "./Action";
 import { useRouter } from "next/navigation";
 import UpdatePrice from "./UpdatePrice";
+import useApi from "@/hooks/useApi";
+import useToast from "@/hooks/useToast";
+import { UpdateMyJobsStatusApi } from "@/apis";
+import { formatDateIntl } from "@/utils/utils";
 
 interface Props {
   eppOrders: JobListing[];
@@ -43,10 +44,7 @@ const COLUMNS = [
     name: "Location",
     key: "location",
   },
-  {
-    name: "Price of referring",
-    key: "price",
-  },
+
   {
     name: "Date",
     key: "date",
@@ -236,8 +234,6 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
               </p>
             </div>
           );
-        case "price":
-          return <UpdatePrice job={job} onSubmitPrice={handleSubmitPrice} />;
 
         case "status":
           return (
@@ -360,7 +356,7 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
   return (
     <div className="flex flex-col">
       <p className="text-black text-lg leading-8 font-roboto font-normal mt-[2%]">
-        Manage your listed referrals
+        Manage your listed Jobs
       </p>
       <Spacer size="xs" />
       <Table

@@ -22,6 +22,7 @@ import JobApplicationModal from "@/components/pages/home/JobApply";
 import JobCard from "@/components/cards/JobCard";
 import Pagination from "@/components/pages/home/Pagination";
 import JobInfoPage from "@/components/cards/JobInfoPage";
+import ActiveRentals from "../myjobs/page";
 
 const useIsDesktop = () => {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -271,6 +272,10 @@ const ReferralCommunity = () => {
                 No community referral requests found.
               </p>
             )}
+          </Tab>
+
+          <Tab key="myreferral-tab" title="My Listings">
+            <ActiveRentals />
           </Tab>
         </Tabs>
       </div>

@@ -40,6 +40,7 @@ const emptyProfileDetails = {
   social_urls: [],
   referal_code: "",
   applies: 0,
+  username: "",
 };
 
 interface Props {
@@ -238,26 +239,26 @@ function SidebarNew({
         active: pathname === "/dashboard/saved",
         href: "/dashboard/saved",
       },
-      {
-        icon: (
-          <ProductSVG
-            color={
-              pathname === "/dashboard/myjobs" ||
-              pathname.includes("/myjobs/applications")
-                ? "#fff"
-                : "#683FDB"
-            }
-          />
-        ),
-        text: "My Jobs",
-        alert:
-          pathname === "/dashboard/myjobs" ||
-          pathname.includes("/myjobs/applications"),
-        active:
-          pathname === "/dashboard/myjobs" ||
-          pathname.includes("/myjobs/applications"),
-        href: "/dashboard/myjobs",
-      },
+      // {
+      //   icon: (
+      //     <ProductSVG
+      //       color={
+      //         pathname === "/dashboard/myjobs" ||
+      //         pathname.includes("/myjobs/applications")
+      //           ? "#fff"
+      //           : "#683FDB"
+      //       }
+      //     />
+      //   ),
+      //   text: "My Jobs",
+      //   alert:
+      //     pathname === "/dashboard/myjobs" ||
+      //     pathname.includes("/myjobs/applications"),
+      //   active:
+      //     pathname === "/dashboard/myjobs" ||
+      //     pathname.includes("/myjobs/applications"),
+      //   href: "/dashboard/myjobs",
+      // },
       {
         icon: (
           <FeedBack

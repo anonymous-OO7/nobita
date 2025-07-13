@@ -550,3 +550,12 @@ export const UpdateApplicantJobsStatusRemarkApi = (
     },
   });
 };
+
+export const GetUniversalProfileApi = (user_id: string) => {
+  return onePiece.get("/getall-profile", {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      user_id: `${user_id}`,
+    },
+  });
+};

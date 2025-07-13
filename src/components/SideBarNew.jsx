@@ -10,12 +10,14 @@ import { gradients } from "../../src/assets/colors";
 import useApi from "@/hooks/useApi";
 import { GetProfileApi } from "@/apis";
 import { Tooltip } from "@heroui/react";
+import { useRouter } from "next/navigation";
 
 const SidebarContext = createContext();
 
 export default function Sidebar({ children, setExpandedMain, profileDetails }) {
   const [expanded, setExpanded] = useState(true);
   const { makeApiCall } = useApi();
+  const router = useRouter();
 
   // const name = nextLocalStorage()?.getItem("name") ?? "name";
   const email = nextLocalStorage()?.getItem("email") ?? "";
@@ -35,6 +37,10 @@ export default function Sidebar({ children, setExpandedMain, profileDetails }) {
         console.log("finally");
       });
   }, [makeApiCall]);
+
+  const navigateToProfileView = React.useCallback(() => {
+    router.push(`/user?username=${profileDetails.username}`);
+  }, [router, profileDetails]);
 
   return (
     <div>
@@ -118,7 +124,10 @@ export default function Sidebar({ children, setExpandedMain, profileDetails }) {
                 overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
               `}
             >
-              <div className="leading-4 text-black">
+              <div
+                onClick={navigateToProfileView}
+                className="leading-4 text-black"
+              >
                 <p> {name != "" ? name : ""}</p>
                 <span className="text-xs text-gray-600">
                   <p className="text-black font-poppins font-light text-xs">

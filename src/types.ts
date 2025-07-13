@@ -242,6 +242,7 @@ export interface ProfileDetailsType {
   tagline: string;
   skill: string[];
   social_urls: SocialUrlType[];
+  username: string;
 }
 
 export interface Option {

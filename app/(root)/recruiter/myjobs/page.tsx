@@ -3,7 +3,7 @@
 import React from "react";
 
 import { GetMyJobsApi } from "../../../../src/apis";
-import OrdersEpp from "../../../../src/components/pages/myjobs/List";
+import OrdersEpp from "../../../../src/components/pages/recruiter/myjobs/List";
 import useApi from "../../../../src/hooks/useApi";
 import Spacer from "../../../../src/components/Spacer";
 import { JobListing } from "@/types";

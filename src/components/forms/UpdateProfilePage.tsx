@@ -30,6 +30,7 @@ const emptyProfileDetails: ProfileDetailsType = {
   social_urls: [],
   applies: 0,
   referal_code: "",
+  username: "string",
 };
 
 export default function UpdateProfilePage() {
@@ -128,7 +129,11 @@ export default function UpdateProfilePage() {
       skill,
       social_urls,
     }: ProfileDetailsType) => {
-      // Example of how you can process the array of work experiences, education, and social URLs
+      // Convert expertise array to comma-separated string
+      const formattedExpertise = Array.isArray(expertise)
+        ? expertise.join(", ")
+        : expertise;
+
       console.log(
         email,
         uuid,
@@ -136,7 +141,7 @@ export default function UpdateProfilePage() {
         gender,
         country,
         bio,
-        expertise,
+        formattedExpertise,
         seniority,
         work_experience,
         education,
@@ -146,30 +151,6 @@ export default function UpdateProfilePage() {
         social_urls,
         "All data sending"
       );
-      // const formattedwork_experience = work_experience.map((experience) => ({
-      //   role: experience.role,
-      //   company: experience.company,
-      //   employmentType: experience.employmentType,
-      //   duration: {
-      //     start: experience.duration.start,
-      //     end: experience.duration.end,
-      //     years: experience.duration.years,
-      //   },
-      //   location: experience.location,
-      //   skills: experience.skills.join(", "),
-      // }));
-
-      // const formattedEducation = education.map((edu) => ({
-      //   universityName: edu.universityName,
-      //   degree: edu.degree,
-      //   duration: edu.duration,
-      //   skills: edu.skills.join(", "),
-      // }));
-
-      // const formattedsocial_urls = social_urls.map((social) => ({
-      //   platform: social.platform,
-      //   url: social.url,
-      // }));
 
       return makeApiCall(
         UpdateProfileApi(
@@ -178,7 +159,7 @@ export default function UpdateProfilePage() {
           gender,
           country,
           bio,
-          expertise,
+          formattedExpertise,
           seniority,
           work_experience,
           education,
@@ -190,12 +171,11 @@ export default function UpdateProfilePage() {
       )
         .then((response) => {
           console.log(response, "Responseof upload products");
-
-          toast.success("Profile updated succesfully");
+          toast.success("Profile updated successfully");
         })
         .catch((error) => {
           toast.error(
-            error?.response?.data?.message || "Product addition failed"
+            error?.response?.data?.message || "Profile update failed"
           );
         });
     },

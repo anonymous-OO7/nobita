@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Hamburger from "hamburger-react";
@@ -13,43 +13,29 @@ const Header = () => {
   const navButtonClass =
     "text-[#000] hover:text-[#0071e3] font-medium text-base";
 
+  const baseButton =
+    "text-sm font-medium rounded-md transition duration-200 ease-in-out px-4 py-1.5";
+
+  const recruiterButton = `${baseButton} border border-gray-300 text-gray-900 hover:bg-gray-100`;
+
+  const jobSeekerButton = `${baseButton} bg-black text-white hover:bg-gray-900`;
+
   return (
     <header
-      className={`fixed w-full top-0 inset-x-0 z-30 bg-white transition-transform duration-300 ease-out ${
+      className={`fixed w-full top-0 inset-x-0 z-30 bg-white shadow-sm transition-transform duration-300 ease-out ${
         showHeader ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="flex justify-between items-center px-4 sm:px-8 py-1 ">
+      <div className="flex justify-between items-center px-4 sm:px-8 py-2">
         {/* Logo */}
         <div className="flex items-center">
           <button onClick={() => router.push("/")}>
             <Image
               src={LogoWorkist}
               alt="logo"
-              className="w-20 sm:w-24 lg:w-24 h-auto"
+              className="w-20 sm:w-24 h-auto"
               priority
             />
-          </button>
-        </div>
-
-        {/* MOBILE ONLY: Buttons in middle */}
-        <div className="flex-1 flex justify-center items-center space-x-2 lg:hidden">
-          <button
-            onClick={() =>
-              window.open(
-                "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
-                "_blank"
-              )
-            }
-            className="text-sm border border-[#0071e3] text-[#0071e3] px-3 py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
-          >
-            Become a Referrer
-          </button>
-          <button
-            onClick={() => router.push("/login")}
-            className="text-sm bg-[#0071e3] text-white px-3 py-1.5 rounded-md hover:bg-[#005bb5] transition"
-          >
-            Login
           </button>
         </div>
 
@@ -78,33 +64,17 @@ const Header = () => {
             Pricing
           </button>
 
-          {/* Recruiter Buttons */}
+          {/* Login Buttons */}
           <div className="flex items-center space-x-2 border-l border-gray-200 pl-4 ml-2">
             <button
-              onClick={() => router.push("/signup?is_recruiter=true")}
-              className="bg-purple-600 text-white px-4 py-1.5 rounded-md hover:bg-purple-700 transition"
-            >
-              Recruiter Sign Up
-            </button>
-            <button
               onClick={() => router.push("/login?is_recruiter=true")}
-              className="bg-purple-600 text-white px-4 py-1.5 rounded-md hover:bg-purple-700 transition"
+              className={recruiterButton}
             >
               Recruiter Login
             </button>
-          </div>
-
-          {/* Regular Buttons */}
-          <div className="flex items-center space-x-2 border-l border-gray-200 pl-4 ml-2">
-            <button
-              onClick={() => router.push("/signup")}
-              className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
-            >
-              Job Seeker Sign Up
-            </button>
             <button
               onClick={() => router.push("/login")}
-              className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
+              className={jobSeekerButton}
             >
               Job Seeker Login
             </button>
@@ -148,42 +118,21 @@ const Header = () => {
             Become a Referrer
           </button>
 
-          {/* Recruiter Buttons - Mobile */}
-          <button
-            onClick={() => {
-              setIsMenuOpen(false);
-              router.push("/signup?is_recruiter=true");
-            }}
-            className="text-sm bg-purple-600 text-white w-full text-center py-1.5 rounded-md hover:bg-purple-700 transition"
-          >
-            Recruiter Sign Up
-          </button>
           <button
             onClick={() => {
               setIsMenuOpen(false);
               router.push("/login?is_recruiter=true");
             }}
-            className="text-sm bg-purple-600 text-white w-full text-center py-1.5 rounded-md hover:bg-purple-700 transition"
+            className={`${recruiterButton} w-full text-center`}
           >
             Recruiter Login
-          </button>
-
-          {/* Regular Buttons - Mobile */}
-          <button
-            onClick={() => {
-              setIsMenuOpen(false);
-              router.push("/signup");
-            }}
-            className="text-sm bg-[#0071e3] text-white w-full text-center py-1.5 rounded-md hover:bg-[#005bb5] transition"
-          >
-            Job Seeker Sign Up
           </button>
           <button
             onClick={() => {
               setIsMenuOpen(false);
               router.push("/login");
             }}
-            className="text-sm bg-[#0071e3] text-white w-full text-center py-1.5 rounded-md hover:bg-[#005bb5] transition"
+            className={`${jobSeekerButton} w-full text-center`}
           >
             Job Seeker Login
           </button>
