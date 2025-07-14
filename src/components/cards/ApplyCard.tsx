@@ -99,9 +99,9 @@ const Card: React.FC<CardProps> = ({ job }) => {
       <div className=" flex flex-row justify-between items-center">
         <div className="flex flex-col sm:flex-row gap-3 justify-start sm:items-center">
           <div className="flex flex-row items-center gap-2">
-            {job?.company?.logo_url && job?.company?.logo_url != "" ? (
+            {job?.Company.logo_url && job?.Company?.logo_url != "" ? (
               <Image
-                src={job?.company?.logo_url}
+                src={job?.Company?.logo_url}
                 width={50}
                 height={50}
                 alt="Picture of the author"
@@ -124,7 +124,7 @@ const Card: React.FC<CardProps> = ({ job }) => {
         </div>
       </div>
       <div className=" flex flex-row gap-1 items-center mt-3">
-        <p className="text-sm font-poppins text-black">{job.company.name}</p>
+        <p className="text-sm font-poppins text-black">{job.Company.name}</p>
         <div className=" flex flex-row gap-1 items-center">
           <CiLocationOn className="h-4 w-4 text-black" />
           <p className="text-xs font-poppins text-black">{job.Location}</p>

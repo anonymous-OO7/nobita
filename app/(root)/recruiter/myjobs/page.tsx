@@ -3,7 +3,7 @@
 import React from "react";
 
 import { GetMyJobsApi } from "../../../../src/apis";
-import OrdersEpp from "../../../../src/components/pages/recruiter/myjobs/List";
+import RecruiterJobListing from "../../../../src/components/pages/recruiter/myjobs/List";
 import useApi from "../../../../src/hooks/useApi";
 import Spacer from "../../../../src/components/Spacer";
 import { JobListing } from "@/types";
@@ -30,7 +30,7 @@ const ActiveRentals = () => {
   return (
     <div className="text-black bg-pageBackground px-2 min-h-screen">
       <Spacer size="sm" />
-      <OrdersEpp eppOrders={jobs} loading={invoiceLoading} />
+      <RecruiterJobListing eppOrders={jobs} loading={invoiceLoading} />
     </div>
   );
 };

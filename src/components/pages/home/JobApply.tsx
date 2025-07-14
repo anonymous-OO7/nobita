@@ -115,7 +115,7 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({
             {({ setFieldValue, isSubmitting }) => (
               <Form>
                 <ModalHeader className="flex flex-col gap-1 text-black font-poppins">
-                  Apply to {applyingJob?.company.name}
+                  Apply to {applyingJob?.Company.name}
                 </ModalHeader>
                 <ModalBody>
                   {/* Company Logo + Job Summary */}
@@ -141,9 +141,9 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({
                             applyingJob.Type.slice(1)}
                         </p>
                       </div>
-                      {applyingJob.company?.logo_url && (
+                      {applyingJob.Company?.logo_url && (
                         <img
-                          src={applyingJob.company.logo_url}
+                          src={applyingJob.Company.logo_url}
                           alt="Company Logo"
                           className="w-14 h-14 rounded-md object-contain"
                         />
@@ -152,17 +152,17 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({
                   )}
 
                   {/* Skills */}
-                  {applyingJob?.skills && (
+                  {applyingJob?.Skills && (
                     <div className="mb-3">
                       <p className="font-semibold text-sm text-gray-800 mb-1">
                         Skills:
                       </p>
                       <div className="flex flex-wrap gap-2">
-                        {(Array.isArray(applyingJob.skills)
-                          ? applyingJob.skills
+                        {(Array.isArray(applyingJob.Skills)
+                          ? applyingJob.Skills
                           : (() => {
                               try {
-                                return JSON.parse(applyingJob.skills as string);
+                                return JSON.parse(applyingJob.Skills as string);
                               } catch {
                                 return [];
                               }

@@ -66,7 +66,16 @@ export type JobListing = {
   UserID: number;
   Status: string;
   Uuid: string;
-  CompanyName: string;
+  CompanyCode: string; // Added from response
+  Company: {
+    ID: number;
+    uuid: string;
+    code: string;
+    name: string;
+    logo_url: string;
+    website_url: string;
+    location: string;
+  }; // New: Nested company object
   Position: string;
   Location: string;
   Type: string;
@@ -76,8 +85,25 @@ export type JobListing = {
   MinPay: number;
   MaxPay: number;
   Price: number;
-  TotalEmp: number;
-  LogoUrl: string;
+  Currency: string;
+  HideSalary: boolean;
+  MinExperience: number;
+  MaxExperience: number;
+  ExperienceText: string;
+  Remote: boolean;
+  Hybrid: boolean;
+  Category: string;
+  JobUrl: string;
+  Skills: string[]; // Changed from string to array
+  Tags: string;
+  GroupID: number;
+  Vacancy: number;
+  Mode: string;
+  Board: string;
+  SourceCreatedDate: number;
+  FooterLabel: string;
+  FooterColor: string;
+  ShowMultipleApply: boolean;
 };
 
 // Define a type for WorkExperience
@@ -147,25 +173,33 @@ export type Company = {
   CreatedAt: string;
   UpdatedAt: string;
   DeletedAt: string | null;
-  logo_url: string;
-  name: string;
   uuid: string;
   code: string;
+  name: string;
   description: string;
-  website_url: string;
   industry: string;
   company_size: string;
-  location: string;
-  company_culture: string;
-  benefits: string;
+  logo_url: string;
+  website_url: string;
   social_media_links: string;
-  founded_date: string;
+  location: string;
   headquarters_address: string;
   contact_email: string;
   contact_phone: string;
+  founded_date: string;
+  company_culture: string;
+  benefits: string;
+  reviews_count: number;
+  aggregate_rating: number;
+  reviews_url: string;
+  glassdoor_url: string;
   subscription_plan: string;
   status: string;
-  glassdoor_url: string;
+  uploaded_by: string;
+  tech_stack: string;
+  hiring_status: string;
+  last_funding_round: string;
+  employee_growth_rate: number;
 };
 
 export type Job = {
@@ -188,12 +222,12 @@ export type Job = {
   Price: number;
   MinExperience: number;
   MaxExperience: number;
-  remote: boolean;
-  hybrid: boolean;
-  skills: string | string[];
+  Remote: boolean;
+  Hybrid: boolean;
+  Skills: string | string[];
   JobUrl: string;
   Category: string;
-  company: Company;
+  Company: Company;
 };
 
 export interface WorkExperienceType {

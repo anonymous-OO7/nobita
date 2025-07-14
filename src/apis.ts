@@ -112,7 +112,14 @@ export const CreateJobApi = (
   maxExperience: number,
   remote: boolean,
   hybrid: boolean,
-  skills: string[] // Array of strings
+  skills: string[], // Array of strings
+  tags: string[], // New
+  currency: string, // New
+  groupId: number, // New
+  vacancy: number, // New
+  hideSalary: boolean, // New
+  variablePercentage: number, // New
+  experienceText: string // New - for display purposes
 ) => {
   const formData = new FormData();
   formData.append("status", status);
@@ -127,16 +134,23 @@ export const CreateJobApi = (
   formData.append("price", price.toString());
   formData.append("category", category);
   formData.append("job_url", job_url);
-
-  // New fields
   formData.append("min_experience", minExperience.toString());
   formData.append("max_experience", maxExperience.toString());
   formData.append("remote", remote.toString());
   formData.append("hybrid", hybrid.toString());
+  formData.append("currency", currency);
+  formData.append("group_id", groupId.toString());
+  formData.append("vacancy", vacancy.toString());
+  formData.append("hide_salary", hideSalary.toString());
+  formData.append("variable_percentage", variablePercentage.toString());
+  formData.append("experience_text", experienceText);
 
-  // Convert skills array to JSON string
   if (skills && skills.length > 0) {
     formData.append("skills", JSON.stringify(skills));
+  }
+
+  if (tags && tags.length > 0) {
+    formData.append("tags", JSON.stringify(tags));
   }
 
   return onePiece.post("/create-job", formData, {

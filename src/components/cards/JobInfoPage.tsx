@@ -27,32 +27,33 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
     MaxExperience,
     MinPay,
     MaxPay,
-    remote,
-    hybrid,
-    skills,
+    Remote,
+    Hybrid,
+    Skills,
     JobUrl,
     CreatedAt,
-    company,
+    Company,
+    Field,
+    Category,
   } = job;
 
   const parsedSkills: string[] = React.useMemo(() => {
-    if (Array.isArray(skills)) return skills;
+    if (Array.isArray(Skills)) return Skills;
     try {
-      return JSON.parse(skills as string);
+      return JSON.parse(Skills as string);
     } catch {
       return [];
     }
-  }, [skills]);
+  }, [Skills]);
 
   return (
     <div className="px-6 py-8 max-w-5xl mx-auto">
       {/* Header */}
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
         <div className="flex items-center gap-4">
-          {company.logo_url ? (
+          {Company.logo_url ? (
             <Image
-              src={company.logo_url}
+              src={Company.logo_url}
               alt="Company Logo"
               width={60}
               height={60}
@@ -63,7 +64,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
           )}
           <div>
             <h1 className="text-2xl font-semibold text-black">{Position}</h1>
-            <p className="text-gray-600 text-sm">{company.name}</p>
+            <p className="text-gray-600 text-sm">{Company.name}</p>
           </div>
         </div>
 
@@ -114,16 +115,16 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             </p>
             <p>
               <strong>Work Mode:</strong>{" "}
-              {remote ? "Remote" : hybrid ? "Hybrid" : "On-site"}
+              {Remote ? "Remote" : Hybrid ? "Hybrid" : "On-site"}
             </p>
           </div>
 
           <div className="space-y-2 text-gray-700">
             <p>
-              <strong>Field:</strong> {job.Field}
+              <strong>Field:</strong> {Field}
             </p>
             <p>
-              <strong>Category:</strong> {job?.Category?.replace("_", " ")}
+              <strong>Category:</strong> {Category?.replace("_", " ")}
             </p>
             {JobUrl && (
               <p className="text-blue-600 font-medium inline-flex items-center gap-1">
@@ -171,59 +172,59 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
         </h2>
         <div className="space-y-2 text-gray-700">
           <p>
-            <strong>Industry:</strong> {company.industry}
+            <strong>Industry:</strong> {Company.industry}
           </p>
           <p>
-            <strong>Size:</strong> {company.company_size}+ employees
+            <strong>Size:</strong> {Company.company_size}+ employees
           </p>
           <p>
             <strong>Founded:</strong>{" "}
-            {company.founded_date
-              ? format(new Date(company.founded_date), "yyyy")
+            {Company.founded_date
+              ? format(new Date(Company.founded_date), "yyyy")
               : "N/A"}
           </p>
           <p>
-            <strong>Location:</strong> {company.location}
+            <strong>Location:</strong> {Company.location}
           </p>
           <p>
-            <strong>Headquarters:</strong> {company.headquarters_address}
+            <strong>Headquarters:</strong> {Company.headquarters_address}
           </p>
           <p>
             <strong>Description:</strong>{" "}
-            <span className="whitespace-pre-line">{company.description}</span>
+            <span className="whitespace-pre-line">{Company.description}</span>
           </p>
           <p>
             <strong>Culture:</strong>{" "}
             <span className="whitespace-pre-line">
-              {company.company_culture}
+              {Company.company_culture}
             </span>
           </p>
           <p>
             <strong>Benefits:</strong>{" "}
-            <span className="whitespace-pre-line">{company.benefits}</span>
+            <span className="whitespace-pre-line">{Company.benefits}</span>
           </p>
         </div>
 
         {/* Contact & Social */}
         <div className="mt-6 space-y-2 text-gray-700">
-          {company.website_url && (
+          {Company.website_url && (
             <p className="inline-flex items-center gap-1">
               <Globe size={16} />
               <a
-                href={company.website_url}
+                href={Company.website_url}
                 className="text-blue-600"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {company.website_url}
+                {Company.website_url}
               </a>
             </p>
           )}
-          {company.glassdoor_url && (
+          {Company.glassdoor_url && (
             <p className="inline-flex items-center gap-1">
               <Globe size={16} />
               <a
-                href={company.glassdoor_url}
+                href={Company.glassdoor_url}
                 className="text-blue-600"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -232,14 +233,14 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
               </a>
             </p>
           )}
-          {company.contact_email && (
+          {Company.contact_email && (
             <p className="inline-flex items-center gap-1">
-              <Mail size={16} /> {company.contact_email}
+              <Mail size={16} /> {Company.contact_email}
             </p>
           )}
-          {company.contact_phone && (
+          {Company.contact_phone && (
             <p className="inline-flex items-center gap-1">
-              <Phone size={16} /> {company.contact_phone}
+              <Phone size={16} /> {Company.contact_phone}
             </p>
           )}
         </div>

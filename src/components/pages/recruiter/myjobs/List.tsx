@@ -1,5 +1,6 @@
-import React from "react";
+"use client";
 
+import React from "react";
 import {
   Table,
   TableHeader,
@@ -17,7 +18,6 @@ import secureLocalStorage from "react-secure-storage";
 import Spacer from "@/components/Spacer";
 import { DropdownType, JobListing } from "@/types.js";
 import DropDownSingle from "./SelectionDropdown";
-
 import Action from "./Action";
 import { useRouter } from "next/navigation";
 import UpdatePrice from "./UpdatePrice";
@@ -32,41 +32,25 @@ interface Props {
 }
 
 const COLUMNS = [
-  {
-    name: "Sr No.",
-    key: "sr_no",
-  },
-  {
-    name: "Position",
-    key: "position",
-  },
-  {
-    name: "Location",
-    key: "location",
-  },
-
-  {
-    name: "Date",
-    key: "date",
-  },
-
-  {
-    name: "Status",
-    key: "status",
-  },
-  {
-    name: "Action",
-    key: "action",
-  },
+  { name: "Sr No.", key: "sr_no" },
+  { name: "Position", key: "position" },
+  { name: "Location", key: "location" },
+  { name: "Experience", key: "experience" },
+  { name: "Salary", key: "salary" },
+  { name: "Type", key: "type" },
+  { name: "Date", key: "date" },
+  { name: "Status", key: "status" },
+  { name: "Action", key: "action" },
 ];
 
-export default function OrdersEpp({ eppOrders, loading }: Props) {
+export default function RecruiterJobListing({ eppOrders, loading }: Props) {
   const [filterValue, setFilterValue] = React.useState("");
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
   const role = secureLocalStorage.getItem("role");
   const router = useRouter();
+  const [page, setPage] = React.useState(1);
 
   const dropdownData: DropdownType[] = React.useMemo(
     () => [
@@ -79,278 +63,181 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
   );
 
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
-    column: "schedule_number",
-    direction: "ascending",
+    column: "CreatedAt",
+    direction: "descending",
   });
 
   const pages = React.useMemo(() => {
-    if (eppOrders.length === 0) {
-      return 1;
-    }
-    return Math.ceil((eppOrders?.length ?? 1) / rowsPerPage);
+    return Math.max(Math.ceil(eppOrders.length / rowsPerPage), 1);
   }, [eppOrders, rowsPerPage]);
 
-  const hasSearchFilter = Boolean(filterValue);
-  const [page, setPage] = React.useState(1);
-
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...eppOrders];
-
-    if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.Position.toLowerCase().includes(filterValue.toLowerCase())
-      );
-    }
-
-    return filteredUsers;
-  }, [eppOrders, filterValue, hasSearchFilter]);
+    if (!filterValue) return eppOrders;
+    return eppOrders.filter((job) =>
+      job.Position.toLowerCase().includes(filterValue.toLowerCase())
+    );
+  }, [eppOrders, filterValue]);
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     return filteredItems.slice(start, end);
-  }, [page, filteredItems, rowsPerPage]);
-
-  const onRowsPerPageChange = React.useCallback((e: any) => {
-    setRowsPerPage(Number(e.target.value));
-    setPage(1);
-  }, []);
-
-  const onSearchChange = React.useCallback((value: any) => {
-    if (value) {
-      setFilterValue(value);
-      setPage(1);
-    } else {
-      setFilterValue("");
-    }
-  }, []);
-
-  // const renderStatus = React.useCallback((item: JobListing) => {
-  //   if (item?.Status === "pending") {
-  //     return (
-  //       <Chip variant="solid" color="warning">
-  //         Pending
-  //       </Chip>
-  //     );
-  //   } else if (item?.Status === "success") {
-  //     return (
-  //       <Chip variant="solid" color="success">
-  //         Completed
-  //       </Chip>
-  //     );
-  //   } else {
-  //     return <Chip variant="solid">Not Started</Chip>;
-  //   }
-  // }, []);
+  }, [filteredItems, page, rowsPerPage]);
 
   const onSaveClaimStatus = React.useCallback(
     (status: string, currentOrder: JobListing, price: number) => {
-      console.log(currentOrder, "payload sending to update");
-
       makeApiCall(
         UpdateMyJobsStatusApi(currentOrder.ID.toString(), status, price)
       )
         .then(() => {
-          showToast("updated successfully", { type: "success" });
+          showToast("Updated successfully", { type: "success" });
         })
         .catch(() => {
-          showToast("updation failed", { type: "error" });
+          showToast("Updation failed", { type: "error" });
         });
     },
     [makeApiCall, showToast]
   );
 
   const handleStatusChange = React.useCallback(
-    // eslint-disable-next-line
-    (data: any, item: JobListing) => {
-      onSaveClaimStatus(data, item, item.Price);
+    (status: string, job: JobListing) => {
+      onSaveClaimStatus(status, job, job.Price);
     },
     [onSaveClaimStatus]
   );
 
   const renderStatus = React.useCallback(
-    (item: JobListing) => {
-      return (
-        <DropDownSingle
-          isDisabled={false}
-          data={dropdownData}
-          defaultSelected={item?.Status.toString()}
-          // eslint-disable-next-line
-          onSelection={(data) => handleStatusChange(data, item)}
-          buttonWidth="w-60"
-          key={`status-dropdown`}
-        />
-      );
-    },
+    (job: JobListing) => (
+      <DropDownSingle
+        isDisabled={false}
+        data={dropdownData}
+        defaultSelected={job?.Status?.toString()}
+        onSelection={(val) => handleStatusChange(val, job)}
+        buttonWidth="w-60"
+        key={`status-${job.ID}`}
+      />
+    ),
     [dropdownData, handleStatusChange]
   );
 
   const handleViewOrders = React.useCallback(
-    (item: JobListing) => {
+    (job: JobListing) => {
       router.push(
-        `/dashboard/myjobs/applications?id=${encodeURIComponent(item.Uuid)}`
+        `/dashboard/myjobs/applications?id=${encodeURIComponent(job.Uuid)}`
       );
     },
     [router]
   );
 
-  const handleSubmitPrice = React.useCallback(
-    (price: number, currentOrder: JobListing) => {
-      onSaveClaimStatus(currentOrder.Status, currentOrder, price);
-    },
-    []
-  );
-
   const renderCell = React.useCallback(
     (job: JobListing, columnKey: React.Key) => {
-      const index = eppOrders.map((object) => object.ID).indexOf(job.ID);
+      const index = eppOrders.findIndex((obj) => obj.ID === job.ID);
 
       switch (columnKey) {
         case "sr_no":
-          return (
-            <div className="flex flex-col">
-              <p className="text-bold text-sm capitalize">{index + 1}</p>
-            </div>
-          );
+          return <p className="text-sm">{index + 1}</p>;
 
         case "position":
-          return (
-            <div className="flex flex-col">
-              <p className="text-bold text-sm capitalize">{job.Position}</p>
-            </div>
-          );
+          return <p className="text-sm">{job.Position}</p>;
 
         case "location":
+          return <p className="text-sm">{job.Location}</p>;
+
+        case "experience":
           return (
-            <div className="flex flex-col">
-              <p className="text-bold text-sm capitalize">{job.Location}</p>
-            </div>
-          );
-        case "date":
-          return (
-            <div className="flex flex-col">
-              <p className="text-bold text-sm capitalize">
-                {formatDateIntl(job.CreatedAt)}
-              </p>
-            </div>
+            <p className="text-sm">
+              {job.MinExperience} - {job.MaxExperience} yrs
+            </p>
           );
 
+        case "salary":
+          return (
+            <p className="text-sm">
+              {job.HideSalary
+                ? "Hidden"
+                : `${
+                    job.Currency
+                  } ${job.MinPay.toLocaleString()} - ${job.MaxPay.toLocaleString()}`}
+            </p>
+          );
+
+        case "type":
+          return (
+            <p className="text-sm capitalize">
+              {job.Type}
+              {job.Remote ? " · Remote" : ""}
+              {job.Hybrid ? " · Hybrid" : ""}
+            </p>
+          );
+
+        case "date":
+          return <p className="text-sm">{formatDateIntl(job.CreatedAt)}</p>;
+
         case "status":
-          return (
-            <div className="flex flex-col">
-              <p className="text-bold text-sm capitalize">
-                {renderStatus(job)}
-              </p>
-            </div>
-          );
+          return renderStatus(job);
+
         case "action":
-          return (
-            <div className="flex">
-              <Action item={job} onViewOrders={handleViewOrders} />
-            </div>
-          );
+          return <Action item={job} onViewOrders={handleViewOrders} />;
       }
     },
-    [eppOrders, renderStatus]
+    [eppOrders, renderStatus, handleViewOrders]
   );
 
   const sortedItems = React.useMemo(() => {
-    return [...items].sort((a: JobListing, b: JobListing) => {
-      const first = a[sortDescriptor.column as keyof JobListing] as number;
-      const second = b[sortDescriptor.column as keyof JobListing] as number;
-      const cmp = first < second ? -1 : first > second ? 1 : 0;
-
-      return sortDescriptor.direction === "descending" ? -cmp : cmp;
+    return [...items].sort((a, b) => {
+      const aVal = a[sortDescriptor.column as keyof JobListing];
+      const bVal = b[sortDescriptor.column as keyof JobListing];
+      if (typeof aVal === "number" && typeof bVal === "number") {
+        const cmp = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+        return sortDescriptor.direction === "descending" ? -cmp : cmp;
+      }
+      return 0;
     });
-  }, [sortDescriptor, items]);
+  }, [items, sortDescriptor]);
 
-  const topContent = React.useMemo(() => {
-    return (
-      <div className="relative flex flex-col gap-4">
-        <div className="flex justify-between gap-3 items-end my-2">
-          <Input
-            isClearable
-            className="focus:outline-none focus:border-none"
-            classNames={{
-              base: "w-full sm:max-w-[44%] focus:outline-none focus:border-none",
-              inputWrapper:
-                "border-0 focus:border-0 focus:outline-none focus:border-none",
-              input: "border-0 focus:outline-none focus:border-none",
-            }}
-            placeholder="Search your jobs..."
-            size="sm"
-            startContent={<CiSearch />}
-            value={filterValue}
-            onClear={() => {
-              setFilterValue("");
-            }}
-            onValueChange={onSearchChange}
-          />
-        </div>
-      </div>
-    );
-  }, [filterValue, onSearchChange]);
+  const topContent = (
+    <div className="flex justify-between items-center my-2">
+      <Input
+        isClearable
+        placeholder="Search your jobs..."
+        size="sm"
+        startContent={<CiSearch />}
+        value={filterValue}
+        onClear={() => setFilterValue("")}
+        onValueChange={(val) => setFilterValue(val)}
+        classNames={{
+          base: "w-full sm:max-w-[44%]",
+          inputWrapper: "border-0",
+        }}
+      />
+    </div>
+  );
 
-  const bottomContent = React.useMemo(() => {
-    return (
-      <div className="py-2 px-2 flex justify-between items-center">
-        <Pagination
-          showControls
-          classNames={{
-            item: "bg-pageBackground w-8 h-6 min-w-4 font-roboto",
-            cursor: "bg-info w-8 h-6 min-w-4 font-roboto",
+  const bottomContent = (
+    <div className="py-2 px-2 flex justify-between items-center">
+      <Pagination
+        showControls
+        page={page}
+        total={pages}
+        onChange={setPage}
+        isDisabled={!!filterValue}
+      />
+      <div className="flex items-center text-sm">
+        Size:&nbsp;
+        <select
+          className="outline-none px-1 py-0 rounded-md text-sm"
+          onChange={(e) => {
+            setRowsPerPage(Number(e.target.value));
+            setPage(1);
           }}
-          color="default"
-          isDisabled={hasSearchFilter}
-          page={page}
-          total={pages}
-          variant="light"
-          onChange={setPage}
-        />
-        <div className="flex justify-between items-center">
-          <label className="flex items-center text-small font-roboto text-black font-light ">
-            Size :&nbsp;
-            <select
-              className="border-none shadow-sm outline-none text-default-400 text-small font-roboto font-light px-1 py-0 rounded-md"
-              onChange={onRowsPerPageChange}
-              defaultValue={"20"}
-            >
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-              <option value="25">25</option>
-            </select>
-          </label>
-        </div>
+          defaultValue={"10"}
+        >
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
       </div>
-    );
-  }, [hasSearchFilter, page, pages, onRowsPerPageChange]);
-
-  const classNames = React.useMemo(
-    () => ({
-      th: [
-        "bg-transparent",
-        "text-tableHeaderColor",
-        "border-b",
-        "border-divider",
-        "font-roboto",
-        "font-regular",
-        "text-sm",
-      ],
-      td: [
-        "group-data-[first=true]:first:before:rounded-none",
-        "group-data-[first=true]:last:before:rounded-none",
-        "group-data-[middle=true]:before:rounded-none",
-        "group-data-[last=true]:first:before:rounded-none",
-        "group-data-[last=true]:last:before:rounded-none",
-        "font-roboto",
-        "font-normal",
-        "text-textColorGrey",
-      ],
-      table: "min-h-[350px]",
-      wrapper: "table-wrapper",
-    }),
-    []
+    </div>
   );
 
   return (
@@ -361,7 +248,10 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
       <Spacer size="xs" />
       <Table
         selectionMode="single"
-        classNames={classNames}
+        classNames={{
+          th: ["text-sm font-medium text-gray-700"],
+          td: ["text-sm text-gray-600"],
+        }}
         topContent={topContent}
         bottomContent={bottomContent}
         bottomContentPlacement="inside"
@@ -369,14 +259,13 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
         onSortChange={setSortDescriptor}
       >
         <TableHeader columns={COLUMNS}>
-          {(column) => (
+          {(col) => (
             <TableColumn
-              key={column.key}
-              align={column.key === "action" ? "end" : "start"}
-              width={column.key === "action" ? 100 : undefined}
-              className="text-center"
+              key={col.key}
+              align={col.key === "action" ? "end" : "start"}
+              width={col.key === "action" ? 100 : undefined}
             >
-              {column.name}
+              {col.name}
             </TableColumn>
           )}
         </TableHeader>
@@ -387,10 +276,7 @@ export default function OrdersEpp({ eppOrders, loading }: Props) {
           loadingContent={<Spinner label="Loading..." />}
         >
           {(item) => (
-            <TableRow
-              key={`${item.Uuid}-${item.ID}`}
-              className="cursor-pointer h-12 "
-            >
+            <TableRow key={item.ID}>
               {(columnKey) => (
                 <TableCell className="text-center">
                   {renderCell(item, columnKey)}

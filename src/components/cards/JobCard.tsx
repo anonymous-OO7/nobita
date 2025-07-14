@@ -33,19 +33,18 @@ const Card: React.FC<CardProps> = ({
   onViewDetails,
   isApplied = false,
 }) => {
-  const backgroundColorClass =
-    job.Status === "inactive" ||
-    job.Status === "hired" ||
-    job.Status === "closed"
-      ? "bg-red-400"
-      : "bg-buttonPrimary";
+  const backgroundColorClass = ["inactive", "hired", "closed"].includes(
+    job.Status
+  )
+    ? "bg-red-400"
+    : "bg-buttonPrimary";
 
   const postedDate = formatDistanceToNow(new Date(job.CreatedAt), {
     addSuffix: true,
   });
 
-  const renderJobType = (value: string) => {
-    switch (value) {
+  const renderJobStatus = (status: string) => {
+    switch (status) {
       case "active":
         return (
           <Chip
@@ -53,74 +52,61 @@ const Card: React.FC<CardProps> = ({
             variant="flat"
             color="success"
             size="sm"
-            className="z-0"
           >
             <p className="text-sm font-poppins text-black">Actively Hiring</p>
           </Chip>
         );
       case "closed":
-        return (
-          <Chip
-            startContent={<CircleX size={18} />}
-            color="danger"
-            variant="flat"
-            size="sm"
-            className="z-0"
-          >
-            <p className="text-sm font-poppins text-black">Closed</p>
-          </Chip>
-        );
       case "inactive":
         return (
           <Chip
             startContent={<CircleX size={18} />}
-            color="warning"
             variant="flat"
+            color="danger"
             size="sm"
-            className="z-0"
           >
-            <p className="text-sm font-poppins text-black">Inactive</p>
+            <p className="text-sm font-poppins text-black">
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </p>
           </Chip>
         );
       case "hired":
         return (
           <Chip
             startContent={<CircleCheckBig size={18} />}
-            color="success"
             variant="bordered"
+            color="success"
             size="sm"
-            className="z-0"
           >
             <p className="text-sm font-poppins text-black">Hired</p>
           </Chip>
         );
       default:
         return (
-          <Chip variant="flat" color="success" size="sm">
-            <span className="font-extrabold">&#8226;</span> Active
+          <Chip variant="flat" color="default" size="sm">
+            Active
           </Chip>
         );
     }
   };
 
-  const growinfFast = (value: boolean) => {
-    return (
-      <Chip
-        startContent={<ChartNoAxesCombined size={18} />}
-        variant="bordered"
-        color={value ? "warning" : "success"}
-        size="sm"
-        className="p-2 -z-0"
-      >
-        <p className="text-sm font-poppins text-black">
-          {value ? "Growing Fast" : "Well Established"}
-        </p>
-      </Chip>
-    );
-  };
+  const isGrowing = parseInt(job.Company.company_size || "0") < 500;
 
-  const renderType = (value: string) => {
-    switch (value) {
+  const renderGrowth = () => (
+    <Chip
+      startContent={<ChartNoAxesCombined size={18} />}
+      variant="bordered"
+      color={isGrowing ? "warning" : "success"}
+      size="sm"
+    >
+      <p className="text-sm font-poppins text-black">
+        {isGrowing ? "Growing Fast" : "Well Established"}
+      </p>
+    </Chip>
+  );
+
+  const renderType = () => {
+    switch (job.Type) {
       case "fulltime":
         return (
           <Chip
@@ -128,7 +114,6 @@ const Card: React.FC<CardProps> = ({
             variant="flat"
             color="primary"
             size="sm"
-            className="p-1"
           >
             <p className="text-sm font-poppins text-black">Full-Time</p>
           </Chip>
@@ -142,10 +127,9 @@ const Card: React.FC<CardProps> = ({
             variant="flat"
             color="warning"
             size="sm"
-            className="p-1"
           >
             <p className="text-sm font-poppins text-black">
-              {value.charAt(0).toUpperCase() + value.slice(1)}
+              {job.Type.charAt(0).toUpperCase() + job.Type.slice(1)}
             </p>
           </Chip>
         );
@@ -156,7 +140,6 @@ const Card: React.FC<CardProps> = ({
             variant="flat"
             color="primary"
             size="sm"
-            className="p-1"
           >
             <p className="text-sm font-poppins text-black">Full-Time</p>
           </Chip>
@@ -164,8 +147,9 @@ const Card: React.FC<CardProps> = ({
     }
   };
 
-  const renderPriceTag = (price: number) => {
-    if (price < 2000) {
+  const renderPriceTag = () => {
+    const price = job.Price;
+    if (price < 1000) {
       return (
         <Chip
           startContent={<TagIcon size={18} />}
@@ -176,7 +160,7 @@ const Card: React.FC<CardProps> = ({
           <p className="text-sm font-poppins text-black">Affordable</p>
         </Chip>
       );
-    } else if (price >= 1000 && price < 2000) {
+    } else if (price < 2000) {
       return (
         <Chip
           startContent={<AwardIcon size={18} />}
@@ -184,10 +168,10 @@ const Card: React.FC<CardProps> = ({
           variant="flat"
           size="sm"
         >
-          <p className="text-sm font-poppins text-black">Competitive Pricing</p>
+          <p className="text-sm font-poppins text-black">Competitive</p>
         </Chip>
       );
-    } else if (price >= 2000 && price < 5000) {
+    } else if (price < 5000) {
       return (
         <Chip
           startContent={<GemIcon size={18} />}
@@ -213,21 +197,21 @@ const Card: React.FC<CardProps> = ({
   };
 
   const parsedSkills: string[] = React.useMemo(() => {
-    if (Array.isArray(job.skills)) return job.skills;
+    if (Array.isArray(job.Skills)) return job.Skills;
     try {
-      return JSON.parse(job.skills as string);
+      return JSON.parse(job.Skills as string);
     } catch {
       return [];
     }
-  }, [job.skills]);
+  }, [job.Skills]);
 
   return (
     <div className="p-5 shadow-md rounded-md mb-6 border bg-white">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <div className="flex items-center gap-3">
-          {job?.company?.logo_url ? (
+          {job?.Company?.logo_url ? (
             <Image
-              src={job?.company?.logo_url}
+              src={job.Company.logo_url}
               width={50}
               height={50}
               alt="Company Logo"
@@ -238,13 +222,13 @@ const Card: React.FC<CardProps> = ({
           )}
           <div>
             <h2 className="text-lg font-medium text-black">{job.Position}</h2>
-            <p className="text-sm text-gray-600">{job.company.name}</p>
+            <p className="text-sm text-gray-600">{job.Company.name}</p>
           </div>
         </div>
         <div className="flex flex-row flex-wrap gap-2">
-          {renderType(job?.Type)}
-          {renderJobType(job.Status)}
-          {growinfFast(parseInt(job.company.company_size) > 500 ? false : true)}
+          {renderType()}
+          {renderJobStatus(job.Status)}
+          {renderGrowth()}
         </div>
       </div>
 
@@ -261,10 +245,10 @@ const Card: React.FC<CardProps> = ({
             size="sm"
           >
             <span className="text-sm text-black">
-              {job.company.company_size}+ Employees
+              {job.Company.company_size || "N/A"}+ Employees
             </span>
           </Chip>
-          {renderPriceTag(job.Price)}
+          {renderPriceTag()}
           {isApplied && (
             <Chip
               startContent={<CircleCheckBig size={16} />}
@@ -284,7 +268,7 @@ const Card: React.FC<CardProps> = ({
           <p>
             {job.MinExperience} - {job.MaxExperience} yrs • ₹{job.MinPay}L - ₹
             {job.MaxPay}L •{" "}
-            {job.remote ? "Remote" : job.hybrid ? "Hybrid" : "On-site"}
+            {job.Remote ? "Remote" : job.Hybrid ? "Hybrid" : "On-site"}
           </p>
         </div>
         <div className="flex gap-2 flex-wrap">

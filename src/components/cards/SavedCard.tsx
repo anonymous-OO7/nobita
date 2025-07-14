@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { CiLocationOn } from "react-icons/ci";
 import Image from "next/image";
+
 interface CardProps {
   job: Job;
   onSave: (uuid: string) => void;
@@ -63,26 +64,20 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
   }, []);
 
   const growinfFast = React.useCallback((value: boolean) => {
-    switch (value) {
-      case true:
-        return (
-          <Chip
-            startContent={<ChartNoAxesCombined size={18} />}
-            variant="flat"
-            color="warning"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Growing Fast</p>
-          </Chip>
-        );
-
-      default:
-        return (
-          <Chip variant="flat" color="success" size="sm">
-            <span className="font-extrabold">&#8226;</span> Active
-          </Chip>
-        );
-    }
+    return value ? (
+      <Chip
+        startContent={<ChartNoAxesCombined size={18} />}
+        variant="flat"
+        color="warning"
+        size="sm"
+      >
+        <p className="text-sm font-poppins text-black">Growing Fast</p>
+      </Chip>
+    ) : (
+      <Chip variant="flat" color="success" size="sm">
+        <span className="font-extrabold">&#8226;</span> Established
+      </Chip>
+    );
   }, []);
 
   const renderType = React.useCallback((value: string) => {
@@ -100,27 +95,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           </Chip>
         );
       case "contract":
-        return (
-          <Chip
-            startContent={<ChartNoAxesCombined size={18} />}
-            variant="flat"
-            color="warning"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Contract</p>
-          </Chip>
-        );
       case "internship":
-        return (
-          <Chip
-            startContent={<ChartNoAxesCombined size={18} />}
-            variant="flat"
-            color="warning"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Internship</p>
-          </Chip>
-        );
       case "freelance":
         return (
           <Chip
@@ -129,10 +104,11 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             color="warning"
             size="sm"
           >
-            <p className="text-sm font-poppins text-black">Freelance</p>
+            <p className="text-sm font-poppins text-black">
+              {value.charAt(0).toUpperCase() + value.slice(1)}
+            </p>
           </Chip>
         );
-
       default:
         return (
           <Chip variant="flat" color="success" size="sm">
@@ -164,7 +140,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             size="sm"
           >
             <p className="text-sm font-poppins text-black">
-              Competetive Pricing
+              Competitive Pricing
             </p>
           </Chip>
         );
@@ -200,26 +176,26 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
   }, []);
 
   return (
-    <div className="p-4  shadow-md rounded-md mb-4 border">
-      <div className=" flex flex-row justify-between items-center">
+    <div className="p-4 shadow-md rounded-md mb-4 border">
+      {/* Header */}
+      <div className="flex flex-row justify-between items-center">
         <div className="flex flex-col sm:flex-row gap-3 justify-start sm:items-center">
           <div className="flex flex-row items-center gap-2">
-            {job.company.logo_url && job.company.logo_url != "" ? (
+            {job.Company.logo_url && job.Company.logo_url !== "" ? (
               <Image
-                src={job.company.logo_url}
+                src={job.Company.logo_url}
                 width={50}
                 height={50}
-                alt="Picture of the author"
+                alt="Company Logo"
               />
             ) : (
               <Building2Icon color="black" size={30} />
-            )}{" "}
+            )}
             <h2 className="font-semibold text-xl font-poppins text-black">
               {job.Position}
             </h2>
           </div>
-
-          {renderType(job?.Type)}
+          {renderType(job.Type)}
         </div>
 
         <div className="flex flex-row justify-center items-center gap-2">
@@ -234,17 +210,19 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
             <p className="text-2xl font-semibold font-poppins text-black">
               {job.Price}
             </p>
-            {/* Assuming job.Price is available */}
           </Chip>
         </div>
       </div>
-      <div className=" flex flex-row gap-1 items-center mt-3">
-        <p className="text-sm font-poppins text-black">{job.company.name}</p>
-        <div className=" flex flex-row gap-1 items-center">
+
+      {/* Company Info */}
+      <div className="flex flex-row gap-1 items-center mt-3">
+        <p className="text-sm font-poppins text-black">{job.Company.name}</p>
+        <div className="flex flex-row gap-1 items-center">
           <CiLocationOn className="h-4 w-4 text-black" />
           <p className="text-xs font-poppins text-black">{job.Location}</p>
         </div>
       </div>
+
       <div className="my-3">
         <Chip
           startContent={<UsersRound size={18} />}
@@ -254,18 +232,18 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           className="px-2"
         >
           <p className="text-sm font-poppins text-black">
-            {" "}
-            {job.company.company_size}+ Employees
+            {job.Company.company_size}+ Employees
           </p>
         </Chip>
       </div>
 
+      {/* Tags and Actions */}
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-wrap gap-4 md:flex-nowrap">
-          <div className="w-full md:w-auto">{renderJobType("active")}</div>
-          <div className="w-full md:w-auto">{renderPriceTag("low_cost")}</div>
-          <div className="w-full md:w-auto">{growinfFast(true)}</div>
+          {renderJobType(job.Status)}
+          {growinfFast(parseInt(job.Company.company_size) < 500)}
         </div>
+
         <div className="flex flex-row justify-center items-center gap-2">
           <Button
             color="danger"
@@ -277,8 +255,12 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
         </div>
       </div>
 
-      <p className="text-sm font-poppins text-black mt-10">{job.Description}</p>
+      {/* Description */}
+      <p className="text-sm font-poppins text-black mt-10 line-clamp-4">
+        {job.Description}
+      </p>
 
+      {/* Pay + Posted */}
       <p className="text-gray-700">
         Pay - {job.MinPay} - {job.MaxPay} INR
       </p>

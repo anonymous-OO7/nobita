@@ -1,4 +1,3 @@
-// components/Header.js
 "use client";
 
 import React from "react";
@@ -19,15 +18,13 @@ import { Logo } from "../../../assets/Logo";
 import { Add } from "@/assets/Add";
 import Image from "next/image";
 import BellIcon from "../../../assets/bell.svg";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
-import { Search } from "lucide-react";
+import { Search, Star } from "lucide-react";
 import Logo2 from "../../../assets/workistheadline.svg";
 import { ProfileDetailsType } from "@/types";
-import { Star } from "lucide-react";
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 import Button from "@/components/Button";
-import { usePathname } from "next/navigation";
 
 interface UserData {
   id: number;
@@ -39,12 +36,14 @@ interface UserData {
   phoneNo: string;
   gender: string;
   course: string;
-  createdAt: string; // Assuming createdAt is always a string in ISO 8601 format
+  createdAt: string;
 }
+
 interface DashHeaderProps {
   onOpen: () => void;
   profileDetails: ProfileDetailsType;
 }
+
 export default function DashHeader({
   onOpen,
   profileDetails,
@@ -53,8 +52,6 @@ export default function DashHeader({
   const name = nextLocalStorage()?.getItem("name") ?? "";
   const pathname = usePathname();
 
-  // const userData = JSON.parse(nextLocalStorage()?.getItem("user_data") ?? "");
-
   const handleLogout = React.useCallback(() => {
     localStorage.clear();
     router.replace("/");
@@ -62,24 +59,35 @@ export default function DashHeader({
 
   const handleUpdateProfile = React.useCallback(() => {
     router.replace("/dashboard/profile");
-    // onOpen();
-  }, [router, onOpen]);
+  }, [router]);
 
   const navigateSavedJobs = React.useCallback(() => {
     router.replace("/dashboard/saved");
-    // onOpen();
-  }, [router, onOpen]);
+  }, [router]);
 
   const navigateMyJobs = React.useCallback(() => {
     router.replace("/dashboard/myjobs");
-    // onOpen();
-  }, [router, onOpen]);
+  }, [router]);
 
   const navigateToAskReferral = React.useCallback(() => {
     router.push("/dashboard/referral-community/referral-ask");
   }, [router]);
 
+  const navigateToPostJob = React.useCallback(() => {
+    router.push("/recruiter/submit");
+  }, [router]);
+
   const [data, setData] = React.useState<UserData>();
+
+  const isRecruiter = React.useMemo(() => {
+    if (typeof window !== "undefined") {
+      return (
+        pathname.includes("/recruiter") &&
+        localStorage.getItem("role") === "recruiter"
+      );
+    }
+    return false;
+  }, [pathname]);
 
   React.useEffect(() => {
     const storedData = nextLocalStorage()?.getItem("user_data");
@@ -96,21 +104,21 @@ export default function DashHeader({
   return (
     <Navbar
       isBordered
-      className="p-0 h-[7vh]  flex flex-row justify-between overflow-hidden"
+      className="p-0 h-[7vh] flex flex-row justify-between overflow-hidden"
     >
       <NavbarContent justify="start">
         <NavbarBrand>
           <Image src={Logo2} alt="logo" width={120} />
-          <p className=" text-black font-normal font-poppins sm:block  ">
-            {data?.college != "" ? data?.college : "---"}
+          <p className="text-black font-normal font-poppins sm:block">
+            {data?.college !== "" ? data?.college : "---"}
           </p>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-2">
           <Input
             classNames={{
               base: "max-w-full sm:max-w-[32rem] h-8 rounded-2xl",
-              input: "text-small border-0	",
-              inputWrapper: "font-normal font-rubik text-default-500 ",
+              input: "text-small border-0",
+              inputWrapper: "font-normal font-rubik text-default-500",
             }}
             placeholder="Search ..."
             size="sm"
@@ -122,29 +130,16 @@ export default function DashHeader({
 
       <NavbarContent
         as="div"
-        className=" flex flex-row justify-center items-center"
+        className="flex flex-row justify-center items-center"
         justify="end"
       >
-        {/* <Input
-          classNames={{
-            base: "max-w-full sm:max-w-[10rem] h-10",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper:
-              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-          }}
-          placeholder="Type to search..."
-          size="sm"
-          startContent={<SearchIcon />}
-          type="search"
-        /> */}
         {pathname.includes("/dashboard/referral-community") && (
           <div className="hidden sm:flex gap-2">
             <button
               onClick={() => (window.location.href = "/dashboard/submit")}
               className="hover:bg-stone-300 bg-buttonPrimary py-1 px-2 shadow-md text-white text-xs rounded-md font-poppins font-normal flex items-center gap-2"
             >
-              Add referal
+              Add referral
               <Add />
             </button>
             <Button
@@ -155,6 +150,16 @@ export default function DashHeader({
               Ask referral
             </Button>
           </div>
+        )}
+
+        {/* ✅ Show Post Job for recruiters */}
+        {isRecruiter && (
+          <Button
+            className="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-2 rounded-md font-poppins font-normal"
+            onClick={navigateToPostJob}
+          >
+            Post Job
+          </Button>
         )}
 
         <div>
@@ -173,9 +178,9 @@ export default function DashHeader({
           color="warning"
           variant="solid"
           aria-label="Take a photo"
-          className="h-8 "
+          className="h-8"
         >
-          <Image height={18} src={BellIcon} alt="File" />
+          <Image height={18} src={BellIcon} alt="Notifications" />
         </Button>
 
         <Popover placement="bottom-end" showArrow>
