@@ -256,7 +256,7 @@ export type Job = {
   JobUrl: string;
   ApplyRedirectUrl: string;
   BrandedJd: string;
-  Company: Company; // ✅ this replaces duplicate `company`
+  Company: Company; // ✅ now has updated structure
 };
 
 export interface WorkExperienceType {

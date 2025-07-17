@@ -41,12 +41,42 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
   } = job;
 
   const parsedSkills: string[] = React.useMemo(() => {
-    if (Array.isArray(Skills)) return Skills;
-    try {
-      return JSON.parse(Skills as string);
-    } catch {
-      return [];
+    if (!Skills) return [];
+
+    let skills: string[] = [];
+
+    if (Array.isArray(Skills)) {
+      skills = Skills.flatMap((s) =>
+        s
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean)
+      );
+    } else if (typeof Skills === "string") {
+      try {
+        const parsed = JSON.parse(Skills);
+        if (Array.isArray(parsed)) {
+          skills = parsed.flatMap((s) =>
+            typeof s === "string"
+              ? s
+                  .split(",")
+                  .map((item) => item.trim())
+                  .filter(Boolean)
+              : []
+          );
+        } else {
+          skills = Skills.split(",")
+            .map((item) => item.trim())
+            .filter(Boolean);
+        }
+      } catch {
+        skills = Skills.split(",")
+          .map((item) => item.trim())
+          .filter(Boolean);
+      }
     }
+
+    return skills.slice(0, 10); // Limit to 10
   }, [Skills]);
 
   const applyText =
@@ -177,6 +207,19 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
           />
         </div>
       </div>
+
+      {job.ApplyRedirectUrl ? (
+        <a
+          href={job.ApplyRedirectUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-4 py-2 mb-9 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        >
+          Apply on Company Site
+        </a>
+      ) : (
+        <p className="text-gray-500 text-sm">No application link provided.</p>
+      )}
 
       {/* About the Company */}
       <div>

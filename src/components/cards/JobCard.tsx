@@ -42,14 +42,43 @@ const Card: React.FC<CardProps> = ({
   const isGrowing = parseInt(job.Company?.company_size || "0") < 500;
   const showExternalApply =
     job.BrandedJd === "true" && job.ApplyRedirectUrl?.trim();
-
   const parsedSkills: string[] = React.useMemo(() => {
-    if (Array.isArray(job.Skills)) return job.Skills;
-    try {
-      return JSON.parse(job.Skills as string);
-    } catch {
-      return [];
+    if (!job.Skills) return [];
+
+    let skills: string[] = [];
+
+    if (Array.isArray(job.Skills)) {
+      skills = job.Skills.flatMap((skill) =>
+        skill
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean)
+      );
+    } else if (typeof job.Skills === "string") {
+      try {
+        const parsed = JSON.parse(job.Skills);
+        if (Array.isArray(parsed)) {
+          skills = parsed.flatMap((skill) =>
+            typeof skill === "string"
+              ? skill
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean)
+              : []
+          );
+        } else {
+          skills = job.Skills.split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+        }
+      } catch {
+        skills = job.Skills.split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+      }
     }
+
+    return skills.slice(0, 10); // Limit to 10
   }, [job.Skills]);
 
   return (
@@ -182,6 +211,7 @@ const Card: React.FC<CardProps> = ({
         </p>
       </div>
 
+      {/* Skills */}
       {/* Skills */}
       {parsedSkills.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-1">
