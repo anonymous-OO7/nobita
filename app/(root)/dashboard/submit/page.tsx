@@ -31,6 +31,7 @@ const validationSchema = Yup.object().shape({
   maxExperience: Yup.number().min(0),
   remote: Yup.boolean(),
   hybrid: Yup.boolean(),
+  walkIn: Yup.boolean(),
   skills: Yup.array().of(Yup.string()),
   tags: Yup.array().of(Yup.string()),
   currency: Yup.string(),
@@ -38,16 +39,57 @@ const validationSchema = Yup.object().shape({
   vacancy: Yup.number(),
   hideSalary: Yup.boolean(),
   variablePercentage: Yup.number(),
+  applyRedirectUrl: Yup.string(),
+  brandedJd: Yup.string(),
+  viewCount: Yup.number(),
+  applyCount: Yup.number(),
+  hideApplyButton: Yup.boolean(),
+  showRecruiterDetail: Yup.boolean(),
 });
 
 export default function SubmitJob() {
   const [loading, setLoading] = React.useState(false);
   const { makeApiCall } = useApi();
   const { showToast } = useToast();
-  const [jobtype, setType] = React.useState("");
-  const [jobCategory, setCategory] = React.useState("");
   const [companyData, setCompanyData] = React.useState<Option[]>([]);
   const router = useRouter();
+
+  const role =
+    typeof window !== "undefined" ? localStorage.getItem("role") : "user";
+
+  const [InitialValues, setInitialValues] = React.useState({
+    status: "active",
+    companyName: "",
+    position: "",
+    location: "",
+    jobType: "fulltime",
+    description: "",
+    field: "",
+    owner: "",
+    minPay: 0,
+    maxPay: 0,
+    price: 0,
+    category: "referral_post",
+    job_url: "",
+    remote: false,
+    hybrid: false,
+    walkIn: false,
+    minExperience: 0,
+    maxExperience: 0,
+    skills: [] as string[],
+    tags: [] as string[],
+    currency: "INR",
+    groupId: 0,
+    vacancy: 1,
+    hideSalary: false,
+    variablePercentage: 0,
+    applyRedirectUrl: "",
+    brandedJd: role === "super_recruiter" ? "false" : "true",
+    viewCount: 0,
+    applyCount: 0,
+    hideApplyButton: false,
+    showRecruiterDetail: false,
+  });
 
   const skillsOptions: SelectType[] = [
     { value: "Go", label: "Go" },
@@ -64,7 +106,6 @@ export default function SubmitJob() {
     { value: "Redis", label: "Redis" },
     { value: "SQL", label: "SQL" },
   ];
-
   const tagsOptions: SelectType[] = [
     { value: "urgent", label: "Urgent Hiring" },
     { value: "remote_ok", label: "Remote OK" },
@@ -73,14 +114,12 @@ export default function SubmitJob() {
     { value: "equity", label: "Equity" },
     { value: "bonus", label: "Performance Bonus" },
   ];
-
   const currencyOptions: SelectType[] = [
     { value: "INR", label: "Indian Rupee (₹)" },
     { value: "USD", label: "US Dollar ($)" },
     { value: "EUR", label: "Euro (€)" },
     { value: "GBP", label: "British Pound (£)" },
   ];
-
   const fieldDropdowndata: SelectType[] = [
     { value: "engineering", label: "Engineering" },
     { value: "marketing", label: "Marketing" },
@@ -108,7 +147,6 @@ export default function SubmitJob() {
     { value: "energy", label: "Energy & Utilities" },
     { value: "others", label: "Others" },
   ];
-
   const dropdownData: SelectType[] = [
     { label: "Full Time", value: "fulltime" },
     { label: "Part Time", value: "part_time" },
@@ -116,38 +154,6 @@ export default function SubmitJob() {
     { label: "Free Lancing", value: "freelancing" },
     { label: "Contract", value: "contract" },
   ];
-
-  const dropdownCategory: SelectType[] = [
-    { label: "Job post", value: "job_post" },
-    { label: "Referral", value: "referral_post" },
-  ];
-
-  const [InitialValues, setInitialValues] = React.useState({
-    status: "active",
-    companyName: "",
-    position: "",
-    location: "",
-    jobType: "fulltime",
-    description: "",
-    field: "",
-    owner: "",
-    minPay: 0,
-    maxPay: 0,
-    price: 0,
-    category: "referral_post",
-    job_url: "",
-    remote: false,
-    hybrid: false,
-    minExperience: 0,
-    maxExperience: 0,
-    skills: [] as string[],
-    tags: [] as string[],
-    currency: "INR",
-    groupId: 0,
-    vacancy: 1,
-    hideSalary: false,
-    variablePercentage: 0,
-  });
 
   const handleSubmit = React.useCallback(
     async (values: typeof InitialValues) => {
@@ -166,6 +172,7 @@ export default function SubmitJob() {
         job_url,
         remote,
         hybrid,
+        walkIn,
         minExperience,
         maxExperience,
         skills,
@@ -175,6 +182,12 @@ export default function SubmitJob() {
         vacancy,
         hideSalary,
         variablePercentage,
+        applyRedirectUrl,
+        brandedJd,
+        viewCount,
+        applyCount,
+        hideApplyButton,
+        showRecruiterDetail,
       } = values;
 
       const finalPrice = category === "referral_post" ? 0 : price;
@@ -206,7 +219,14 @@ export default function SubmitJob() {
           vacancy,
           hideSalary,
           variablePercentage,
-          experienceText
+          experienceText,
+          applyRedirectUrl,
+          brandedJd,
+          viewCount,
+          applyCount,
+          walkIn,
+          hideApplyButton,
+          showRecruiterDetail
         )
       )
         .then(() => {
@@ -220,9 +240,6 @@ export default function SubmitJob() {
     },
     [makeApiCall, router, showToast]
   );
-
-  const handleShowSource = (data: string) => setType(data);
-  const handleSetCategory = (data: string) => setCategory(data);
 
   React.useEffect(() => {
     makeApiCall(SearchGetCompaniesApi("")).then((response: any) => {
@@ -264,12 +281,10 @@ export default function SubmitJob() {
             <Form>
               <Spacer size="md" orientation="horizontal" />
               <SearchSelect
-                placeholder="Enter company name (e.g., Microsoft)"
+                placeholder="Enter company name"
                 label="Company Name"
                 item={companyData}
                 name="companyName"
-                className="bg-white p-1 text-black font-poppins font-light text-lg"
-                size="sm"
                 onChange={(e) => searchCompanies(e.target.value)}
               />
               <p
@@ -279,115 +294,59 @@ export default function SubmitJob() {
                 Can't find your company? Create here
               </p>
               <Spacer size="xs" />
-              <Input
-                className="bg-white p-1 text-black font-poppins font-light text-lg"
-                label="Position"
-                name="position"
-                placeholder="Enter position (e.g., Backend Developer)"
-              />
+              <Input label="Position" name="position" />
               <Spacer size="xs" />
               <Row>
-                {/* <Select
-                  label="Job Category"
-                  item={dropdownCategory}
-                  name="category"
-                  onSelect={handleSetCategory}
-                  placeholder="Job category"
-                  className="text-black font-poppins font-light px-1"
-                /> */}
-                <Select
-                  label="Job Type"
-                  item={dropdownData}
-                  name="jobType"
-                  onSelect={handleShowSource}
-                  placeholder="Job type"
-                  className="text-black font-poppins font-light px-1"
-                />
+                <Select label="Job Type" item={dropdownData} name="jobType" />
               </Row>
               <Spacer size="xs" />
               <Row>
-                <Input
-                  className="bg-white p-1 text-black font-poppins font-light text-lg"
-                  label="Job Location"
-                  name="location"
-                />
+                <Input label="Job Location" name="location" />
                 <Spacer size="xs" />
-                <Select
-                  label="Field"
-                  placeholder="Select a professional field"
-                  item={fieldDropdowndata}
-                  name="field"
-                  size="sm"
-                />
+                <Select label="Field" item={fieldDropdowndata} name="field" />
               </Row>
-              <Input
-                className="bg-white p-1 text-black font-poppins font-light text-lg"
-                label="Job Link (*optional)"
-                name="job_url"
-              />
+              <Input label="Job Link (*optional)" name="job_url" />
               <Spacer size="xs" />
               <RichTextEditor
                 name="description"
                 label="Description"
                 placeholder="Write something..."
-                size="large"
-                helperText="You can use bold, italics, lists, etc."
               />
               <Spacer size="xs" />
               <Row>
-                <Input
-                  className="bg-white p-1 text-black font-poppins font-light text-lg"
-                  label="Minimum Pay"
-                  name="minPay"
-                  type="number"
-                />
-                <Input
-                  className="bg-white p-1 text-black font-poppins font-light text-lg"
-                  label="Maximum Pay"
-                  name="maxPay"
-                  type="number"
-                />
+                <Input label="Minimum Pay" name="minPay" type="number" />
+                <Input label="Maximum Pay" name="maxPay" type="number" />
                 <Select
                   label="Currency"
                   item={currencyOptions}
                   name="currency"
-                  placeholder="Select currency"
-                  size="sm"
                 />
               </Row>
               <Spacer size="xs" />
               <Row>
                 <Input
-                  className="bg-white p-1 text-black font-poppins font-light text-lg"
-                  label="Minimum Experience (Years)"
+                  label="Minimum Experience"
                   name="minExperience"
                   type="number"
                 />
                 <Input
-                  className="bg-white p-1 text-black font-poppins font-light text-lg"
-                  label="Maximum Experience (Years)"
+                  label="Maximum Experience"
                   name="maxExperience"
                   type="number"
                 />
               </Row>
               <Spacer size="xs" />
               <Row>
+                <Input label="Vacancy Count" name="vacancy" type="number" />
                 <Input
-                  className="bg-white p-1 text-black font-poppins font-light text-lg"
-                  label="Vacancy Count"
-                  name="vacancy"
-                  type="number"
-                  min={1}
-                />
-                <Input
-                  className="bg-white p-1 text-black font-poppins font-light text-lg"
                   label="Variable Pay (%)"
                   name="variablePercentage"
                   type="number"
-                  min={0}
-                  max={100}
                 />
               </Row>
+              <Spacer size="xs" />
+              <Input label="Apply Redirect URL" name="applyRedirectUrl" />
+              <Input label="Branded JD (true/false)" name="brandedJd" />
               <Spacer size="xs" />
               <div className="flex items-center gap-4">
                 <label className="flex items-center gap-2 text-black">
@@ -399,28 +358,34 @@ export default function SubmitJob() {
                   Hybrid
                 </label>
                 <label className="flex items-center gap-2 text-black">
+                  <Field type="checkbox" name="walkIn" />
+                  Walk-in
+                </label>
+                <label className="flex items-center gap-2 text-black">
                   <Field type="checkbox" name="hideSalary" />
                   Hide Salary
+                </label>
+                <label className="flex items-center gap-2 text-black">
+                  <Field type="checkbox" name="showRecruiterDetail" />
+                  Show Recruiter Detail
                 </label>
               </div>
               <Spacer size="xs" />
               <FormikMultiSelect
                 name="skills"
                 label="Required Skills"
-                placeholder="Select required skills"
                 options={skillsOptions}
               />
               <Spacer size="xs" />
               <FormikMultiSelect
                 name="tags"
                 label="Job Tags"
-                placeholder="Select relevant tags"
                 options={tagsOptions}
               />
               <Spacer size="md" />
               <button
                 type="submit"
-                className="bg-buttonPrimary font-poppins text-white font-normal py-2 px-4 rounded w-full"
+                className="bg-buttonPrimary text-white py-2 px-4 rounded w-full"
                 disabled={loading}
               >
                 {loading ? "Creating Job..." : "Create Job Posting"}

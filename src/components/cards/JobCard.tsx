@@ -1,3 +1,4 @@
+"use client";
 import { Job } from "@/types";
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
@@ -33,168 +34,14 @@ const Card: React.FC<CardProps> = ({
   onViewDetails,
   isApplied = false,
 }) => {
-  const backgroundColorClass = ["inactive", "hired", "closed"].includes(
-    job.Status
-  )
-    ? "bg-red-400"
-    : "bg-buttonPrimary";
-
   const postedDate = formatDistanceToNow(new Date(job.CreatedAt), {
     addSuffix: true,
   });
 
-  const renderJobStatus = (status: string) => {
-    switch (status) {
-      case "active":
-        return (
-          <Chip
-            startContent={<CircleCheck size={18} />}
-            variant="flat"
-            color="success"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Actively Hiring</p>
-          </Chip>
-        );
-      case "closed":
-      case "inactive":
-        return (
-          <Chip
-            startContent={<CircleX size={18} />}
-            variant="flat"
-            color="danger"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </p>
-          </Chip>
-        );
-      case "hired":
-        return (
-          <Chip
-            startContent={<CircleCheckBig size={18} />}
-            variant="bordered"
-            color="success"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Hired</p>
-          </Chip>
-        );
-      default:
-        return (
-          <Chip variant="flat" color="default" size="sm">
-            Active
-          </Chip>
-        );
-    }
-  };
-
-  const isGrowing = parseInt(job.Company.company_size || "0") < 500;
-
-  const renderGrowth = () => (
-    <Chip
-      startContent={<ChartNoAxesCombined size={18} />}
-      variant="bordered"
-      color={isGrowing ? "warning" : "success"}
-      size="sm"
-    >
-      <p className="text-sm font-poppins text-black">
-        {isGrowing ? "Growing Fast" : "Well Established"}
-      </p>
-    </Chip>
-  );
-
-  const renderType = () => {
-    switch (job.Type) {
-      case "fulltime":
-        return (
-          <Chip
-            startContent={<Check size={18} />}
-            variant="flat"
-            color="primary"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Full-Time</p>
-          </Chip>
-        );
-      case "contract":
-      case "internship":
-      case "freelance":
-        return (
-          <Chip
-            startContent={<ChartNoAxesCombined size={18} />}
-            variant="flat"
-            color="warning"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">
-              {job.Type.charAt(0).toUpperCase() + job.Type.slice(1)}
-            </p>
-          </Chip>
-        );
-      default:
-        return (
-          <Chip
-            startContent={<Check size={18} />}
-            variant="flat"
-            color="primary"
-            size="sm"
-          >
-            <p className="text-sm font-poppins text-black">Full-Time</p>
-          </Chip>
-        );
-    }
-  };
-
-  const renderPriceTag = () => {
-    const price = job.Price;
-    if (price < 1000) {
-      return (
-        <Chip
-          startContent={<TagIcon size={18} />}
-          color="secondary"
-          variant="flat"
-          size="sm"
-        >
-          <p className="text-sm font-poppins text-black">Affordable</p>
-        </Chip>
-      );
-    } else if (price < 2000) {
-      return (
-        <Chip
-          startContent={<AwardIcon size={18} />}
-          color="secondary"
-          variant="flat"
-          size="sm"
-        >
-          <p className="text-sm font-poppins text-black">Competitive</p>
-        </Chip>
-      );
-    } else if (price < 5000) {
-      return (
-        <Chip
-          startContent={<GemIcon size={18} />}
-          color="primary"
-          variant="flat"
-          size="sm"
-        >
-          <p className="text-sm font-poppins text-black">Premium</p>
-        </Chip>
-      );
-    } else {
-      return (
-        <Chip
-          startContent={<GemIcon size={18} />}
-          color="danger"
-          variant="flat"
-          size="sm"
-        >
-          <p className="text-sm font-poppins text-black">Rare</p>
-        </Chip>
-      );
-    }
-  };
+  const isJobClosed = ["inactive", "hired", "closed"].includes(job.Status);
+  const isGrowing = parseInt(job.Company?.company_size || "0") < 500;
+  const showExternalApply =
+    job.BrandedJd === "true" && job.ApplyRedirectUrl?.trim();
 
   const parsedSkills: string[] = React.useMemo(() => {
     if (Array.isArray(job.Skills)) return job.Skills;
@@ -206,146 +53,191 @@ const Card: React.FC<CardProps> = ({
   }, [job.Skills]);
 
   return (
-    <div className="p-5 shadow-md rounded-md mb-6 border bg-white">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+    <div className="p-4 sm:p-6 bg-white rounded-xl border shadow-sm space-y-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-3">
-          {job?.Company?.logo_url ? (
+          {job.Company?.logo_url ? (
             <Image
               src={job.Company.logo_url}
-              width={50}
-              height={50}
+              width={48}
+              height={48}
               alt="Company Logo"
               className="rounded-md"
             />
           ) : (
-            <Building2Icon color="black" size={30} />
+            <Building2Icon className="text-gray-500" size={30} />
           )}
-          <div>
-            <h2 className="text-lg font-medium text-black">{job.Position}</h2>
-            <p className="text-sm text-gray-600">{job.Company.name}</p>
+          <div className="space-y-0.5">
+            <h3 className="text-base font-semibold text-gray-900">
+              {job.Position}
+            </h3>
+            <p className="text-sm text-gray-600">{job.Company?.name}</p>
           </div>
         </div>
-        <div className="flex flex-row flex-wrap gap-2">
-          {renderType()}
-          {renderJobStatus(job.Status)}
-          {renderGrowth()}
+
+        <div className="flex flex-wrap gap-2">
+          <Chip
+            startContent={<Check size={16} />}
+            size="sm"
+            color="primary"
+            variant="flat"
+          >
+            <span className="text-xs">
+              {job.Type.charAt(0).toUpperCase() + job.Type.slice(1)}
+            </span>
+          </Chip>
+          <Chip
+            startContent={
+              isJobClosed ? <CircleX size={16} /> : <CircleCheck size={16} />
+            }
+            size="sm"
+            color={isJobClosed ? "danger" : "success"}
+            variant="flat"
+          >
+            <span className="text-xs">
+              {isJobClosed
+                ? job.Status.charAt(0).toUpperCase() + job.Status.slice(1)
+                : "Actively Hiring"}
+            </span>
+          </Chip>
+          <Chip
+            startContent={<ChartNoAxesCombined size={16} />}
+            size="sm"
+            color={isGrowing ? "warning" : "success"}
+            variant="flat"
+          >
+            <span className="text-xs">
+              {isGrowing ? "Growing Fast" : "Well Established"}
+            </span>
+          </Chip>
         </div>
       </div>
 
-      <div className="mt-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-        <div className="flex items-center gap-2 text-sm text-gray-700">
-          <CiLocationOn className="text-black" />
-          <span>{job.Location}</span>
+      {/* Location, Company Size, Price */}
+      <div className="flex flex-wrap justify-between gap-3 text-sm text-gray-700">
+        <div className="flex items-center gap-2">
+          <CiLocationOn className="text-gray-700" />
+          <span>{job.Location || "N/A"}</span>
         </div>
         <div className="flex items-center gap-2">
           <Chip
-            startContent={<UsersRound size={16} />}
+            startContent={<UsersRound size={14} />}
             variant="flat"
             color="default"
             size="sm"
           >
-            <span className="text-sm text-black">
-              {job.Company.company_size || "N/A"}+ Employees
+            <span className="text-xs">
+              {job.Company?.company_size || "N/A"}+ Employees
             </span>
           </Chip>
-          {renderPriceTag()}
+          {/* Price Tag */}
+          {job.Price >= 5000 ? (
+            <Chip startContent={<GemIcon size={14} />} color="danger" size="sm">
+              <span className="text-xs">Rare</span>
+            </Chip>
+          ) : job.Price >= 2000 ? (
+            <Chip
+              startContent={<GemIcon size={14} />}
+              color="primary"
+              size="sm"
+            >
+              <span className="text-xs">Premium</span>
+            </Chip>
+          ) : job.Price >= 1000 ? (
+            <Chip
+              startContent={<AwardIcon size={14} />}
+              color="secondary"
+              size="sm"
+            >
+              <span className="text-xs">Competitive</span>
+            </Chip>
+          ) : (
+            <Chip
+              startContent={<TagIcon size={14} />}
+              color="secondary"
+              size="sm"
+            >
+              <span className="text-xs">Affordable</span>
+            </Chip>
+          )}
           {isApplied && (
             <Chip
-              startContent={<CircleCheckBig size={16} />}
+              startContent={<CircleCheckBig size={14} />}
               color="success"
-              variant="flat"
               size="sm"
-              className="bg-green-500 text-white"
             >
-              Applied
+              <span className="text-xs">Applied</span>
             </Chip>
           )}
         </div>
       </div>
 
-      <div className="mt-4 flex justify-between items-center flex-wrap gap-4">
-        <div className="text-sm text-gray-700">
-          <p>
-            {job.MinExperience} - {job.MaxExperience} yrs • ₹{job.MinPay}L - ₹
-            {job.MaxPay}L •{" "}
-            {job.Remote ? "Remote" : job.Hybrid ? "Hybrid" : "On-site"}
-          </p>
-        </div>
-        <div className="flex gap-2 flex-wrap">
-          <Button
-            color="primary"
-            variant="outline"
-            onClick={() => onSave(job.Uuid)}
-            size="sm"
-          >
-            <span className="text-sm font-normal text-blue-500">Save</span>
-          </Button>
-          <Button
-            color="secondary"
-            variant="outline"
-            onClick={() => onViewDetails(job)}
-            size="sm"
-          >
-            <span className="text-sm font-medium text-secondary">
-              View Details
-            </span>
-          </Button>
-          <Button
-            className={`rounded-md ${backgroundColorClass}`}
-            color={
-              ["inactive", "hired", "closed"].includes(job.Status)
-                ? "danger"
-                : "primary"
-            }
-            variant={
-              ["inactive", "hired", "closed"].includes(job.Status)
-                ? "solid"
-                : "ghost"
-            }
-            size="sm"
-            onClick={() => onApply(job)}
-            disabled={["inactive", "hired", "closed"].includes(job.Status)}
-          >
-            <span className="text-sm text-white font-medium">
-              {["inactive", "hired", "closed"].includes(job.Status)
-                ? job.Status
-                : "Apply"}
-            </span>
-          </Button>
-        </div>
+      {/* Info */}
+      <div className="text-xs text-gray-600">
+        <p>
+          {job.MinExperience} - {job.MaxExperience} yrs • ₹{job.MinPay}L - ₹
+          {job.MaxPay}L •{" "}
+          {job.Remote ? "Remote" : job.Hybrid ? "Hybrid" : "On-site"}
+        </p>
       </div>
 
+      {/* Skills */}
       {parsedSkills.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {parsedSkills.map((skill, index) => (
-            <Chip
-              key={index}
-              color="primary"
-              variant="bordered"
-              size="sm"
-              className="px-2 py-1"
-            >
-              <span className="text-xs text-black">{skill}</span>
+        <div className="flex flex-wrap gap-2 mt-1">
+          {parsedSkills.map((skill, i) => (
+            <Chip key={i} variant="bordered" color="primary" size="sm">
+              <span className="text-xs">{skill}</span>
             </Chip>
           ))}
         </div>
       )}
 
+      {/* Footer Actions */}
+      <div className="flex flex-wrap justify-between items-center gap-3">
+        <div className="text-xs text-gray-500 space-y-1">
+          <p>
+            <span className="font-medium text-gray-700">Category:</span>{" "}
+            {job.Category?.replace("_", " ") || "N/A"}
+          </p>
+          <p className="text-gray-400">Posted {postedDate}</p>
+        </div>
+
+        <div className="flex gap-2 flex-wrap">
+          <Button variant="outline" size="sm" onClick={() => onSave(job.Uuid)}>
+            <span className="text-xs font-medium text-blue-500">Save</span>
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onViewDetails(job)}
+          >
+            <span className="text-xs font-medium">View Details</span>
+          </Button>
+          <Button
+            className={`rounded-md ${
+              isJobClosed ? "bg-gray-400" : "bg-buttonPrimary"
+            }`}
+            variant="solid"
+            size="sm"
+            color={isJobClosed ? "default" : "primary"}
+            disabled={isJobClosed}
+            onClick={() => onApply(job)}
+          >
+            <span className="text-xs text-white font-medium">
+              {showExternalApply ? "Apply on company site" : "Apply Now"}
+            </span>
+          </Button>
+        </div>
+      </div>
+
       {job.JobUrl && (
-        <p className="mt-3 text-sm text-blue-600 font-medium">
+        <p className="text-xs mt-1 text-blue-600 font-medium underline">
           <a href={job.JobUrl} target="_blank" rel="noopener noreferrer">
             View Job Posting
           </a>
         </p>
       )}
-
-      <div className="mt-2 text-xs text-gray-500">
-        <p>
-          <span className="font-medium text-black">Category:</span>{" "}
-          {job.Category?.replace("_", " ")}
-        </p>
-        <p>Posted {postedDate}</p>
-      </div>
     </div>
   );
 };

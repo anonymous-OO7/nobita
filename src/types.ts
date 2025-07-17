@@ -220,14 +220,43 @@ export type Job = {
   MinPay: number;
   MaxPay: number;
   Price: number;
+  Currency: string;
+  HideSalary: boolean;
   MinExperience: number;
   MaxExperience: number;
+  ExperienceText: string;
   Remote: boolean;
   Hybrid: boolean;
-  Skills: string | string[];
-  JobUrl: string;
+  WalkIn: boolean;
+  EducationDoesNotMatter: boolean;
+  EducationUG: string;
+  EducationPG: string;
+  EducationPPG: string;
+  EducationDegreeCombo: string;
+  EducationBTechPremium: boolean;
+  EducationMbaPremium: boolean;
+  EducationPremiumProcessed: boolean;
+  EducationLabel: string;
+  EducationIsSchool: boolean;
   Category: string;
-  Company: Company;
+  Skills: string | string[];
+  Tags: string;
+  GroupID: number;
+  Vacancy: number;
+  Mode: string;
+  Board: string;
+  SourceCreatedDate: number;
+  ViewCount: number;
+  ApplyCount: number;
+  HideApplyButton: boolean;
+  ShowRecruiterDetail: boolean;
+  FooterLabel: string;
+  FooterColor: string;
+  ShowMultipleApply: boolean;
+  JobUrl: string;
+  ApplyRedirectUrl: string;
+  BrandedJd: string;
+  Company: Company; // ✅ this replaces duplicate `company`
 };
 
 export interface WorkExperienceType {

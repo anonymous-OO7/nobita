@@ -130,7 +130,10 @@ function SidebarNew({
       return []; // Return empty array while loading
     }
 
-    if (role === "recruiter" && pathname.includes("/recruiter")) {
+    if (
+      (role === "recruiter" || role === "super_recruiter") &&
+      pathname.includes("/recruiter")
+    ) {
       return [
         {
           icon: <Home color={pathname === "/recruiter" ? "#fff" : "#683FDB"} />,
@@ -191,6 +194,17 @@ function SidebarNew({
           alert: pathname === "/recruiter/feedback",
           active: pathname === "/recruiter/feedback",
           href: "/recruiter/feedback",
+        },
+        {
+          icon: (
+            <FeedBack
+              color={pathname === "/recruiter/admin" ? "#fff" : "#683FDB"}
+            />
+          ),
+          text: "Admin",
+          alert: pathname === "/recruiter/admin",
+          active: pathname === "/recruiter/admin",
+          href: "/recruiter/admin",
         },
       ];
     }

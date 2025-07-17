@@ -112,16 +112,24 @@ export const CreateJobApi = (
   maxExperience: number,
   remote: boolean,
   hybrid: boolean,
-  skills: string[], // Array of strings
-  tags: string[], // New
-  currency: string, // New
-  groupId: number, // New
-  vacancy: number, // New
-  hideSalary: boolean, // New
-  variablePercentage: number, // New
-  experienceText: string // New - for display purposes
+  skills: string[],
+  tags: string[],
+  currency: string,
+  groupId: number,
+  vacancy: number,
+  hideSalary: boolean,
+  variablePercentage: number,
+  experienceText: string,
+  applyRedirectUrl: string,
+  brandedJd: string,
+  viewCount: number,
+  applyCount: number,
+  walkIn: boolean,
+  hideApplyButton: boolean,
+  showRecruiterDetail: boolean
 ) => {
   const formData = new FormData();
+
   formData.append("status", status);
   formData.append("company_code", companyName);
   formData.append("position", position);
@@ -144,12 +152,19 @@ export const CreateJobApi = (
   formData.append("hide_salary", hideSalary.toString());
   formData.append("variable_percentage", variablePercentage.toString());
   formData.append("experience_text", experienceText);
+  formData.append("apply_redirect_url", applyRedirectUrl);
+  formData.append("branded_jd", brandedJd);
+  formData.append("view_count", viewCount.toString());
+  formData.append("apply_count", applyCount.toString());
+  formData.append("walk_in", walkIn.toString());
+  formData.append("hide_apply_button", hideApplyButton.toString());
+  formData.append("show_recruiter_detail", showRecruiterDetail.toString());
 
-  if (skills && skills.length > 0) {
+  if (skills?.length > 0) {
     formData.append("skills", JSON.stringify(skills));
   }
 
-  if (tags && tags.length > 0) {
+  if (tags?.length > 0) {
     formData.append("tags", JSON.stringify(tags));
   }
 
@@ -570,6 +585,23 @@ export const GetUniversalProfileApi = (user_id: string) => {
     headers: {
       "ngrok-skip-browser-warning": "69420",
       user_id: `${user_id}`,
+    },
+  });
+};
+
+export const AddJobsCsvClientApi = (file: File) => {
+  const formData = new FormData();
+
+  formData.append("jobs", file);
+
+  return onePiece.post("/admin/add-jobs", formData, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      user_id: `${localStorage.getItem("id")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+      email: localStorage.getItem("email"),
     },
   });
 };

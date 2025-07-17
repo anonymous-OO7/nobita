@@ -1,3 +1,4 @@
+"use client";
 import { Job } from "@/types";
 import React from "react";
 import { format } from "date-fns";
@@ -31,6 +32,8 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
     Hybrid,
     Skills,
     JobUrl,
+    ApplyRedirectUrl,
+    BrandedJd,
     CreatedAt,
     Company,
     Field,
@@ -46,8 +49,18 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
     }
   }, [Skills]);
 
+  const applyText =
+    BrandedJd === "true" && ApplyRedirectUrl?.trim()
+      ? "Apply on company site"
+      : "Apply Now";
+
+  const applyLink =
+    BrandedJd === "true" && ApplyRedirectUrl?.trim()
+      ? ApplyRedirectUrl
+      : JobUrl;
+
   return (
-    <div className="px-6 py-8 max-w-5xl mx-auto">
+    <div className="px-6 py-8 max-w-5xl mx-auto text-sm text-gray-800">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
         <div className="flex items-center gap-4">
@@ -63,7 +76,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             <Building2 size={40} />
           )}
           <div>
-            <h1 className="text-2xl font-semibold text-black">{Position}</h1>
+            <h1 className="text-xl font-semibold text-black">{Position}</h1>
             <p className="text-gray-600 text-sm">{Company.name}</p>
           </div>
         </div>
@@ -78,14 +91,14 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             Posted on {format(new Date(CreatedAt), "dd MMM yyyy")}
           </Chip>
 
-          {JobUrl && (
+          {applyLink && (
             <a
-              href={JobUrl}
+              href={applyLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded transition"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-4 py-2 rounded transition"
             >
-              Apply Now
+              {applyText}
             </a>
           )}
         </div>
@@ -93,7 +106,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
 
       {/* About the Job */}
       <div className="mb-10">
-        <h2 className="text-xl font-semibold text-black mb-4">About the Job</h2>
+        <h2 className="text-lg font-semibold text-black mb-4">About the Job</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="space-y-2 text-gray-700">
             <p>
@@ -121,10 +134,10 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
 
           <div className="space-y-2 text-gray-700">
             <p>
-              <strong>Field:</strong> {Field}
+              <strong>Field:</strong> {Field || "N/A"}
             </p>
             <p>
-              <strong>Category:</strong> {Category?.replace("_", " ")}
+              <strong>Category:</strong> {Category?.replace("_", " ") || "N/A"}
             </p>
             {JobUrl && (
               <p className="text-blue-600 font-medium inline-flex items-center gap-1">
@@ -140,7 +153,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
         {/* Skills */}
         {parsedSkills.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-black mb-2">
+            <h3 className="text-base font-semibold text-black mb-2">
               Required Skills
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -155,11 +168,11 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
 
         {/* Job Description */}
         <div>
-          <h3 className="text-lg font-semibold text-black mb-2">
+          <h3 className="text-base font-semibold text-black mb-2">
             Job Description
           </h3>
           <div
-            className="prose max-w-none rounded-md p-2 text-black"
+            className="prose max-w-none rounded-md p-2 text-gray-800"
             dangerouslySetInnerHTML={{ __html: Description }}
           />
         </div>
@@ -167,15 +180,15 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
 
       {/* About the Company */}
       <div>
-        <h2 className="text-xl font-semibold text-black mb-4">
+        <h2 className="text-lg font-semibold text-black mb-4">
           About the Company
         </h2>
         <div className="space-y-2 text-gray-700">
           <p>
-            <strong>Industry:</strong> {Company.industry}
+            <strong>Industry:</strong> {Company.industry || "N/A"}
           </p>
           <p>
-            <strong>Size:</strong> {Company.company_size}+ employees
+            <strong>Size:</strong> {Company.company_size || "N/A"}+ employees
           </p>
           <p>
             <strong>Founded:</strong>{" "}
@@ -184,25 +197,32 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
               : "N/A"}
           </p>
           <p>
-            <strong>Location:</strong> {Company.location}
+            <strong>Location:</strong> {Company.location || "N/A"}
           </p>
           <p>
-            <strong>Headquarters:</strong> {Company.headquarters_address}
+            <strong>Headquarters:</strong>{" "}
+            {Company.headquarters_address || "N/A"}
           </p>
           <p>
             <strong>Description:</strong>{" "}
-            <span className="whitespace-pre-line">{Company.description}</span>
-          </p>
-          <p>
-            <strong>Culture:</strong>{" "}
             <span className="whitespace-pre-line">
-              {Company.company_culture}
+              {Company.description || "N/A"}
             </span>
           </p>
-          <p>
-            <strong>Benefits:</strong>{" "}
-            <span className="whitespace-pre-line">{Company.benefits}</span>
-          </p>
+          {Company.company_culture && (
+            <p>
+              <strong>Culture:</strong>{" "}
+              <span className="whitespace-pre-line">
+                {Company.company_culture}
+              </span>
+            </p>
+          )}
+          {Company.benefits && (
+            <p>
+              <strong>Benefits:</strong>{" "}
+              <span className="whitespace-pre-line">{Company.benefits}</span>
+            </p>
+          )}
         </div>
 
         {/* Contact & Social */}
