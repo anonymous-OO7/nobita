@@ -78,40 +78,46 @@ export default function Sidebar({ children, setExpandedMain, profileDetails }) {
           <SidebarContext.Provider value={{ expanded }}>
             <ul className="flex-1 px-3">{children}</ul>
           </SidebarContext.Provider>
-          <div
-            className={`
-                flex justify-between items-center 
-                overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-              `}
-          >
-            <div className="flex flex-row justify-between leading-4 text-black gap-6 items-center">
-              <p className="text-black font-poppins font-semibold text-xl">
-                Credits
-              </p>
-              <Tooltip
-                content={"*credits are used to apply for a referral"}
-                size="md"
-                color="foreground"
+          {expanded && (
+            <>
+              <div
+                className={`
+          flex justify-between items-center 
+          overflow-hidden transition-all w-52 ml-3
+        `}
               >
-                <p className="text-black font-poppins font-light text-2xl">
-                  {profileDetails?.applies}
-                </p>
-              </Tooltip>
-            </div>
-          </div>
+                <div className="flex flex-row justify-between leading-4 text-black gap-6 items-center">
+                  <p className="text-black font-poppins font-semibold text-xl">
+                    Credits
+                  </p>
+                  <Tooltip
+                    content={"*credits are used to apply for a referral"}
+                    size="md"
+                    color="foreground"
+                  >
+                    <p className="text-black font-poppins font-light text-2xl">
+                      {profileDetails?.applies}
+                    </p>
+                  </Tooltip>
+                </div>
+              </div>
 
-          <p className="text-black font-poppins font-light text-xs px-3 my-4">
-            *Credits let you apply to referrals. Want more? Share your referral
-            code with friends using the code below to earn extra credits!
-          </p>
-          <p className="text-black font-poppins font-light text-xs px-3 my-4 ">
-            Your Referral Code:
-            <span className="text-xs text-gray-600">
-              <p className="text-red-600 font-poppins font-semibold text-3xl">
-                {profileDetails?.referal_code}
+              <p className="text-black font-poppins font-light text-xs px-3 my-4">
+                *Credits let you apply to referrals. Want more? Share your
+                referral code with friends using the code below to earn extra
+                credits!
               </p>
-            </span>
-          </p>
+              <p className="text-black font-poppins font-light text-xs px-3 my-4 ">
+                Your Referral Code:
+                <span className="text-xs text-gray-600">
+                  <p className="text-red-600 font-poppins font-semibold text-3xl">
+                    {profileDetails?.referal_code}
+                  </p>
+                </span>
+              </p>
+            </>
+          )}
+
           <div className="border-t flex p-3">
             <img // eslint-disable-line
               src="https://cdn1.vectorstock.com/i/1000x1000/77/10/men-faceless-profile-vector-13567710.jpg"

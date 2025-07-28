@@ -60,6 +60,27 @@ const COLUMNS = [
     key: "status",
   },
   {
+    name: "Code",
+    key: "code",
+  },
+
+  {
+    name: "Founded",
+    key: "founded_date",
+  },
+  {
+    name: "Website",
+    key: "website_url",
+  },
+  {
+    name: "Tech Stack",
+    key: "tech_stack",
+  },
+  {
+    name: "Subscription Plan",
+    key: "subscription_plan",
+  },
+  {
     name: "Action",
     key: "action",
   },
@@ -261,7 +282,10 @@ export default function ListCompany({ eppOrders, loading }: Props) {
           return (
             <div className="flex flex-col">
               <p className="text-sm">
-                {company.aggregate_rating?.toFixed(1) || "N/A"}
+                {company.aggregate_rating !== undefined &&
+                company.aggregate_rating !== null
+                  ? company.aggregate_rating.toFixed(1)
+                  : "N/A"}
               </p>
             </div>
           );
@@ -270,14 +294,75 @@ export default function ListCompany({ eppOrders, loading }: Props) {
           return (
             <div className="flex flex-col">
               <span
-                className={`px-2 py-1 text-xs rounded-full w-fit ${
+                className={`px-2 py-1 text-xs rounded-full w-fit capitalize ${
                   company.status === "active"
                     ? "bg-green-100 text-green-600"
                     : "bg-gray-200 text-gray-600"
                 }`}
               >
-                {company.status}
+                {company.status || "—"}
               </span>
+            </div>
+          );
+
+        // New columns:
+
+        case "code":
+          return (
+            <div className="flex flex-col">
+              <p className="text-sm lowercase">{company.code || "—"}</p>
+            </div>
+          );
+
+        case "uploaded_by":
+          return (
+            <div className="flex flex-col">
+              <p className="text-sm">{company.uploaded_by || "—"}</p>
+            </div>
+          );
+
+        case "founded_date":
+          return (
+            <div className="flex flex-col">
+              <p className="text-sm">
+                {company.founded_date
+                  ? new Date(company.founded_date).getFullYear()
+                  : "N/A"}
+              </p>
+            </div>
+          );
+
+        case "website_url":
+          return (
+            <div className="flex flex-col">
+              {company.website_url ? (
+                <a
+                  href={company.website_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline text-sm truncate max-w-[150px]"
+                >
+                  {company.website_url}
+                </a>
+              ) : (
+                <p className="text-sm">—</p>
+              )}
+            </div>
+          );
+
+        case "tech_stack":
+          return (
+            <div className="flex flex-col">
+              <p className="text-sm truncate max-w-[150px]">
+                {company.tech_stack || "—"}
+              </p>
+            </div>
+          );
+
+        case "subscription_plan":
+          return (
+            <div className="flex flex-col capitalize">
+              <p className="text-sm">{company.subscription_plan || "—"}</p>
             </div>
           );
 
@@ -292,7 +377,7 @@ export default function ListCompany({ eppOrders, loading }: Props) {
           return null;
       }
     },
-    [eppOrders]
+    [eppOrders, handleViewOrders]
   );
 
   const sortedItems = React.useMemo(() => {

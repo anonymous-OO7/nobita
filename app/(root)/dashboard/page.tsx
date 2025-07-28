@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import useApi from "@/hooks/useApi";
 import useTokenCheck from "@/hooks/useTokenCheck";
 import JobCard from "@/components/cards/JobCard";
@@ -48,6 +48,9 @@ const Home: React.FC = () => {
   const [remainingCredits, setRemainingCredits] = useState<number>(0);
   const [applyingJob, setApplyingJobInfo] = useState<Job>();
 
+  // Ref for scrolling job list container
+  const jobListRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     makeApiCall(GetAllUserAppliedJobsList())
       .then((res) => setAllAppliedJobs(res?.data || []))
@@ -66,10 +69,32 @@ const Home: React.FC = () => {
       .then((res) => {
         setJobsInfo(res?.data || []);
         setTotalItems(res?.total_items || 0);
+        // Optionally set first job on initial fetch
+        if ((res?.data || []).length > 0) {
+          setSelectedJob(res!.data[0]);
+        } else {
+          setSelectedJob(null);
+        }
       })
       .catch(console.error)
       .finally(() => setLoading(false));
   }, [makeApiCall, currentPage, postsPerPage]);
+
+  // Scroll to top and auto-select first job on page or jobsInfo change
+  useEffect(() => {
+    if (jobListRef.current) {
+      jobListRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+
+    if (jobsInfo.length > 0) {
+      setSelectedJob(jobsInfo[0]);
+    } else {
+      setSelectedJob(null);
+    }
+  }, [currentPage, jobsInfo]);
 
   const saveJob = useCallback(
     (uuid: string) => {
@@ -116,8 +141,8 @@ const Home: React.FC = () => {
 
       {isDesktop ? (
         <div className="flex gap-4 mt-[6vh] h-[calc(100vh-150px)]">
-          {/* Scrollable job list */}
-          <div className="w-2/5 overflow-y-auto pr-2">
+          {/* Scrollable job list with ref */}
+          <div ref={jobListRef} className="w-2/5 overflow-y-auto pr-2">
             <div className="space-y-4">
               {jobsInfo.map((job) => (
                 <JobCard

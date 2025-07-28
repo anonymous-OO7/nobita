@@ -1,6 +1,6 @@
 "use client";
+import React, { useEffect, useRef } from "react";
 import { Job } from "@/types";
-import React from "react";
 import { format } from "date-fns";
 import { Chip } from "@nextui-org/react";
 import { CiLocationOn } from "react-icons/ci";
@@ -19,6 +19,16 @@ interface JobInfoPageProps {
 }
 
 const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  }, [job]);
+
   const {
     Position,
     Description,
@@ -90,7 +100,10 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
       : JobUrl;
 
   return (
-    <div className="px-6 py-8 max-w-5xl mx-auto text-sm text-gray-800">
+    <div
+      className="px-6 py-8 max-w-5xl mx-auto text-sm text-gray-800"
+      ref={containerRef}
+    >
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
         <div className="flex items-center gap-4">
@@ -192,7 +205,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             </h3>
             <div className="flex flex-wrap gap-2">
               {parsedSkills.map((skill, idx) => (
-                <Chip key={idx} color="primary" variant="bordered" size="sm">
+                <Chip key={idx} color="secondary" variant="bordered" size="sm">
                   {skill}
                 </Chip>
               ))}

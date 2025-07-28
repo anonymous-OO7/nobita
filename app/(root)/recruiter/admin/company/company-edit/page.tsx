@@ -16,9 +16,7 @@ import {
 import { Company, SelectType } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import RichTextEditor from "@/components/formikui/RichTextEditor";
-import { error } from "console";
 
-// --- Select options you may extend/change ---
 const companySizeOptions: SelectType[] = [
   { value: "1-10", label: "1-10" },
   { value: "11-50", label: "11-50" },
@@ -211,6 +209,7 @@ export default function UpdateCompany() {
                 name="description"
                 label="Description"
                 placeholder="Write company description..."
+                size="large"
               />
               <Spacer size="xs" />
 
@@ -220,18 +219,26 @@ export default function UpdateCompany() {
                 name="industry"
                 value={values.industry}
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Select
                 label="Company Size"
                 item={companySizeOptions}
                 name="company_size"
                 value={values.company_size}
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Input label="Logo URL" name="logo_url" value={values.logo_url} />
+              <Spacer orientation="vertical" size="sm" />
+
               <Input
                 label="Website URL"
                 name="website_url"
                 value={values.website_url}
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Input
                 label="Social Media Links"
                 name="social_media_links"
@@ -239,6 +246,8 @@ export default function UpdateCompany() {
               />
               <Spacer orientation="vertical" size="sm" />
               <Input label="Location" name="location" value={values.location} />
+              <Spacer orientation="vertical" size="sm" />
+
               <Input
                 label="Headquarters Address"
                 name="headquarters_address"
@@ -251,6 +260,8 @@ export default function UpdateCompany() {
                 type="email"
                 value={values.contact_email}
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Input
                 label="Contact Phone"
                 name="contact_phone"
@@ -263,40 +274,53 @@ export default function UpdateCompany() {
                 value={values.founded_date}
                 placeholder="YYYY-MM-DD"
               />
+              <Spacer orientation="vertical" size="sm" />
 
               <RichTextEditor
                 name="company_culture"
                 label="Company Culture"
                 placeholder="Write company culture..."
+                size="large"
               />
+              <Spacer orientation="vertical" size="sm" />
 
               <RichTextEditor
                 name="benefits"
                 label="Benefits"
                 placeholder="Write company benefits..."
+                size="large"
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Input
                 label="Reviews URL"
                 name="reviews_url"
                 value={values.reviews_url}
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Input
                 label="Glassdoor URL"
                 name="glassdoor_url"
                 value={values.glassdoor_url}
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Select
                 label="Subscription Plan"
                 item={subscriptionPlanOptions}
                 name="subscription_plan"
                 value={values.subscription_plan}
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Select
                 label="Status"
                 item={statusOptions}
                 name="status"
                 value={values.status}
               />
+              <Spacer orientation="vertical" size="sm" />
               <Spacer orientation="vertical" size="sm" />
               <Input
                 label="Uploaded By"
@@ -305,17 +329,22 @@ export default function UpdateCompany() {
                 readOnly
                 disabled
               />
+              <Spacer orientation="vertical" size="sm" />
               <Input
                 label="Tech Stack"
                 name="tech_stack"
                 value={values.tech_stack}
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Select
                 label="Hiring Status"
                 item={hiringStatusOptions}
                 name="hiring_status"
                 value={values.hiring_status}
               />
+              <Spacer orientation="vertical" size="sm" />
+
               <Input
                 label="Last Funding Round"
                 name="last_funding_round"
