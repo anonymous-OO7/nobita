@@ -216,7 +216,7 @@ const Card: React.FC<CardProps> = ({
       {parsedSkills.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-1">
           {parsedSkills.map((skill, i) => (
-            <Chip key={i} variant="bordered" color="primary" size="sm">
+            <Chip key={i} variant="bordered" color="secondary" size="sm">
               <span className="text-xs">{skill}</span>
             </Chip>
           ))}

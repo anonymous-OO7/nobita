@@ -605,3 +605,30 @@ export const AddJobsCsvClientApi = (file: File) => {
     },
   });
 };
+
+export const AddCompaniesCsvClientApi = (file: File) => {
+  const formData = new FormData();
+
+  formData.append("companies", file);
+
+  return onePiece.post("/admin/add-companies", formData, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      user_id: `${localStorage.getItem("id")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+      email: localStorage.getItem("email"),
+    },
+  });
+};
+
+export const GetAllCompaniesAdminApi = () => {
+  return onePiece.get("/admin-getallcompanies", {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+    },
+  });
+};
