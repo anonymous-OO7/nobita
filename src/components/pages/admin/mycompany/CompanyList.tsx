@@ -193,7 +193,9 @@ export default function ListCompany({ eppOrders, loading }: Props) {
   const handleViewOrders = React.useCallback(
     (item: Company) => {
       router.push(
-        `/dashboard/myjobs/applications?id=${encodeURIComponent(item.uuid)}`
+        `/recruiter/admin/company/company-edit?id=${encodeURIComponent(
+          item.uuid
+        )}`
       );
     },
     [router]
@@ -395,7 +397,7 @@ export default function ListCompany({ eppOrders, loading }: Props) {
   return (
     <div className="flex flex-col">
       <p className="text-black text-lg leading-8 font-roboto font-normal mt-[2%]">
-        Manage your listed referrals
+        Manage all listed companies
       </p>
       <Spacer size="xs" />
       <Table

@@ -632,3 +632,60 @@ export const GetAllCompaniesAdminApi = () => {
     },
   });
 };
+
+//get a company info
+
+export const GetCompanyInfoApi = (company_uuid: string) => {
+  return onePiece.get(`/admin-getcompanyinfo/${company_uuid}`, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      user_id: `${localStorage.getItem("id")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+      email: localStorage.getItem("email"),
+    },
+  });
+};
+
+export interface UpdateCompanyPayload {
+  uuid: string;
+  logo_url?: string;
+  name?: string;
+  description?: string;
+  website_url?: string;
+  industry?: string;
+  company_size?: string;
+  social_media_links?: string;
+  location?: string;
+  headquarters_address?: string;
+  contact_email?: string;
+  contact_phone?: string;
+  founded_date?: string;
+  company_culture?: string;
+  benefits?: string;
+  reviews_url?: string;
+  glassdoor_url?: string;
+  subscription_plan?: string;
+  status?: string;
+  uploaded_by?: string;
+  tech_stack?: string;
+  hiring_status?: string;
+  last_funding_round?: string;
+  employee_growth_rate?: number;
+}
+
+export const UpdateCompanyApi = async (payload: UpdateCompanyPayload) => {
+  if (!payload.uuid) {
+    throw new Error("Company UUID is required");
+  }
+  return onePiece.post("/admin-update-company", payload, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+      user_id: localStorage.getItem("id") || "",
+      email: localStorage.getItem("email") || "",
+    },
+  });
+};

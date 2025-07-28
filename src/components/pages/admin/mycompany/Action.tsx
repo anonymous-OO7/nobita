@@ -18,7 +18,7 @@ export default function Action({ item, onViewOrders }: Props) {
         className="cursor-pointer font-roboto font-normal"
       >
         <p className="text-blue-600 text-sm font-light font-rubik underline">
-          View Applications
+          Edit company
         </p>
       </button>
       {/* 

@@ -140,24 +140,28 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="space-y-2 text-gray-700">
             <p>
-              <strong>Location:</strong>{" "}
+              <strong>Location:</strong>
               <span className="inline-flex items-center gap-1">
                 <CiLocationOn className="text-black" />
                 {Location}
               </span>
             </p>
             <p>
-              <strong>Type:</strong>{" "}
+              <strong>Type:</strong>
               {Type.charAt(0).toUpperCase() + Type.slice(1)}
             </p>
             <p>
               <strong>Experience:</strong> {MinExperience} - {MaxExperience} yrs
             </p>
             <p>
-              <strong>Compensation:</strong> ₹{MinPay}L - ₹{MaxPay}L
+              <strong>Compensation:</strong>
+              {MinPay === 0 && MaxPay === 0
+                ? "Not Disclosed"
+                : `₹${MinPay}L - ₹${MaxPay}L`}
             </p>
+
             <p>
-              <strong>Work Mode:</strong>{" "}
+              <strong>Work Mode:</strong>
               {Remote ? "Remote" : Hybrid ? "Hybrid" : "On-site"}
             </p>
           </div>
@@ -234,7 +238,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             <strong>Size:</strong> {Company.company_size || "N/A"}+ employees
           </p>
           <p>
-            <strong>Founded:</strong>{" "}
+            <strong>Founded:</strong>
             {Company.founded_date
               ? format(new Date(Company.founded_date), "yyyy")
               : "N/A"}
@@ -243,39 +247,44 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             <strong>Location:</strong> {Company.location || "N/A"}
           </p>
           <p>
-            <strong>Headquarters:</strong>{" "}
+            <strong>Headquarters:</strong>
             {Company.headquarters_address || "N/A"}
           </p>
           <p>
-            <strong>Description:</strong>{" "}
-            <span className="whitespace-pre-line">
-              {Company.description || "N/A"}
-            </span>
+            <strong>Description:</strong>
+            <div
+              className="prose max-w-none rounded-md p-2 text-gray-800"
+              dangerouslySetInnerHTML={{ __html: Company.description }}
+            />
           </p>
           {Company.company_culture && (
             <p>
-              <strong>Culture:</strong>{" "}
-              <span className="whitespace-pre-line">
-                {Company.company_culture}
-              </span>
+              <strong>Culture:</strong>
+              <div
+                className="prose max-w-none rounded-md p-2 text-gray-800"
+                dangerouslySetInnerHTML={{ __html: Company.company_culture }}
+              />
             </p>
           )}
           {Company.benefits && (
             <p>
-              <strong>Benefits:</strong>{" "}
-              <span className="whitespace-pre-line">{Company.benefits}</span>
+              <strong>Benefits:</strong>
+              <div
+                className="prose max-w-none rounded-md p-2 text-gray-800"
+                dangerouslySetInnerHTML={{ __html: Company.benefits }}
+              />
             </p>
           )}
         </div>
 
         {/* Contact & Social */}
-        <div className="mt-6 space-y-2 text-gray-700">
+        <div className="mt-6 flex flex-col space-y-3 text-gray-700">
           {Company.website_url && (
-            <p className="inline-flex items-center gap-1">
+            <p className="inline-flex items-center gap-2">
               <Globe size={16} />
               <a
                 href={Company.website_url}
-                className="text-blue-600"
+                className="text-blue-600 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -284,11 +293,11 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             </p>
           )}
           {Company.glassdoor_url && (
-            <p className="inline-flex items-center gap-1">
+            <p className="inline-flex items-center gap-2">
               <Globe size={16} />
               <a
                 href={Company.glassdoor_url}
-                className="text-blue-600"
+                className="text-blue-600 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -297,13 +306,25 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             </p>
           )}
           {Company.contact_email && (
-            <p className="inline-flex items-center gap-1">
-              <Mail size={16} /> {Company.contact_email}
+            <p className="inline-flex items-center gap-2 break-words">
+              <Mail size={16} />
+              <a
+                href={`mailto:${Company.contact_email}`}
+                className="hover:underline"
+              >
+                {Company.contact_email}
+              </a>
             </p>
           )}
           {Company.contact_phone && (
-            <p className="inline-flex items-center gap-1">
-              <Phone size={16} /> {Company.contact_phone}
+            <p className="inline-flex items-center gap-2">
+              <Phone size={16} />
+              <a
+                href={`tel:${Company.contact_phone}`}
+                className="hover:underline"
+              >
+                {Company.contact_phone}
+              </a>
             </p>
           )}
         </div>
