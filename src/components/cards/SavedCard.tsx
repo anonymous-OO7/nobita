@@ -198,7 +198,7 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           {renderType(job.Type)}
         </div>
 
-        <div className="flex flex-row justify-center items-center gap-2">
+        {/* <div className="flex flex-row justify-center items-center gap-2">
           <p className="text-lg font-poppins text-green-400">At</p>
           <Chip
             startContent={<IndianRupee color="black" size={22} />}
@@ -211,9 +211,8 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
               {job.Price}
             </p>
           </Chip>
-        </div>
+        </div> */}
       </div>
-
       {/* Company Info */}
       <div className="flex flex-row gap-1 items-center mt-3">
         <p className="text-sm font-poppins text-black">{job.Company.name}</p>
@@ -222,7 +221,6 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           <p className="text-xs font-poppins text-black">{job.Location}</p>
         </div>
       </div>
-
       <div className="my-3">
         <Chip
           startContent={<UsersRound size={18} />}
@@ -236,7 +234,6 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           </p>
         </Chip>
       </div>
-
       {/* Tags and Actions */}
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-wrap gap-4 md:flex-nowrap">
@@ -254,12 +251,12 @@ const Card: React.FC<CardProps> = ({ job, onSave, onApply }) => {
           </Button>
         </div>
       </div>
-
       {/* Description */}
-      <p className="text-sm font-poppins text-black mt-10 line-clamp-4">
-        {job.Description}
-      </p>
 
+      <div
+        className="prose max-w-none rounded-md p-2 text-gray-800"
+        dangerouslySetInnerHTML={{ __html: job.Description }}
+      />
       {/* Pay + Posted */}
       <p className="text-gray-700">
         Pay - {job.MinPay} - {job.MaxPay} INR

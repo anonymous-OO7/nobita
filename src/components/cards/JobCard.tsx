@@ -238,13 +238,14 @@ const Card: React.FC<CardProps> = ({
             <span className="text-xs font-medium text-blue-500">Save</span>
           </Button>
           <Button
+            className={`rounded-md ${"bg-buttonPrimary"}`}
             variant="outline"
             size="sm"
             onClick={() => onViewDetails(job)}
           >
-            <span className="text-xs font-medium">View Details</span>
+            <span className="text-xs text-white font-medium">View Details</span>
           </Button>
-          <Button
+          {/* <Button
             className={`rounded-md ${
               isJobClosed ? "bg-gray-400" : "bg-buttonPrimary"
             }`}
@@ -257,7 +258,7 @@ const Card: React.FC<CardProps> = ({
             <span className="text-xs text-white font-medium">
               {showExternalApply ? "Apply on company site" : "Apply Now"}
             </span>
-          </Button>
+          </Button> */}
         </div>
       </div>
 

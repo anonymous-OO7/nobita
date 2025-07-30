@@ -248,7 +248,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             <strong>Industry:</strong> {Company.industry || "N/A"}
           </p>
           <p>
-            <strong>Size:</strong> {Company.company_size || "N/A"}+ employees
+            <strong>Size:</strong> {Company.company_size || "N/A"} employees
           </p>
           <p>
             <strong>Founded:</strong>
