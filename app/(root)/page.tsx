@@ -21,7 +21,7 @@ export default function About() {
         <div className="flex-grow">
           <FrontContent />
           <TechContent />
-          <Clients />
+          {/* <Clients /> */}
           <Testimonials />
           {/* <Founders /> */}
           <UserCount />
