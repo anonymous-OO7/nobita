@@ -161,7 +161,7 @@ const Card: React.FC<CardProps> = ({
             </span>
           </Chip>
           {/* Price Tag */}
-          {job.Price >= 5000 ? (
+          {/* {job.Price >= 5000 ? (
             <Chip startContent={<GemIcon size={14} />} color="danger" size="sm">
               <span className="text-xs">Rare</span>
             </Chip>
@@ -189,7 +189,7 @@ const Card: React.FC<CardProps> = ({
             >
               <span className="text-xs">Affordable</span>
             </Chip>
-          )}
+          )} */}
           {isApplied && (
             <Chip
               startContent={<CircleCheckBig size={14} />}
