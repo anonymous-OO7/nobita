@@ -16,9 +16,15 @@ import Image from "next/image";
 
 interface JobInfoPageProps {
   job: Job;
+  onApply: (job: Job) => void;
+  isApplied: boolean;
 }
 
-const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
+const JobInfoPage: React.FC<JobInfoPageProps> = ({
+  job,
+  onApply,
+  isApplied = false,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (containerRef.current) {
@@ -89,15 +95,10 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
     return skills.slice(0, 10); // Limit to 10
   }, [Skills]);
 
-  const applyText =
-    BrandedJd === "true" && ApplyRedirectUrl?.trim()
-      ? "Apply on company site"
-      : "Apply Now";
-
-  const applyLink =
-    BrandedJd === "true" && ApplyRedirectUrl?.trim()
-      ? ApplyRedirectUrl
-      : JobUrl;
+  // Determine Apply Button Text and Link
+  const isBranded = BrandedJd === "true";
+  const hasApplyRedirect = !!ApplyRedirectUrl?.trim();
+  const hasJobUrl = !!JobUrl?.trim();
 
   return (
     <div
@@ -134,16 +135,30 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             Posted on {format(new Date(CreatedAt), "dd MMM yyyy")}
           </Chip>
 
-          {applyLink && (
+          {/* Conditionally render Apply Button here as well for quick access */}
+          {isBranded && hasApplyRedirect ? (
             <a
-              href={applyLink}
+              href={ApplyRedirectUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-4 py-2 rounded transition"
+              className="inline-block mt-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-4 py-2 rounded transition"
             >
-              {applyText}
+              Apply on company site
             </a>
-          )}
+          ) : !isBranded && hasJobUrl ? (
+            <button
+              type="button"
+              onClick={() => onApply(job)}
+              disabled={isApplied}
+              className={`inline-block mt-1 text-xs font-medium px-4 py-2 rounded transition ${
+                isApplied
+                  ? "bg-gray-400 cursor-not-allowed text-white"
+                  : "bg-blue-600 hover:bg-blue-700 text-white"
+              }`}
+            >
+              {isApplied ? "Applied" : "Apply Now"}
+            </button>
+          ) : null}
         </div>
       </div>
 
@@ -153,28 +168,27 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="space-y-2 text-gray-700">
             <p>
-              <strong>Location:</strong>
+              <strong>Location:</strong>{" "}
               <span className="inline-flex items-center gap-1">
                 <CiLocationOn className="text-black" />
                 {Location}
               </span>
             </p>
             <p>
-              <strong>Type:</strong>
+              <strong>Type:</strong>{" "}
               {Type.charAt(0).toUpperCase() + Type.slice(1)}
             </p>
             <p>
               <strong>Experience:</strong> {MinExperience} - {MaxExperience} yrs
             </p>
             <p>
-              <strong>Compensation:</strong>
+              <strong>Compensation:</strong>{" "}
               {MinPay === 0 && MaxPay === 0
                 ? "Not Disclosed"
                 : `₹${MinPay}L - ₹${MaxPay}L`}
             </p>
-
             <p>
-              <strong>Work Mode:</strong>
+              <strong>Work Mode:</strong>{" "}
               {Remote ? "Remote" : Hybrid ? "Hybrid" : "On-site"}
             </p>
           </div>
@@ -225,18 +239,34 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
         </div>
       </div>
 
-      {job.ApplyRedirectUrl ? (
-        <a
-          href={job.ApplyRedirectUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block px-4 py-2 mb-9 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-        >
-          Apply on Company Site
-        </a>
-      ) : (
-        <p className="text-gray-500 text-sm">No application link provided.</p>
-      )}
+      {/* Apply Button Section - repeated for accessibility and clarity */}
+      <div className="mb-9">
+        {isBranded && hasApplyRedirect ? (
+          <a
+            href={ApplyRedirectUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          >
+            Apply on company site
+          </a>
+        ) : !isBranded && hasJobUrl ? (
+          <button
+            type="button"
+            onClick={() => onApply(job)}
+            disabled={isApplied}
+            className={`inline-block px-4 py-2 rounded transition w-full sm:w-auto ${
+              isApplied
+                ? "bg-gray-400 cursor-not-allowed text-white"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
+          >
+            {isApplied ? "Applied" : "Apply Now"}
+          </button>
+        ) : (
+          <p className="text-gray-500 text-sm">No application link provided.</p>
+        )}
+      </div>
 
       {/* About the Company */}
       <div>
@@ -251,7 +281,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             <strong>Size:</strong> {Company.company_size || "N/A"} employees
           </p>
           <p>
-            <strong>Founded:</strong>
+            <strong>Founded:</strong>{" "}
             {Company.founded_date
               ? format(new Date(Company.founded_date), "yyyy")
               : "N/A"}
@@ -260,7 +290,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({ job }) => {
             <strong>Location:</strong> {Company.location || "N/A"}
           </p>
           <p>
-            <strong>Headquarters:</strong>
+            <strong>Headquarters:</strong>{" "}
             {Company.headquarters_address || "N/A"}
           </p>
           <p>
