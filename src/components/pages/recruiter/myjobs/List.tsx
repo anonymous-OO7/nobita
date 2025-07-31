@@ -123,7 +123,7 @@ export default function RecruiterJobListing({ eppOrders, loading }: Props) {
   const handleViewOrders = React.useCallback(
     (job: JobListing) => {
       router.push(
-        `/dashboard/myjobs/applications?id=${encodeURIComponent(job.Uuid)}`
+        `/recruiter/myjobs/applications?id=${encodeURIComponent(job.Uuid)}`
       );
     },
     [router]

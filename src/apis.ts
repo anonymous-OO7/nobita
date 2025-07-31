@@ -689,3 +689,13 @@ export const UpdateCompanyApi = async (payload: UpdateCompanyPayload) => {
     },
   });
 };
+
+export const GetRecruiterDashboardApi = () => {
+  return onePiece.get("/recruiter-dashboard", {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+    },
+  });
+};
