@@ -136,7 +136,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
           </Chip>
 
           {/* Conditionally render Apply Button here as well for quick access */}
-          {isBranded && hasApplyRedirect ? (
+          {!isBranded && hasApplyRedirect ? (
             <a
               href={ApplyRedirectUrl}
               target="_blank"
@@ -145,7 +145,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
             >
               Apply on company site
             </a>
-          ) : !isBranded && hasJobUrl ? (
+          ) : (
             <button
               type="button"
               onClick={() => onApply(job)}
@@ -158,7 +158,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
             >
               {isApplied ? "Applied" : "Apply Now"}
             </button>
-          ) : null}
+          )}
         </div>
       </div>
 
