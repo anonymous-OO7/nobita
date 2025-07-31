@@ -206,7 +206,11 @@ const ReferralCommunity = () => {
                 {/* Job detail */}
                 <div className="w-3/5 pl-4 overflow-y-auto">
                   {selectedJob ? (
-                    <JobInfoPage job={selectedJob} />
+                    <JobInfoPage
+                      job={selectedJob}
+                      onApply={onApplyJob}
+                      isApplied={allAppliedJobs.includes(selectedJob.Uuid)}
+                    />
                   ) : (
                     <p className="text-center text-gray-500 mt-10">
                       Select a job to view details
