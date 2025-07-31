@@ -1,7 +1,7 @@
 import { Job } from "@/types";
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Button, Chip } from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
 import {
   Check,
   ChartNoAxesCombined,
@@ -13,7 +13,10 @@ import Image from "next/image";
 import { FormatToLakhs } from "@/utils/utils";
 
 interface CardProps {
-  job: Job;
+  job: Job & {
+    Status?: string; // e.g., "applied", "rejected", "pending" etc.
+    Remark?: string; // additional remarks text to show
+  };
 }
 
 const Card: React.FC<CardProps> = ({ job }) => {
@@ -66,6 +69,29 @@ const Card: React.FC<CardProps> = ({ job }) => {
     }
   }, []);
 
+  // Map job.Status to display text and optionally color
+  const statusText = job.Status
+    ? job.Status.charAt(0).toUpperCase() + job.Status.slice(1)
+    : "Unknown";
+
+  // Map status to chip color variants; adjust as needed
+  const statusColorMap: Record<
+    string,
+    // "default" | "success" | "error" | "warning" | "secondary"
+
+    "default" | "success" | "warning" | "secondary" | "primary" | "danger"
+  > = {
+    applied: "success",
+    pending: "warning",
+    rejected: "danger",
+    unknown: "secondary",
+  };
+
+  // Normalize status key for mapping
+  const normalizedStatus = job.Status ? job.Status.toLowerCase() : "unknown";
+
+  const statusColor = statusColorMap[normalizedStatus] || "secondary";
+
   return (
     <div className="p-4 shadow-md rounded-md mb-4 border bg-white">
       {/* Header */}
@@ -96,15 +122,27 @@ const Card: React.FC<CardProps> = ({ job }) => {
           {renderType(job.Type)}
         </div>
 
-        <Chip
-          startContent={<CircleCheckBig size={16} />}
-          variant="flat"
-          color="success"
-          size="sm"
-          className="bg-green-500 text-white"
-        >
-          <span className="text-xs font-medium">Applied</span>
-        </Chip>
+        {/* Status Chip */}
+        <div className="flex flex-col items-end">
+          <Chip
+            startContent={<CircleCheckBig size={16} />}
+            variant="flat"
+            color={statusColor}
+            size="sm"
+            className={
+              statusColor === "success" ? "bg-green-500 text-white" : ""
+            }
+          >
+            <span className="text-xs font-medium">{statusText}</span>
+          </Chip>
+
+          {/* Display Remark if exists */}
+          {job.Remark && (
+            <p className="mt-1 text-xs italic text-gray-600 max-w-xs font-poppins whitespace-pre-wrap">
+              {job.Remark}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Location and Salary */}
