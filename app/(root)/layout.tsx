@@ -28,6 +28,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENTID} />
+        <meta
+          name="ezoic-site-verification"
+          content="uXTIS6h8d5bB4Pq6dhkgz661B59XcB"
+        />
       </head>
       <body className={`${poppins.variable}`}>
         <Suspense>
