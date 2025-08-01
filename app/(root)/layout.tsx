@@ -29,22 +29,14 @@ export default function RootLayout({
       <head>
         <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENTID} />
         <meta
-          name="ezoic-site-verification"
-          content="uXTIS6h8d5bB4Pq6dhkgz661B59XcB"
-        />
+          name="google-adsense-account"
+          content="ca-pub-2888315269414105"
+        ></meta>
         <script
-          src="https://cmp.gatekeeperconsent.com/min.js"
-          data-cfasync="false"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2888315269414105"
+          crossOrigin="anonymous"
         ></script>
-        <script
-          src="https://the.gatekeeperconsent.com/cmp.min.js"
-          data-cfasync="false"
-        ></script>
-        <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-        <script>
-          window.ezstandalone = window.ezstandalone || {}; ezstandalone.cmd =
-          ezstandalone.cmd || [];
-        </script>
       </head>
       <body className={`${poppins.variable}`}>
         <Suspense>
