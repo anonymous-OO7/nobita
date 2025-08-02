@@ -8,9 +8,14 @@ import useToast from "@/hooks/useToast";
 import useApi from "@/hooks/useApi";
 import { LoadingIcon } from "@/assets/images/Loading";
 import FileInput from "@/components/FileInput";
-import { AddCompaniesCsvClientApi, AddJobsCsvClientApi } from "@/apis";
+import {
+  AddCompaniesCsvClientApi,
+  AddJobsCsvClientApi,
+  DownloadDatabaseDump,
+} from "@/apis";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
+import { toast } from "react-toastify";
 
 const INITIAL_VALUES = {
   csv_file: null as File | null,
@@ -21,6 +26,8 @@ export default function UploadCsvPage() {
   const { makeApiCall } = useApi();
   const [loading, setLoading] = React.useState(false);
   const [isCompanyMode, setIsCompanyMode] = React.useState(false);
+  const [isDownloading, setIsDownloading] = React.useState(false);
+
   const router = useRouter();
 
   const schema = Yup.object().shape({
@@ -60,6 +67,44 @@ export default function UploadCsvPage() {
   const handleAllCompaniesPosting = React.useCallback(() => {
     router.push(`/recruiter/admin/company`);
   }, [router]);
+
+  const downloadDatabaseDump = React.useCallback(() => {
+    setIsDownloading(true);
+
+    toast.promise(
+      (async () => {
+        try {
+          const response = await makeApiCall(DownloadDatabaseDump());
+          const blob =
+            response instanceof Blob ? response : await response.blob();
+
+          const blobUrl = URL.createObjectURL(blob);
+          const anchor = document.createElement("a");
+          anchor.href = blobUrl;
+
+          // Note: filename matches backend served dump file name
+          anchor.download = "latest_backup.dump";
+          anchor.style.display = "none";
+
+          document.body.appendChild(anchor);
+          anchor.click();
+
+          URL.revokeObjectURL(blobUrl);
+          document.body.removeChild(anchor);
+
+          setIsDownloading(false);
+        } catch (error) {
+          setIsDownloading(false);
+          throw error;
+        }
+      })(),
+      {
+        pending: "Database downloading...",
+        success: "Database downloaded successfully",
+        error: "Database download failed",
+      }
+    );
+  }, [makeApiCall]);
 
   return (
     <section className="bg-white dark:bg-gray-900 min-h-screen py-10">
@@ -119,6 +164,16 @@ export default function UploadCsvPage() {
             </div>
           </Form>
         </Formik>
+        <Button
+          size="sm"
+          type="button"
+          radius="full"
+          color="primary"
+          onClick={downloadDatabaseDump}
+          disabled={isDownloading}
+        >
+          Download DB backup
+        </Button>
 
         <Button
           type="button"

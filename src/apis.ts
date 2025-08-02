@@ -310,33 +310,43 @@ export const UpdateProfileApi = (
   current_organisation: string,
   tagline: string,
   skill: string[],
-  social_urls: SocialUrlType[]
+  social_urls: SocialUrlType[],
+  resume: File | null
 ) => {
-  return onePiece.post(
-    "/update-profile",
-    {
-      uuid,
-      name,
-      gender,
-      country,
-      bio,
-      expertise,
-      seniority,
-      work_experience,
-      education,
-      current_organisation,
-      tagline,
-      skill,
-      social_urls,
+  // Create FormData object
+  const formData = new FormData();
+
+  formData.append("uuid", uuid);
+  formData.append("name", name);
+  formData.append("gender", gender);
+  formData.append("country", country);
+  formData.append("bio", bio);
+  formData.append("expertise", expertise);
+  formData.append("seniority", seniority);
+  formData.append("current_organisation", current_organisation);
+  formData.append("tagline", tagline);
+
+  // Append arrays/objects as JSON strings
+  formData.append("work_experience", JSON.stringify(work_experience));
+  formData.append("education", JSON.stringify(education));
+  formData.append("skill", JSON.stringify(skill));
+  formData.append("social_urls", JSON.stringify(social_urls));
+
+  // Append resume file only if it exists
+  if (resume) {
+    formData.append("resume", resume);
+  }
+
+  return onePiece.post("/update-profile", formData, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+      user_id: localStorage.getItem("id") || "",
+      email: localStorage.getItem("email") || "",
+      // Do NOT set Content-Type here; Axios will set `multipart/form-data` boundary automatically
     },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
-        user_id: localStorage.getItem("id") || "",
-        email: localStorage.getItem("email") || "",
-      },
-    }
-  );
+  });
 };
 
 export const GetProfileApi = () => {
@@ -692,6 +702,17 @@ export const UpdateCompanyApi = async (payload: UpdateCompanyPayload) => {
 
 export const GetRecruiterDashboardApi = () => {
   return onePiece.get("/recruiter-dashboard", {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+    },
+  });
+};
+
+export const DownloadDatabaseDump = () => {
+  return onePiece.get("/admin-download-zipped-backup", {
+    responseType: "blob",
     headers: {
       "ngrok-skip-browser-warning": "69420",
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,

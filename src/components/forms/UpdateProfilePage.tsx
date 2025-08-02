@@ -30,7 +30,8 @@ const emptyProfileDetails: ProfileDetailsType = {
   social_urls: [],
   applies: 0,
   referal_code: "",
-  username: "string",
+  username: "",
+  resume: null,
 };
 
 export default function UpdateProfilePage() {
@@ -128,6 +129,7 @@ export default function UpdateProfilePage() {
       tagline,
       skill,
       social_urls,
+      resume,
     }: ProfileDetailsType) => {
       // Convert expertise array to comma-separated string
       const formattedExpertise = Array.isArray(expertise)
@@ -149,7 +151,8 @@ export default function UpdateProfilePage() {
         tagline,
         skill,
         social_urls,
-        "All data sending"
+        "All data sending",
+        resume
       );
 
       return makeApiCall(
@@ -166,7 +169,8 @@ export default function UpdateProfilePage() {
           current_organisation,
           tagline,
           skill,
-          social_urls
+          social_urls,
+          resume
         )
       )
         .then((response) => {

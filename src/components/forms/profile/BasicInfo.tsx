@@ -7,6 +7,7 @@ import Textarea from "@/components/common/TextArea";
 import Row from "@/components/common/Row";
 import Button from "../../Button";
 import RichTextEditor from "@/components/formikui/RichTextEditor";
+import FileInput from "@/components/FileInput";
 
 interface Props {
   profileData: ProfileDetailsType;
@@ -20,6 +21,7 @@ export default function BasicInfo({ profileData }: Props) {
     gender: string;
     country: string;
     bio: string;
+    resume: File | null;
   }>();
 
   const { getFieldProps, setValues } = formikContext ?? {};
@@ -33,6 +35,7 @@ export default function BasicInfo({ profileData }: Props) {
         gender: profileData.gender || "",
         country: profileData.country || "",
         bio: profileData.bio || "",
+        resume: null, // no existing file object initially
       });
     }
   }, [profileData, setValues]);
@@ -73,6 +76,8 @@ export default function BasicInfo({ profileData }: Props) {
             {...getFieldProps?.("country")}
           />
         </div>
+        <FileInput name="resume" type="dropzone" accept=".pdf" size="small" />
+
         <RichTextEditor
           label="Bio"
           placeholder="Enter your bio"

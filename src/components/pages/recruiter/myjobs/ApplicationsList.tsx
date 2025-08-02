@@ -231,6 +231,7 @@ export default function ApplicationsList({
 
   const handleSubmitRemark = React.useCallback(
     (remark: string, currentOrder: Applications) => {
+      console.log(remark, "remark uodate in save remark");
       makeApiCall(
         UpdateApplicantJobsStatusRemarkApi(
           currentOrder.applicant_id,

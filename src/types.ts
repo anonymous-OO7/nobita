@@ -306,6 +306,7 @@ export interface ProfileDetailsType {
   skill: string[];
   social_urls: SocialUrlType[];
   username: string;
+  resume: File | null;
 }
 
 export interface Option {
