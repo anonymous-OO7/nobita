@@ -10,7 +10,7 @@ const Clients = () => {
             <div className="flex flex-col items-center justify-center rounded-tr-full rounded-bl-full w-full bg-white py-6">
               <div className="flex flex-col m-2 max-w-7xl">
                 <p className="text-2xl md:text-3xl text-black font-semibold font-poppins mb-4">
-                  Latest Referals listed
+                  Top companies #Hiring
                 </p>
               </div>
 

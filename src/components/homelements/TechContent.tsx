@@ -83,11 +83,6 @@ const TechContent = () => {
               can provide, you can help others find great products, services, or
               programs while earning a commission for every successful referral.
             </div>
-            <div className="text-left text-xl font-normal font-poppins text-black py-4">
-              It’s a win-win situation: you get rewarded for your efforts, and
-              others benefit from the opportunities you offer. Join today and
-              start turning your network into a source of income!
-            </div>
           </div>
         </div>
       </div>

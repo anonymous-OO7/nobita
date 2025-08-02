@@ -32,16 +32,11 @@ const UserCount = () => {
             <div className="w-full md:w-1/4 h-40 flex items-center justify-center">
               <div className="flex flex-col space-y-2 px-4 text-center">
                 <div className="text-sm font-medium font-poppins">
-                  Total Referrals
+                  Total Jobs
                 </div>
                 <div className="text-5xl font-bold font-poppins text-[#0071e3]">
                   {inView && (
-                    <CountUp
-                      end={1.2}
-                      decimals={1}
-                      duration={2.5}
-                      suffix="M+"
-                    />
+                    <CountUp end={5} decimals={1} duration={2.5} suffix="K+" />
                   )}
                 </div>
                 <div className="text-sm font-medium font-poppins">
