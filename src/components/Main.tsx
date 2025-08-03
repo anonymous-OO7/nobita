@@ -41,6 +41,7 @@ const emptyProfileDetails = {
   referal_code: "",
   applies: 0,
   username: "",
+  resume: null,
 };
 
 interface Props {

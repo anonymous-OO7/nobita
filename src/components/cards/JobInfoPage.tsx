@@ -13,6 +13,7 @@ import {
   Building2,
 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface JobInfoPageProps {
   job: Job;
@@ -25,6 +26,8 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
   onApply,
   isApplied = false,
 }) => {
+  const router = useRouter();
+
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (containerRef.current) {
@@ -100,6 +103,11 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
   const hasApplyRedirect = !!ApplyRedirectUrl?.trim();
   const hasJobUrl = !!JobUrl?.trim();
 
+  const navigateToJobInfo = React.useCallback(() => {
+    if (!job?.Uuid) return;
+    window.open(`/job?id=${job.Uuid}`, "_blank");
+  }, [job]);
+
   return (
     <div
       className="px-6 py-8 max-w-5xl mx-auto text-sm text-gray-800"
@@ -134,6 +142,18 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
           >
             Posted on {format(new Date(CreatedAt), "dd MMM yyyy")}
           </Chip>
+          <button
+            type="button"
+            onClick={() => navigateToJobInfo()}
+            disabled={isApplied}
+            className={`inline-block mt-1 text-xs font-medium px-4 py-2 rounded transition ${
+              isApplied
+                ? "bg-gray-400 cursor-not-allowed text-white"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
+          >
+            Show Full Details
+          </button>
 
           {/* Conditionally render Apply Button here as well for quick access */}
           {!isBranded && hasApplyRedirect ? (
@@ -293,85 +313,20 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
             <strong>Headquarters:</strong>{" "}
             {Company.headquarters_address || "N/A"}
           </p>
-          <p>
-            <strong>Description:</strong>
-            <div
-              className="prose max-w-none rounded-md p-2 text-gray-800"
-              dangerouslySetInnerHTML={{ __html: Company.description }}
-            />
-          </p>
-          {Company.company_culture && (
-            <p>
-              <strong>Culture:</strong>
-              <div
-                className="prose max-w-none rounded-md p-2 text-gray-800"
-                dangerouslySetInnerHTML={{ __html: Company.company_culture }}
-              />
-            </p>
-          )}
-          {Company.benefits && (
-            <p>
-              <strong>Benefits:</strong>
-              <div
-                className="prose max-w-none rounded-md p-2 text-gray-800"
-                dangerouslySetInnerHTML={{ __html: Company.benefits }}
-              />
-            </p>
-          )}
-        </div>
-
-        {/* Contact & Social */}
-        <div className="mt-6 flex flex-col space-y-3 text-gray-700">
-          {Company.website_url && (
-            <p className="inline-flex items-center gap-2">
-              <Globe size={16} />
-              <a
-                href={Company.website_url}
-                className="text-blue-600 hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {Company.website_url}
-              </a>
-            </p>
-          )}
-          {Company.glassdoor_url && (
-            <p className="inline-flex items-center gap-2">
-              <Globe size={16} />
-              <a
-                href={Company.glassdoor_url}
-                className="text-blue-600 hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Glassdoor
-              </a>
-            </p>
-          )}
-          {Company.contact_email && (
-            <p className="inline-flex items-center gap-2 break-words">
-              <Mail size={16} />
-              <a
-                href={`mailto:${Company.contact_email}`}
-                className="hover:underline"
-              >
-                {Company.contact_email}
-              </a>
-            </p>
-          )}
-          {Company.contact_phone && (
-            <p className="inline-flex items-center gap-2">
-              <Phone size={16} />
-              <a
-                href={`tel:${Company.contact_phone}`}
-                className="hover:underline"
-              >
-                {Company.contact_phone}
-              </a>
-            </p>
-          )}
         </div>
       </div>
+      <button
+        type="button"
+        onClick={() => navigateToJobInfo()}
+        disabled={isApplied}
+        className={`inline-block mt-1 text-xs font-medium px-4 py-2 rounded transition ${
+          isApplied
+            ? "bg-gray-400 cursor-not-allowed text-white"
+            : "bg-blue-600 hover:bg-blue-700 text-white"
+        }`}
+      >
+        Show Full Details
+      </button>
     </div>
   );
 };

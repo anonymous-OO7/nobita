@@ -720,3 +720,22 @@ export const DownloadDatabaseDump = () => {
     },
   });
 };
+
+export const GetJobInfo = async (uuid: string) => {
+  if (!uuid) {
+    throw new Error("Job UUID is required");
+  }
+  return onePiece.post(
+    "/job-info",
+    { uuid: uuid },
+    {
+      headers: {
+        "ngrok-skip-browser-warning": "69420",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+        user_id: localStorage.getItem("id") || "",
+        email: localStorage.getItem("email") || "",
+      },
+    }
+  );
+};

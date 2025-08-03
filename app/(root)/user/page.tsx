@@ -25,6 +25,7 @@ const emptyProfileDetails: ProfileDetailsType = {
   applies: 0,
   referal_code: "",
   username: "",
+  resume: null,
 };
 
 export default function UniversalProfile() {
