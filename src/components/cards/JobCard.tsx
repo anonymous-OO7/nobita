@@ -8,9 +8,6 @@ import {
   CircleCheckBig,
   CircleX,
   Check,
-  TagIcon,
-  GemIcon,
-  AwardIcon,
   ChartNoAxesCombined,
   UsersRound,
   Building2Icon,
@@ -42,6 +39,7 @@ const Card: React.FC<CardProps> = ({
   const isGrowing = parseInt(job.Company?.company_size || "0") < 500;
   const showExternalApply =
     job.BrandedJd === "true" && job.ApplyRedirectUrl?.trim();
+
   const parsedSkills: string[] = React.useMemo(() => {
     if (!job.Skills) return [];
 
@@ -78,12 +76,11 @@ const Card: React.FC<CardProps> = ({
       }
     }
 
-    return skills.slice(0, 10); // Limit to 10
+    return skills.slice(0, 2); // ✅ Limit to 2
   }, [job.Skills]);
 
   return (
     <div className="p-4 sm:p-6 bg-white rounded-xl border shadow-sm space-y-4">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-3">
           {job.Company?.logo_url ? (
@@ -145,51 +142,11 @@ const Card: React.FC<CardProps> = ({
 
       {/* Location, Company Size, Price */}
       <div className="flex flex-wrap justify-between gap-3 text-sm text-gray-700">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <CiLocationOn className="text-gray-700" />
-          <span>{job.Location || "N/A"}</span>
+          <span>{job.Location?.split(",")[0].trim() || "N/A"}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Chip
-            startContent={<UsersRound size={14} />}
-            variant="flat"
-            color="default"
-            size="sm"
-          >
-            <span className="text-xs">
-              {job.Company?.company_size || "N/A"}+ Employees
-            </span>
-          </Chip>
-          {/* Price Tag */}
-          {/* {job.Price >= 5000 ? (
-            <Chip startContent={<GemIcon size={14} />} color="danger" size="sm">
-              <span className="text-xs">Rare</span>
-            </Chip>
-          ) : job.Price >= 2000 ? (
-            <Chip
-              startContent={<GemIcon size={14} />}
-              color="primary"
-              size="sm"
-            >
-              <span className="text-xs">Premium</span>
-            </Chip>
-          ) : job.Price >= 1000 ? (
-            <Chip
-              startContent={<AwardIcon size={14} />}
-              color="secondary"
-              size="sm"
-            >
-              <span className="text-xs">Competitive</span>
-            </Chip>
-          ) : (
-            <Chip
-              startContent={<TagIcon size={14} />}
-              color="secondary"
-              size="sm"
-            >
-              <span className="text-xs">Affordable</span>
-            </Chip>
-          )} */}
           {isApplied && (
             <Chip
               startContent={<CircleCheckBig size={14} />}
@@ -202,17 +159,15 @@ const Card: React.FC<CardProps> = ({
         </div>
       </div>
 
-      {/* Info */}
       <div className="text-xs text-gray-600">
         <p>
-          {job.MinExperience} - {job.MaxExperience} yrs • ₹{job.MinPay}L - ₹
-          {job.MaxPay}L •{" "}
-          {job.Remote ? "Remote" : job.Hybrid ? "Hybrid" : "On-site"}
+          {job.MinExperience} - {job.MaxExperience} yrs •{" "}
+          {job.MinPay === 0 && job.MaxPay === 0
+            ? "Not Specified"
+            : `₹${job.MinPay}L - ₹${job.MaxPay}L`}{" "}
+          • {job.Remote ? "Remote" : job.Hybrid ? "Hybrid" : "On-site"}
         </p>
       </div>
-
-      {/* Skills */}
-      {/* Skills */}
       {parsedSkills.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-1">
           {parsedSkills.map((skill, i) => (
@@ -223,13 +178,8 @@ const Card: React.FC<CardProps> = ({
         </div>
       )}
 
-      {/* Footer Actions */}
       <div className="flex flex-wrap justify-between items-center gap-3">
         <div className="text-xs text-gray-500 space-y-1">
-          <p>
-            <span className="font-medium text-gray-700">Category:</span>{" "}
-            {job.Category?.replace("_", " ") || "N/A"}
-          </p>
           <p className="text-gray-400">Posted {postedDate}</p>
         </div>
 
@@ -238,27 +188,15 @@ const Card: React.FC<CardProps> = ({
             <span className="text-xs font-medium text-blue-500">Save</span>
           </Button>
           <Button
-            className={`rounded-md ${"bg-buttonPrimary"}`}
+            className={`rounded-md ${"bg-buttonPrimary"} `}
             variant="outline"
             size="sm"
             onClick={() => onViewDetails(job)}
           >
-            <span className="text-xs text-white font-medium">View Details</span>
-          </Button>
-          {/* <Button
-            className={`rounded-md ${
-              isJobClosed ? "bg-gray-400" : "bg-buttonPrimary"
-            }`}
-            variant="solid"
-            size="sm"
-            color={isJobClosed ? "default" : "primary"}
-            disabled={isJobClosed}
-            onClick={() => onApply(job)}
-          >
-            <span className="text-xs text-white font-medium">
-              {showExternalApply ? "Apply on company site" : "Apply Now"}
+            <span className="text-xs text-white hover:text-black font-medium">
+              View Details
             </span>
-          </Button> */}
+          </Button>
         </div>
       </div>
 

@@ -140,9 +140,9 @@ const Home: React.FC = () => {
       />
 
       {isDesktop ? (
-        <div className="flex gap-4 mt-[6vh] h-[calc(100vh-150px)]">
+        <div className="flex gap-4 mt-[6vh] h-[calc(100vh-150px)] ">
           {/* Scrollable job list with ref */}
-          <div ref={jobListRef} className="w-2/5 overflow-y-auto pr-2">
+          <div ref={jobListRef} className="w-2/5 overflow-y-auto pr-2  ">
             <div className="space-y-4">
               {jobsInfo.map((job) => (
                 <JobCard

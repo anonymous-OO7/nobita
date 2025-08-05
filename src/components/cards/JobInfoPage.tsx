@@ -27,15 +27,10 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
   isApplied = false,
 }) => {
   const router = useRouter();
-
   const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
+    containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, [job]);
 
   const {
@@ -56,19 +51,16 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
     CreatedAt,
     Company,
     Field,
-    Category,
   } = job;
 
-  const parsedSkills: string[] = React.useMemo(() => {
+  const parsedSkills = React.useMemo(() => {
     if (!Skills) return [];
-
     let skills: string[] = [];
-
     if (Array.isArray(Skills)) {
       skills = Skills.flatMap((s) =>
         s
           .split(",")
-          .map((item) => item.trim())
+          .map((i) => i.trim())
           .filter(Boolean)
       );
     } else if (typeof Skills === "string") {
@@ -76,45 +68,40 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
         const parsed = JSON.parse(Skills);
         if (Array.isArray(parsed)) {
           skills = parsed.flatMap((s) =>
-            typeof s === "string"
-              ? s
-                  .split(",")
-                  .map((item) => item.trim())
-                  .filter(Boolean)
-              : []
+            typeof s === "string" ? s.split(",").map((i) => i.trim()) : []
           );
         } else {
-          skills = Skills.split(",")
-            .map((item) => item.trim())
-            .filter(Boolean);
+          skills = Skills.split(",").map((i) => i.trim());
         }
       } catch {
-        skills = Skills.split(",")
-          .map((item) => item.trim())
-          .filter(Boolean);
+        skills = Skills.split(",").map((i) => i.trim());
       }
     }
-
-    return skills.slice(0, 10); // Limit to 10
+    return skills.slice(0, 10);
   }, [Skills]);
 
-  // Determine Apply Button Text and Link
+  const parsedLocations = Location
+    ? Location.split(",")
+        .map((loc) => loc.trim())
+        .filter(Boolean)
+    : [];
+
   const isBranded = BrandedJd === "true";
   const hasApplyRedirect = !!ApplyRedirectUrl?.trim();
   const hasJobUrl = !!JobUrl?.trim();
 
-  const navigateToJobInfo = React.useCallback(() => {
+  const navigateToJobInfo = () => {
     if (!job?.Uuid) return;
     window.open(`/job?id=${job.Uuid}`, "_blank");
-  }, [job]);
+  };
 
   return (
     <div
-      className="px-6 py-8 max-w-5xl mx-auto text-sm text-gray-800"
+      className="px-6 py-8 max-w-4xl mx-auto text-sm text-gray-800 space-y-8"
       ref={containerRef}
     >
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
           {Company.logo_url ? (
             <Image
@@ -128,72 +115,90 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
             <Building2 size={40} />
           )}
           <div>
-            <h1 className="text-xl font-semibold text-black">{Position}</h1>
-            <p className="text-gray-600 text-sm">{Company.name}</p>
+            <h1 className="text-xl font-semibold text-black font-poppins">
+              {Position}
+            </h1>
+            <p className="text-gray-600 text-sm font-poppins">{Company.name}</p>
           </div>
         </div>
 
-        <div className="flex flex-col sm:items-end gap-2 mt-4 sm:mt-0">
+        <div className="flex flex-col sm:items-end gap-2">
           <Chip
             variant="flat"
             color="primary"
             size="sm"
-            className="text-xs font-medium"
+            className="text-xs font-medium font-poppins"
           >
             Posted on {format(new Date(CreatedAt), "dd MMM yyyy")}
           </Chip>
-          <button
-            type="button"
-            onClick={() => navigateToJobInfo()}
-            disabled={isApplied}
-            className={`inline-block mt-1 text-xs font-medium px-4 py-2 rounded transition ${
-              isApplied
-                ? "bg-gray-400 cursor-not-allowed text-white"
-                : "bg-blue-600 hover:bg-blue-700 text-white"
-            }`}
-          >
-            Show Full Details
-          </button>
 
-          {/* Conditionally render Apply Button here as well for quick access */}
-          {!isBranded && hasApplyRedirect ? (
-            <a
-              href={ApplyRedirectUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-4 py-2 rounded transition"
-            >
-              Apply on company site
-            </a>
-          ) : (
+          <div className="flex flex-col sm:flex-row gap-2">
             <button
               type="button"
-              onClick={() => onApply(job)}
+              onClick={navigateToJobInfo}
               disabled={isApplied}
-              className={`inline-block mt-1 text-xs font-medium px-4 py-2 rounded transition ${
+              className={`text-xs font-medium px-4 py-2 rounded transition whitespace-nowrap font-poppins ${
                 isApplied
                   ? "bg-gray-400 cursor-not-allowed text-white"
                   : "bg-blue-600 hover:bg-blue-700 text-white"
               }`}
             >
-              {isApplied ? "Applied" : "Apply Now"}
+              Show Full Details
             </button>
-          )}
+
+            {!isBranded && hasApplyRedirect ? (
+              <a
+                href={ApplyRedirectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-medium px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white whitespace-nowrap font-poppins"
+              >
+                Apply on company site
+              </a>
+            ) : (
+              <button
+                type="button"
+                onClick={() => onApply(job)}
+                disabled={isApplied}
+                className={`text-xs font-medium px-4 py-2 rounded transition whitespace-nowrap ${
+                  isApplied
+                    ? "bg-gray-400 cursor-not-allowed text-white"
+                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                }`}
+              >
+                {isApplied ? "Applied" : "Apply Now"}
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       {/* About the Job */}
-      <div className="mb-10">
-        <h2 className="text-lg font-semibold text-black mb-4">About the Job</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="space-y-2 text-gray-700">
-            <p>
-              <strong>Location:</strong>{" "}
-              <span className="inline-flex items-center gap-1">
-                <CiLocationOn className="text-black" />
-                {Location}
-              </span>
-            </p>
+      <div className="space-y-6">
+        <h2 className="text-lg font-semibold text-black font-poppins">
+          About the Job
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <CiLocationOn className="text-black" size={20} />
+              <div className="flex flex-wrap gap-2">
+                {parsedLocations.length > 0 ? (
+                  parsedLocations.map((loc, idx) => (
+                    <span
+                      key={idx}
+                      className="text-xs px-2 py-1 border border-gray-300 rounded-full text-gray-700 bg-gray-50 font-poppins"
+                    >
+                      {loc}
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs text-gray-500 font-poppins">
+                    N/A
+                  </span>
+                )}
+              </div>
+            </div>
             <p>
               <strong>Type:</strong>{" "}
               {Type.charAt(0).toUpperCase() + Type.slice(1)}
@@ -213,12 +218,9 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
             </p>
           </div>
 
-          <div className="space-y-2 text-gray-700">
+          <div className="space-y-2">
             <p>
               <strong>Field:</strong> {Field || "N/A"}
-            </p>
-            <p>
-              <strong>Category:</strong> {Category?.replace("_", " ") || "N/A"}
             </p>
             {JobUrl && (
               <p className="text-blue-600 font-medium inline-flex items-center gap-1">
@@ -233,13 +235,19 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
 
         {/* Skills */}
         {parsedSkills.length > 0 && (
-          <div className="mb-6">
-            <h3 className="text-base font-semibold text-black mb-2">
+          <div>
+            <h3 className="text-base font-semibold text-black mb-2 font-poppins">
               Required Skills
             </h3>
             <div className="flex flex-wrap gap-2">
               {parsedSkills.map((skill, idx) => (
-                <Chip key={idx} color="secondary" variant="bordered" size="sm">
+                <Chip
+                  key={idx}
+                  color="secondary"
+                  variant="bordered"
+                  size="sm"
+                  className="font-poppins"
+                >
                   {skill}
                 </Chip>
               ))}
@@ -249,18 +257,18 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
 
         {/* Job Description */}
         <div>
-          <h3 className="text-base font-semibold text-black mb-2">
+          <h3 className="text-base font-semibold text-black mb-2 font-poppins">
             Job Description
           </h3>
           <div
-            className="prose max-w-none rounded-md p-2 text-gray-800"
+            className="prose max-w-none rounded-md p-2 text-gray-800 font-poppins"
             dangerouslySetInnerHTML={{ __html: Description }}
           />
         </div>
       </div>
 
-      {/* Apply Button Section - repeated for accessibility and clarity */}
-      <div className="mb-9">
+      {/* Apply Button */}
+      <div>
         {isBranded && hasApplyRedirect ? (
           <a
             href={ApplyRedirectUrl}
@@ -288,18 +296,21 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
         )}
       </div>
 
-      {/* About the Company */}
+      {/* Company Info */}
       <div>
-        <h2 className="text-lg font-semibold text-black mb-4">
+        <h2 className="text-lg font-semibold text-black font-poppins mb-4">
           About the Company
         </h2>
         <div className="space-y-2 text-gray-700">
           <p>
             <strong>Industry:</strong> {Company.industry || "N/A"}
           </p>
-          <p>
-            <strong>Size:</strong> {Company.company_size || "N/A"} employees
-          </p>
+          {Company.company_size &&
+            Company.company_size.toLowerCase() !== "unknown" && (
+              <p>
+                <strong>Size:</strong> {Company.company_size} employees
+              </p>
+            )}
           <p>
             <strong>Founded:</strong>{" "}
             {Company.founded_date
@@ -315,18 +326,6 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
           </p>
         </div>
       </div>
-      <button
-        type="button"
-        onClick={() => navigateToJobInfo()}
-        disabled={isApplied}
-        className={`inline-block mt-1 text-xs font-medium px-4 py-2 rounded transition ${
-          isApplied
-            ? "bg-gray-400 cursor-not-allowed text-white"
-            : "bg-blue-600 hover:bg-blue-700 text-white"
-        }`}
-      >
-        Show Full Details
-      </button>
     </div>
   );
 };
