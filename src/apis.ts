@@ -739,3 +739,11 @@ export const GetJobInfo = async (uuid: string) => {
     }
   );
 };
+
+export const GetDashboardJobsdApi = () => {
+  return onePiece.get("/get-public-jobs", {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+    },
+  });
+};

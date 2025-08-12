@@ -18,10 +18,10 @@ import Button from "../Button";
 
 interface CardProps {
   job: Job;
-  onSave: (uuid: string) => void;
-  onApply: (job: Job) => void;
+  onSave?: (uuid: string) => void;
+  onApply?: (job: Job) => void;
   onViewDetails: (job: Job) => void;
-  isApplied: boolean;
+  isApplied?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -184,9 +184,16 @@ const Card: React.FC<CardProps> = ({
         </div>
 
         <div className="flex gap-2 flex-wrap">
-          <Button variant="outline" size="sm" onClick={() => onSave(job.Uuid)}>
-            <span className="text-xs font-medium text-blue-500">Save</span>
-          </Button>
+          {onSave && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onSave(job?.Uuid)}
+            >
+              <span className="text-xs font-medium text-blue-500">Save</span>
+            </Button>
+          )}
+
           <Button
             className={`rounded-md ${"bg-buttonPrimary"} `}
             variant="outline"

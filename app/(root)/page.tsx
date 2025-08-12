@@ -12,6 +12,7 @@ import Testimonials from "@/components/homelements/Testimonials";
 import UserCount from "@/components/homelements/UserCount";
 import Accordian from "@/components/homelements/Accordian";
 import Navbar from "@/components/pages/landing/Navbar";
+import LatestJobs from "@/components/homelements/LatestJobsShowcase";
 
 export default function About() {
   const [isTrialModalOpen, setIsTrialModalOpen] = useState(false);
@@ -32,6 +33,7 @@ export default function About() {
           </section>
 
           <TechContent />
+          <LatestJobs />
           <Clients />
           <Testimonials />
           {/* <Founders /> */}

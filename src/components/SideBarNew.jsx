@@ -132,7 +132,7 @@ export default function Sidebar({ children, setExpandedMain, profileDetails }) {
             >
               <div
                 onClick={navigateToProfileView}
-                className="leading-4 text-black"
+                className="leading-4 text-black cursor-pointer"
               >
                 <p> {name != "" ? name : ""}</p>
                 <span className="text-xs text-gray-600">
