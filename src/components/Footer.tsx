@@ -3,8 +3,11 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@heroui/react";
 import { FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function Footer() {
+  const router = useRouter();
+
   return (
     <footer className="bg-[#041a2f] text-white">
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -100,17 +103,26 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="#">
+                <Link
+                  href="/terms-and-conditions"
+                  onClick={() => router.push("/terms-and-conditions")}
+                >
                   <span className="hover:underline">Terms and conditions</span>
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link
+                  href="/privacypolicy"
+                  onClick={() => router.push("/privacypolicy")}
+                >
                   <span className="hover:underline">Privacy Policy</span>
                 </Link>
               </li>
               <li>
-                <Link href="#">
+                <Link
+                  href="/cancellation-refundpolicy"
+                  onClick={() => router.push("/cancellation-refundpolicy")}
+                >
                   <span className="hover:underline">
                     Cancellation and refund
                   </span>

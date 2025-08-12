@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X, GraduationCap, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
-
 import LogoWorkist from "../../../assets/workistlogo.svg";
 import Image from "next/image";
+
 interface NavbarProps {
   onOpenTrialModal: () => void;
 }
@@ -12,6 +12,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
   const router = useRouter();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isQuickLinksOpen, setIsQuickLinksOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
@@ -22,7 +23,6 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
     "text-sm font-medium rounded-md transition duration-200 ease-in-out px-4 py-1.5";
 
   const recruiterButton = `${baseButton} border border-gray-300 text-gray-900 hover:bg-gray-100`;
-
   const jobSeekerButton = `${baseButton} bg-black text-white hover:bg-gray-900`;
 
   const navItems = [
@@ -38,7 +38,6 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      // Update active section based on scroll position
       const sections = navItems.map((item) => item.id);
       const currentSection = sections.find((section) => {
         const element = document.getElementById(section);
@@ -95,24 +94,6 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
-            {/* {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.href)}
-                className={`relative px-3 py-2 text-sm font-medium font-poppins transition-colors duration-200 ${
-                  activeSection === item.id
-                    ? "text-blue-600"
-                    : isScrolled
-                    ? "text-gray-700 hover:text-blue-600"
-                    : "text-gray-800 hover:text-blue-600"
-                }`}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full"></div>
-                )}
-              </button>
-            ))} */}
             <nav className="hidden lg:flex items-center space-x-6">
               <button
                 onClick={() =>
@@ -154,19 +135,42 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                 >
                   Job Seeker Login
                 </button>
+
+                {/* Quick Links Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setIsQuickLinksOpen(!isQuickLinksOpen)}
+                    className="flex items-center text-gray-800 hover:text-blue-600 transition-colors"
+                  >
+                    Quick Links <ChevronDown className="w-4 h-4 ml-1" />
+                  </button>
+
+                  {isQuickLinksOpen && (
+                    <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                      <button
+                        onClick={() => {
+                          router.push("/about");
+                          setIsQuickLinksOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        About Us
+                      </button>
+                      <button
+                        onClick={() => {
+                          router.push("/contact");
+                          setIsQuickLinksOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Contact Us
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </nav>
           </div>
-
-          {/* CTA Button */}
-          {/* <div className="hidden md:flex items-center space-x-4">
-            <button
-              onClick={onOpenTrialModal}
-              className="bg-gradient-to-r from-blue-600 to-teal-600 text-white px-6 py-2.5 rounded-lg font-semibold text-sm hover:from-blue-700 hover:to-teal-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              Free Trial
-            </button>
-          </div> */}
 
           {/* Mobile Menu Button */}
           <button
@@ -204,6 +208,31 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                   {item.text}
                 </button>
               ))}
+
+              {/* Quick Links in Mobile */}
+              <div className="border-t pt-2">
+                <p className="text-sm font-semibold text-gray-700">
+                  Quick Links
+                </p>
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push("/about");
+                  }}
+                  className="block w-full text-left text-black text-sm font-medium py-1"
+                >
+                  About Us
+                </button>
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push("/contact");
+                  }}
+                  className="block w-full text-left text-black text-sm font-medium py-1"
+                >
+                  Contact Us
+                </button>
+              </div>
 
               <button
                 onClick={() =>

@@ -1,320 +1,396 @@
-import { gradients } from "@/assets/colors";
+"use client";
+import React, { useState } from "react";
+import { Colors, gradients } from "@/assets/colors";
+import Navbar from "@/components/pages/landing/Navbar";
 import Head from "next/head";
+import Footer from "@/components/Footer";
 
 export default function PrivacyPolicy() {
+  const [isTrialModalOpen, setIsTrialModalOpen] = useState(false);
+
   return (
     <>
-      <Head>
-        <title>Workist.in - Privacy Policy</title>
-        <meta
-          name="description"
-          content="Workist.in Privacy Policy - Learn how we protect your data."
-        />
-      </Head>
-      <div
-        className="flex flex-col min-h-screen"
-        style={{ background: gradients.gradientbackground }}
-      >
-        <div className="container mx-auto px-4 py-10 md:py-20">
-          <h1 className="text-3xl md:text-5xl font-normal text-center text-black mb-8">
-            Privacy Policy for Workist.in
-          </h1>
+      <div>
+        <div
+          className="flex flex-col min-h-screen"
+          style={{ background: Colors.light }}
+        >
+          <Navbar onOpenTrialModal={() => setIsTrialModalOpen(true)} />
+          <Head>
+            <title>Workist.in - Privacy Policy</title>
+            <meta
+              name="description"
+              content="Workist.in Privacy Policy - Full details on how we collect, store, process, share, and protect your personal data."
+            />
+          </Head>
+          <div
+            className="flex flex-col min-h-screen"
+            style={{ background: gradients.gradientbackground }}
+          >
+            <div className="container mx-auto px-4 py-10 md:py-20">
+              <h1 className="text-3xl md:text-5xl font-bold text-center mb-8">
+                Privacy Policy for Workist.in
+              </h1>
 
-          <div className="bg-white p-6 md:p-8 rounded-lg shadow-xl">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              1. Introduction
-            </h2>
-            <p className="text-gray-700 mb-6">
-              Welcome to Workist.in. We are committed to protecting your privacy
-              and ensuring you have a positive experience on our platform. This
-              Privacy Policy outlines our practices regarding the collection,
-              use, and disclosure of your information when you use our website
-              Workist.in (the "Platform"). Workist.in is a platform that allows
-              users to sell referrals to other users. This policy is designed to
-              be transparent about how we handle your data in the context of
-              these services. By using Workist.in, you consent to the data
-              practices described in this policy. If you do not agree with any
-              part of this Privacy Policy, please do not use our Platform.
-            </p>
+              <div className="bg-white p-6 md:p-10 rounded-lg shadow-xl space-y-8">
+                {/* 1. Introduction */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">1. Introduction</h2>
+                  <p className="mb-4">
+                    We, at <strong>Workist Internet Private Limited</strong>{" "}
+                    ("Workist", "we", "our", or "us"), respect your online
+                    privacy and are committed to providing transparency
+                    regarding the collection, usage, and protection of your
+                    personal information.
+                  </p>
+                  <p>
+                    This Privacy Policy (“Policy”) applies to your interaction
+                    with:
+                  </p>
+                  <ul className="list-disc list-inside mb-4">
+                    <li>The Workist.in website and associated subdomains</li>
+                    <li>Our official mobile applications</li>
+                    <li>
+                      Other services, products, APIs, and tools provided through
+                      our digital platforms
+                    </li>
+                  </ul>
+                  <p>
+                    By accessing or using our services, you agree to this
+                    Policy. If you do not agree, please discontinue using our
+                    Platform.
+                  </p>
+                </section>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              2. Information We Collect
-            </h2>
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              2.1 Personal Information
-            </h3>
-            <p className="text-gray-700 mb-4">
-              We collect personal information that you voluntarily provide to us
-              when you register on Workist.in, create a profile, sell or
-              purchase referrals, or contact us. This may include:
-              <ul className="list-disc list-inside mb-4">
-                <li>Your name</li>
-                <li>Email address</li>
-                <li>Contact number</li>
-                <li>
-                  Profile information (e.g., skills, experience, location)
-                </li>
-                <li>Payment information (for transactions)</li>
-                <li>Any other information you choose to provide</li>
-              </ul>
-            </p>
+                {/* 2. Definitions */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    2. Key Definitions
+                  </h2>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>
+                      <strong>Personal Information (PI):</strong> Data that can
+                      identify you directly or indirectly — e.g., name, email,
+                      contact numbers, location, government IDs.
+                    </li>
+                    <li>
+                      <strong>Usage Data:</strong> Technical data about how you
+                      use our Platform, such as IP, browser type, device info.
+                    </li>
+                    <li>
+                      <strong>Cookies:</strong> Small files stored in your
+                      browser to improve user experience and track preferences.
+                    </li>
+                    <li>
+                      <strong>Processing:</strong> Any operation performed on
+                      personal data including storage, retrieval, sharing, or
+                      deletion.
+                    </li>
+                  </ul>
+                </section>
 
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              2.2 Referral Information
-            </h3>
-            <p className="text-gray-700 mb-4">
-              As a platform for selling referrals, we collect information
-              related to the referrals you list or purchase, including:
-              <ul className="list-disc list-inside mb-4">
-                <li>Job details for referrals</li>
-                <li>Referral recipient information (if you provide it)</li>
-                <li>Transaction details for referral sales and purchases</li>
-              </ul>
-            </p>
+                {/* 3. Types of Information We Collect */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    3. Information We Collect
+                  </h2>
 
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              2.3 Usage Data
-            </h3>
-            <p className="text-gray-700 mb-6">
-              We automatically collect certain information when you use
-              Workist.in, such as:
-              <ul className="list-disc list-inside mb-4">
-                <li>IP address</li>
-                <li>Browser type</li>
-                <li>Device information</li>
-                <li>Pages you visit</li>
-                <li>Time spent on pages</li>
-                <li>Links you click</li>
-                <li>Cookies (see section 7)</li>
-              </ul>
-              This data helps us understand how you use the Platform and improve
-              our services.
-            </p>
+                  <h3 className="font-semibold text-xl mt-4 mb-2">
+                    3.1 Personal Information You Provide
+                  </h3>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Name, age, gender, and contact details</li>
+                    <li>Email and password (hashed)</li>
+                    <li>Employment history, skills, resume/CV data</li>
+                    <li>Educational qualifications</li>
+                    <li>
+                      Payment and billing details (processed via secure third
+                      parties)
+                    </li>
+                    <li>
+                      Social media handles if you link accounts (Google,
+                      LinkedIn, etc.)
+                    </li>
+                  </ul>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              3. How We Use Your Information
-            </h2>
-            <p className="text-gray-700 mb-6">
-              We use the information we collect for various purposes, including:
-              <ul className="list-disc list-inside mb-4">
-                <li>To provide and maintain our Platform</li>
-                <li>To facilitate the selling and purchasing of referrals</li>
-                <li>To process transactions and payments</li>
-                <li>To personalize your experience on Workist.in</li>
-                <li>
-                  To communicate with you, including responding to your
-                  inquiries and providing customer support
-                </li>
-                <li>
-                  To send you updates, promotional materials, and other
-                  information (in accordance with your preferences)
-                </li>
-                <li>
-                  To monitor the usage of the Platform and ensure its security
-                </li>
-                <li>
-                  To detect, prevent, and address technical issues, fraud, and
-                  abuse
-                </li>
-                <li>To comply with legal obligations</li>
-              </ul>
-            </p>
+                  <h3 className="font-semibold text-xl mt-4 mb-2">
+                    3.2 Automatically Collected Data
+                  </h3>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>IP address and geolocation</li>
+                    <li>Browser, device type, OS</li>
+                    <li>Session duration, clicks, page views</li>
+                  </ul>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              4. Sharing and Disclosure of Your Information
-            </h2>
-            <p className="text-gray-700 mb-6">
-              We may share your information in the following circumstances:
-              <ul className="list-disc list-inside mb-4">
-                <li>
-                  <span className="font-semibold">With other users:</span> To
-                  facilitate referral transactions, certain information may be
-                  shared between users involved in a transaction. For example,
-                  if you sell a referral, the buyer may see limited information
-                  from your profile.
-                </li>
-                <li>
-                  <span className="font-semibold">With service providers:</span>{" "}
-                  We may employ third-party companies and individuals to
-                  facilitate our Platform, provide services on our behalf (e.g.,
-                  payment processing, data analytics, email delivery), and
-                  assist us in analyzing how our Platform is used. These third
-                  parties have access to your Personal Information only to
-                  perform these tasks on our behalf and are obligated not to
-                  disclose or use it for any other purpose.
-                </li>
-                <li>
-                  <span className="font-semibold">For legal reasons:</span> We
-                  may disclose your Personal Information if required to do so by
-                  law or in response to valid requests by public authorities
-                  (e.g., a court or a government agency).
-                </li>
-                <li>
-                  <span className="font-semibold">Business transfers:</span> In
-                  connection with any merger, sale of company assets, financing,
-                  or acquisition of all or a portion of our business by another
-                  company, or in the unlikely event that Workist.in goes out of
-                  business or enters bankruptcy, user information would likely
-                  be among the assets transferred.
-                </li>
-                <li>
-                  <span className="font-semibold">With your consent:</span> We
-                  may disclose your Personal Information for any other purpose
-                  with your consent.
-                </li>
-              </ul>
-            </p>
+                  <h3 className="font-semibold text-xl mt-4 mb-2">
+                    3.3 Cookies and Tracking Data
+                  </h3>
+                  <p className="mb-2">We use various types of cookies:</p>
+                  <ul className="list-disc list-inside">
+                    <li>Essential (login functionality)</li>
+                    <li>Analytics (Google Analytics, internal tools)</li>
+                    <li>Preferences (remember your settings)</li>
+                    <li>Advertising (targeted job ads and remarketing)</li>
+                  </ul>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              5. Data Security
-            </h2>
-            <p className="text-gray-700 mb-6">
-              We take reasonable measures to protect your Personal Information
-              from unauthorized access, use, or disclosure. These measures
-              include [Describe security measures, e.g., encryption, firewalls,
-              secure servers, access controls]. However, no method of
-              transmission over the Internet, or method of electronic storage,
-              is 100% secure. Therefore, while we strive to use commercially
-              acceptable means to protect your Personal Information, we cannot
-              guarantee its absolute security.
-            </p>
+                  <h3 className="font-semibold text-xl mt-4 mb-2">
+                    3.4 Optional Sensitive Personal Data
+                  </h3>
+                  <p>
+                    Workist may offer forms that request sensitive data such as
+                    caste category or diversity preference — sharing is
+                    voluntary.
+                  </p>
+                </section>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              6. Your Data Protection Rights
-            </h2>
-            <p className="text-gray-700 mb-6">
-              You have certain rights regarding your personal information,
-              including:
-              <ul className="list-disc list-inside mb-4">
-                <li>
-                  <span className="font-semibold">Access:</span> You have the
-                  right to access the personal information we hold about you.
-                </li>
-                <li>
-                  <span className="font-semibold">Correction:</span> You have
-                  the right to request that we correct any inaccurate or
-                  incomplete personal information.
-                </li>
-                <li>
-                  <span className="font-semibold">Deletion:</span> You have the
-                  right to request that we delete your personal information,
-                  under certain conditions.
-                </li>
-                <li>
-                  <span className="font-semibold">
-                    Objection to processing:
-                  </span>{" "}
-                  You have the right to object to the processing of your
-                  personal information in certain situations.
-                </li>
-                <li>
-                  <span className="font-semibold">
-                    Restriction of processing:
-                  </span>{" "}
-                  You have the right to request that we restrict the processing
-                  of your personal information under certain circumstances.
-                </li>
-                <li>
-                  <span className="font-semibold">Data portability:</span> You
-                  have the right to receive your personal information in a
-                  structured, commonly used and machine-readable format and, if
-                  technically feasible, to have it transmitted to another
-                  controller.
-                </li>
-                <li>
-                  <span className="font-semibold">Withdraw consent:</span> If we
-                  are processing your personal information based on your
-                  consent, you have the right to withdraw your consent at any
-                  time.
-                </li>
-              </ul>
-              To exercise these rights, please contact us using the information
-              in section 11.
-            </p>
+                {/* 4. Purpose of Processing */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    4. How We Use Your Information
+                  </h2>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Provide, maintain, and improve our services</li>
+                    <li>Match job seekers with recruiters efficiently</li>
+                    <li>
+                      Enable community features, discussion forums, and Q&A
+                    </li>
+                    <li>Personalize recommendations and job alerts</li>
+                    <li>Prevent fraud, ensure security, and enforce terms</li>
+                    <li>
+                      Conduct analytics, A/B testing, and engagement improvement
+                    </li>
+                    <li>Comply with legal and regulatory requirements</li>
+                  </ul>
+                </section>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              7. Cookies and Tracking Technologies
-            </h2>
-            <p className="text-gray-700 mb-6">
-              We use cookies and similar tracking technologies to collect and
-              use information. Cookies are files with a small amount of data
-              which may include an anonymous unique identifier. Cookies are sent
-              to your browser from a website and stored on your device's
-              browser. We use cookies for purposes such as:
-              <ul className="list-disc list-inside mb-4">
-                <li>
-                  <span className="font-semibold">Authentication:</span> To
-                  remember you and keep you logged in.
-                </li>
-                <li>
-                  <span className="font-semibold">Personalization:</span> To
-                  remember your preferences and settings.
-                </li>
-                <li>
-                  <span className="font-semibold">Analytics:</span> To
-                  understand how you use our Platform and to improve it.
-                </li>
-              </ul>
-              You can instruct your browser to refuse all cookies or to indicate
-              when a cookie is being sent. However, if you do not accept
-              cookies, you may not be able to use some portions of our Platform.
-            </p>
+                {/* 5. Legal Basis */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    5. Legal Grounds for Processing
+                  </h2>
+                  <ul className="list-disc list-inside">
+                    <li>Consent (e.g., marketing communications)</li>
+                    <li>
+                      Contractual necessity (e.g., providing requested services)
+                    </li>
+                    <li>Legitimate interests (e.g., preventing spam/fraud)</li>
+                    <li>Legal obligations (e.g., retention required by law)</li>
+                  </ul>
+                </section>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              8. Third-Party Links
-            </h2>
-            <p className="text-gray-700 mb-6">
-              Our Platform may contain links to third-party websites or services
-              that are not owned or controlled by Workist.in. We are not
-              responsible for the privacy practices of these third parties. We
-              encourage you to review the privacy policies of any third-party
-              websites or services you visit.
-            </p>
+                {/* 6. Cookie Policy */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    6. Cookie & Tracking Policy
+                  </h2>
+                  <p className="mb-2">
+                    Cookies and tracking technology are used for authentication,
+                    analytics, advertising, and personalization. You can learn
+                    more and manage settings via your browser:
+                  </p>
+                  <ul className="list-disc list-inside">
+                    <li>
+                      Chrome –{" "}
+                      <a
+                        href="https://support.google.com/chrome/answer/95647"
+                        className="text-blue-600"
+                      >
+                        Manage Cookies
+                      </a>
+                    </li>
+                    <li>
+                      Firefox –{" "}
+                      <a
+                        href="https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+                        className="text-blue-600"
+                      >
+                        Manage Cookies
+                      </a>
+                    </li>
+                    <li>
+                      Safari –{" "}
+                      <a
+                        href="https://support.apple.com/en-in/guide/safari/sfri11471/mac"
+                        className="text-blue-600"
+                      >
+                        Manage Cookies
+                      </a>
+                    </li>
+                  </ul>
+                </section>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              9. Children's Privacy
-            </h2>
-            <p className="text-gray-700 mb-6">
-              Workist.in is not intended for use by children under the age of
-              [Specify Age, e.g., 16]. We do not knowingly collect personal
-              information from children under this age. If you are a parent or
-              guardian and you are aware that your child has provided us with
-              Personal Information, please contact us. If we become aware that
-              we have collected Personal Information from children without
-              verification of parental consent, we take steps to remove that
-              information from our servers.
-            </p>
+                {/* 7. Sharing Info */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    7. Sharing & Disclosure
+                  </h2>
+                  <ul className="list-disc list-inside">
+                    <li>Employers & recruiters (if you apply or opt-in)</li>
+                    <li>Cloud hosting and database providers</li>
+                    <li>Advertising networks (Google Ads, Facebook Ads)</li>
+                    <li>Law enforcement (where legally required)</li>
+                    <li>During mergers, acquisitions, or asset sales</li>
+                  </ul>
+                </section>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              10. Changes to This Privacy Policy
-            </h2>
-            <p className="text-gray-700 mb-6">
-              We may update our Privacy Policy from time to time. We will notify
-              you of any changes by posting the new Privacy Policy on this page.
-              We will let you know via email and/or a prominent notice on our
-              Platform, prior to the change becoming effective and update the
-              "effective date" at the top of this Privacy Policy. You are
-              advised to review this Privacy Policy periodically for any
-              changes. Changes to this Privacy Policy are effective when they
-              are posted on this page.
-            </p>
+                {/* 8. Data Retention */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">8. Data Retention</h2>
+                  <p>
+                    We delete or anonymize data when it is no longer needed,
+                    unless retention is required by law.
+                  </p>
+                </section>
 
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-              11. Contact Us
-            </h2>
-            <p className="text-gray-700 mb-6">
-              If you have any questions or concerns about this Privacy Policy,
-              please contact us at:
-              <ul className="list-disc list-inside mb-4">
-                <li>Email: [Your Company Email Address]</li>
-                <li>Address: [Your Company Address]</li>
-              </ul>
-            </p>
+                {/* 9. Your Rights */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    9. Your Rights as a User
+                  </h2>
+                  <ul className="list-disc list-inside">
+                    <li>Access and copy your data</li>
+                    <li>Rectify inaccurate data</li>
+                    <li>Request deletion</li>
+                    <li>Restrict processing</li>
+                    <li>Withdraw consent</li>
+                    <li>Data portability</li>
+                  </ul>
+                </section>
 
-            <p className="text-gray-500 text-sm">
-              Last updated: February 26, 2025
-            </p>
+                {/* 10. Children's Privacy */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    10. Children & Age Limitations
+                  </h2>
+                  <p>
+                    Workist.in is not for users under 18. Use under
+                    parental/guardian supervision only if local laws allow.
+                  </p>
+                </section>
+
+                {/* 11. Security */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    11. Security Measures
+                  </h2>
+                  <p>
+                    We use secure servers, encryption protocols, firewalls, and
+                    limited employee access to protect your data. Still, no
+                    method of transmission over the Internet is 100% secure.
+                  </p>
+                </section>
+
+                {/* 12. International Transfers */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    12. International Data Transfers
+                  </h2>
+                  <p>
+                    Your data may be transferred to and processed in other
+                    countries, with safeguards in place as per applicable data
+                    laws.
+                  </p>
+                </section>
+
+                {/* 13. Updates */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    13. Updates to This Policy
+                  </h2>
+                  <p>
+                    We may amend this Policy at any time. Changes will be posted
+                    here with an updated “Last Updated” date.
+                  </p>
+                </section>
+
+                {/* 14. Contact */}
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    14. Contact & Grievance Redressal
+                  </h2>
+                  <p>
+                    Email:{" "}
+                    <a
+                      href="mailto:privacy@workist.in"
+                      className="text-blue-600"
+                    >
+                      privacy@workist.in
+                    </a>
+                    <br />
+                    Address: Workist, Saket Mall, New Delhi, India
+                  </p>
+                </section>
+                <section>
+                  <h2 className="text-2xl font-bold mb-4">
+                    15. What third-party cookies does workist.in use?
+                  </h2>
+                  <p className="mb-2">
+                    Please note that the third parties (advertising networks and
+                    providers of external services like web traffic analysis
+                    services) may also use cookies on our Services. Cookies on
+                    our sites. Also, note that the names of cookies, pixels and
+                    other technologies may change over time. We use trusted
+                    partners to help us service advertising, who may place
+                    cookies on your device. We also pull through content from
+                    social networks into our own pages, such as embedded
+                    Facebook feeds. The social networks, such as Facebook,
+                    Google, etc. may themselves also put cookies on your
+                    machine. If a user logs into Facebook, Twitter or Google+
+                    via our website, they will leave a cookie on the users
+                    computer. This is the same process as if the user logs into
+                    these social networks directly. We also use Google Analytics
+                    on our Services to help us analyse how our Services are
+                    used. Google Analytics uses performance cookies to track
+                    customers interactions. For example, by using cookies,
+                    Google can tell us which pages our users view, which are
+                    most popular, what time of day our websites are visited,
+                    whether visitors have been to our websites before, what
+                    website referred the visitor to our websites, and other
+                    similar information. All of this information is anonymized.
+                    We suggest that you should check the respective privacy
+                    policies for these external services to help you understand
+                    what data these organisations hold about you and how they
+                    process it.
+                  </p>
+                  <ul className="list-disc list-inside">
+                    <li>
+                      Google AdSense –{" "}
+                      <a
+                        href="https://policies.google.com/technologies/ads"
+                        className="text-blue-600"
+                      >
+                        AdSense
+                      </a>
+                    </li>
+                    <li>
+                      Google Analytics –{" "}
+                      <a
+                        href="https://www.google.com/analytics/learn/privacy.html"
+                        className="text-blue-600"
+                      >
+                        See policy
+                      </a>
+                    </li>
+                    <li>
+                      Google Tag Manager –{" "}
+                      <a
+                        href="https://www.google.com/analytics/tag-manager/faq/"
+                        className="text-blue-600"
+                      >
+                        Google Tag Manager: policy
+                      </a>
+                    </li>
+                  </ul>
+                </section>
+
+                <p className="text-gray-500 text-sm">
+                  Last updated: August 13, 2025
+                </p>
+              </div>
+            </div>
           </div>
+
+          <Footer />
         </div>
       </div>
     </>
