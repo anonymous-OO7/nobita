@@ -11,26 +11,25 @@ interface Props {
 
 // https://2f6bf4373c05.ngrok-free.app
 
-// //dev
-// const baseOnePieceURLS =
-//   getEnviromentVariable() === "staginga"
-//     ? "https://a55644bcfd84.ngrok-free.app"
-//     : // ? "http://192.168.68.113:8080/"
-
-//       // "https://aa3c-103-248-173-178.ngrok-free.app";
-//       "https://a55644bcfd84.ngrok-free.app";
-
-//prod
-
+//dev
 const baseOnePieceURLS =
   getEnviromentVariable() === "staginga"
-    ? "https://2f6bf4373c05.ngrok-free.app"
+    ? "https://0b0bcb2e8e73.ngrok-free.app"
     : // ? "http://192.168.68.113:8080/"
 
       // "https://aa3c-103-248-173-178.ngrok-free.app";
-      "https://2f6bf4373c05.ngrok-free.app";
+      "https://0b0bcb2e8e73.ngrok-free.app";
 
-const baseBakiURL = getEnviromentVariable() === "staging" ? "" : "";
+//prod
+// const baseOnePieceURLS =
+//   getEnviromentVariable() === "staginga"
+//     ? "https://2f6bf4373c05.ngrok-free.app"
+//     : // ? "http://192.168.68.113:8080/"
+
+//       // "https://aa3c-103-248-173-178.ngrok-free.app";
+//       "https://2f6bf4373c05.ngrok-free.app";
+
+const baseBakiURL = getEnviromentVariable() === "stagingsss" ? "" : "";
 
 // local ngrok url for production :  https://bbd9-103-15-252-147.ngrok-free.app
 export const onePiece: AxiosInstance = axios.create({
