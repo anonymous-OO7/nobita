@@ -53,9 +53,9 @@ const Header = () => {
             Become a Referrer
           </button>
 
-          <button onClick={() => router.push("/")} className={navButtonClass}>
+          {/* <button onClick={() => router.push("/")} className={navButtonClass}>
             Home
-          </button>
+          </button> */}
 
           <button
             onClick={() => router.push("/pricing")}
@@ -91,7 +91,7 @@ const Header = () => {
       {isMenuOpen && (
         <div className="lg:hidden px-4 pb-4 space-y-2 bg-white border-t">
           {[
-            { text: "Home", link: "/" },
+            // { text: "Home", link: "/" },
             { text: "Pricing", link: "/pricing" },
           ].map((item) => (
             <button

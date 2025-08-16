@@ -107,12 +107,12 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                 Become a Referrer
               </button>
 
-              <button
+              {/* <button
                 onClick={() => router.push("/")}
                 className={navButtonClass}
               >
                 Home
-              </button>
+              </button> */}
 
               <button
                 onClick={() => router.push("/pricing")}
@@ -124,16 +124,16 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
               {/* Login Buttons */}
               <div className="flex items-center space-x-2 border-l border-gray-200 pl-4 ml-2">
                 <button
-                  onClick={() => router.push("/login?is_recruiter=true")}
-                  className={recruiterButton}
-                >
-                  Recruiter Login
-                </button>
-                <button
                   onClick={() => router.push("/login")}
                   className={jobSeekerButton}
                 >
                   Job Seeker Login
+                </button>
+                <button
+                  onClick={() => router.push("/login?is_recruiter=true")}
+                  className={recruiterButton}
+                >
+                  Recruiter Login
                 </button>
 
                 {/* Quick Links Dropdown */}
@@ -194,7 +194,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
           <div className="py-4 space-y-2 bg-white/95 backdrop-blur-md rounded-b-2xl border-t border-gray-100">
             <div className="lg:hidden px-4 pb-4 space-y-2 bg-white border-t">
               {[
-                { text: "Home", link: "/" },
+                // { text: "Home", link: "/" },
                 { text: "Pricing", link: "/pricing" },
               ].map((item) => (
                 <button
@@ -246,15 +246,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                 Become a Referrer
               </button>
 
-              <button
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  router.push("/login?is_recruiter=true");
-                }}
-                className={`${recruiterButton} w-full text-center`}
-              >
-                Recruiter Login
-              </button>
+              
               <button
                 onClick={() => {
                   setIsMenuOpen(false);
@@ -263,6 +255,15 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                 className={`${jobSeekerButton} w-full text-center`}
               >
                 Job Seeker Login
+              </button>
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  router.push("/login?is_recruiter=true");
+                }}
+                className={`${recruiterButton} w-full text-center`}
+              >
+                Recruiter Login
               </button>
             </div>
 

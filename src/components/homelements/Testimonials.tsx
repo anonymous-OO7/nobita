@@ -28,7 +28,7 @@ const Testimonials = () => {
               </div>
 
               {/* Full filters on tablet and up */}
-              <div className="hidden sm:flex flex-wrap justify-center gap-3">
+              {/* <div className="hidden sm:flex flex-wrap justify-center gap-3">
                 {[
                   "Engineer",
                   "Designer",
@@ -46,7 +46,7 @@ const Testimonials = () => {
                     {role}
                   </button>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             {/* Testimonials */}
