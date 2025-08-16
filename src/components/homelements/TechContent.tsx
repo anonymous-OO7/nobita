@@ -40,26 +40,17 @@ const TechContent = () => {
             {/* Tablet and up: Show all */}
             <div className="hidden sm:flex flex-wrap gap-3">
               {[
-                "Data",
-                "Network",
-                "Deep Learning",
-                "Web",
-                "Algorithm",
-                "Cybersecurity",
-                "AI/ML",
-                "Frontend",
-                "Backend",
-                "Cloud",
-                "DevOps",
-                "Mobile",
-                "Blockchain",
-                "Product",
-                "Design",
+                "Remote",
+                "MNC",
                 "Marketing",
+                "Supply Chain",
+                "Banking And Finance",
                 "Sales",
-                "Operations",
                 "HR",
-                "Finance",
+                "Fresher",
+                "Software And Technology",
+                "Data Science",
+                "Internship",
               ].map((field) => (
                 <button
                   key={field}
@@ -71,7 +62,7 @@ const TechContent = () => {
             </div>
           </div>
 
-          <div className=" text-lg text-black py-2">
+          {/* <div className=" text-lg text-black py-2">
             <span className="text-xl font-normal font-poppins">Want to</span>{" "}
             <span className="text-xl font-bold font-poppins">
               Earn by providing referals to people
@@ -83,7 +74,7 @@ const TechContent = () => {
               can provide, you can help others find great products, services, or
               programs while earning a commission for every successful referral.
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
