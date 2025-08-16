@@ -61,7 +61,7 @@ const Accordion: React.FC = () => {
   const faqItems = [
     {
       header: "What services do you offer?",
-      text: "We provide job listings, referrals, resume help, and career advice.",
+      text: "We provide everything you need to grow your career—job listings, trusted referrals, and resume support. Our app also offers career advice, interview tips, networking guidance, and instant job alerts, making it easier for you to discover opportunities and achieve your professional goals with confidence.",
     },
     {
       header: "How do I sign up?",
@@ -69,11 +69,11 @@ const Accordion: React.FC = () => {
     },
     {
       header: "Is there a cost?",
-      text: "Basic services are free. Premium features are paid.",
+      text: "Our basic services are available free of charge, allowing users to browse job listings, access referrals, and receive general career support without cost. However, certain advanced or premium features—such as enhanced resume assistance, personalized career coaching, or priority referrals—may require a paid subscription or one-time fee.",
     },
     {
       header: "How do referrals work?",
-      text: "We match you with professionals who can refer you directly to companies.",
+      text: "Referrals are facilitated by connecting you with experienced professionals within our network who are associated with the hiring companies. Once matched, these professionals may provide a direct referral to the employer on your behalf, thereby enhancing the visibility of your application and improving your chances of consideration.",
     },
     {
       header: "Can I become a referral partner?",
@@ -99,15 +99,15 @@ const Accordion: React.FC = () => {
     },
     {
       header: "How do I apply for a job?",
-      text: "Browse jobs, click on a listing, and follow application instructions.",
+      text: "To apply for a job, simply browse through the available listings, select the position that interests you, and follow the application instructions provided. Ensure that you review the job requirements carefully and submit all necessary documents to complete your application successfully.",
     },
     {
       header: "How long does it take to get a referral?",
-      text: "Referrals can take a few days to a couple of weeks depending on the job.",
+      text: "Referrals can take a few days to a couple of weeks depending on the job.The duration for obtaining a referral may vary depending on the employer, the nature of the position, and the availability of suitable referrers.",
     },
     {
       header: "What if I have technical issues?",
-      text: "Contact our support team via the Contact page for help.",
+      text: "Please contact our support team through the Contact page. Our representatives will review your issue promptly and provide the necessary assistance to ensure uninterrupted access and a smooth user experience.",
     },
   ];
 

@@ -53,17 +53,17 @@ const FrontContent: React.FC<HeroSectionProps> = ({ onOpenTrialModal }) => {
                 Get started
               </button>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              {/* <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button className="flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transform hover:scale-105  shadow-lg hover:shadow-xl px-8 py-4 rounded-lg font-semibold text-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200">
                   <Search className="w-5 h-5" />
                   Search Manually
-                </button>
+                </button> 
 
                 <button className="flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 shadow-lg hover:shadow-xl px-8 py-4 rounded-lg font-semibold text-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200">
                   <Search className="w-5 h-5" />
                   Search with AI
                 </button>
-              </div>
+              </div> */}
               <div className="flex  justify-start items-center px-4 my-6">
                 <AvatarGroup className="mr-2" isBordered max={3} total={10}>
                   <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
