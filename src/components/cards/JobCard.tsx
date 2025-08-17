@@ -2,19 +2,10 @@
 import { Job } from "@/types";
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Chip } from "@nextui-org/react";
-import {
-  CircleCheck,
-  CircleCheckBig,
-  CircleX,
-  Check,
-  ChartNoAxesCombined,
-  UsersRound,
-  Building2Icon,
-} from "lucide-react";
+import { Building2Icon } from "lucide-react";
 import { CiLocationOn } from "react-icons/ci";
 import Image from "next/image";
-import Button from "../Button";
+import { Bookmark } from "lucide-react"; // ✅ bookmark icon
 
 interface CardProps {
   job: Job;
@@ -34,11 +25,6 @@ const Card: React.FC<CardProps> = ({
   const postedDate = formatDistanceToNow(new Date(job.CreatedAt), {
     addSuffix: true,
   });
-
-  const isJobClosed = ["inactive", "hired", "closed"].includes(job.Status);
-  const isGrowing = parseInt(job.Company?.company_size || "0") < 500;
-  const showExternalApply =
-    job.BrandedJd === "true" && job.ApplyRedirectUrl?.trim();
 
   const parsedSkills: string[] = React.useMemo(() => {
     if (!job.Skills) return [];
@@ -80,140 +66,82 @@ const Card: React.FC<CardProps> = ({
   }, [job.Skills]);
 
   return (
-    <div className="p-4 sm:p-6 bg-white rounded-xl border shadow-sm space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div className="flex items-center gap-3">
-          {job.Company?.logo_url ? (
-            <Image
-              src={job.Company.logo_url}
-              width={48}
-              height={48}
-              alt="Company Logo"
-              className="rounded-md"
-            />
-          ) : (
-            <Building2Icon className="text-gray-500" size={30} />
-          )}
-          <div className="space-y-0.5">
-            <h3 className="text-base font-semibold text-gray-900">
-              {job.Position}
-            </h3>
-            <p className="text-sm text-gray-600">{job.Company?.name}</p>
+    <div
+      onClick={() => onViewDetails(job)} // ✅ whole card clickable
+      className="p-4 rounded-2xl border shadow-sm bg-white hover:shadow-md transition cursor-pointer"
+    >
+      {/* Job Title & Company */}
+      <div className="flex justify-between items-start">
+        <div>
+          <h3 className="text-base font-semibold text-gray-900">{job.Position}</h3>
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <span>{job.Company?.name}</span>
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          <Chip
-            startContent={<Check size={16} />}
-            size="sm"
-            color="primary"
-            variant="flat"
-          >
-            <span className="text-xs">
-              {job.Type.charAt(0).toUpperCase() + job.Type.slice(1)}
-            </span>
-          </Chip>
-          <Chip
-            startContent={
-              isJobClosed ? <CircleX size={16} /> : <CircleCheck size={16} />
-            }
-            size="sm"
-            color={isJobClosed ? "danger" : "success"}
-            variant="flat"
-          >
-            <span className="text-xs">
-              {isJobClosed
-                ? job.Status.charAt(0).toUpperCase() + job.Status.slice(1)
-                : "Actively Hiring"}
-            </span>
-          </Chip>
-          <Chip
-            startContent={<ChartNoAxesCombined size={16} />}
-            size="sm"
-            color={isGrowing ? "warning" : "success"}
-            variant="flat"
-          >
-            <span className="text-xs">
-              {isGrowing ? "Growing Fast" : "Well Established"}
-            </span>
-          </Chip>
-        </div>
+        {/* Logo */}
+        {job.Company?.logo_url ? (
+          <Image
+            src={job.Company.logo_url}
+            width={40}
+            height={40}
+            alt="Company Logo"
+            className="rounded-md"
+          />
+        ) : (
+          <Building2Icon className="text-gray-400" size={28} />
+        )}
       </div>
 
-      {/* Location, Company Size, Price */}
-      <div className="flex flex-wrap justify-between gap-3 text-sm text-gray-700">
+      {/* Info Row: Experience, Location, Work Mode */}
+      <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-700">
         <div className="flex items-center gap-1">
-          <CiLocationOn className="text-gray-700" />
-          <span>{job.Location?.split(",")[0].trim() || "N/A"}</span>
+          <span>⏳</span>
+          <span>
+            {job.MinExperience}-{job.MaxExperience} Yrs
+          </span>
         </div>
-        <div className="flex items-center gap-2">
-          {isApplied && (
-            <Chip
-              startContent={<CircleCheckBig size={14} />}
-              color="success"
-              size="sm"
-            >
-              <span className="text-xs">Applied</span>
-            </Chip>
-          )}
+        <div className="flex items-center gap-1">
+          <CiLocationOn className="text-gray-600" />
+          <span>{job.Location?.split(",")[0] || "N/A"}</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span>🏢</span>
+          <span>
+            {job.Remote ? "Remote" : job.Hybrid ? "Hybrid" : "On-site"}
+          </span>
         </div>
       </div>
 
-      <div className="text-xs text-gray-600">
-        <p>
-          {job.MinExperience} - {job.MaxExperience} yrs •{" "}
-          {job.MinPay === 0 && job.MaxPay === 0
-            ? "Not Specified"
-            : `₹${job.MinPay}L - ₹${job.MaxPay}L`}{" "}
-          • {job.Remote ? "Remote" : job.Hybrid ? "Hybrid" : "On-site"}
-        </p>
-      </div>
+      {/* Skill Section */}
       {parsedSkills.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-1">
+        <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-700">
           {parsedSkills.map((skill, i) => (
-            <Chip key={i} variant="bordered" color="secondary" size="sm">
-              <span className="text-xs">{skill}</span>
-            </Chip>
+            <span key={i} className="after:content-['·'] last:after:content-none">
+              {skill}
+            </span>
           ))}
         </div>
       )}
 
-      <div className="flex flex-wrap justify-between items-center gap-3">
-        <div className="text-xs text-gray-500 space-y-1">
-          <p className="text-gray-400">Posted {postedDate}</p>
-        </div>
-
-        <div className="flex gap-2 flex-wrap">
+      {/* Footer */}
+      <div className="flex justify-between items-center mt-3 text-xs text-gray-500">
+        <span>Posted {postedDate}</span>
+        <div className="flex gap-4 items-center">
           {onSave && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => onSave(job?.Uuid)}
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // ✅ prevent card click
+                onSave(job?.Uuid);
+              }}
+              className="flex items-center gap-1 text-gray-500 hover:text-blue-500"
             >
-              <span className="text-xs font-medium text-blue-500">Save</span>
-            </Button>
+              <Bookmark size={14} /> {/* ✅ bookmark icon */}
+              <span>Save</span>
+            </button>
           )}
-
-          <Button
-            className={`rounded-md ${"bg-buttonPrimary"} `}
-            variant="outline"
-            size="sm"
-            onClick={() => onViewDetails(job)}
-          >
-            <span className="text-xs text-white hover:text-black font-medium">
-              View Details
-            </span>
-          </Button>
         </div>
       </div>
-
-      {job.JobUrl && (
-        <p className="text-xs mt-1 text-blue-600 font-medium underline">
-          <a href={job.JobUrl} target="_blank" rel="noopener noreferrer">
-            View Job Posting
-          </a>
-        </p>
-      )}
     </div>
   );
 };
