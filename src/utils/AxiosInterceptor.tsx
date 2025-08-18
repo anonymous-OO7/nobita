@@ -14,11 +14,11 @@ interface Props {
 //dev
 const baseOnePieceURLS =
   getEnviromentVariable() === "staginga"
-    ? "https://0b0bcb2e8e73.ngrok-free.app"
+    ? "https://354beea3490d.ngrok-free.app"
     : // ? "http://192.168.68.113:8080/"
 
       // "https://aa3c-103-248-173-178.ngrok-free.app";
-      "https://0b0bcb2e8e73.ngrok-free.app";
+      "https://354beea3490d.ngrok-free.app";
 
 //prod
 // const baseOnePieceURLS =
