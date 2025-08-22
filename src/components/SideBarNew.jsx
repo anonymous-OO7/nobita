@@ -10,7 +10,7 @@ import { gradients } from "../../src/assets/colors";
 import useApi from "@/hooks/useApi";
 import { GetProfileApi } from "@/apis";
 import { Tooltip } from "@heroui/react";
-import { useRouter } from "next/navigation";
+import { useRouter,usePathname } from "next/navigation";
 
 const SidebarContext = createContext();
 
@@ -18,7 +18,8 @@ export default function Sidebar({ children, setExpandedMain, profileDetails }) {
   const [expanded, setExpanded] = useState(true);
   const { makeApiCall } = useApi();
   const router = useRouter();
-
+  const pathname = usePathname();
+  
   // const name = nextLocalStorage()?.getItem("name") ?? "name";
   const email = nextLocalStorage()?.getItem("email") ?? "";
   const name = nextLocalStorage()?.getItem("name") ?? "";
@@ -78,7 +79,7 @@ export default function Sidebar({ children, setExpandedMain, profileDetails }) {
           <SidebarContext.Provider value={{ expanded }}>
             <ul className="flex-1 px-3">{children}</ul>
           </SidebarContext.Provider>
-          {expanded && (
+          {expanded && (pathname==="/dashboard/referral-community") && (
             <>
               <div
                 className={`
