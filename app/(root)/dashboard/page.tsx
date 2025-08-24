@@ -15,7 +15,7 @@ import useToast from "@/hooks/useToast";
 import JobApplicationModal from "@/components/pages/home/JobApply";
 import { useDisclosure } from "@nextui-org/react";
 import PageLoader from "@/components/common/PageLoader";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "@/components/pages/home/Pagination";
 import JobInfoPage from "@/components/cards/JobInfoPage";
 
@@ -37,6 +37,8 @@ const Home: React.FC = () => {
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const searchParams = useSearchParams(); // for reading URL params
+
   const isDesktop = useIsDesktop();
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [loading, setLoading] = useState(false);
@@ -47,29 +49,107 @@ const Home: React.FC = () => {
   const [allAppliedJobs, setAllAppliedJobs] = useState<string[]>([]);
   const [remainingCredits, setRemainingCredits] = useState<number>(0);
   const [applyingJob, setApplyingJobInfo] = useState<Job>();
-
-  // Ref for scrolling job list container
   const jobListRef = useRef<HTMLDivElement>(null);
 
+  // State for filters (example - update as per your filter keys & defaults)
+  const [filters, setFilters] = useState<Record<string, any>>({
+    workMode: [] as number[],
+    department: [] as number[],
+    location: [] as number[],
+    salary: [] as number[],
+    companyType: [] as number[],
+    roleCategory: [] as number[],
+    education: [] as number[],
+    postedBy: [] as number[],
+    industry: [] as number[],
+    experienceMin: 0,
+    experienceMax: 30,
+    search: "",
+  });
+
+  // Sync filters & page from URL params on mount or URL change
+  useEffect(() => {
+    if (!searchParams) return;
+
+    // Utility to parse array params as numbers
+    const getNumbers = (key: string): number[] =>
+      searchParams
+        .getAll(key)
+        .map((v) => Number(v))
+        .filter((n) => !isNaN(n));
+
+    setFilters({
+      workMode: getNumbers("workMode"),
+      department: getNumbers("department"),
+      location: getNumbers("location"),
+      salary: getNumbers("salary"),
+      companyType: getNumbers("companyType"),
+      roleCategory: getNumbers("roleCategory"),
+      education: getNumbers("education"),
+      postedBy: getNumbers("postedBy"),
+      industry: getNumbers("industry"),
+      experienceMin: Number(searchParams.get("experienceMin")) || 0,
+      experienceMax: Number(searchParams.get("experienceMax")) || 30,
+      search: searchParams.get("search") || "",
+    });
+
+    const pageFromUrl = Number(searchParams.get("page"));
+    if (!isNaN(pageFromUrl) && pageFromUrl > 0) {
+      setCurrentPage(pageFromUrl);
+    } else {
+      setCurrentPage(1);
+    }
+  }, [searchParams]);
+
+  // Load user applied jobs and credits once
   useEffect(() => {
     makeApiCall(GetAllUserAppliedJobsList())
       .then((res) => setAllAppliedJobs(res?.data || []))
       .catch(console.error);
-  }, [makeApiCall]);
 
-  useEffect(() => {
     makeApiCall(GetAllUserCredits())
       .then((res) => setRemainingCredits(res?.credits_remaining || 0))
       .catch(console.error);
   }, [makeApiCall]);
 
+  // Trigger API call when filters or pagination change
   useEffect(() => {
     setLoading(true);
-    makeApiCall(GetAllJobsList(currentPage, postsPerPage, ""))
+
+    // Destructure needed filter keys and pass to API call
+    const {
+      workMode,
+      department,
+      location,
+      salary,
+      companyType,
+      roleCategory,
+      education,
+      postedBy,
+      industry,
+      experienceMin,
+      experienceMax,
+      search,
+    } = filters;
+
+    makeApiCall(
+      GetAllJobsList(currentPage, postsPerPage, search || "", {
+        workMode,
+        department,
+        location,
+        salary,
+        companyType,
+        roleCategory,
+        education,
+        postedBy,
+        industry,
+        experienceMin,
+        experienceMax,
+      })
+    )
       .then((res) => {
         setJobsInfo(res?.data || []);
         setTotalItems(res?.total_items || 0);
-        // Optionally set first job on initial fetch
         if ((res?.data || []).length > 0) {
           setSelectedJob(res!.data[0]);
         } else {
@@ -78,23 +158,57 @@ const Home: React.FC = () => {
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [makeApiCall, currentPage, postsPerPage]);
+  }, [makeApiCall, currentPage, postsPerPage, filters]);
 
-  // Scroll to top and auto-select first job on page or jobsInfo change
+  // Update URL query params when currentPage or filters change
   useEffect(() => {
-    if (jobListRef.current) {
-      jobListRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+    // Convert filters object to URLSearchParams
+    const searchParams = new URLSearchParams();
+
+    searchParams.set("page", currentPage.toString());
+    searchParams.set("limit", postsPerPage.toString());
+
+    // Add search param if exists
+    if (filters.search) {
+      searchParams.set("search", filters.search);
     }
 
-    if (jobsInfo.length > 0) {
-      setSelectedJob(jobsInfo[0]);
-    } else {
-      setSelectedJob(null);
-    }
-  }, [currentPage, jobsInfo]);
+    // Add filter params - multi value params added repeatedly
+    Object.entries(filters).forEach(([key, value]) => {
+      if (
+        value === null ||
+        value === undefined ||
+        key === "search" ||
+        key === "page" ||
+        key === "limit"
+      )
+        return;
+
+      if (Array.isArray(value)) {
+        value.forEach((v) => searchParams.append(key, String(v)));
+      } else {
+        searchParams.set(key, String(value));
+      }
+    });
+
+    // Avoid redundant updates by checking current URL (optional)
+
+    router.replace(`/dashboard?${searchParams.toString()}`, undefined);
+  }, [filters, currentPage, postsPerPage, router]);
+
+  // Handlers for updating filters; this depends on your UI implementation.
+  // You should have filter components update `filters` state here.
+
+  // Example: update single filter item
+  const updateFilter = (key: string, values: any) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: values,
+    }));
+    setCurrentPage(1); // reset to first page on filter change
+  };
+
+  // Other handlers: saveJob, onApplyJob, handleViewDetails remain unchanged
 
   const saveJob = useCallback(
     (uuid: string) => {
@@ -131,6 +245,8 @@ const Home: React.FC = () => {
     }
   };
 
+  // Your existing JSX rendering jobs, pagination, etc remains unchanged
+
   return (
     <div className="container mx-auto pb-5 px-4 sm:px-0">
       <JobApplicationModal
@@ -140,9 +256,9 @@ const Home: React.FC = () => {
       />
 
       {isDesktop ? (
-        <div className="flex gap-4 mt-[6vh] h-[calc(100vh-150px)] ">
+        <div className="flex  gap-4 mt-[6vh] h-[calc(100vh-150px)]">
           {/* Scrollable job list with ref */}
-          <div ref={jobListRef} className="w-2/5 overflow-y-auto pr-2  ">
+          <div ref={jobListRef} className="w-2/5 overflow-y-auto pr-2">
             <div className="space-y-4">
               {jobsInfo.map((job) => (
                 <JobCard
@@ -171,7 +287,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* Static job detail section */}
-          <div className="w-3/5 pl-4 overflow-y-auto ">
+          <div className="w-3/5 pl-4 overflow-y-auto">
             {selectedJob ? (
               <JobInfoPage
                 job={selectedJob}

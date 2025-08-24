@@ -436,3 +436,19 @@ export interface Applications {
   status: string;
   remark: string;
 }
+export interface FilterOption {
+  label: string;
+  value: number;
+}
+
+export interface OptionsMap {
+  workMode: FilterOption[];
+  department: FilterOption[];
+  location: FilterOption[];
+  salary: FilterOption[];
+  companyType: FilterOption[];
+  roleCategory: FilterOption[];
+  education: FilterOption[];
+  postedBy: FilterOption[];
+  industry: FilterOption[];
+}

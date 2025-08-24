@@ -1,42 +1,20 @@
 "use client";
 
-import React from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  Input,
-  DropdownItem,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
-  Avatar,
-} from "@nextui-org/react";
-import { Logo } from "../../../assets/Logo";
-import { Add } from "@/assets/Add";
+import React, { useState, useEffect, useCallback } from "react";
+import Logo2 from "../../../assets/workistheadline.svg";
 import Image from "next/image";
-import BellIcon from "../../../assets/bell.svg";
 import { useRouter, usePathname } from "next/navigation";
 import { nextLocalStorage } from "@/utils/nextLocalStorage";
-import { Search, Star } from "lucide-react";
-import Logo2 from "../../../assets/workistheadline.svg";
-import { ProfileDetailsType } from "@/types";
+import { Search } from "lucide-react";
+import JobSearchNumericCodeComponent from "@/components/common/FilterComponent";
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
+import { Avatar } from "@heroui/react";
 import Button from "@/components/Button";
+import { ProfileDetailsType } from "@/types";
 
 interface UserData {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
   college: string;
-  company: string;
-  phoneNo: string;
-  gender: string;
-  course: string;
-  createdAt: string;
+  // other fields omitted for brevity
 }
 
 interface DashHeaderProps {
@@ -49,193 +27,113 @@ export default function DashHeader({
   profileDetails,
 }: DashHeaderProps) {
   const router = useRouter();
-  const name = nextLocalStorage()?.getItem("name") ?? "";
   const pathname = usePathname();
+  const [data, setData] = useState<UserData | null>(null);
 
-  const handleLogout = React.useCallback(() => {
+  useEffect(() => {
+    const stored = nextLocalStorage()?.getItem("user_data");
+    if (stored) {
+      try {
+        setData(JSON.parse(stored));
+      } catch {}
+    }
+  }, []);
+
+  const name = nextLocalStorage()?.getItem("name") ?? "";
+
+  const handleLogout = useCallback(() => {
     localStorage.clear();
     router.replace("/");
   }, [router]);
 
-  const handleUpdateProfile = React.useCallback(() => {
-    router.replace("/dashboard/profile");
-  }, [router]);
+  const navigate = useCallback(
+    (path: string) => {
+      router.replace(path);
+    },
+    [router]
+  );
 
-  const navigateSavedJobs = React.useCallback(() => {
-    router.replace("/dashboard/saved");
-  }, [router]);
-
-  const navigateMyJobs = React.useCallback(() => {
-    router.replace("/dashboard/myjobs");
-  }, [router]);
-
-  const navigateToAskReferral = React.useCallback(() => {
-    router.push("/dashboard/referral-community/referral-ask");
-  }, [router]);
-
-  const navigateToPostJob = React.useCallback(() => {
-    router.push("/recruiter/submit");
-  }, [router]);
-
-  const [data, setData] = React.useState<UserData>();
-
-  const isRecruiter = React.useMemo(() => {
-    if (typeof window !== "undefined") {
-      return (
-        pathname.includes("/recruiter") &&
+  // Determine if recruiter path
+  const isRecruiter =
+    typeof window !== "undefined"
+      ? pathname.includes("/recruiter") &&
         localStorage.getItem("role") === "recruiter"
-      );
-    }
-    return false;
-  }, [pathname]);
-
-  React.useEffect(() => {
-    const storedData = nextLocalStorage()?.getItem("user_data");
-    if (storedData) {
-      try {
-        const parsedData = JSON.parse(storedData);
-        setData(parsedData);
-      } catch (error) {
-        console.log("USER DATA NOT PARSED");
-      }
-    }
-  }, []);
+      : false;
 
   return (
-    <Navbar
-      isBordered
-      className="p-0 h-[7vh] flex flex-row justify-between overflow-hidden"
-    >
-      <NavbarContent justify="start">
-        <NavbarBrand>
-          <Image src={Logo2} alt="logo" width={120} />
-          <p className="text-black font-normal font-poppins sm:block">
-            {data?.college !== "" ? data?.college : "---"}
-          </p>
-        </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-2">
-          <Input
-            classNames={{
-              base: "max-w-full sm:max-w-[32rem] h-8 rounded-2xl",
-              input: "text-small border-0",
-              inputWrapper: "font-normal font-rubik text-default-500",
-            }}
-            placeholder="Search ..."
-            size="sm"
-            startContent={<Search />}
+    <div className="w-full h-[7vh] border-b border-gray-200 flex items-center justify-between px-4 bg-white">
+      {/* Left Section: Logo + College */}
+      <div className="flex items-center gap-4">
+        <Image src={Logo2} alt="Logo" width={120} height={32} />
+      </div>
+
+      {/* Center Section: Search + Filters */}
+      <div className="flex-1 px-4 flex items-center gap-4">
+        <div className="hidden sm:flex items-center w-2/4 max-w-lg bg-gray-100 rounded-md px-3 py-2">
+          <Search className="text-gray-500" size={18} />
+          <input
             type="search"
+            placeholder="Search..."
+            className="flex-1 bg-transparent outline-none text-sm px-2 text-gray-700"
           />
-        </NavbarContent>
-      </NavbarContent>
-
-      <NavbarContent
-        as="div"
-        className="flex flex-row justify-center items-center"
-        justify="end"
-      >
-        {pathname.includes("/dashboard/referral-community") && (
-          <div className="hidden sm:flex gap-2">
-            <button
-              onClick={() => (window.location.href = "/dashboard/submit")}
-              className="hover:bg-stone-300 bg-buttonPrimary py-1 px-2 shadow-md text-white text-xs rounded-md font-poppins font-normal flex items-center gap-2"
-            >
-              Add referral
-              <Add />
-            </button>
-            <Button
-              className="flex flex-row justify-center items-center"
-              onClick={navigateToAskReferral}
-              color="default"
-            >
-              Ask referral
-            </Button>
-          </div>
-        )}
-
-        {/* ✅ Show Post Job for recruiters */}
-        {isRecruiter && (
-          <Button
-            className="bg-green-600 hover:bg-green-700 text-white text-xs px-3 py-2 rounded-md font-poppins font-normal"
-            onClick={navigateToPostJob}
-          >
-            Post Job
-          </Button>
-        )}
-
-        <div>
-          <button
-            onClick={() => (window.location.href = "/pricing")}
-            className="hover:bg-stone-300 bg-buttonPrimary p-2 py-2 shadow-md text-white text-xs rounded-md font-poppins font-normal flex items-center gap-2"
-          >
-            <span className="whitespace-nowrap">
-              Credits {profileDetails?.applies}
-            </span>
-            <Star size={18} />
-          </button>
         </div>
+        {/* Filter component always visible */}
+        <JobSearchNumericCodeComponent onSearch={(url) => router.push(url)} />
+      </div>
 
-        <Button
-          color="warning"
-          variant="solid"
-          aria-label="Take a photo"
-          className="h-8"
-        >
-          <Image height={18} src={BellIcon} alt="Notifications" />
-        </Button>
-
+      {/* Right Section: Avatar & Popover */}
+      <div className="flex items-center gap-4 relative">
         <Popover placement="bottom-end" showArrow>
           <PopoverTrigger>
             <Avatar
-              isBordered
               as="button"
-              className="transition-transform"
-              color="secondary"
-              name="User Avatar"
+              isBordered
               size="sm"
+              color="secondary"
               src="https://cdn1.vectorstock.com/i/1000x1000/77/10/men-faceless-profile-vector-13567710.jpg"
+              className="cursor-pointer"
             />
           </PopoverTrigger>
-          <PopoverContent className="p-2 w-[60vw] sm:w-[40vw] md:w-[30vw] lg:w-[20vw] max-w-xs">
+          <PopoverContent className="w-56 p-2 bg-white shadow-md rounded-lg">
             <div className="space-y-1">
-              <div className="px-3 py-2 text-left text-sm">
-                <p className="text-black font-poppins">Signed in as</p>
-                <p className="text-black font-poppins">{name || "---"}</p>
+              <div className="px-3 py-2 border-b border-gray-100">
+                <p className="text-gray-600 text-xs">Signed in as</p>
+                <p className="text-gray-800 font-medium">{name || "---"}</p>
               </div>
-              <hr />
               <button
-                onClick={navigateSavedJobs}
-                className="w-full text-left px-3 py-2 hover:bg-stone-100 rounded-md text-sm text-black font-poppins"
+                onClick={() => navigate("/dashboard/saved")}
+                className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm text-gray-700"
               >
                 Saved
               </button>
               <button
-                onClick={navigateMyJobs}
-                className="w-full text-left px-3 py-2 hover:bg-stone-100 rounded-md text-sm text-black font-poppins"
+                onClick={() => navigate("/dashboard/myjobs")}
+                className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm text-gray-700"
               >
                 My Jobs
               </button>
               <button
-                onClick={handleUpdateProfile}
-                className="w-full text-left px-3 py-2 hover:bg-stone-100 rounded-md text-sm text-black font-poppins"
+                onClick={() => navigate("/dashboard/profile")}
+                className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm text-gray-700"
               >
                 Update Profile
               </button>
               <button
                 onClick={() => alert("Coming soon!")}
-                className="w-full text-left px-3 py-2 hover:bg-stone-100 rounded-md text-sm text-black font-poppins"
+                className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm text-gray-700"
               >
                 Help & Feedback
               </button>
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-3 py-2 hover:bg-red-100 rounded-md text-sm text-red-600 font-poppins"
+                className="w-full text-left px-3 py-2 hover:bg-red-50 text-sm text-red-600"
               >
                 Log Out
               </button>
             </div>
           </PopoverContent>
         </Popover>
-      </NavbarContent>
-    </Navbar>
+      </div>
+    </div>
   );
 }

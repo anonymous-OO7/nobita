@@ -180,14 +180,37 @@ export const CreateJobApi = (
 };
 
 //get api for utility claims
-export const GetAllJobsList = (page: number, limit: number, search: string) => {
-  return onePiece.get(`/all-jobs`, {
+export const GetAllJobsList = (
+  page: number,
+  limit: number,
+  search: string,
+  filters: Record<string, any> // e.g. { workMode: [1, 2], department: [3], experienceMin: 5, experienceMax: 20 }
+) => {
+  // Build query params string
+  const searchParams = new URLSearchParams();
+
+  // Pagination & search
+  if (page !== undefined) searchParams.append("page", String(page));
+  if (limit !== undefined) searchParams.append("limit", String(limit));
+  if (search) searchParams.append("search", search);
+
+  // Add filters (arrays: multi-select, single values)
+  Object.entries(filters).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((item) => searchParams.append(key, String(item)));
+    } else if (value !== undefined && value !== null) {
+      searchParams.append(key, String(value));
+    }
+  });
+
+  // Compose URL
+  const url = `/all-jobs?${searchParams.toString()}`;
+
+  // Axios GET (header for auth only)
+  return onePiece.get(url, {
     headers: {
       "ngrok-skip-browser-warning": "69420",
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      page: page,
-      limit: limit,
-      search: search,
     },
   });
 };
