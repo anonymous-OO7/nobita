@@ -15,15 +15,48 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
-  // Always show all pages (for this style)
-  const pages: number[] = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(i);
-  }
-
   const goToPage = (page: number) => {
     if (page < 1 || page > totalPages) return;
     setCurrentPage(page);
+  };
+
+  const getPageNumbers = () => {
+    const windowSize = 4;
+    let start = 1;
+    let end = windowSize;
+
+    // Center current page when possible
+    if (currentPage > Math.floor(windowSize / 2)) {
+      start = currentPage - Math.floor(windowSize / 2);
+      end = start + windowSize - 1;
+    }
+
+    // Adjust for overflow
+    if (end > totalPages) {
+      end = totalPages;
+      start = Math.max(1, end - windowSize + 1);
+    }
+
+    const pages: (number | string)[] = [];
+
+    // Always show first page, ellipsis if skipped
+    if (start > 1) {
+      pages.push(1);
+      if (start > 2) {
+        pages.push("...");
+      }
+    }
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    // Right ellipsis if more pages
+    if (end < totalPages) {
+      pages.push("...");
+    }
+
+    return pages;
   };
 
   return (
@@ -34,34 +67,43 @@ const Pagination: React.FC<PaginationProps> = ({
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
           aria-label="Previous"
-          className="px-2 py-2 text-xs rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 transition-all disabled:text-gray-300 disabled:bg-white disabled:border-gray-200 flex items-center"
+          className="px-4 py-2 text-xs font-poppins rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 transition-all disabled:text-gray-300 disabled:bg-white disabled:border-gray-200 flex items-center"
         >
           <span className="mr-1">&lt;</span> Previous
         </button>
 
         {/* Page numbers */}
-        {pages.map((page) => (
-          <button
-            key={page}
-            onClick={() => goToPage(page)}
-            aria-current={page === currentPage ? "page" : undefined}
-            className={`w-5 h-5 px-2 text-xs rounded-full flex items-center justify-center font-medium transition-all
-    ${
-      page === currentPage
-        ? "bg-gray-900 text-white"
-        : "bg-transparent text-gray-900 hover:bg-gray-100"
-    }`}
-          >
-            {page}
-          </button>
-        ))}
+        {getPageNumbers().map((page, idx) =>
+          page === "..." ? (
+            <span
+              key={`ellipsis-${idx}`}
+              className="px-1 text-base text-gray-500 select-none"
+            >
+              ...
+            </span>
+          ) : (
+            <button
+              key={page}
+              onClick={() => goToPage(page as number)}
+              aria-current={page === currentPage ? "page" : undefined}
+              className={`w-4 h-4 p-3 text-xs font-poppins rounded-full flex items-center justify-center font-medium transition-all
+                ${
+                  page === currentPage
+                    ? "bg-gray-900 text-white"
+                    : "bg-transparent text-gray-900 hover:bg-gray-100"
+                }`}
+            >
+              {page}
+            </button>
+          )
+        )}
 
         {/* Next */}
         <button
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
           aria-label="Next"
-          className="px-2 py-2 text-xs rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 transition-all disabled:text-gray-300 disabled:bg-white disabled:border-gray-200 flex items-center"
+          className="px-4 py-2  text-xs font-poppins rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 transition-all disabled:text-gray-300 disabled:bg-white disabled:border-gray-200 flex items-center"
         >
           Next <span className="ml-1">&gt;</span>
         </button>
