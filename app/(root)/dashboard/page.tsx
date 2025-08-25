@@ -231,6 +231,7 @@ const Home: React.FC = () => {
       } else if (allAppliedJobs.includes(job.Uuid)) {
         showToast("Already applied!", { type: "info" });
       } else {
+        console.log(job, "Applying job");
         setApplyingJobInfo(job);
         onOpen();
       }
@@ -240,6 +241,8 @@ const Home: React.FC = () => {
 
   const handleViewDetails = (job: Job) => {
     setSelectedJob(job);
+    console.log(job, "Selected job");
+    setApplyingJobInfo(job);
     if (!isDesktop) {
       onOpen();
     }
