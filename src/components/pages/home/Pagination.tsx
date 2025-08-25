@@ -14,16 +14,10 @@ const Pagination: React.FC<PaginationProps> = ({
   currentPage,
 }) => {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
-  const blockSize = 5; // show 5 pages per block
 
-  // Determine current block start and end
-  const currentBlock = Math.floor((currentPage - 1) / blockSize);
-  const blockStart = currentBlock * blockSize + 1;
-  const blockEnd = Math.min(blockStart + blockSize - 1, totalPages);
-
-  // Generate page numbers for the block
+  // Always show all pages (for this style)
   const pages: number[] = [];
-  for (let i = blockStart; i <= blockEnd; i++) {
+  for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
 
@@ -33,45 +27,45 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="flex justify-center items-center gap-1 mt-4">
-      {/* Previous */}
-      <button
-        onClick={() => goToPage(currentPage - 1)}
-        disabled={currentPage === 1}
-        aria-label="Previous"
-        className="w-8 h-8 rounded-lg border border-gray-200 bg-gray-50 text-gray-400 hover:bg-yellow-100 hover:text-yellow-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center"
-      >
-        &lt;
-      </button>
-
-      {/* Page numbers */}
-      {pages.map((page) => (
+    <div className="w-[70%] mx-auto">
+      <div className="flex justify-center items-center gap-3 mt-4">
+        {/* Previous */}
         <button
-          key={page}
-          onClick={() => goToPage(page)}
-          aria-current={page === currentPage ? "page" : undefined}
-          className={`w-8 h-8 text-sm rounded-lg border
-            ${
-              page === currentPage
-                ? "bg-yellow-200 text-yellow-700 font-bold shadow border-yellow-300"
-                : "bg-gray-50 text-gray-500 border-gray-200 hover:bg-yellow-50 hover:text-yellow-700"
-            }
-            transition-all flex items-center justify-center
-          `}
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          aria-label="Previous"
+          className="px-2 py-2 text-xs rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 transition-all disabled:text-gray-300 disabled:bg-white disabled:border-gray-200 flex items-center"
         >
-          {page}
+          <span className="mr-1">&lt;</span> Previous
         </button>
-      ))}
 
-      {/* Next */}
-      <button
-        onClick={() => goToPage(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        aria-label="Next"
-        className="w-8 h-8 rounded-lg border border-gray-200 bg-gray-50 text-gray-400 hover:bg-yellow-100 hover:text-yellow-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center"
-      >
-        &gt;
-      </button>
+        {/* Page numbers */}
+        {pages.map((page) => (
+          <button
+            key={page}
+            onClick={() => goToPage(page)}
+            aria-current={page === currentPage ? "page" : undefined}
+            className={`w-5 h-5 px-2 text-xs rounded-full flex items-center justify-center font-medium transition-all
+    ${
+      page === currentPage
+        ? "bg-gray-900 text-white"
+        : "bg-transparent text-gray-900 hover:bg-gray-100"
+    }`}
+          >
+            {page}
+          </button>
+        ))}
+
+        {/* Next */}
+        <button
+          onClick={() => goToPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          aria-label="Next"
+          className="px-2 py-2 text-xs rounded-full border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 transition-all disabled:text-gray-300 disabled:bg-white disabled:border-gray-200 flex items-center"
+        >
+          Next <span className="ml-1">&gt;</span>
+        </button>
+      </div>
     </div>
   );
 };
