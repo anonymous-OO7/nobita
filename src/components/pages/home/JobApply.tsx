@@ -195,9 +195,10 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({
                         {parsedSkills.map((skill, idx) => (
                           <Chip
                             key={idx}
-                            color="primary"
+                            color="secondary"
                             variant="bordered"
                             size="sm"
+                            className="font-poppins"
                           >
                             {skill}
                           </Chip>
@@ -421,14 +422,6 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({
 
             {/* Sticky Buttons */}
             <div className="sticky bottom-0 left-0 w-full z-50 shadow-xl border-t px-4 py-3 flex gap-3 justify-end items-center whitespace-nowrap bg-white">
-              <Button
-                className="text-xs font-poppins shadow-md"
-                color="default"
-                onPress={navigateToFullDetails}
-              >
-                Full Details
-              </Button>
-
               {isRedirect ? (
                 <a
                   href={ApplyRedirectUrl}
@@ -448,6 +441,13 @@ const JobApplicationModal: React.FC<JobApplicationModalProps> = ({
                   {loading ? "Applying..." : "Apply"}
                 </Button>
               )}
+
+              <Button
+                className="text-xs bg-blue-600 text-white font-poppins shadow-md rounded-sm px-4 py-2"
+                onPress={navigateToFullDetails}
+              >
+                Full Details
+              </Button>
 
               <Button
                 className="text-xs font-poppins shadow-md"

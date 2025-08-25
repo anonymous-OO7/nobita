@@ -259,10 +259,19 @@ const Home: React.FC = () => {
       />
 
       {isDesktop ? (
-        <div className="flex  gap-4 mt-[6vh] h-[calc(100vh-150px)]">
+        <div className="flex  gap-4 mt-[6vh] h-[calc(100vh-150px)] bg-light">
           {/* Scrollable job list with ref */}
-          <div ref={jobListRef} className="w-2/5 overflow-y-auto pr-2">
+
+          <div ref={jobListRef} className="w-2/5 overflow-y-auto pr-2 ">
             <div className="space-y-4">
+              <p className="text-sm font-poppins text-gray-600 mb-1">
+                {`Total Recommended Jobs: ${totalItems}`}
+              </p>
+              <p className="text-sm font-poppins text-gray-600 mb-3">
+                {totalItems === 0 ? 0 : (currentPage - 1) * postsPerPage + 1} -{" "}
+                {Math.min(currentPage * postsPerPage, totalItems)} of{" "}
+                {totalItems}
+              </p>
               {jobsInfo.map((job) => (
                 <JobCard
                   key={job.Uuid}
@@ -312,7 +321,20 @@ const Home: React.FC = () => {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-4 mt-4">
+                <div className="flex flex-row justify-between">
+                  <p className="text-xs font-poppins text-gray-600 mb-1">
+                    {`Recommended Jobs: ${totalItems}`}
+                  </p>
+                  <p className="text-xs font-poppins text-gray-600 mb-1">
+                    {totalItems === 0
+                      ? 0
+                      : (currentPage - 1) * postsPerPage + 1}{" "}
+                    - {Math.min(currentPage * postsPerPage, totalItems)} of{" "}
+                    {totalItems}
+                  </p>
+                </div>
+
                 {jobsInfo.map((job) => (
                   <JobCard
                     key={job.Uuid}

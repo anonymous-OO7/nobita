@@ -20,7 +20,7 @@ const UserCount = () => {
               <div className="flex flex-col space-y-2 px-4 text-center">
                 <div className="text-sm font-medium font-poppins">Visitors</div>
                 <div className="text-5xl font-bold font-poppins text-[#0071e3]">
-                  {inView && <CountUp end={1000} duration={2} suffix="+" />}
+                  {inView && <CountUp end={100} duration={2} suffix="+" />}
                 </div>
                 <div className="text-sm font-medium font-poppins">
                   Workist has over 100+ daily visitors.
@@ -52,7 +52,7 @@ const UserCount = () => {
                   Engagement
                 </div>
                 <div className="text-5xl font-bold font-poppins text-[#0071e3]">
-                  {inView && <CountUp end={10000} duration={3} separator="," />}
+                  {inView && <CountUp end={1000} duration={3} separator="," />}
                 </div>
                 <div className="text-sm font-medium font-poppins">
                   Workist gained 100+ users last month.

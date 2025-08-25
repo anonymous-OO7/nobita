@@ -73,7 +73,9 @@ const Card: React.FC<CardProps> = ({
       {/* Job Title & Company */}
       <div className="flex justify-between items-start">
         <div>
-          <h3 className="text-base font-semibold text-gray-900">{job.Position}</h3>
+          <h3 className="text-base font-semibold text-gray-900">
+            {job.Position}
+          </h3>
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <span>{job.Company?.name}</span>
           </div>
@@ -117,7 +119,10 @@ const Card: React.FC<CardProps> = ({
       {parsedSkills.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-700">
           {parsedSkills.map((skill, i) => (
-            <span key={i} className="after:content-['·'] last:after:content-none">
+            <span
+              key={i}
+              className="after:content-['·'] last:after:content-none"
+            >
               {skill}
             </span>
           ))}
