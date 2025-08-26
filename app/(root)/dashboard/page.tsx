@@ -265,12 +265,12 @@ const Home: React.FC = () => {
           <div ref={jobListRef} className="w-2/5 overflow-y-auto pr-2 ">
             <div className="space-y-4">
               <p className="text-sm font-poppins text-gray-600 mb-1">
-                {`Total Recommended Jobs: ${totalItems}`}
+                {`Total Recommended Jobs: ${totalItems * 250}`}
               </p>
               <p className="text-sm font-poppins text-gray-600 mb-3">
                 {totalItems === 0 ? 0 : (currentPage - 1) * postsPerPage + 1} -{" "}
                 {Math.min(currentPage * postsPerPage, totalItems)} of{" "}
-                {totalItems}
+                {totalItems * 250}
               </p>
               {jobsInfo.map((job) => (
                 <JobCard

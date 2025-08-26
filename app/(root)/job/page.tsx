@@ -127,10 +127,7 @@ export default function JobDetail() {
         <meta charSet="UTF-8" />
       </Head>
       <main className="bg-gray-100 pt-10 min-h-screen font-poppins">
-        {/* ✅ Only show Navbar if NOT logged in */}
-        {!isLoggedIn && (
-          <Navbar onOpenTrialModal={() => setIsTrialModalOpen(true)} />
-        )}
+        <Navbar onOpenTrialModal={() => setIsTrialModalOpen(true)} />
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 my-20">
           {/* Sidebar */}

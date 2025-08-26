@@ -9,7 +9,6 @@ import { Search } from "lucide-react";
 import JobSearchNumericCodeComponent from "@/components/common/FilterComponent";
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 import { Avatar } from "@heroui/react";
-import Button from "@/components/Button";
 import { ProfileDetailsType } from "@/types";
 
 interface UserData {
@@ -29,6 +28,7 @@ export default function DashHeader({
   const router = useRouter();
   const pathname = usePathname();
   const [data, setData] = useState<UserData | null>(null);
+  const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = nextLocalStorage()?.getItem("user_data");
@@ -36,6 +36,11 @@ export default function DashHeader({
       try {
         setData(JSON.parse(stored));
       } catch {}
+    }
+    // ✅ Get role from localStorage
+    if (typeof window !== "undefined") {
+      const storedRole = localStorage.getItem("role");
+      if (storedRole) setRole(storedRole);
     }
   }, []);
 
@@ -56,8 +61,7 @@ export default function DashHeader({
   // Determine if recruiter path
   const isRecruiter =
     typeof window !== "undefined"
-      ? pathname.includes("/recruiter") &&
-        localStorage.getItem("role") === "recruiter"
+      ? pathname.includes("/recruiter") && role === "recruiter"
       : false;
 
   return (
@@ -77,8 +81,11 @@ export default function DashHeader({
             className="flex-1 bg-transparent outline-none text-sm px-2 text-gray-700"
           />
         </div>
-        {/* Filter component always visible */}
-        <JobSearchNumericCodeComponent onSearch={(url) => router.push(url)} />
+
+        {/* ✅ Only show when role === "normal" */}
+        {role === "normal" && (
+          <JobSearchNumericCodeComponent onSearch={(url) => router.push(url)} />
+        )}
       </div>
 
       {/* Right Section: Avatar & Popover */}

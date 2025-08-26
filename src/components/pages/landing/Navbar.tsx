@@ -15,6 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
   const [isQuickLinksOpen, setIsQuickLinksOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navButtonClass =
     "text-[#000] hover:text-[#0071e3] font-medium text-base";
@@ -35,6 +36,16 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
   ];
 
   useEffect(() => {
+    // ✅ Check if user is logged in
+    if (
+      typeof window !== "undefined" &&
+      localStorage.getItem("authToken") &&
+      localStorage.getItem("uuid") &&
+      localStorage.getItem("email")
+    ) {
+      setIsLoggedIn(true);
+    }
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
@@ -95,27 +106,39 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
             <nav className="hidden lg:flex items-center space-x-6">
-              <button
+              {/* <button
                 onClick={() => router.push("/")}
                 className={navButtonClass}
               >
                 Home
-              </button>
+              </button> */}
 
-              {/* Login Buttons */}
+              {/* Auth / Dashboard Buttons */}
               <div className="flex items-center space-x-2 border-l border-gray-200 pl-4 ml-2">
-                <button
-                  onClick={() => router.push("/login")}
-                  className={jobSeekerButton}
-                >
-                  Job Seeker Login
-                </button>
-                <button
-                  onClick={() => router.push("/login?is_recruiter=true")}
-                  className={recruiterButton}
-                >
-                  Recruiter Login
-                </button>
+                {isLoggedIn ? (
+                  <button
+                    onClick={() => router.push("/dashboard")}
+                    className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
+                  >
+                    Go to Dashboard
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => router.push("/login")}
+                      className={jobSeekerButton}
+                    >
+                      Job Seeker Login
+                    </button>
+                    <button
+                      onClick={() => router.push("/login?is_recruiter=true")}
+                      className={recruiterButton}
+                    >
+                      Recruiter Login
+                    </button>
+                  </>
+                )}
+
                 <button
                   onClick={() =>
                     window.open(
@@ -192,10 +215,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
         >
           <div className="py-4 space-y-2 bg-white/95 backdrop-blur-md rounded-b-2xl border-t border-gray-100">
             <div className="lg:hidden px-4 pb-4 space-y-2 bg-white border-t">
-              {[
-                // { text: "Home", link: "/" },
-                { text: "Pricing", link: "/pricing" },
-              ].map((item) => (
+              {[{ text: "Pricing", link: "/pricing" }].map((item) => (
                 <button
                   key={item.text}
                   onClick={() => {
@@ -245,24 +265,38 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                 Become a Referrer
               </button>
 
-              <button
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  router.push("/login");
-                }}
-                className={`${jobSeekerButton} w-full text-center`}
-              >
-                Job Seeker Login
-              </button>
-              <button
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  router.push("/login?is_recruiter=true");
-                }}
-                className={`${recruiterButton} w-full text-center`}
-              >
-                Recruiter Login
-              </button>
+              {isLoggedIn ? (
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push("/dashboard");
+                  }}
+                  className="w-full bg-[#0071e3] text-white text-center py-1.5 rounded-md hover:bg-[#005bb5] transition"
+                >
+                  Go to Dashboard
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      router.push("/login");
+                    }}
+                    className={`${jobSeekerButton} w-full text-center`}
+                  >
+                    Job Seeker Login
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      router.push("/login?is_recruiter=true");
+                    }}
+                    className={`${recruiterButton} w-full text-center`}
+                  >
+                    Recruiter Login
+                  </button>
+                </>
+              )}
             </div>
 
             <div className="px-4 pt-2">
