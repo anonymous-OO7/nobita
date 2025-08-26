@@ -268,7 +268,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
       </div>
 
       {/* Apply Button */}
-      <div>
+      {/* <div>
         {isBranded && hasApplyRedirect ? (
           <a
             href={ApplyRedirectUrl}
@@ -294,7 +294,7 @@ const JobInfoPage: React.FC<JobInfoPageProps> = ({
         ) : (
           <p className="text-gray-500 text-sm">No application link provided.</p>
         )}
-      </div>
+      </div> */}
 
       {/* Company Info */}
       <div>

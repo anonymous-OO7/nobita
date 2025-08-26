@@ -105,14 +105,6 @@ export default function JobDetail() {
             <h2 className="text-lg font-semibold text-black">Job Overview</h2>
             <div className="text-gray-700 text-sm space-y-2">
               <p>
-                <strong>Salary:</strong>{" "}
-                {MinPay === 0 && MaxPay === 0
-                  ? "Not Disclosed"
-                  : `${
-                      Currency === "INR" ? "₹" : Currency
-                    }${MinPay} - ${MaxPay}`}
-              </p>
-              <p>
                 <strong>Location:</strong>{" "}
                 {parsedLocations.length > 0
                   ? parsedLocations.join(", ")
@@ -126,11 +118,16 @@ export default function JobDetail() {
                 <strong>Education:</strong> Graduation
               </p>
               <p>
-                <strong>Posted:</strong>{" "}
-                {CreatedAt ? format(new Date(CreatedAt), "dd MMM yyyy") : "N/A"}
+                <strong>Salary:</strong>{" "}
+                {MinPay === 0 && MaxPay === 0
+                  ? "Not Disclosed"
+                  : `${
+                      Currency === "INR" ? "₹" : Currency
+                    }${MinPay} - ${MaxPay}`}
               </p>
               <p>
-                <strong>Job Level:</strong> Entry Level
+                <strong>Posted:</strong>{" "}
+                {CreatedAt ? format(new Date(CreatedAt), "dd MMM yyyy") : "N/A"}
               </p>
             </div>
           </div>
@@ -274,28 +271,6 @@ export default function JobDetail() {
                     rel="noopener noreferrer"
                   >
                     {Company.website_url}
-                  </a>
-                </p>
-              )}
-              {Company.contact_email && (
-                <p className="inline-flex items-center gap-2">
-                  <Mail size={16} />
-                  <a
-                    href={`mailto:${Company.contact_email}`}
-                    className="hover:underline"
-                  >
-                    {Company.contact_email}
-                  </a>
-                </p>
-              )}
-              {Company.contact_phone && (
-                <p className="inline-flex items-center gap-2">
-                  <Phone size={16} />
-                  <a
-                    href={`tel:${Company.contact_phone}`}
-                    className="hover:underline"
-                  >
-                    {Company.contact_phone}
                   </a>
                 </p>
               )}

@@ -62,7 +62,7 @@ export default function SubmitJob() {
     companyName: "",
     position: "",
     location: "",
-    jobType: "fulltime",
+    jobType: "Full Time, Permanent",
     description: "",
     field: "",
     owner: "",
@@ -148,11 +148,11 @@ export default function SubmitJob() {
     { value: "others", label: "Others" },
   ];
   const dropdownData: SelectType[] = [
-    { label: "Full Time", value: "fulltime" },
-    { label: "Part Time", value: "part_time" },
-    { label: "Internship", value: "internship" },
-    { label: "Free Lancing", value: "freelancing" },
-    { label: "Contract", value: "contract" },
+    { label: "Full Time", value: "Full Time, Permanent" },
+    { label: "Part Time", value: "Part Time" },
+    { label: "Internship", value: "Internship" },
+    { label: "Free Lancing", value: "Free Lancing" },
+    { label: "Contract", value: "Contract" },
   ];
 
   const handleSubmit = React.useCallback(
@@ -346,7 +346,6 @@ export default function SubmitJob() {
               </Row>
               <Spacer size="xs" />
               <Input label="Apply Redirect URL" name="applyRedirectUrl" />
-              <Input label="Branded JD (true/false)" name="brandedJd" />
               <Spacer size="xs" />
               <div className="flex items-center gap-4">
                 <label className="flex items-center gap-2 text-black">
