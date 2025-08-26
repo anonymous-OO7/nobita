@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "build:staging": "env-cmd -f .env.staging next build",
@@ -29,6 +30,7 @@
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.416.0",
     "next": "14.2.5",
+    "next-sitemap": "^4.2.3",
     "radix-ui": "^1.0.1",
     "react": "^18",
     "react-countup": "^6.5.3",
