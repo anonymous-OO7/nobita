@@ -96,29 +96,10 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
           <div className="hidden lg:flex items-center space-x-8">
             <nav className="hidden lg:flex items-center space-x-6">
               <button
-                onClick={() =>
-                  window.open(
-                    "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
-                    "_blank"
-                  )
-                }
-                className="border border-[#0071e3] text-[#0071e3] px-4 py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
-              >
-                Become a Referrer
-              </button>
-
-              {/* <button
                 onClick={() => router.push("/")}
                 className={navButtonClass}
               >
                 Home
-              </button> */}
-
-              <button
-                onClick={() => router.push("/pricing")}
-                className={navButtonClass}
-              >
-                Pricing
               </button>
 
               {/* Login Buttons */}
@@ -134,6 +115,24 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                   className={recruiterButton}
                 >
                   Recruiter Login
+                </button>
+                <button
+                  onClick={() =>
+                    window.open(
+                      "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
+                      "_blank"
+                    )
+                  }
+                  className="border border-[#0071e3] text-[#0071e3] px-4 py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
+                >
+                  Become a Referrer
+                </button>
+
+                <button
+                  onClick={() => router.push("/pricing")}
+                  className={navButtonClass}
+                >
+                  Pricing
                 </button>
 
                 {/* Quick Links Dropdown */}
@@ -246,7 +245,6 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                 Become a Referrer
               </button>
 
-              
               <button
                 onClick={() => {
                   setIsMenuOpen(false);
