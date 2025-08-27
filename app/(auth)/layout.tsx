@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENTID} />
+        <AdSense pId={"ca-pub-2888315269414105"} />
       </head>
       <ToastContainer />
       <body className={`${poppins.variable}`}>
