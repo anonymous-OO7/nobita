@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { format } from "date-fns";
-import { Globe, Mail, Phone, Building2 } from "lucide-react";
+import { Globe, Building2 } from "lucide-react";
 import { Chip, Button } from "@nextui-org/react";
 import { GetJobInfo } from "@/apis";
 import useApi from "@/hooks/useApi";
@@ -13,7 +13,9 @@ import { Job } from "@/types";
 import Navbar from "@/components/pages/landing/Navbar";
 import Footer from "@/components/Footer";
 import Head from "next/head";
-
+import AdBanner from "@/components/advertisement/AdBanner";
+import { Adsense } from "@ctrl/react-adsense";
+// ✅ Authentication hook
 const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -194,6 +196,25 @@ export default function JobDetail() {
                   </p>
                 </div>
               )}
+            </div>
+
+            {/* ✅ Google Ad Below Sidebar */}
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              {/* <AdBanner dataAdSlot="7280228136" /> */}
+              <Adsense client={"ca-pub-2888315269414105"} slot="7280228136" />
+              <Adsense
+                client={"ca-pub-2888315269414105"}
+                slot="7280228136"
+                style={{ width: 500, height: 300 }}
+                format=""
+              />
+              <Adsense
+                client={"ca-pub-2888315269414105"}
+                slot="7280228136"
+                style={{ display: "block" }}
+                layout="in-article"
+                format="fluid"
+              />
             </div>
           </aside>
 

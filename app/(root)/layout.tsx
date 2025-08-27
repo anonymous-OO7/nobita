@@ -27,11 +27,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CLIENTID} />
-        <meta
+        {/* Google AdSense Script */}
+        {/* <AdSense pId={"ca-pub-2888315269414105"} /> */}
+        {/* <meta
           name="google-adsense-account"
           content="ca-pub-2888315269414105"
         ></meta>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2888315269414105"
+          crossOrigin="anonymous"
+        ></script> */}
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2888315269414105"
