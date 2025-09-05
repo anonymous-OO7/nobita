@@ -3,6 +3,7 @@ import { Job } from "@/types.js";
 import useApi from "@/hooks/useApi";
 import { GetDashboardJobsdApi } from "@/apis";
 import JobCard from "@/components/cards/JobCard";
+import { Colors } from "@/assets/colors";
 
 const LatestJobs = () => {
   const { makeApiCall } = useApi();
@@ -55,8 +56,8 @@ const LatestJobs = () => {
   return (
     <div>
       <section>
-        <div className="py-12">
-          <div className="flex items-center justify-center text-center mt-8 mb-2 lg:mt-28">
+        <div className="py-6">
+          <div className="flex items-center justify-center text-center mt-8 mb-2 lg:mt-8">
             <div className="flex flex-col items-center justify-center rounded-tr-full rounded-bl-full w-full bg-white py-6">
               <div className="flex flex-col m-2 max-w-7xl">
                 <p className="text-2xl md:text-3xl text-black font-semibold font-poppins mb-4">
@@ -65,19 +66,25 @@ const LatestJobs = () => {
 
                 {/* Titles List */}
                 <div className="flex flex-wrap gap-2 justify-center mb-6">
-                  {Object.keys(latestJobsByField).map((field) => (
-                    <button
-                      key={field}
-                      onClick={() => setSelectedField(field)}
-                      className={`px-4 py-2 rounded-full border transition-all ${
-                        selectedField === field
-                          ? "bg-yellow-200 text-yellow-800 border-yellow-300 font-semibold"
-                          : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-yellow-50"
-                      }`}
-                    >
-                      {field}
-                    </button>
-                  ))}
+                  {Object.keys(latestJobsByField).map((field) => {
+                    const isActive = selectedField === field;
+                    return (
+                      <button
+                        key={field}
+                        onClick={() => setSelectedField(field)}
+                        className="px-4 py-2 rounded-full border transition-all font-semibold"
+                        style={{
+                          backgroundColor: isActive
+                            ? Colors.textLink
+                            : "#ffffff", // active bg color, inactive white
+                          color: isActive ? "#ffffff" : Colors.textLink, // active text white, inactive text textLink
+                          borderColor: Colors.textLink, // border color consistent for both
+                        }}
+                      >
+                        {field?.replace(/,$/, "")}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {/* Jobs Grid */}

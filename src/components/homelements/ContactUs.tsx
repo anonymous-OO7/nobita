@@ -80,14 +80,6 @@ const Contact = () => {
       >
         <div className=" container relative z-10 overflow-hidden bg-white w-[90%] py-20  px-10 lg:py-[120px]">
           <div className="-mx-4 flex flex-wrap lg:justify-between">
-            <h1 className="text-4xl font-bold mb-6 text-center text-blue-700">
-              Contact Workist
-            </h1>
-            <p className="text-center text-lg mb-8">
-              We'd love to hear from you! Whether you have questions about jobs,
-              referrals, community support, or want to partner with us, reach
-              out anytime.
-            </p>
             <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
               <div className="mb-12 max-w-[570px] lg:mb-0">
                 <span className="mb-4 block text-base font-semibold text-black">
@@ -103,7 +95,7 @@ const Contact = () => {
                 </p>
 
                 <div className="mb-8 flex w-full max-w-[370px]">
-                  <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-primary/5 text-primary sm:h-[70px] sm:max-w-[70px]">
+                  <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-primary/5 sm:h-[70px] sm:max-w-[70px]">
                     <svg
                       width="32"
                       height="32"
@@ -127,7 +119,7 @@ const Contact = () => {
                   </div>
                 </div>
                 <div className="mb-8 flex w-full max-w-[370px]">
-                  <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-primary/5 text-primary sm:h-[70px] sm:max-w-[70px]">
+                  <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-primary/5  sm:h-[70px] sm:max-w-[70px]">
                     <svg
                       width="32"
                       height="32"
@@ -146,7 +138,7 @@ const Contact = () => {
                       Our Location
                     </h4>
                     <p className="text-base text-body-color text-black">
-                      MGF Mall,Saket, New Delhi, India
+                      Sainik farm, New Delhi, India - 110062
                     </p>
                   </div>
                 </div>

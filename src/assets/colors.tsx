@@ -1,7 +1,7 @@
 // commonColor.tsx
 
 export const Colors = {
-  primary: "#F9EB98",
+  primary: "#2775EB",
   secondary: "#6c757d",
   success: "#28a745",
   danger: "#dc3545",
@@ -10,6 +10,18 @@ export const Colors = {
   light: "#f8f9fa",
   dark: "#343a40",
   background: "#f8f9fa",
+  buttonPrimary: "#020839",
+  textprimary: "#683FDB",
+  textBase: "#333333",
+  textLink: "#2775EB",
+  secondryLinkColor: "#68696F",
+  textColorGrey: "#68696F",
+  tableHeaderColor: "#2C2D33",
+  textColorSecondary: "#45464E",
+  bgButtonGreen: "#d2eace",
+  buttonBackground: "#00006D",
+  pageBackground: "#FFFFFFCC",
+  mainColor: "#4655FF",
 };
 
 // You can also define additional color variables or gradients here

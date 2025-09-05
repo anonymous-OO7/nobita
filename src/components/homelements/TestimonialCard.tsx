@@ -25,11 +25,18 @@ const TestimonialCard = ({
         </svg>
         <p className="leading-relaxed mb-6">{text}</p>
         <a className="inline-flex items-center">
-          <img
-            alt="testimonial"
-            src={authorImage}
-            className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
-          />
+          {authorImage ? (
+            <img
+              alt="testimonial"
+              src={authorImage}
+              className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
+            />
+          ) : (
+            <div className="w-12 h-12 rounded-full flex-shrink-0 bg-gray-300 flex items-center justify-center text-gray-500">
+              {/* Optionally show initials or icon here */}
+              {authorName ? authorName.charAt(0) : "?"}
+            </div>
+          )}
           <span className="flex-grow flex flex-col pl-4">
             <span className="title-font font-medium text-gray-900">
               {authorName}

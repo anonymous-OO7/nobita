@@ -112,7 +112,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                   Top Job Locations <ChevronDown className="w-4 h-4 ml-1" />
                 </button>
                 {openDropdown === "location" && (
-                  <div className="absolute left-0 mt-2 max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                  <div className="absolute left-0  max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                     {options.location.map(({ label, value }) => (
                       <button
                         key={value}
@@ -141,7 +141,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                   Top Departments <ChevronDown className="w-4 h-4 ml-1" />
                 </button>
                 {openDropdown === "department" && (
-                  <div className="absolute left-0 mt-2 max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                  <div className="absolute left-0  max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                     {options.department.map(({ label, value }) => (
                       <button
                         key={value}
@@ -171,7 +171,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                   Work Mode <ChevronDown className="w-4 h-4 ml-1" />
                 </button>
                 {openDropdown === "workMode" && (
-                  <div className="absolute left-0 mt-2 max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                  <div className="absolute left-0 max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                     {options.workMode.map(({ label, value }) => (
                       <button
                         key={value}
@@ -229,6 +229,38 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
                 >
                   Pricing
                 </button>
+                {/* Quick Links Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setIsQuickLinksOpen(!isQuickLinksOpen)}
+                    className="flex items-center text-gray-800 hover:text-blue-600 transition-colors"
+                  >
+                    Quick Links <ChevronDown className="w-4 h-4 ml-1" />
+                  </button>
+
+                  {isQuickLinksOpen && (
+                    <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                      <button
+                        onClick={() => {
+                          router.push("/about");
+                          setIsQuickLinksOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        About Us
+                      </button>
+                      <button
+                        onClick={() => {
+                          router.push("/contact");
+                          setIsQuickLinksOpen(false);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Contact Us
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </nav>
           </div>

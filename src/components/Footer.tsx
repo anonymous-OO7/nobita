@@ -1,8 +1,7 @@
-// components/Footer.tsx
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@heroui/react";
-import { FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaTelegramPlane, FaLinkedin } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 export default function Footer() {
@@ -13,7 +12,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
           {/* Products */}
-          <div>
+          {/* <div>
             <h4 className="font-semibold mb-4">Products</h4>
             <ul className="space-y-2">
               <li>
@@ -37,28 +36,31 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Company */}
           <div>
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="#">
+                <Link href="/about" onClick={() => router.push("/about")}>
                   <span className="hover:underline">About</span>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="#">
                   <span className="hover:underline">Investor Relations</span>
                 </Link>
-              </li>
+              </li> */}
               <li>
-                <Link href="#">
+                <Link
+                  href="/dashboard"
+                  onClick={() => router.push("/dashboard")}
+                >
                   <span className="hover:underline">Jobs</span>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="#">
                   <span className="hover:underline">Press</span>
                 </Link>
@@ -67,7 +69,7 @@ export default function Footer() {
                 <Link href="#">
                   <span className="hover:underline">Blog</span>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -76,11 +78,16 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="#">
+                <Link href="/contact" onClick={() => router.push("/contact")}>
                   <span className="hover:underline">Contact</span>
                 </Link>
               </li>
               <li>
+                <Link href="/pricing" onClick={() => router.push("/pricing")}>
+                  <span className="hover:underline">Pricing</span>
+                </Link>
+              </li>
+              {/* <li>
                 <Link href="#">
                   <span className="hover:underline">Documentation</span>
                 </Link>
@@ -94,7 +101,7 @@ export default function Footer() {
                 <Link href="#">
                   <span className="hover:underline">FAQ</span>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -128,17 +135,17 @@ export default function Footer() {
                   </span>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="#">
                   <span className="hover:underline">Cookie settings</span>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
 
         {/* Newsletter */}
-        <div className="mt-12 border-t border-white/10 pt-8 md:flex md:items-center md:justify-between">
+        {/* <div className="mt-12 border-t border-white/10 pt-8 md:flex md:items-center md:justify-between">
           <div className="mb-6 md:mb-0">
             <h5 className="font-semibold text-lg">Stay up to date</h5>
             <p className="text-sm text-gray-300">Subscribe to our newsletter</p>
@@ -153,20 +160,29 @@ export default function Footer() {
               Subscribe
             </Button>
           </form>
-        </div>
+        </div> */}
 
         {/* Social icons and copyright */}
         <div className="mt-8 border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-400">
           <p>© {new Date().getFullYear()} Workist. All rights reserved.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white" aria-label="LinkedIn">
+            <a
+              href="https://www.linkedin.com/company/workistai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white"
+              aria-label="LinkedIn"
+            >
               <FaLinkedin size={20} />
             </a>
-            <a href="#" className="hover:text-white" aria-label="Twitter">
-              <FaTwitter size={20} />
-            </a>
-            <a href="#" className="hover:text-white" aria-label="Instagram">
-              <FaInstagram size={20} />
+            <a
+              href="https://t.me/+bBTTpSFwb2Q0ZjZl"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white"
+              aria-label="Telegram"
+            >
+              <FaTelegramPlane size={20} />
             </a>
           </div>
         </div>

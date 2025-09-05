@@ -10,6 +10,9 @@ interface HeroSectionProps {
 }
 
 const FrontContent: React.FC<HeroSectionProps> = ({ onOpenTrialModal }) => {
+  const handleGetStartedClick = () => {
+    window.open("/dashboard", "_blank", "noopener,noreferrer");
+  };
   return (
     <>
       <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50 flex items-center justify-center overflow-hidden pt-10">
@@ -19,7 +22,7 @@ const FrontContent: React.FC<HeroSectionProps> = ({ onOpenTrialModal }) => {
           <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-teal-100 rounded-full opacity-20 animate-pulse delay-1000"></div>
         </div>
 
-        <div className="container mx-auto px-4 py-20 relative z-10">
+        <div className="container mx-auto px-4  relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left content */}
             <div className="text-center lg:text-left">
@@ -49,21 +52,20 @@ const FrontContent: React.FC<HeroSectionProps> = ({ onOpenTrialModal }) => {
                 goals.
               </p>
 
-              <button className="flex m-4 justify-center items-center px-3 py-5 w-[30%] rounded-full border border-[#0071e3] bg-transparent text-[#0071e3] hover:bg-[#0071e3] hover:text-white transition font-poppins font-medium leading-[1.125rem]">
+              {/* Added paragraph with relevant text */}
+              <p className="text-lg text-gray-700 mb-8 max-w-2xl">
+                Explore powerful tools for job searching, build standout resumes
+                with our builder, gain referrals from industry experts, and
+                access curated reading materials to boost your career growth.
+              </p>
+
+              <button
+                className="flex m-4 justify-center items-center px-3 py-5 w-[30%] rounded-full border border-[#0071e3] bg-transparent text-[#0071e3] hover:bg-[#0071e3] hover:text-white transition font-poppins font-medium leading-[1.125rem]"
+                onClick={handleGetStartedClick} // Open /dashboard in a new tab on click
+              >
                 Get started
               </button>
 
-              {/* <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <button className="flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transform hover:scale-105  shadow-lg hover:shadow-xl px-8 py-4 rounded-lg font-semibold text-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200">
-                  <Search className="w-5 h-5" />
-                  Search Manually
-                </button> 
-
-                <button className="flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 shadow-lg hover:shadow-xl px-8 py-4 rounded-lg font-semibold text-lg border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200">
-                  <Search className="w-5 h-5" />
-                  Search with AI
-                </button>
-              </div> */}
               <div className="flex  justify-start items-center px-4 my-6">
                 <AvatarGroup className="mr-2" isBordered max={3} total={10}>
                   <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
@@ -82,16 +84,16 @@ const FrontContent: React.FC<HeroSectionProps> = ({ onOpenTrialModal }) => {
               </div>
 
               <div className="mt-8 flex items-center justify-center lg:justify-start gap-8">
-                <div className="text-center">
+                {/* <div className="text-center">
                   <div className="text-2xl font-bold text-gray-900">1K+</div>
                   <div className="text-sm text-gray-600">Users Active</div>
-                </div>
+                </div> */}
                 <div className="text-center">
                   <div className="text-2xl font-bold text-gray-900">4.9</div>
                   <div className="text-sm text-gray-600">Average Rating</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">5000+</div>
+                  <div className="text-2xl font-bold text-gray-900">10000+</div>
                   <div className="text-sm text-gray-600">
                     Recent Job Listing
                   </div>

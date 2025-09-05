@@ -32,7 +32,7 @@ export default function About() {
             <FrontContent onOpenTrialModal={() => setIsTrialModalOpen(true)} />
           </section>
 
-          <TechContent />
+          {/* <TechContent /> */}
           <LatestJobs />
           <Clients />
           <Testimonials />

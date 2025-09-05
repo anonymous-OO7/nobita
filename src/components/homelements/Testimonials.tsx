@@ -28,6 +28,7 @@ const Testimonials = () => {
               </div>
 
               {/* Full filters on tablet and up */}
+              {/* Uncomment if needed later */}
               {/* <div className="hidden sm:flex flex-wrap justify-center gap-3">
                 {[
                   "Engineer",
@@ -52,28 +53,28 @@ const Testimonials = () => {
             {/* Testimonials */}
             <div className="flex flex-wrap -m-4 justify-center">
               <TestimonialCard
-                text="Joining this platform was a game-changer for my career. I received a referral to a top tech company and landed my dream job within a month."
-                authorName="Gaurav Yadav"
-                authorTitle="Software Engineer"
-                authorImage="https://media.licdn.com/dms/image/v2/C4D03AQGLbwd9j1oSRQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1650774597752?e=1735171200&v=beta&t=pXUEE0VsGImntkghwReTmnYcPE5Cgiso7t43Rynpkik"
+                text="Using Workist helped me secure a referral at a leading tech firm. The interview process was smooth and I got the offer within weeks."
+                authorName="Rohit Sharma"
+                authorTitle="Software Developer"
+                // authorImage="https://some-url.jpg"
               />
               <TestimonialCard
-                text="As a designer, finding the right fit can be challenging. This platform connected me with great opportunities and valuable insights."
-                authorName="Sean S. Ellis"
-                authorTitle="Graphic Designer"
-                authorImage="https://ogletree.com/app/uploads/people/alexandre-abitbol.jpg"
+                text="As a backend engineer, finding the right opportunity was tough. Workist connected me with mentors and gave me access to exclusive job listings."
+                authorName="Anjali Verma"
+                authorTitle="Backend Engineer"
+                // authorImage="https://some-url.jpg"
               />
               <TestimonialCard
-                text="I was skeptical at first, but the quality of referrals I received was outstanding. It's reassuring to know I'm connecting with trusted professionals."
-                authorName="Shubham Singh"
-                authorTitle="Full Stack Specialist"
-                authorImage="https://img.freepik.com/free-photo/smiling-young-male-professional-standing-with-arms-crossed-while-making-eye-contact-against-isolated-background_662251-838.jpg"
+                text="The platform’s referral network gave me much-needed confidence during interviews. I’m now part of a great product team building cutting-edge software."
+                authorName="Karan Mehta"
+                authorTitle="Product Engineer"
+                // authorImage="https://some-url.jpg"
               />
               <TestimonialCard
-                text="The referral system here is exceptional. I felt confident going into interviews with strong recommendations. Highly recommended."
-                authorName="Henry"
-                authorTitle="Financial Analyst"
-                authorImage="https://images.ctfassets.net/lh3zuq09vnm2/yBDals8aU8RWtb0xLnPkI/19b391bda8f43e16e64d40b55561e5cd/How_tracking_user_behavior_on_your_website_can_improve_customer_experience.png"
+                text="Workist’s curated job listings saved me months of searching. I quickly found roles fitting my skills in frontend and full stack development."
+                authorName="Priya Singh"
+                authorTitle="Full Stack Developer"
+                // authorImage="https://some-url.jpg"
               />
             </div>
           </div>

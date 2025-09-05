@@ -35,9 +35,7 @@ const UserCount = () => {
                   Total Jobs
                 </div>
                 <div className="text-5xl font-bold font-poppins text-[#0071e3]">
-                  {inView && (
-                    <CountUp end={5} decimals={1} duration={2.5} suffix="K+" />
-                  )}
+                  {inView && <CountUp end={100} duration={2.5} suffix="K+" />}
                 </div>
                 <div className="text-sm font-medium font-poppins">
                   Goal is to grow the biggest referral community.

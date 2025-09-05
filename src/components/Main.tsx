@@ -297,16 +297,33 @@ function SidebarNew({
           <LoadingIcon className="w-8 h-8" />
         </div>
       ) : (
-        sidebarItems.map((item, index) => (
-          <SidebarItem
-            key={index}
-            icon={item.icon}
-            text={item.text}
-            alert={item.alert}
-            active={item.active}
-            href={item.href}
-          />
-        ))
+        <>
+          {!role && (
+            <div className="p-4 mb-4 bg-yellow-50 border border-yellow-300 rounded-md text-sm text-yellow-700">
+              <p>
+                You are not logged in.{" "}
+                <button
+                  className="underline font-semibold text-yellow-800"
+                  onClick={() => (window.location.href = "/login")}
+                >
+                  Login
+                </button>{" "}
+                to unlock full premium access, advanced features, resume
+                builder, and more.
+              </p>
+            </div>
+          )}
+          {sidebarItems.map((item, index) => (
+            <SidebarItem
+              key={index}
+              icon={item.icon}
+              text={item.text}
+              alert={item.alert}
+              active={item.active}
+              href={item.href}
+            />
+          ))}
+        </>
       )}
     </Sidebar>
   );
