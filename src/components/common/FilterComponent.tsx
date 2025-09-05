@@ -508,20 +508,6 @@ export default function JobSearchNumericCodeComponent({
     },
   ];
 
-  const paramCodes: ParamCodes = {
-    workMode: 1,
-    department: 2,
-    location: 3,
-    salary: 4,
-    companyType: 5,
-    roleCategory: 6,
-    education: 7,
-    postedBy: 8,
-    industry: 9,
-    experienceMin: "experienceMin",
-    experienceMax: "experienceMax",
-  };
-
   function buildQuery(params: Record<string | number, any>) {
     return Object.entries(params)
       .flatMap(([k, v]) =>
