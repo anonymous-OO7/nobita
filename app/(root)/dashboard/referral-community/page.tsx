@@ -15,7 +15,7 @@ import Button from "@/components/Button";
 import { useRouter } from "next/navigation";
 import ReferralCard from "@/components/cards/ReferralCard"; // Import the updated ReferralCard
 import PageLoader from "@/components/common/PageLoader";
-import ReferralQueryModal from "@/components/pages/communityreferral/ReferralQueryApply";
+import ReferralQueryModal from "@/components/pages/blogs/communityreferral/ReferralQueryApply";
 import { useDisclosure } from "@nextui-org/react";
 import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import JobApplicationModal from "@/components/pages/home/JobApply";

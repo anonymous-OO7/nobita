@@ -1,0 +1,180 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+  max-width: 900px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 15px 20px;
+  }
+}
+
+.select {
+  margin-bottom: 40px;
+  padding: 8px 16px;
+  width: fit-content;
+  margin-left: 0;
+}
+
+@media (max-width: 768px) {
+  .select {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+.editor {
+  display: flex;
+  gap: 16px;
+  flex-direction: row;
+  position: relative;
+  height: 600px;
+}
+
+@media (max-width: 768px) {
+  .editor {
+    flex-direction: column;
+    height: auto;
+  }
+}
+
+.button,
+.addButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid var(--textColor, #333);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.button:hover,
+.addButton:hover {
+  border-color: #1a8917;
+}
+
+.addButton {
+  border-color: #1a8917;
+}
+
+.add {
+  display: flex;
+  gap: 16px;
+  background-color: var(--bg, #f9f9f9);
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  top: 44px;
+  left: 0;
+  padding: 8px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+}
+
+.input {
+  padding: 20px 24px;
+  font-size: 3rem;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--textColor, #222);
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .input {
+    font-size: 2rem;
+    padding: 16px 20px;
+  }
+}
+
+.input::placeholder {
+  color: #b3b3b1;
+}
+
+.textArea {
+  flex: 1;
+  min-height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+  font-size: 1rem;
+  overflow-y: auto;
+}
+
+.publish {
+  position: sticky;
+  top: 16px;
+  align-self: flex-end;
+  padding: 10px 28px;
+  border: none;
+  background-color: #1a8917;
+  color: white;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.publish:disabled {
+  background-color: #7fb881;
+  cursor: not-allowed;
+}
+
+.publish:hover:not(:disabled) {
+  background-color: #13650c;
+}
+
+@media (max-width: 768px) {
+  .publish {
+    width: 100%;
+    position: relative;
+    top: auto;
+    margin-top: 24px;
+  }
+}
+.inputError {
+  border: 1px solid red !important;
+  box-shadow: 0 0 5px red;
+}
+
+.errorText {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  margin-left: 16px;
+}
+
+.loader {
+  display: inline-block;
+  margin-right: 6px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid white;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

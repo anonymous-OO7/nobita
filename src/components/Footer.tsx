@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@heroui/react";
@@ -64,12 +65,12 @@ export default function Footer() {
                 <Link href="#">
                   <span className="hover:underline">Press</span>
                 </Link>
-              </li>
+              </li> */}
               <li>
-                <Link href="#">
+                <Link href="/blogs" onClick={() => router.push("/blogs")}>
                   <span className="hover:underline">Blog</span>
                 </Link>
-              </li> */}
+              </li>
             </ul>
           </div>
 

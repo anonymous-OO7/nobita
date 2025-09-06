@@ -770,3 +770,72 @@ export const GetDashboardJobsdApi = () => {
     },
   });
 };
+
+//blog cate goried get
+
+export const GetAllBlogCategories = async () => {
+  return onePiece.get(`/get-blog-categories`, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+      uuid: `${localStorage.getItem("uuid")}`,
+      email: localStorage.getItem("email") || "",
+    },
+  });
+};
+
+//get api for utility claims
+export const GetAllBlogPostsList = (page: number, limit: number) => {
+  const searchParams = new URLSearchParams();
+
+  // Pagination & search
+  if (page !== undefined) searchParams.append("page", String(page));
+  if (limit !== undefined) searchParams.append("limit", String(limit));
+
+  const url = `/get-all-post?${searchParams.toString()}`;
+
+  return onePiece.get(url, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  });
+};
+
+export const GetBlogPost = (slug: string) => {
+  return onePiece.get(`/get-post/${slug}`, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  });
+};
+
+export const CreateBlogApi = (
+  slug: string,
+  title: string,
+  desc: string,
+  cat_slug: string,
+  image: File | null | string
+) => {
+  const formData = new FormData();
+
+  formData.append("slug", slug);
+  formData.append("title", title);
+  formData.append("desc", desc);
+  formData.append("cat_slug", cat_slug);
+
+  if (image && image instanceof File) {
+    formData.append("img", image);
+  }
+
+  return onePiece.post("/create-blog", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      role: localStorage.getItem("role") || "",
+      email: localStorage.getItem("email") || "",
+      name: localStorage.getItem("name") || "",
+    },
+  });
+};
