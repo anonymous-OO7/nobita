@@ -816,7 +816,9 @@ export const CreateBlogApi = (
   title: string,
   desc: string,
   cat_slug: string,
-  image: File | null | string
+  image: File | null | string,
+  editors_pick: boolean = false,
+  most_popular: boolean = false
 ) => {
   const formData = new FormData();
 
@@ -824,6 +826,10 @@ export const CreateBlogApi = (
   formData.append("title", title);
   formData.append("desc", desc);
   formData.append("cat_slug", cat_slug);
+
+  // Append new boolean fields as strings
+  formData.append("editors_pick", editors_pick ? "true" : "false");
+  formData.append("most_popular", most_popular ? "true" : "false");
 
   if (image && image instanceof File) {
     formData.append("img", image);
@@ -836,6 +842,15 @@ export const CreateBlogApi = (
       role: localStorage.getItem("role") || "",
       email: localStorage.getItem("email") || "",
       name: localStorage.getItem("name") || "",
+    },
+  });
+};
+
+export const GetAllBlogSpecialPostsList = () => {
+  return onePiece.get("/get-specialposts", {
+    headers: {
+      "ngrok-skip-browser-warning": "69420",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     },
   });
 };

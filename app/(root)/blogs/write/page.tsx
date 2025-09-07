@@ -24,6 +24,11 @@ const WritePage: React.FC = () => {
   const [value, setValue] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [catSlug, setCatSlug] = useState<string>("style");
+
+  // New states for the checkboxes
+  const [editorsPick, setEditorsPick] = useState<boolean>(false);
+  const [mostPopular, setMostPopular] = useState<boolean>(false);
+
   const [loading, setLoading] = useState<boolean>(false);
 
   // Validation error states
@@ -69,16 +74,34 @@ const WritePage: React.FC = () => {
     setLoading(true);
     try {
       await makeApiCall(
-        CreateBlogApi(slugify(title), title, value, catSlug || "style", file)
+        CreateBlogApi(
+          slugify(title),
+          title,
+          value,
+          catSlug || "style",
+          file,
+          editorsPick, // Pass the new fields here
+          mostPopular
+        )
       );
       showToast("Post created successfully", { type: "success" });
-      router.push(`/posts/${slugify(title)}`);
+      // router.push(`/posts/${slugify(title)}`);
     } catch (error: any) {
       showToast(error.message || "Failed to create post", { type: "error" });
     } finally {
       setLoading(false);
     }
-  }, [makeApiCall, showToast, router, title, value, catSlug, file]);
+  }, [
+    makeApiCall,
+    showToast,
+    router,
+    title,
+    value,
+    catSlug,
+    file,
+    editorsPick,
+    mostPopular,
+  ]);
 
   return (
     <div className={styles.container}>
@@ -103,6 +126,26 @@ const WritePage: React.FC = () => {
         <option value="travel">travel</option>
         <option value="coding">coding</option>
       </select>
+
+      {/* New checkboxes for editors_pick and most_popular */}
+      <div className={styles.checkboxGroup}>
+        <label className={styles.checkboxLabel}>
+          <input
+            type="checkbox"
+            checked={editorsPick}
+            onChange={(e) => setEditorsPick(e.target.checked)}
+          />
+          Editor's Pick
+        </label>
+        <label className={styles.checkboxLabel}>
+          <input
+            type="checkbox"
+            checked={mostPopular}
+            onChange={(e) => setMostPopular(e.target.checked)}
+          />
+          Most Popular
+        </label>
+      </div>
 
       <div className={styles.editor}>
         <button

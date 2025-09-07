@@ -82,212 +82,206 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <button onClick={() => router.push("/")}>
-              <Image
-                src={LogoWorkist}
-                alt="logo"
-                className="w-20 sm:w-24 h-auto"
-                priority
-              />
-            </button>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            <nav className="hidden lg:flex items-center space-x-6">
-              {/* Location Dropdown */}
-              <div
-                className="relative z-50 max-h-64"
-                onMouseEnter={() => setOpenDropdown("location")}
-                onMouseLeave={() => setOpenDropdown("")}
-              >
-                <button
-                  className="flex items-center text-gray-800 hover:text-[#0071e3] transition-colors font-medium text-base px-3 py-1 rounded-md"
-                  style={{ background: "#f7f7f7" }}
-                  type="button"
-                >
-                  Top Job Locations <ChevronDown className="w-4 h-4 ml-1" />
-                </button>
-                {openDropdown === "location" && (
-                  <div className="absolute left-0  max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    {options.location.map(({ label, value }) => (
-                      <button
-                        key={value}
-                        onClick={() => handleDropdownSelect("location", value)}
-                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        type="button"
-                      >
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Department Dropdown */}
-              <div
-                className="relative z-50 max-h-64"
-                onMouseEnter={() => setOpenDropdown("department")}
-                onMouseLeave={() => setOpenDropdown("")}
-              >
-                <button
-                  className="flex items-center text-gray-800 hover:text-[#0071e3] transition-colors font-medium text-base px-3 py-1 rounded-md"
-                  style={{ background: "#f7f7f7" }}
-                  type="button"
-                >
-                  Top Departments <ChevronDown className="w-4 h-4 ml-1" />
-                </button>
-                {openDropdown === "department" && (
-                  <div className="absolute left-0  max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    {options.department.map(({ label, value }) => (
-                      <button
-                        key={value}
-                        onClick={() =>
-                          handleDropdownSelect("department", value)
-                        }
-                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        type="button"
-                      >
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-              {/* Work Mode Dropdown */}
-              <div
-                className="relative z-50 max-h-64"
-                onMouseEnter={() => setOpenDropdown("workMode")}
-                onMouseLeave={() => setOpenDropdown("")}
-              >
-                <button
-                  className="flex items-center text-gray-800 hover:text-[#0071e3] transition-colors font-medium text-base px-3 py-1 rounded-md"
-                  style={{ background: "#f7f7f7" }}
-                  type="button"
-                >
-                  Work Mode <ChevronDown className="w-4 h-4 ml-1" />
-                </button>
-                {openDropdown === "workMode" && (
-                  <div className="absolute left-0 max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                    {options.workMode.map(({ label, value }) => (
-                      <button
-                        key={value}
-                        onClick={() => handleDropdownSelect("workMode", value)}
-                        className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        type="button"
-                      >
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-              {/* Auth / Dashboard Buttons */}
-              <div className="flex items-center space-x-2 border-l border-gray-200 pl-4 ml-2">
-                {isLoggedIn ? (
-                  <button
-                    onClick={() => router.push("/dashboard")}
-                    className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
-                  >
-                    Go to Dashboard
-                  </button>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => router.push("/login")}
-                      className={jobSeekerButton}
-                    >
-                      Job Seeker Login
-                    </button>
-                    <button
-                      onClick={() => router.push("/login?is_recruiter=true")}
-                      className={recruiterButton}
-                    >
-                      Recruiter Login
-                    </button>
-                  </>
-                )}
-
-                <button
-                  onClick={() =>
-                    window.open(
-                      "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
-                      "_blank"
-                    )
-                  }
-                  className="border border-[#0071e3] text-[#0071e3] px-4 py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
-                >
-                  Become a Referrer
-                </button>
-
-                <button
-                  onClick={() => router.push("/pricing")}
-                  className={navButtonClass}
-                >
-                  Pricing
-                </button>
-                {/* Quick Links Dropdown */}
-                <div className="relative">
-                  <button
-                    onClick={() => setIsQuickLinksOpen(!isQuickLinksOpen)}
-                    className="flex items-center text-gray-800 hover:text-blue-600 transition-colors"
-                  >
-                    Quick Links <ChevronDown className="w-4 h-4 ml-1" />
-                  </button>
-
-                  {isQuickLinksOpen && (
-                    <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
-                      <button
-                        onClick={() => {
-                          router.push("/about");
-                          setIsQuickLinksOpen(false);
-                        }}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        About Us
-                      </button>
-                      <button
-                        onClick={() => {
-                          router.push("/contact");
-                          setIsQuickLinksOpen(false);
-                        }}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Contact Us
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </nav>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center transition-colors duration-200"
-            type="button"
-          >
-            {isMenuOpen ? (
-              <X className="w-5 h-5 text-gray-600" />
-            ) : (
-              <Menu className="w-5 h-5 text-gray-600" />
-            )}
+      <div className="flex items-center justify-between h-16 px-10 md:h-20">
+        {/* Logo */}
+        <div className="flex items-center space-x-3">
+          <button onClick={() => router.push("/")}>
+            <Image
+              src={LogoWorkist}
+              alt="logo"
+              className="w-20 sm:w-24 h-auto"
+              priority
+            />
           </button>
         </div>
 
-        {/* Mobile Menu */}
-        <div
-          className={`lg:hidden transition-all duration-300 overflow-hidden ${
-            isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          {/* Your existing mobile menu code */}
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-6">
+            {/* Location Dropdown */}
+            <div
+              className="relative z-50 max-h-64"
+              onMouseEnter={() => setOpenDropdown("location")}
+              onMouseLeave={() => setOpenDropdown("")}
+            >
+              <button
+                className="flex items-center text-gray-800 hover:text-[#0071e3] transition-colors font-medium text-base px-3 py-1 rounded-md"
+                style={{ background: "#f7f7f7" }}
+                type="button"
+              >
+                Top Job Locations <ChevronDown className="w-4 h-4 ml-1" />
+              </button>
+              {openDropdown === "location" && (
+                <div className="absolute left-0  max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                  {options.location.map(({ label, value }) => (
+                    <button
+                      key={value}
+                      onClick={() => handleDropdownSelect("location", value)}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      type="button"
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Department Dropdown */}
+            <div
+              className="relative z-50 max-h-64"
+              onMouseEnter={() => setOpenDropdown("department")}
+              onMouseLeave={() => setOpenDropdown("")}
+            >
+              <button
+                className="flex items-center text-gray-800 hover:text-[#0071e3] transition-colors font-medium text-base px-3 py-1 rounded-md"
+                style={{ background: "#f7f7f7" }}
+                type="button"
+              >
+                Top Departments <ChevronDown className="w-4 h-4 ml-1" />
+              </button>
+              {openDropdown === "department" && (
+                <div className="absolute left-0  max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                  {options.department.map(({ label, value }) => (
+                    <button
+                      key={value}
+                      onClick={() => handleDropdownSelect("department", value)}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      type="button"
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            {/* Work Mode Dropdown */}
+            <div
+              className="relative z-50 max-h-64"
+              onMouseEnter={() => setOpenDropdown("workMode")}
+              onMouseLeave={() => setOpenDropdown("")}
+            >
+              <button
+                className="flex items-center text-gray-800 hover:text-[#0071e3] transition-colors font-medium text-base px-3 py-1 rounded-md"
+                style={{ background: "#f7f7f7" }}
+                type="button"
+              >
+                Work Mode <ChevronDown className="w-4 h-4 ml-1" />
+              </button>
+              {openDropdown === "workMode" && (
+                <div className="absolute left-0 max-h-64 overflow-y-auto w-64 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                  {options.workMode.map(({ label, value }) => (
+                    <button
+                      key={value}
+                      onClick={() => handleDropdownSelect("workMode", value)}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                      type="button"
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button
+              onClick={() => router.push("/blogs")}
+              className={navButtonClass}
+            >
+              Blogs
+            </button>
+            {/* Auth / Dashboard Buttons */}
+            <div className="flex items-center space-x-2 border-l border-gray-200 pl-4 ml-2">
+              {isLoggedIn ? (
+                <button
+                  onClick={() => router.push("/dashboard")}
+                  className="bg-[#0071e3] text-white px-4 py-1.5 rounded-md hover:bg-[#005bb5] transition"
+                >
+                  Go to Dashboard
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => router.push("/login")}
+                    className={jobSeekerButton}
+                  >
+                    Job Seeker Login
+                  </button>
+                  <button
+                    onClick={() => router.push("/login?is_recruiter=true")}
+                    className={recruiterButton}
+                  >
+                    Recruiter Login
+                  </button>
+                </>
+              )}
+
+              <button
+                onClick={() =>
+                  window.open(
+                    "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
+                    "_blank"
+                  )
+                }
+                className="border border-[#0071e3] text-[#0071e3] px-4 py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
+              >
+                Become a Referrer
+              </button>
+
+              <button
+                onClick={() => router.push("/pricing")}
+                className={navButtonClass}
+              >
+                Pricing
+              </button>
+
+              {/* Quick Links Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setIsQuickLinksOpen(!isQuickLinksOpen)}
+                  className="flex items-center text-gray-800 hover:text-blue-600 transition-colors"
+                >
+                  Quick Links <ChevronDown className="w-4 h-4 ml-1" />
+                </button>
+
+                {isQuickLinksOpen && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                    <button
+                      onClick={() => {
+                        router.push("/about");
+                        setIsQuickLinksOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      About Us
+                    </button>
+                    <button
+                      onClick={() => {
+                        router.push("/contact");
+                        setIsQuickLinksOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Contact Us
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </nav>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="lg:hidden w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center transition-colors duration-200"
+          type="button"
+        >
+          {isMenuOpen ? (
+            <X className="w-5 h-5 text-gray-600" />
+          ) : (
+            <Menu className="w-5 h-5 text-gray-600" />
+          )}
+        </button>
       </div>
     </nav>
   );

@@ -8,15 +8,15 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Lama Dev Blog App",
-  description: "The best blog app!",
+  title: "Workist ",
+  description: "Workist blogs!",
 };
 
 export default function RootLayout({ children }) {
   return (
     <ThemeContextProvider>
       <ThemeProvider>
-        {/* <Navbar /> */}
+        <Navbar />
         <main className="mainContainer">
           <div className="container">
             <div className="wrapper"></div>
