@@ -273,7 +273,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="lg:hidden w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center transition-colors duration-200"
+          className="lg:hidden w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center transition-colors duration-200 ml-2"
           type="button"
         >
           {isMenuOpen ? (
@@ -282,111 +282,130 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenTrialModal }) => {
             <Menu className="w-5 h-5 text-gray-600" />
           )}
         </button>
+      </div>
 
-        {/* Mobile Menu */}
-        <div
-          className={`lg:hidden transition-all duration-300 overflow-hidden ${
-            isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="py-4 space-y-2 bg-white/95 backdrop-blur-md rounded-b-2xl border-t border-gray-100">
-            <div className="lg:hidden px-4 pb-4 space-y-2 bg-white border-t">
-              {[{ text: "Pricing", link: "/pricing" }].map((item) => (
-                <button
-                  key={item.text}
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    router.push(item.link);
-                  }}
-                  className="block w-full text-left text-black text-sm font-medium py-1"
-                >
-                  {item.text}
-                </button>
-              ))}
+      {/* Mobile Menu */}
+      <div
+        className={`lg:hidden transition-all duration-300 overflow-hidden ${
+          isMenuOpen ? "max-h-[100vh] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="py-4 space-y-2 bg-white/95 backdrop-blur-md rounded-b-2xl border-t border-gray-100">
+          <div className="px-4 pb-4 space-y-2">
+            <button
+              onClick={() => {
+                setIsMenuOpen(false);
+                router.push("/blogs");
+              }}
+              className="block w-full text-left text-black text-sm font-medium py-1"
+            >
+              Blogs
+            </button>
+            <button
+              onClick={() => {
+                setIsMenuOpen(false);
+                router.push("/pricing");
+              }}
+              className="block w-full text-left text-black text-sm font-medium py-1"
+            >
+              Pricing
+            </button>
 
-              {/* Quick Links in Mobile */}
-              <div className="border-t pt-2">
-                <p className="text-sm font-semibold text-gray-700">
-                  Quick Links
-                </p>
-                <button
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    router.push("/about");
-                  }}
-                  className="block w-full text-left text-black text-sm font-medium py-1"
-                >
-                  About Us
-                </button>
-                <button
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    router.push("/contact");
-                  }}
-                  className="block w-full text-left text-black text-sm font-medium py-1"
-                >
-                  Contact Us
-                </button>
-              </div>
-
+            {/* Quick Links in Mobile */}
+            <div className="border-t pt-2">
               <button
-                onClick={() =>
-                  window.open(
-                    "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
-                    "_blank"
-                  )
-                }
-                className="text-sm border border-[#0071e3] text-[#0071e3] w-full text-center py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
+                onClick={() => setIsQuickLinksOpen(!isQuickLinksOpen)}
+                className="flex items-center justify-between w-full text-sm font-semibold text-gray-700 py-2"
               >
-                Become a Referrer
+                Quick Links
+                <ChevronDown
+                  className={`w-4 h-4 ml-1 transform transition-transform ${
+                    isQuickLinksOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
-              {isLoggedIn ? (
-                <button
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    router.push("/dashboard");
-                  }}
-                  className="w-full bg-[#0071e3] text-white text-center py-1.5 rounded-md hover:bg-[#005bb5] transition"
-                >
-                  Go to Dashboard
-                </button>
-              ) : (
-                <>
+              {isQuickLinksOpen && (
+                <div className="pl-4 space-y-1">
                   <button
                     onClick={() => {
                       setIsMenuOpen(false);
-                      router.push("/login");
+                      router.push("/about");
                     }}
-                    className={`${jobSeekerButton} w-full text-center`}
+                    className="block w-full text-left text-black text-sm font-medium py-1"
                   >
-                    Job Seeker Login
+                    About Us
                   </button>
                   <button
                     onClick={() => {
                       setIsMenuOpen(false);
-                      router.push("/login?is_recruiter=true");
+                      router.push("/contact");
                     }}
-                    className={`${recruiterButton} w-full text-center`}
+                    className="block w-full text-left text-black text-sm font-medium py-1"
                   >
-                    Recruiter Login
+                    Contact Us
                   </button>
-                </>
+                </div>
               )}
             </div>
 
-            <div className="px-4 pt-2">
+            <button
+              onClick={() =>
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSeFT0yElRSlgMQ45MtftSV4DNEXItEmu_a_vTimkPdo4HKu9A/viewform",
+                  "_blank"
+                )
+              }
+              className="text-sm border border-[#0071e3] text-[#0071e3] w-full text-center py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
+            >
+              Become a Referrer
+            </button>
+
+            {isLoggedIn ? (
               <button
                 onClick={() => {
-                  onOpenTrialModal();
                   setIsMenuOpen(false);
+                  router.push("/dashboard");
                 }}
-                className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-sm hover:from-blue-700 hover:to-teal-700 transition-all duration-200"
+                className="w-full bg-[#0071e3] text-white text-center py-1.5 rounded-md hover:bg-[#005bb5] transition"
               >
-                Book Free Trial
+                Go to Dashboard
               </button>
-            </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push("/login");
+                  }}
+                  className={`${jobSeekerButton} w-full text-center`}
+                >
+                  Job Seeker Login
+                </button>
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    router.push("/login?is_recruiter=true");
+                  }}
+                  className={`${recruiterButton} w-full text-center`}
+                >
+                  Recruiter Login
+                </button>
+              </>
+            )}
           </div>
+
+          {/* <div className="px-4 pt-2">
+            <button
+              onClick={() => {
+                onOpenTrialModal();
+                setIsMenuOpen(false);
+              }}
+              className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white px-6 py-3 rounded-lg font-semibold text-sm hover:from-blue-700 hover:to-teal-700 transition-all duration-200"
+            >
+              Book Free Trial
+            </button>
+          </div> */}
         </div>
       </div>
     </nav>

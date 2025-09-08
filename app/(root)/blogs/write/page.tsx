@@ -1,17 +1,17 @@
 "use client";
 import * as React from "react";
-import { useState, useCallback, ChangeEvent } from "react";
+import { useState, useCallback, ChangeEvent, useEffect } from "react";
 import Image from "next/image";
 import styles from "./writePage.module.css";
 import "react-quill/dist/quill.bubble.css";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { Storage } from "megajs";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 import useToast from "@/hooks/useToast";
 import useApi from "@/hooks/useApi";
-
 import { CreateBlogApi } from "@/apis";
 
 const WritePage: React.FC = () => {
@@ -19,19 +19,43 @@ const WritePage: React.FC = () => {
   const { showToast } = useToast();
   const { makeApiCall } = useApi();
 
+  const [megaStorage, setMegaStorage] = useState<any>(null);
+
+  useEffect(() => {
+    // Initialize MEGA storage once
+    const storage = new Storage({
+      email: "workist.ai@gmail.com",
+      password: "Gaurav@123",
+      userAgent: "WorkistBlog/1.0",
+    });
+
+    storage.on("ready", () => {
+      console.log("✅ MEGA storage ready");
+      setMegaStorage(storage);
+    });
+
+    (storage as any).on("error", (err: any) => {
+      console.error("❌ MEGA error:", err);
+      showToast("Failed to connect to MEGA.", { type: "error" });
+    });
+
+    // Clean up the event listener
+    return () => {
+      console.error("❌ MEGA error: Returnnn");
+    };
+  }, [showToast]);
+
   const [open, setOpen] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [value, setValue] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [catSlug, setCatSlug] = useState<string>("style");
 
-  // New states for the checkboxes
   const [editorsPick, setEditorsPick] = useState<boolean>(false);
   const [mostPopular, setMostPopular] = useState<boolean>(false);
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  // Validation error states
   const [titleError, setTitleError] = useState<string>("");
   const [descError, setDescError] = useState<string>("");
 
@@ -45,7 +69,17 @@ const WritePage: React.FC = () => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
+      const selectedFile = e.target.files[0];
+      const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+
+      if (!allowedTypes.includes(selectedFile.type)) {
+        showToast("Only PNG, JPG, and JPEG files are allowed", {
+          type: "error",
+        });
+        return;
+      }
+
+      setFile(selectedFile);
     }
   };
 
@@ -71,22 +105,43 @@ const WritePage: React.FC = () => {
       return;
     }
 
+    if (!megaStorage) {
+      showToast("MEGA storage not ready yet. Try again.", { type: "error" });
+      return;
+    }
+
     setLoading(true);
     try {
+      let fileUrl: string | null = null;
+
+      if (file) {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        const uploadedFile = await megaStorage.upload(file.name, buffer, {
+          size: buffer.length,
+        }).complete;
+
+        const exported = await uploadedFile.link();
+        fileUrl = exported;
+        console.log("✅ File uploaded to MEGA:", fileUrl);
+      }
+
       await makeApiCall(
         CreateBlogApi(
           slugify(title),
           title,
           value,
           catSlug || "style",
-          file,
-          editorsPick, // Pass the new fields here
+          fileUrl,
+          editorsPick,
           mostPopular
         )
       );
+
       showToast("Post created successfully", { type: "success" });
-      // router.push(`/posts/${slugify(title)}`);
     } catch (error: any) {
+      console.error("Upload or API error:", error);
       showToast(error.message || "Failed to create post", { type: "error" });
     } finally {
       setLoading(false);
@@ -101,6 +156,8 @@ const WritePage: React.FC = () => {
     file,
     editorsPick,
     mostPopular,
+    megaStorage,
+    validateFields,
   ]);
 
   return (
@@ -127,7 +184,6 @@ const WritePage: React.FC = () => {
         <option value="coding">coding</option>
       </select>
 
-      {/* New checkboxes for editors_pick and most_popular */}
       <div className={styles.checkboxGroup}>
         <label className={styles.checkboxLabel}>
           <input

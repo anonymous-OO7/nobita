@@ -816,7 +816,7 @@ export const CreateBlogApi = (
   title: string,
   desc: string,
   cat_slug: string,
-  image: File | null | string,
+  image: string | null,
   editors_pick: boolean = false,
   most_popular: boolean = false
 ) => {
@@ -831,7 +831,7 @@ export const CreateBlogApi = (
   formData.append("editors_pick", editors_pick ? "true" : "false");
   formData.append("most_popular", most_popular ? "true" : "false");
 
-  if (image && image instanceof File) {
+  if (image) {
     formData.append("img", image);
   }
 

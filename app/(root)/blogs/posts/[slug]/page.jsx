@@ -84,7 +84,7 @@ const SinglePage = ({ params }) => {
         {data.img && (
           <div className={styles.imageContainer}>
             <Image
-              src={getImageSrc(data.img)}
+              src={data.img}
               alt={data.title || ""}
               fill
               className={styles.image}
