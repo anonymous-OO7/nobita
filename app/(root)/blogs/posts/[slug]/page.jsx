@@ -81,10 +81,12 @@ const SinglePage = ({ params }) => {
             </div>
           </div>
         </div>
-        {data.img && (
+        {/* {data.img && (
           <div className={styles.imageContainer}>
             <Image
-              src={data.img}
+              src={
+                "https://mega.nz/file/WQlQlKIA#dzW-V8hMZqL1mTnCZWXj79IB34VizzvCprwtoPY3u9o.png"
+              }
               alt={data.title || ""}
               fill
               className={styles.image}
@@ -92,7 +94,7 @@ const SinglePage = ({ params }) => {
               sizes="(max-width: 768px) 100vw, 600px"
             />
           </div>
-        )}
+        )} */}
       </div>
       <div className={styles.content}>
         <div className={styles.post}>
