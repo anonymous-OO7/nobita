@@ -32,7 +32,7 @@ const Card = ({ keyProp, item }) => {
 
   return (
     <div className={styles.container} key={keyProp}>
-      {imageSrc && (
+      {/* {imageSrc && (
         <div className={styles.imageContainer}>
           <Link href={`/blogs/posts/${item.slug}`} passHref legacyBehavior>
             <a
@@ -50,7 +50,7 @@ const Card = ({ keyProp, item }) => {
             </a>
           </Link>
         </div>
-      )}
+      )} */}
 
       <div className={styles.textContainer}>
         <div className={styles.detail}>
