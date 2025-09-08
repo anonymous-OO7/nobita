@@ -5,7 +5,7 @@ import styles from "./menuCategories.module.css";
 const MenuCategories = () => {
   return (
     <div className={styles.categoryList}>
-      <Link
+      {/* <Link
         href="/blog?cat=style"
         className={`${styles.categoryItem} ${styles.style}`}
       >
@@ -25,7 +25,18 @@ const MenuCategories = () => {
       </Link>
       <Link href="/blog" className={`${styles.categoryItem} ${styles.coding}`}>
         Coding
-      </Link>
+      </Link> */}
+      <p
+        href="/blog?cat=style"
+        className={`${styles.categoryItem} ${styles.style}`}
+      >
+        Style
+      </p>
+      <p className={`${styles.categoryItem} ${styles.fashion}`}>Fashion</p>
+      <p className={`${styles.categoryItem} ${styles.food}`}>Food</p>
+      <p className={`${styles.categoryItem} ${styles.travel}`}>Travel</p>
+      <p className={`${styles.categoryItem} ${styles.culture}`}>Culture</p>
+      <p className={`${styles.categoryItem} ${styles.coding}`}>Coding</p>
     </div>
   );
 };

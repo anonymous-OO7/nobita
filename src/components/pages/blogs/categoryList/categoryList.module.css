@@ -1,92 +1,94 @@
 .container {
+  padding: 0 0.5rem; /* add some horizontal padding */
 }
 
 .title {
-  margin: 50px 0px;
+  margin: 3rem 0;
+  font-size: 1.75rem;
+  text-align: center;
 }
 
 .categories {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 20px;
+  gap: 1.25rem; /* 20px approx */
 }
 
+/* Default desktop - category uses flex with set width */
 .category {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem; /* 10px */
   text-transform: capitalize;
   width: 15%;
-  height: 80px;
+  height: 5rem;   /* about 80px */
   justify-content: center;
-  border-radius: 10px;
-  padding: 10px;                   /* add padding so background is more visible */
+  border-radius: 0.625rem; /* 10px */
+  padding: 0.625rem;        /* 10px */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.category.style {
-  background-color: #57c4ff31;
-}
+/* Category background colors */
+.category.style { background-color: #57c4ff31; }
+.category.fashion { background-color: #da85c731; }
+.category.food { background-color: #7fb88133; }
+.category.travel { background-color: #ff795736; }
+.category.culture { background-color: #ffb04f45; }
+.category.coding { background-color: #5e4fff31; }
 
-.category.fashion {
-  background-color: #da85c731;
-}
-
-.category.food {
-  background-color: #7fb88133;
-}
-
-.category.travel {
-  background-color: #ff795736;
-}
-
-.category.culture {
-  background-color: #ffb04f45;
-}
-
-.category.coding {
-  background-color: #5e4fff31;
-}
-
+/* Image with relative sizing */
 .image {
   border-radius: 50%;
+  width: 3rem;       /* 48px approx */
+  height: 3rem;
+  object-fit: cover;
 }
 
-
-.image {
-  border-radius: 50%;
-  width: 48px;             /* fixed width */
-  height: 48px;            /* fixed height */
-  object-fit: cover;       /* maintain aspect ratio, crop if needed */
-}
-
-/* Font popping */
+/* Text style smaller */
 .category span {
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #333;
-  text-shadow: 0 0 5px rgba(0,0,0,0.1);
+  text-shadow: 0 0 0.3125rem rgba(0, 0, 0, 0.1); /* 5px approx */
 }
 
+/* Responsive widths for tablets and lower */
 @media screen and (max-width: 1280px) {
   .category {
     width: 20%;
   }
 }
+
 @media screen and (max-width: 1024px) {
   .category {
     width: 25%;
   }
 }
-@media screen and (max-width: 768px) {
-  .category {
-    width: 45%;
-  }
-}
+
+/* For mobile: switch to 3x3 grid, smaller text */
 @media screen and (max-width: 640px) {
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; /* 16px gap between grid items */
+  }
+
   .category {
-    width: 100%;
+    width: 100%;    /* grid items take full column width */
+    height: auto;   /* height auto for flexible content */
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    justify-content: flex-start; /* align items start for better look */
+  }
+
+  .image {
+    width: 2.5rem;  /* 40px smaller */
+    height: 2.5rem;
+  }
+
+  .category span {
+    font-size: 0.875rem; /* smaller text */
   }
 }

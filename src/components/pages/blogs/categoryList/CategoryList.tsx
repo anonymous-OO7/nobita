@@ -44,8 +44,25 @@ const CategoryList: React.FC = () => {
       <h1 className={styles.title}>Popular Categories</h1>
       <div className={styles.categories}>
         {data.map((item) => (
-          <Link
-            href={`/blog?cat=${item.slug}`}
+          // <Link
+          //   href={""}
+          //   // href={`/blog?cat=${item.slug}`}
+          //   className={`${styles.category} ${styles[item.slug]}`}
+          //   key={item.id}
+          // >
+          //   {item.img && (
+          //     <Image
+          //       src={item.img}
+          //       alt={item.title}
+          //       width={48}
+          //       height={48}
+          //       className={styles.image}
+          //     />
+          //   )}
+          //   <span>{item.title}</span>
+          // </Link>
+          <p
+            // href={`/blog?cat=${item.slug}`}
             className={`${styles.category} ${styles[item.slug]}`}
             key={item.id}
           >
@@ -59,7 +76,7 @@ const CategoryList: React.FC = () => {
               />
             )}
             <span>{item.title}</span>
-          </Link>
+          </p>
         ))}
       </div>
     </div>

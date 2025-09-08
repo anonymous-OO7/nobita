@@ -10,9 +10,9 @@ interface Post {
     slug: string;
   };
   user: {
-    name: string;
+    Name: string;
   };
-  createdAt: string;
+  CreatedAt: string;
   img?: string | null;
 }
 
@@ -65,11 +65,11 @@ const MenuPosts: React.FC<MenuPostsProps> = ({ withImage, posts }) => {
             <h3 className={styles.postTitle}>{post.title}</h3>
             <div className={styles.detail}>
               <span className={styles.username}>
-                {post.user?.name || "Unknown"}
+                {post.user?.Name || "Unknown"}
               </span>
               <span className={styles.date}>
                 {" "}
-                - {formatDate(post.createdAt)}
+                - {formatDate(post?.CreatedAt)}
               </span>
             </div>
           </div>

@@ -12,7 +12,7 @@ const Featured = () => {
         <div className={styles.imgContainer}>
           <Image src="/p1.jpeg" alt="" fill className={styles.image} />
         </div>
-        ;
+
         <div className={styles.textContainer}>
           <h1 className={styles.postTitle}>
             Latest in AI for Manufacturing: Efficiency, Innovation, Success

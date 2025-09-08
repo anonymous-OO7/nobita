@@ -27,7 +27,6 @@ const Card = ({ keyProp, item }) => {
       : item.desc
     : "";
 
-  console.log(excerpt, "eex");
   // Capitalize category for display
   const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");
 
@@ -35,12 +34,7 @@ const Card = ({ keyProp, item }) => {
     <div className={styles.container} key={keyProp}>
       {imageSrc && (
         <div className={styles.imageContainer}>
-          <Link
-            className="cursor-pointer"
-            href={`/blogs/posts/${item.slug}`}
-            passHref
-            legacyBehavior
-          >
+          <Link href={`/blogs/posts/${item.slug}`} passHref legacyBehavior>
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -57,6 +51,7 @@ const Card = ({ keyProp, item }) => {
           </Link>
         </div>
       )}
+
       <div className={styles.textContainer}>
         <div className={styles.detail}>
           <span className={styles.date}>
@@ -79,7 +74,6 @@ const Card = ({ keyProp, item }) => {
           className={styles.desc}
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
-
         <Link href={`/blogs/posts/${item.slug}`} passHref legacyBehavior>
           <a target="_blank" rel="noopener noreferrer" className={styles.link}>
             Read More

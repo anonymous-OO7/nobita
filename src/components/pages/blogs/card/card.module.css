@@ -1,60 +1,40 @@
 .container {
-  margin-bottom: 50px;
+  margin-bottom: 3rem;
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 3rem;
 }
 
 .imageContainer {
-  flex: 1;
-  height: 350px;
+  flex: 1 1 40%;  /* flexible width, max 40% */
   position: relative;
+  width: 40%;
+  aspect-ratio: 7 / 4; /* maintain 7:4 aspect ratio */
+  max-width: 350px;
+  min-width: 150px;
 }
 
-.image {
-  object-fit: cover;
-}
+/* No explicit height, height controlled by aspect ratio */
 
 .textContainer {
-  flex: 1;
+  flex: 1 1 55%;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 1.5rem;
+}
+
+/* Text sizes and spacing adjusted */
+.detail {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .date {
-  color: gray;
-}
-
-.category {
-  color: crimson;
-  font-weight: 500;
-}
-
-
-
-.link {
-  border-bottom: 1px solid crimson;
-  width: max-content;
-  padding: 2px 0px;
-}
-
-@media screen and (max-width: 1280px) {
-  .imageContainer {
-    display: none;
-  }
-}
-
-.title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: 8px 0;
-}
-
-.date {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #666;
-  margin-right: 10px;
+  margin-right: 0.5rem;
   font-style: italic;
 }
 
@@ -62,16 +42,85 @@
   display: inline-block;
   background-color: #0070f3;
   color: white;
-  padding: 3px 12px;
+  padding: 0.2rem 0.75rem;
   border-radius: 15px;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: capitalize;
 }
 
-/* Optional: adjust other related styles */
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+}
+
 .desc {
-  margin-top: 4px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #444;
+  margin-top: 0.25rem;
+}
+
+.link {
+  border-bottom: 1px solid crimson;
+  width: max-content;
+  padding: 0.15rem 0;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+
+@media screen and (max-width: 1024px) {
+  .container {
+    gap: 2rem;
+  }
+  .imageContainer {
+    flex-basis: 45%;
+    width: 45%;
+    max-width: none;
+  }
+  .textContainer {
+    flex-basis: 50%;
+  }
+  .title {
+    font-size: 1.15rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .imageContainer {
+    width: 100%;
+    flex-basis: auto;
+    aspect-ratio: 7 / 4;
+    max-width: 100%;
+  }
+  .textContainer {
+    width: 100%;
+    flex-basis: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .title {
+    font-size: 1rem;
+  }
+  .desc {
+    font-size: 0.85rem;
+  }
+  .link {
+    font-size: 0.85rem;
+  }
+  .categoryChip {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.5rem;
+  }
+  .date {
+    font-size: 0.75rem;
+  }
 }
