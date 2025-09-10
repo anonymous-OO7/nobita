@@ -135,7 +135,7 @@ function SidebarNew({
       (role === "recruiter" || role === "super_recruiter") &&
       pathname.includes("/recruiter")
     ) {
-      return [
+      const recruiterItems = [
         {
           icon: <Home color={pathname === "/recruiter" ? "#fff" : "#683FDB"} />,
           text: "Home",
@@ -196,7 +196,11 @@ function SidebarNew({
           active: pathname === "/recruiter/feedback",
           href: "/recruiter/feedback",
         },
-        {
+      ];
+
+      // ✅ Only push Admin tab if role is super_recruiter
+      if (role === "super_recruiter") {
+        recruiterItems.push({
           icon: (
             <FeedBack
               color={pathname === "/recruiter/admin" ? "#fff" : "#683FDB"}
@@ -206,8 +210,10 @@ function SidebarNew({
           alert: pathname === "/recruiter/admin",
           active: pathname === "/recruiter/admin",
           href: "/recruiter/admin",
-        },
-      ];
+        });
+      }
+
+      return recruiterItems;
     }
 
     // Default candidate items
@@ -254,26 +260,6 @@ function SidebarNew({
         active: pathname === "/dashboard/saved",
         href: "/dashboard/saved",
       },
-      // {
-      //   icon: (
-      //     <ProductSVG
-      //       color={
-      //         pathname === "/dashboard/myjobs" ||
-      //         pathname.includes("/myjobs/applications")
-      //           ? "#fff"
-      //           : "#683FDB"
-      //       }
-      //     />
-      //   ),
-      //   text: "My Jobs",
-      //   alert:
-      //     pathname === "/dashboard/myjobs" ||
-      //     pathname.includes("/myjobs/applications"),
-      //   active:
-      //     pathname === "/dashboard/myjobs" ||
-      //     pathname.includes("/myjobs/applications"),
-      //   href: "/dashboard/myjobs",
-      // },
       {
         icon: (
           <FeedBack
