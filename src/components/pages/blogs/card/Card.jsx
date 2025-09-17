@@ -1,24 +1,66 @@
+// src/components/card/Card.jsx
+
 import Image from "next/image";
 import styles from "./card.module.css";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { File } from "megajs";
 
 const Card = ({ keyProp, item }) => {
-  const getImageSrc = (img) => {
-    if (!img) return null;
-    if (img.startsWith("data:image")) return img; // full base64 URI
-    return `data:image/png;base64,${img}`; // wrap base64 string
-  };
+  // State to hold the temporary image URL
+  const [imageUrl, setImageUrl] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const imageSrc = getImageSrc(item.img);
+  // useEffect to handle image processing
+  useEffect(() => {
+    // If there's no image URL, do nothing
+    if (!item.img) {
+      setImageUrl(null);
+      return;
+    }
+
+    let objectUrl; // Variable to hold the URL for cleanup
+
+    // Function to process the image source
+    const processImage = async () => {
+      setIsLoading(true);
+      // Case 1: It's a Mega.nz URL
+      if (item.img.includes("mega.nz")) {
+        try {
+          const file = File.fromURL(item.img);
+          const buffer = await file.downloadBuffer();
+          const blob = new Blob([buffer]);
+          objectUrl = URL.createObjectURL(blob);
+          setImageUrl(objectUrl);
+        } catch (error) {
+          console.error("Failed to load Mega.nz image:", error);
+          setImageUrl(null); // Fallback to no image on error
+        }
+      }
+      // Case 2: It's a Base64 string
+      else {
+        // This handles both full data URIs and raw base64 strings
+        const src = item.img.startsWith("data:image")
+          ? item.img
+          : `data:image/png;base64,${item.img}`;
+        setImageUrl(src);
+      }
+      setIsLoading(false);
+    };
+
+    processImage();
+
+    // Cleanup function to revoke the object URL and prevent memory leaks
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [item.img]); // Rerun this effect if the item.img URL changes
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
-    try {
-      const d = new Date(dateString);
-      return d.toISOString().substring(0, 10);
-    } catch {
-      return "";
-    }
+    return new Date(dateString).toISOString().substring(0, 10);
   };
 
   const excerpt = item.desc
@@ -27,30 +69,23 @@ const Card = ({ keyProp, item }) => {
       : item.desc
     : "";
 
-  // Capitalize category for display
   const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");
 
   return (
     <div className={styles.container} key={keyProp}>
-      {/* {imageSrc && (
+      {imageUrl && (
         <div className={styles.imageContainer}>
-          <Link href={`/blogs/posts/${item.slug}`} passHref legacyBehavior>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.titleLink}
-            >
-              <Image
-                src={imageSrc}
-                alt={item.title || ""}
-                fill
-                style={{ objectFit: "cover" }}
-                unoptimized={true}
-              />
-            </a>
+          <Link href={`/blogs/posts/${item.slug}`} passHref>
+            <Image
+              src={imageUrl}
+              alt={item.title || ""}
+              fill
+              style={{ objectFit: "cover" }}
+              unoptimized={true}
+            />
           </Link>
         </div>
-      )} */}
+      )}
 
       <div className={styles.textContainer}>
         <div className={styles.detail}>
@@ -61,23 +96,19 @@ const Card = ({ keyProp, item }) => {
             {capitalize(item.cat_slug)}
           </span>
         </div>
-        <Link href={`/blogs/posts/${item.slug}`} passHref legacyBehavior>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.titleLink}
-          >
-            <h1 className={styles.title}>{item.title}</h1>
-          </a>
+        <Link href={`/blogs/posts/${item.slug}`} passHref>
+          <h1 className={styles.title}>{item.title}</h1>
         </Link>
         <div
           className={styles.desc}
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
-        <Link href={`/blogs/posts/${item.slug}`} passHref legacyBehavior>
-          <a target="_blank" rel="noopener noreferrer" className={styles.link}>
-            Read More
-          </a>
+        <Link
+          href={`/blogs/posts/${item.slug}`}
+          passHref
+          className={styles.link}
+        >
+          Read More
         </Link>
       </div>
     </div>

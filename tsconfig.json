@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/assets/colors.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/assets/colors.js", "src/components/pages/blogs/menuPosts/MenuPostItem.js"],
   "exclude": ["node_modules"]
 }

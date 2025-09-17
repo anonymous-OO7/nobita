@@ -7,7 +7,9 @@ import "react-quill/dist/quill.bubble.css";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Storage } from "megajs";
-
+import "react-quill/dist/quill.snow.css";
+import "highlight.js/styles/github.css";
+import hljs from "highlight.js";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 import useToast from "@/hooks/useToast";
@@ -58,6 +60,42 @@ const WritePage: React.FC = () => {
 
   const [titleError, setTitleError] = useState<string>("");
   const [descError, setDescError] = useState<string>("");
+
+  const modules = React.useMemo(
+    () => ({
+      toolbar: [
+        [{ header: [1, 2, 3, false] }], // headings
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        ["code-block", "link", "image", "video"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        [{ script: "sub" }, { script: "super" }],
+        [{ indent: "-1" }, { indent: "+1" }],
+        ["clean"],
+      ],
+      syntax: {
+        highlight: (text: string) => hljs.highlightAuto(text).value,
+      },
+    }),
+    []
+  );
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "code-block",
+    "link",
+    "image",
+    "video",
+    "list",
+    "bullet",
+    "script",
+    "indent",
+    "clean",
+  ];
 
   const slugify = (str: string): string =>
     str
@@ -238,12 +276,15 @@ const WritePage: React.FC = () => {
             </button>
           </div>
         )}
+
         <ReactQuill
           className={`${styles.textArea} ${descError ? styles.inputError : ""}`}
-          theme="bubble"
+          theme="snow" // Use "snow" for richer UI
           value={value}
           onChange={setValue}
-          placeholder="Tell your story..."
+          modules={modules}
+          formats={formats}
+          placeholder="Tell your story, add code, images, videos..."
         />
         {descError && <div className={styles.errorText}>{descError}</div>}
       </div>

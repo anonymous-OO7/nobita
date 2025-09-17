@@ -2,6 +2,13 @@
 const nextConfig = {
   images: {
     unoptimized: true, // Disable image optimization
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "mega.nz",
+        // pathname: '/file/**', // optional
+      },
+    ],
     // domains: [
     //   "encrypted-tbn0.gstatic.com",
     //   "3.68.94.171",

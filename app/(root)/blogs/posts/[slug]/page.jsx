@@ -2,20 +2,25 @@
 import React, { useEffect, useState } from "react";
 import styles from "./singlePage.module.css";
 import Image from "next/image";
-// import Comments from "../../../../../src/components/pages/blogs/comments/Comments";
-
 import useApi from "@/hooks/useApi";
 import { GetBlogPost } from "@/apis";
 import Menu from "@/components/pages/blogs/Menu/Menu";
+import { File } from "megajs";
 
 const SinglePage = ({ params }) => {
   const { makeApiCall } = useApi();
   const { slug } = params;
 
+  // State for the post data
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // New state specifically for the Mega.nz image URL
+  const [imageUrl, setImageUrl] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
+
+  // useEffect for fetching the main post data
   useEffect(() => {
     setLoading(true);
     setError(null);
@@ -35,17 +40,48 @@ const SinglePage = ({ params }) => {
       .finally(() => setLoading(false));
   }, [makeApiCall, slug]);
 
-  const isBase64Image = (src) =>
-    typeof src === "string" && src.startsWith("data:image");
+  // New useEffect to handle downloading the image from Mega.nz
+  // This runs only when the main post data has been successfully fetched
+  useEffect(() => {
+    // Ensure we have data and a mega URL to process
+    if (!data || !data.img || !data.img.includes("mega.nz")) {
+      return;
+    }
 
-  // prep image src: if just raw base64 string, wrap with data URI prefix
+    let objectUrl; // To hold the URL for cleanup
+
+    const loadImageFromMega = async () => {
+      setImageLoading(true);
+      try {
+        const file = File.fromURL(data.img);
+        const buffer = await file.downloadBuffer(); // Download file data
+        const blob = new Blob([buffer]); // Create a blob
+        objectUrl = URL.createObjectURL(blob); // Create a temporary local URL
+        setImageUrl(objectUrl);
+      } catch (err) {
+        console.error("Failed to load image from Mega.nz", err);
+        // You could set an error state for the image here if needed
+      } finally {
+        setImageLoading(false);
+      }
+    };
+
+    loadImageFromMega();
+
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [data]); // Dependency array: runs when 'data' changes
+
   const getImageSrc = (img) => {
     if (!img) return null;
     if (img.startsWith("data:image")) return img;
     return `data:image/png;base64,${img}`;
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading post...</p>;
   if (error) return <p>{error}</p>;
   if (!data) return null;
 
@@ -70,8 +106,8 @@ const SinglePage = ({ params }) => {
                   alt={data.user.name || "User avatar"}
                   fill
                   className={styles.avatar}
-                  unoptimized={isBase64Image(data.user.image)}
                   sizes="80px"
+                  unoptimized
                 />
               </div>
             )}
@@ -81,20 +117,20 @@ const SinglePage = ({ params }) => {
             </div>
           </div>
         </div>
-        {/* {data.img && (
-          <div className={styles.imageContainer}>
+
+        <div className={styles.imageContainer}>
+          {imageLoading && <p>Loading image...</p>}
+          {imageUrl && !imageLoading && (
             <Image
-              src={
-                "https://mega.nz/file/WQlQlKIA#dzW-V8hMZqL1mTnCZWXj79IB34VizzvCprwtoPY3u9o.png"
-              }
+              src={imageUrl}
               alt={data.title || ""}
               fill
               className={styles.image}
-              unoptimized={isBase64Image(data.img)}
+              unoptimized
               sizes="(max-width: 768px) 100vw, 600px"
             />
-          </div>
-        )} */}
+          )}
+        </div>
       </div>
       <div className={styles.content}>
         <div className={styles.post}>
@@ -102,9 +138,6 @@ const SinglePage = ({ params }) => {
             className={styles.description}
             dangerouslySetInnerHTML={{ __html: data.desc }}
           />
-          {/* <div className={styles.comment}>
-            <Comments postSlug={slug} />
-          </div> */}
         </div>
         <Menu />
       </div>
