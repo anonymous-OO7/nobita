@@ -1,5 +1,3 @@
-// src/components/card/Card.jsx
-
 import Image from "next/image";
 import styles from "./card.module.css";
 import Link from "next/link";
@@ -7,24 +5,17 @@ import { useEffect, useState } from "react";
 import { File } from "megajs";
 
 const Card = ({ keyProp, item }) => {
-  // State to hold the temporary image URL
   const [imageUrl, setImageUrl] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect to handle image processing
   useEffect(() => {
-    // If there's no image URL, do nothing
     if (!item.img) {
       setImageUrl(null);
       return;
     }
 
-    let objectUrl; // Variable to hold the URL for cleanup
+    let objectUrl;
 
-    // Function to process the image source
     const processImage = async () => {
-      setIsLoading(true);
-      // Case 1: It's a Mega.nz URL
       if (item.img.includes("mega.nz")) {
         try {
           const file = File.fromURL(item.img);
@@ -34,81 +25,79 @@ const Card = ({ keyProp, item }) => {
           setImageUrl(objectUrl);
         } catch (error) {
           console.error("Failed to load Mega.nz image:", error);
-          setImageUrl(null); // Fallback to no image on error
+          setImageUrl(null);
         }
-      }
-      // Case 2: It's a Base64 string
-      else {
-        // This handles both full data URIs and raw base64 strings
+      } else {
         const src = item.img.startsWith("data:image")
           ? item.img
           : `data:image/png;base64,${item.img}`;
         setImageUrl(src);
       }
-      setIsLoading(false);
     };
 
     processImage();
 
-    // Cleanup function to revoke the object URL and prevent memory leaks
     return () => {
-      if (objectUrl) {
-        URL.revokeObjectURL(objectUrl);
-      }
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [item.img]); // Rerun this effect if the item.img URL changes
+  }, [item.img]);
 
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    return new Date(dateString).toISOString().substring(0, 10);
-  };
+  const formatDate = (dateString) =>
+    dateString ? new Date(dateString).toLocaleDateString() : "";
 
   const excerpt = item.desc
-    ? item.desc.length > 60
-      ? item.desc.substring(0, 50) + "..."
-      : item.desc
+    ? item.desc.replace(/<[^>]*>/g, "").slice(0, 100) + "..."
     : "";
-
-  const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");
 
   return (
     <div className={styles.container} key={keyProp}>
+      {/* Image Section */}
       {imageUrl && (
-        <div className={styles.imageContainer}>
-          <Link href={`/blogs/posts/${item.slug}`} passHref>
-            <Image
-              src={imageUrl}
-              alt={item.title || ""}
-              fill
-              style={{ objectFit: "cover" }}
-              unoptimized={true}
-            />
-          </Link>
-        </div>
-      )}
-
-      <div className={styles.textContainer}>
-        <div className={styles.detail}>
-          <span className={styles.date}>
-            Published on {formatDate(item?.CreatedAt)} -{" "}
-          </span>
-          <span className={styles.categoryChip}>
-            {capitalize(item.cat_slug)}
-          </span>
-        </div>
-        <Link href={`/blogs/posts/${item.slug}`} passHref>
-          <h1 className={styles.title}>{item.title}</h1>
-        </Link>
-        <div
-          className={styles.desc}
-          dangerouslySetInnerHTML={{ __html: excerpt }}
-        />
         <Link
           href={`/blogs/posts/${item.slug}`}
-          passHref
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.imageContainer}
+        >
+          <Image
+            src={imageUrl}
+            alt={item.title || "Blog Post"}
+            fill
+            className={styles.image}
+            unoptimized
+            style={{ objectFit: "cover" }}
+          />
+        </Link>
+      )}
+
+      {/* Content Section */}
+      <div className={styles.textContainer}>
+        <div className={styles.detail}>
+          <span className={styles.date}>{formatDate(item?.CreatedAt)}</span>
+          <span className={styles.dot}>•</span>
+          <span className={styles.categoryChip}>
+            {item.cat_slug?.charAt(0).toUpperCase() + item.cat_slug?.slice(1)}
+          </span>
+        </div>
+
+        <Link
+          href={`/blogs/posts/${item.slug}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.titleLink}
+        >
+          <h2 className={styles.title}>{item.title}</h2>
+        </Link>
+
+        <p className={styles.desc}>{excerpt}</p>
+
+        <Link
+          href={`/blogs/posts/${item.slug}`}
+          target="_blank"
+          rel="noopener noreferrer"
           className={styles.link}
         >
-          Read More
+          Read More →
         </Link>
       </div>
     </div>

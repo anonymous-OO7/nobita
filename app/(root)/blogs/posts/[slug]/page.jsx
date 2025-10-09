@@ -1,26 +1,32 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Head from "next/head";
 import styles from "./singlePage.module.css";
 import Image from "next/image";
 import useApi from "@/hooks/useApi";
 import { GetBlogPost } from "@/apis";
 import Menu from "@/components/pages/blogs/Menu/Menu";
 import { File } from "megajs";
+// Import Link for category navigation
+import Link from "next/link";
 
 const SinglePage = ({ params }) => {
   const { makeApiCall } = useApi();
   const { slug } = params;
 
-  // State for the post data
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // New state specifically for the Mega.nz image URL
   const [imageUrl, setImageUrl] = useState(null);
   const [imageLoading, setImageLoading] = useState(false);
 
-  // useEffect for fetching the main post data
+  const getExcerpt = (html, length = 150) => {
+    if (!html) return "";
+    const text = html.replace(/<[^>]*>/g, "").trim();
+    return text.length > length ? text.substring(0, length) + "..." : text;
+  };
+
   useEffect(() => {
     setLoading(true);
     setError(null);
@@ -28,52 +34,50 @@ const SinglePage = ({ params }) => {
       .then((response) => {
         if (response?.data) {
           setData(response.data);
-          setError(null);
+          // Changed to 'Workist' as per your new title example
+          document.title = `${response.data.title || "Blog Post"} | Workist`;
         } else {
           setError("No data returned");
+          document.title = "Blog Post Not Found | Workist";
         }
       })
       .catch((err) => {
-        setError("Error fetching post");
         console.error("Error fetching post", err);
+        setError("Error fetching post");
+        document.title = "Error Loading Post | Workist";
       })
       .finally(() => setLoading(false));
   }, [makeApiCall, slug]);
 
-  // New useEffect to handle downloading the image from Mega.nz
-  // This runs only when the main post data has been successfully fetched
   useEffect(() => {
-    // Ensure we have data and a mega URL to process
-    if (!data || !data.img || !data.img.includes("mega.nz")) {
-      return;
-    }
+    if (!data?.img || !data.img.includes("mega.nz")) return;
 
-    let objectUrl; // To hold the URL for cleanup
-
+    let objectUrl;
     const loadImageFromMega = async () => {
       setImageLoading(true);
       try {
+        if (typeof File.fromURL !== "function") {
+          console.error("Mega.js File.fromURL not available.");
+          return;
+        }
+
         const file = File.fromURL(data.img);
-        const buffer = await file.downloadBuffer(); // Download file data
-        const blob = new Blob([buffer]); // Create a blob
-        objectUrl = URL.createObjectURL(blob); // Create a temporary local URL
+        const buffer = await file.downloadBuffer();
+        const blob = new Blob([buffer]);
+        objectUrl = URL.createObjectURL(blob);
         setImageUrl(objectUrl);
       } catch (err) {
         console.error("Failed to load image from Mega.nz", err);
-        // You could set an error state for the image here if needed
       } finally {
         setImageLoading(false);
       }
     };
-
     loadImageFromMega();
 
     return () => {
-      if (objectUrl) {
-        URL.revokeObjectURL(objectUrl);
-      }
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, [data]); // Dependency array: runs when 'data' changes
+  }, [data]);
 
   const getImageSrc = (img) => {
     if (!img) return null;
@@ -85,25 +89,79 @@ const SinglePage = ({ params }) => {
   if (error) return <p>{error}</p>;
   if (!data) return null;
 
-  const formattedDate = data.created_at
-    ? new Date(data.created_at).toLocaleDateString(undefined, {
+  // Use data.CreatedAt for formatting and time tag
+  const formattedDate = data.CreatedAt
+    ? new Date(data.CreatedAt).toLocaleDateString(undefined, {
         year: "numeric",
         month: "long",
         day: "numeric",
       })
     : "";
 
+  const description = getExcerpt(data.desc);
+  const canonicalUrl =
+    typeof window !== "undefined"
+      ? window.location.href
+      : `YOUR_DOMAIN/${slug}`;
+
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: data.title,
+    image:
+      imageUrl || (data.img && !data.img.includes("mega.nz") ? data.img : null),
+    // Use correct field name data.CreatedAt for schema
+    datePublished: data.CreatedAt,
+    dateModified: data.UpdatedAt || data.CreatedAt, // Use data.UpdatedAt if available
+    author: {
+      "@type": "Person",
+      name: data.user?.Name || "Unknown Author",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Workist", // Updated publisher name
+      logo: {
+        "@type": "ImageObject",
+        url: "URL_TO_YOUR_BLOG_LOGO",
+      },
+    },
+    description: description,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonicalUrl,
+    },
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.infoContainer}>
-        <div className={styles.textContainer}>
+    <>
+      <Head>
+        {/* Title updated in useEffect, but kept here for initial server render */}
+        <title>{data.title} | Workist</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+
+        <meta property="og:title" content={data.title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={schemaData.image} />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+      </Head>
+
+      <main className={`${styles.container} poppins`}>
+        <div className={styles.header}>
           <h1 className={styles.title}>{data.title}</h1>
+
           <div className={styles.user}>
             {data.user?.image && (
               <div className={styles.userImageContainer}>
                 <Image
                   src={getImageSrc(data.user.image)}
-                  alt={data.user.name || "User avatar"}
+                  alt={data.user.Name || "User avatar"}
                   fill
                   className={styles.avatar}
                   sizes="80px"
@@ -112,36 +170,58 @@ const SinglePage = ({ params }) => {
               </div>
             )}
             <div className={styles.userTextContainer}>
-              <span className={styles.username}>{data.user?.name}</span>
-              <span className={styles.date}>{formattedDate}</span>
+              {/* --- NEW STRUCTURE FOR SINGLE ROW --- */}
+              <span className={styles.username}>{data.user?.Name}</span>
+
+              {/* Category Link */}
+              {data.cat?.title && (
+                <Link
+                  href={`/blogs?cat=${data.cat.slug}`}
+                  className={styles.categoryBadge}
+                >
+                  {data.cat.title}
+                </Link>
+              )}
+
+              <span className={styles.dateSeparator}>|</span>
+
+              {/* Date */}
+              <time dateTime={data.CreatedAt} className={styles.date}>
+                {formattedDate}
+              </time>
+              {/* ------------------------------------- */}
             </div>
           </div>
         </div>
 
-        <div className={styles.imageContainer}>
+        <div className={styles.content}>
           {imageLoading && <p>Loading image...</p>}
           {imageUrl && !imageLoading && (
-            <Image
-              src={imageUrl}
-              alt={data.title || ""}
-              fill
-              className={styles.image}
-              unoptimized
-              sizes="(max-width: 768px) 100vw, 600px"
-            />
+            <div className={styles.imageContainer}>
+              <Image
+                src={imageUrl}
+                alt={data.title || "Main blog image"}
+                fill
+                className={styles.image}
+                unoptimized
+                sizes="100vw"
+              />
+            </div>
           )}
+
+          <article className={styles.post}>
+            <div
+              className={styles.description}
+              dangerouslySetInnerHTML={{ __html: data.desc }}
+            />
+          </article>
+
+          <aside className={styles.menuWrapper}>
+            <Menu />
+          </aside>
         </div>
-      </div>
-      <div className={styles.content}>
-        <div className={styles.post}>
-          <div
-            className={styles.description}
-            dangerouslySetInnerHTML={{ __html: data.desc }}
-          />
-        </div>
-        <Menu />
-      </div>
-    </div>
+      </main>
+    </>
   );
 };
 

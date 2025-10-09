@@ -1,79 +1,130 @@
-.infoContainer {
+/*
+  Note: For the Poppins font to fully work, it must be imported 
+  in your global CSS file or your main layout file.
+  Example in global.css: 
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*/
+
+.container {
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 50px;
+  flex-direction: column;
+  align-items: center; 
+  padding: 24px 0;
+  /* Applying Poppins font family */
+  font-family: 'Poppins', sans-serif; 
 }
 
-.textContainer {
-  flex: 1;
+/* ---------- Header (Title and User) ---------- */
+.header {
+  width: 100%;
+  max-width: 1000px; 
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+  align-items: center;
 }
 
 .title {
-  font-size: 64px;
-  margin-bottom: 50px;
+  width: 100%;
+  font-size: 42px;
+  font-weight: 700; 
+  margin-bottom: 24px;
+  text-align: center;
+  max-width: 700px; 
 }
 
 .user {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 20px;
-}
-
-
-
-
-.userTextContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  color: var(--softTextColor);
-}
-
-.username {
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.image {
-  object-fit: cover;
-}
-
-.content {
-  display: flex;
-  gap: 50px;
-}
-
-.post {
-  flex: 5;
-  margin-top: 60px;
-}
-
-.description p {
-  font-size: 20px;
-  font-weight: 300;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 12px;
+  justify-content: center;
 }
 
 .userImageContainer {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   overflow: hidden;
 }
 
 .avatar {
   border-radius: 50%;
+  object-fit: cover;
+}
+
+/* FIX: Display items (Name, Category, Date) in a single row */
+.userTextContainer {
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  gap: 8px; /* Tighter spacing for inline elements */
+  color: var(--softTextColor);
+  font-weight: 400;
+}
+
+.username {
+  font-size: 18px;
+  font-weight: 600; /* Semi-bold for the author name */
+  color: var(--textColor); 
+}
+
+/* Styling for the new Category Badge */
+.categoryBadge {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 3px 10px; /* Slightly more padding */
+  border-radius: 20px; /* Fully rounded badge */
+  background-color: var(--categoryColor, #4a90e2); /* Default color for safety */
+  color: var(--bgColor, white); 
+  text-decoration: none;
+  text-transform: capitalize;
+  line-height: 1;
+  white-space: nowrap; /* Prevent badge text from wrapping */
+}
+
+/* Styling for the separator */
+.dateSeparator {
+  font-size: 18px;
+  color: var(--softTextColor);
+  font-weight: 300;
+  margin: 0 4px;
+}
+
+.date {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--softTextColor);
+  white-space: nowrap; /* Prevent date text from wrapping */
+}
+
+
+/* ---------- Content (Image, Post, Menu) ---------- */
+
+.content {
+  width: 100%;
+  display: flex;
+  justify-content: center; 
+  gap: 24px;
+  padding: 0 16px;
+  margin-top: 36px;
+  max-width: 1000px;
+  /* KEY FIX: allows image to span first row, post/menu on second row */
+  flex-wrap: wrap; 
 }
 
 .imageContainer {
   position: relative;
-  width: 100%;
-  max-width: 600px;
-  height: 350px;
-  margin-top: 20px;
+  width: 100%; /* Image takes full width of the centered content block */
+  height: 0;
+  padding-bottom: 54%; 
+  margin-bottom: 36px;
   border-radius: 12px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .image {
@@ -81,30 +132,83 @@
   object-fit: cover;
 }
 
-/* Add your other styles for container, title, user, content, etc., here */
-
-
-@media screen and (max-width: 1536px) {
-  .title {
-    font-size: 54px;
-  }
+.post {
+  flex: 1;
+  max-width: 700px; /* Max width for the primary content area */
 }
-@media screen and (max-width: 1280px) {
-  .title {
-    font-size: 48px;
-  }
+
+.description p {
+  font-size: 18px;
+  font-weight: 300;
+  margin-bottom: 18px;
+  word-break: break-word;
 }
-@media screen and (max-width: 1024px) {
+
+.menuWrapper {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .title {
+    font-size: 32px;
+  }
+  
+  .content {
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    padding: 0 4vw;
+    max-width: 100%;
+  }
+  
   .imageContainer {
-    display: none;
-  }
-}
-@media screen and (max-width: 640px) {
-  .title {
-    font-size: 36px;
+    width: 100%;
+    padding-bottom: 60%;
+    max-width: 700px;
   }
 
-  .description p{
-    font-size: 18px;
+  .menuWrapper {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .post {
+    width: 100%;
+    max-width: 700px;
+  }
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  .description p {
+    font-size: 16px;
+  }
+  .imageContainer {
+    padding-bottom: 66%;
+    margin-bottom: 16px;
+  }
+  .user {
+    gap: 8px;
+  }
+  
+  /* FIX: Stack user info vertically on very small screens */
+  .userTextContainer {
+    flex-direction: column; 
+    align-items: center;
+    gap: 4px;
+  }
+  .dateSeparator {
+    display: none; /* Hide the vertical separator when stacked */
+  }
+  .username {
+    font-size: 16px;
+  }
+  .date {
+    font-size: 14px;
   }
 }

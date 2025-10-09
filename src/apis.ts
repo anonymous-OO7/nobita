@@ -785,12 +785,17 @@ export const GetAllBlogCategories = async () => {
 };
 
 //get api for utility claims
-export const GetAllBlogPostsList = (page: number, limit: number) => {
+export const GetAllBlogPostsList = (
+  page: number,
+  limit: number,
+  category: string
+) => {
   const searchParams = new URLSearchParams();
 
   // Pagination & search
   if (page !== undefined) searchParams.append("page", String(page));
   if (limit !== undefined) searchParams.append("limit", String(limit));
+  if (category !== undefined) searchParams.append("category", String(category));
 
   const url = `/get-all-post?${searchParams.toString()}`;
 

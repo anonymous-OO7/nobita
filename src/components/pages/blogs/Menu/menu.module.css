@@ -1,8 +1,9 @@
 .container {
   flex: 2;
   margin-top: 60px;
+  padding: 0 20px;
+  max-width: 380px;
 }
-
 .subtitle {
   color: gray;
   font-size: 16px;
@@ -33,7 +34,11 @@
 
 @media screen and (max-width: 1024px) {
   .container {
-    display: none;
+    margin-top: 32px;
+    max-width: 100%;
+    padding: 0;
+    flex: none;
+    width: 100%;
+    order: 2;
   }
 }
-

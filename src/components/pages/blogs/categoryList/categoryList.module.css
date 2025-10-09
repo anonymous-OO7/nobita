@@ -1,94 +1,113 @@
 .container {
-  padding: 0 0.5rem; /* add some horizontal padding */
+  padding: 0 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .title {
-  margin: 3rem 0;
-  font-size: 1.75rem;
+  margin: 3rem 0 2rem 0;
+  font-size: 1.8rem;
   text-align: center;
+  color: #1a202c;
 }
 
 .categories {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1.25rem; /* 20px approx */
 }
 
-/* Default desktop - category uses flex with set width */
 .category {
+  /* cursor: pointer; */
   display: flex;
   align-items: center;
-  gap: 0.625rem; /* 10px */
-  text-transform: capitalize;
-  width: 15%;
-  height: 5rem;   /* about 80px */
-  justify-content: center;
-  border-radius: 0.625rem; /* 10px */
-  padding: 0.625rem;        /* 10px */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  gap: 0.7rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  background: #313233;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+  margin-bottom: 0.5rem;
 }
 
-/* Category background colors */
-.category.style { background-color: #57c4ff31; }
-.category.fashion { background-color: #da85c731; }
-.category.food { background-color: #7fb88133; }
-.category.travel { background-color: #ff795736; }
-.category.culture { background-color: #ffb04f45; }
-.category.coding { background-color: #5e4fff31; }
+/* .category:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+} */
 
-/* Image with relative sizing */
+.activeCategory {
+  background: #0070f3;
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
 .image {
   border-radius: 50%;
-  width: 3rem;       /* 48px approx */
-  height: 3rem;
   object-fit: cover;
+  width: 3rem;
+  height: 3rem;
 }
 
-/* Text style smaller */
 .category span {
   font-weight: 600;
   font-size: 1rem;
-  color: #333;
-  text-shadow: 0 0 0.3125rem rgba(0, 0, 0, 0.1); /* 5px approx */
+  color: #2d3748;
 }
 
-/* Responsive widths for tablets and lower */
+/* Category background colors */
+.category.style {
+  background-color: #57c4ff31;
+}
+.category.fashion {
+  background-color: #da85c731;
+}
+.category.food {
+  background-color: #7fb88133;
+}
+.category.travel {
+  background-color: #ff795736;
+}
+.category.culture {
+  background-color: #ffb04f45;
+}
+.category.coding {
+  background-color: #5e4fff31;
+}
+
+/* Responsive widths */
 @media screen and (max-width: 1280px) {
   .category {
-    width: 20%;
+    min-width: 140px;
   }
 }
 
 @media screen and (max-width: 1024px) {
   .category {
-    width: 25%;
+    min-width: 120px;
   }
 }
 
-/* For mobile: switch to 3x3 grid, smaller text */
 @media screen and (max-width: 640px) {
   .categories {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem; /* 16px gap between grid items */
+    gap: 1rem;
   }
 
   .category {
-    width: 100%;    /* grid items take full column width */
-    height: auto;   /* height auto for flexible content */
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    justify-content: flex-start; /* align items start for better look */
+    width: 100%;
+    height: auto;
+    padding: 0.6rem;
+    border-radius: 12px;
+    justify-content: flex-start;
   }
 
   .image {
-    width: 2.5rem;  /* 40px smaller */
+    width: 2.5rem;
     height: 2.5rem;
   }
 
   .category span {
-    font-size: 0.875rem; /* smaller text */
+    font-size: 0.9rem;
   }
 }

@@ -60,28 +60,21 @@ const Accordion: React.FC = () => {
 
   const faqItems = [
     {
-      header: "What services do you offer?",
-      text: "We provide everything you need to grow your career—job listings, trusted referrals, and resume support. Our app also offers career advice, interview tips, networking guidance, and instant job alerts, making it easier for you to discover opportunities and achieve your professional goals with confidence.",
+      header: "What does this platform offer?",
+      text: "This platform connects people with job opportunities across industries and provides a space to explore, share, and read blogs on diverse subjects such as tech, business, lifestyle, science, travel, and more.",
     },
     {
-      header: "How do I sign up?",
-      text: "Click the Sign Up button on the top right and fill in your details.",
+      header: "How do I find blogs or jobs?",
+      text: "Browse our curated categories or use the search function to easily find blogs on your favorite topics or explore job listings that match your profile. You can also filter by interest or industry.",
     },
     {
-      header: "Is there a cost?",
-      text: "Our basic services are available free of charge, allowing users to browse job listings, access referrals, and receive general career support without cost. However, certain advanced or premium features—such as enhanced resume assistance, personalized career coaching, or priority referrals—may require a paid subscription or one-time fee.",
-    },
-    {
-      header: "How do referrals work?",
-      text: "Referrals are facilitated by connecting you with experienced professionals within our network who are associated with the hiring companies. Once matched, these professionals may provide a direct referral to the employer on your behalf, thereby enhancing the visibility of your application and improving your chances of consideration.",
-    },
-    {
-      header: "Can I become a referral partner?",
+      header: "Can I contribute as a blog writer?",
       children: (
         <div className="mt-3">
           <p className="mb-4 text-gray-600 dark:text-gray-300">
-            Yes! Click the button below to sign up as a referral partner and
-            start earning.
+            Absolutely! Register as a contributor to start publishing your own
+            blogs and reach a wide audience. Share insights, experiences, or
+            knowledge in your areas of expertise.
           </p>
           <button
             onClick={() =>
@@ -92,22 +85,30 @@ const Accordion: React.FC = () => {
             }
             className="text-sm border border-[#0071e3] text-[#0071e3] px-3 py-1.5 rounded-md hover:bg-[#0071e3] hover:text-white transition"
           >
-            Become a Referrer
+            Join as a Blog Writer
           </button>
         </div>
       ),
     },
     {
+      header: "Is there a cost to use the site?",
+      text: "Browsing and reading blogs, as well as searching and applying for jobs, are completely free. Some advanced features or premium job placement and personalized blog promotion may require a small fee or subscription.",
+    },
+    {
+      header: "How do I register and set up my profile?",
+      text: "Just click the Sign Up button in the header and fill in your details. You can complete your profile, upload a resume (for jobs), or set up your writer profile (for blogs) at any time.",
+    },
+    {
       header: "How do I apply for a job?",
-      text: "To apply for a job, simply browse through the available listings, select the position that interests you, and follow the application instructions provided. Ensure that you review the job requirements carefully and submit all necessary documents to complete your application successfully.",
+      text: "Simply review job details and click the Apply button on any listing. Follow the instructions provided to submit your application, resume, and other required materials.",
     },
     {
-      header: "How long does it take to get a referral?",
-      text: "Referrals can take a few days to a couple of weeks depending on the job.The duration for obtaining a referral may vary depending on the employer, the nature of the position, and the availability of suitable referrers.",
+      header: "Can I subscribe to blog or job updates?",
+      text: "Yes! Subscribe to notifications to receive the latest blogs in your favorite categories or instant job alerts directly to your inbox.",
     },
     {
-      header: "What if I have technical issues?",
-      text: "Please contact our support team through the Contact page. Our representatives will review your issue promptly and provide the necessary assistance to ensure uninterrupted access and a smooth user experience.",
+      header: "What if I have technical issues or need help?",
+      text: "Reach out to our support team anytime via the Contact page. We're committed to providing quick assistance and ensuring a smooth experience for all users.",
     },
   ];
 
@@ -119,10 +120,9 @@ const Accordion: React.FC = () => {
           Any Questions? Look Here
         </h2>
         <p className="text-gray-600 dark:text-gray-300 mt-2">
-          General Questions
+          General questions about blogs, jobs, and using the platform
         </p>
       </div>
-
       <div className="max-w-3xl mx-auto">
         {faqItems.map((item, index) => (
           <AccordionItem

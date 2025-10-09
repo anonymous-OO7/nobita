@@ -1,201 +1,226 @@
+/* General container for the write page */
 .container {
-  background: #f9fafb;
-  border-radius: 14px;
-  box-shadow: 0 6px 32px rgba(30, 41, 59, 0.07);
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  max-width: 80vw;
+  gap: 20px;
+  /* CHANGED: Made the overall container wider */
+  width: 90vw;
   margin: 40px auto;
   padding: 32px 40px;
-  box-sizing: border-box;
+  background-color: var(--bg); /* Use theme variables if you have them */
+  color: var(--textColor);
 }
 
 @media (max-width: 768px) {
   .container {
-    max-width: 99vw;
-    padding: 16px 8px;
-    border-radius: 8px;
-    margin-top: 14px;
+    width: 98vw;
+    padding: 20px 15px;
+    margin-top: 20px;
   }
 }
 
-.select {
-  margin-bottom: 24px;
-  padding: 11px 22px;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  font-size: 1.11rem;
-  transition: border-color 0.19s;
-}
-.select:focus {
-  outline: none;
-  border-color: #1a8917;
-}
-@media (max-width: 768px) {
-  .select {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-}
-
-.editor {
+/* Header section with title and publish button */
+.header {
   display: flex;
-  flex-direction: row;
-  gap: 18px;
-  position: relative;
-  background: #fff;
-  border-radius: 9px;
-  box-shadow: 0 3px 12px rgba(51, 65, 85, 0.08);
-  min-height: 310px;
-  /* padding: 18px 16px 24px 16px; */
-}
-
-@media (max-width: 768px) {
-  .editor {
-    flex-direction: column;
-    height: auto;
-    padding: 10px 5px 18px 5px;
-  }
-}
-
-.button, .addButton {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: #f9fafb;
-  border: 1.4px solid #e2e8f0;
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: border-color 0.18s, box-shadow 0.17s;
-  outline: none;
-  margin: 0 3px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.button:hover, .addButton:hover, .button:focus, .addButton:focus {
-  border-color: #1a8917;
-  box-shadow: 0 1px 5px rgba(49, 195, 48, 0.14);
+.pageTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
 }
 
-.add {
-  display: flex;
-  gap: 10px;
-  background-color: #f6f9f6;
-  position: absolute;
-  z-index: 102;
-  width: max-content;
-  min-width: 150px;
-  top: 44px;
-  left: 0;
-  padding: 9px 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 13px rgba(30, 136, 71, 0.07);
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 1.8rem;
+  }
 }
 
+/* Title Input */
 .input {
-  padding: 16px 22px;
-  font-size: 2.1rem;
+  padding: 18px 24px;
+  font-size: 2.8rem;
   font-weight: 600;
-  /* border: 1.2px solid #d1d5db; */
+  border: none;
   outline: none;
-  background: #fff;
-  color: #24272a;
+  background-color: transparent;
+  color: #111827;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 18px;
-  border-radius: 10px;
-  transition: border-color 0.13s;
+  border-bottom: 1px solid #e5e7eb;
+  transition: border-color 0.2s;
 }
 .input:focus {
   border-color: #1a8917;
 }
+.input::placeholder {
+  color: #d1d5db;
+}
 @media (max-width: 768px) {
   .input {
-    font-size: 1.15rem;
-    padding: 10px 12px;
+    font-size: 1.75rem;
+    padding: 12px 0;
   }
 }
-.input::placeholder {
-  color: #bcbec2;
+
+/* Container for meta controls like category, file input, flags */
+.metaControls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 20px;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 20px;
 }
 
-.textArea {
-  flex: 1;
-  width: 100%;
-  box-sizing: border-box;
-  /* border: 1.2px solid #d1d5db; */
+.controlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.controlLabel {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+/* Category Select Dropdown */
+.select {
+  /* CHANGED: Reduced padding and font-size for a smaller look */
+  padding: 8px 12px;
   border-radius: 8px;
-  /* padding: 14px 13px; */
-  background: #fbfbfb;
-  font-size: 1.09rem;
-  color: #24272a;
-  outline: none;
-  font-family: inherit;
-  transition: border-color 0.12s;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.textArea:focus {
+.select:focus {
+  outline: none;
   border-color: #1a8917;
+  box-shadow: 0 0 0 3px rgba(26, 137, 23, 0.1);
 }
 
+/* Custom File Input */
+.fileInput {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.fileInputLabel {
+  display: inline-block;
+  padding: 8px 12px; /* Matched size with select dropdown */
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem; /* Matched size with select dropdown */
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.2s;
+}
+.fileInputLabel:hover {
+  background-color: #f3f4f6;
+}
+
+/* Checkboxes for Flags */
+.checkboxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Reduced gap slightly */
+  padding: 8px 0;
+}
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Reduced gap */
+  cursor: pointer;
+  /* CHANGED: Smaller font for the label */
+  font-size: 0.9rem;
+}
+.checkboxLabel input[type="checkbox"] {
+  /* CHANGED: Made the checkbox itself smaller */
+  height: 15px;
+  width: 15px;
+}
+
+/* Editor Container */
+.editorContainer {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.editorContainer:focus-within {
+  border-color: #1a8917;
+  box-shadow: 0 0 0 3px rgba(26, 137, 23, 0.1);
+}
+
+.editorContainer :global(.jodit-container) {
+  border: none !important;
+}
+
+/* Publish Button */
 .publish {
-  position: sticky;
-  top: 18px;
-  align-self: flex-end;
-  padding: 13px 30px;
+  padding: 12px 28px;
   background-color: #1a8917;
   color: white;
   border: none;
-  border-radius: 23px;
+  border-radius: 30px;
   font-weight: 600;
-  font-size: 1.08rem;
-  box-shadow: 0 1px 6px 0 rgba(30, 136, 71, 0.13);
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.15s, box-shadow 0.15s;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .publish:disabled {
   background-color: #8ed698;
   cursor: not-allowed;
 }
-.publish:hover:not(:disabled),
-.publish:focus:not(:disabled) {
+.publish:hover:not(:disabled) {
   background-color: #13650c;
-  box-shadow: 0 2px 9px 0 rgba(30, 126, 27, 0.13);
-}
-@media (max-width: 768px) {
-  .publish {
-    width: 100%;
-    position: relative;
-    top: auto;
-    margin-top: 16px;
-  }
+  box-shadow: 0 4px 12px rgba(26, 137, 23, 0.2);
 }
 
+/* Error Styling */
 .inputError {
-  border: 1.5px solid #ed2c3a !important;
-  box-shadow: 0 0 4px #ed2c3a1a;
+  border-color: #ef4444 !important;
 }
 .errorText {
-  color: #ed2c3a;
-  font-size: 0.97rem;
-  margin-top: 4px;
-  margin-left: 10px;
+  color: #ef4444;
+  font-size: 0.9rem;
+  margin-top: -15px;
+  margin-bottom: 10px;
 }
 
+/* Loader for publishing button */
 .loader {
   display: inline-block;
-  margin-right: 8px;
-  width: 16px;
-  height: 16px;
-  border: 2px solid white;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
-  border-top: 2px solid transparent;
+  border-top-color: white;
   animation: spin 1s linear infinite;
-  vertical-align: middle;
-  background: transparent;
 }
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }

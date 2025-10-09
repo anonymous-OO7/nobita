@@ -7,12 +7,14 @@ import Card from "../card/Card";
 import useApi from "@/hooks/useApi";
 import { GetAllBlogPostsList } from "@/apis";
 import { useSearchParams } from "next/navigation";
+import clsx from "clsx";
+
 interface Category {
   id: string;
   slug: string;
   title: string;
   img?: string | null;
-  posts?: any; // can be refined if needed
+  posts?: any;
   created_at: string;
   updated_at: string;
 }
@@ -74,9 +76,11 @@ const CardList: React.FC<CardListProps> = ({ cat }) => {
   const pageParam = searchParams.get("page");
   const page = pageParam ? Number(pageParam) : 1;
 
+  const category = searchParams?.get("category") ?? "";
+
   useEffect(() => {
     setLoading(true);
-    makeApiCall(GetAllBlogPostsList(page, POST_PER_PAGE))
+    makeApiCall(GetAllBlogPostsList(page, POST_PER_PAGE, category))
       .then((response: PostsResponse) => {
         if (response?.data) {
           setPosts(response.data || []);
@@ -91,20 +95,35 @@ const CardList: React.FC<CardListProps> = ({ cat }) => {
         console.error("Error fetching posts:", err);
       })
       .finally(() => setLoading(false));
-  }, [makeApiCall, page]);
+  }, [makeApiCall, page, category]);
 
   const hasPrev = page > 1;
   const hasNext = page < Math.ceil(count / POST_PER_PAGE);
 
-  if (loading) return <div className={styles.container}>Loading posts...</div>;
-  if (error) return <div className={styles.container}>Error: {error}</div>;
+  if (loading)
+    return (
+      <div className={clsx(styles.container, "font-poppins")}>
+        Loading posts...
+      </div>
+    );
+  if (error)
+    return (
+      <div className={clsx(styles.container, "font-poppins")}>
+        Error: {error}
+      </div>
+    );
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Recent Posts</h1>
+    <div className={clsx(styles.container, "font-poppins")}>
+      <h1 className={clsx(styles.title, "font-poppins")}>Recent Posts</h1>
       <div className={styles.posts}>
         {posts.map((item) => (
-          <Card item={item} keyProp={item.ID} />
+          <div
+            className={clsx(styles.cardWrapper, "font-poppins text-[0.97rem]")}
+            key={item.ID}
+          >
+            <Card item={item} keyProp={item.ID} />
+          </div>
         ))}
       </div>
       <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />

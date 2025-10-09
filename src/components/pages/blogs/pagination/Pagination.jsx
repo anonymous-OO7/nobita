@@ -1,30 +1,33 @@
 "use client";
 
 import React from "react";
-import styles from "./pagination.module.css";
 import { useRouter } from "next/navigation";
 
 const Pagination = ({ page, hasPrev, hasNext }) => {
   const router = useRouter();
-  console.log(page, "page in component pagination");
 
   return (
-    <div className={styles.container}>
+    <nav className="flex justify-center items-center gap-3 py-6">
       <button
-        className={styles.button}
+        className="px-3 py-1 rounded-full text-sm border border-gray-300 bg-white hover:bg-blue-50 hover:border-blue-400 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
         disabled={!hasPrev}
+        aria-label="Previous page"
         onClick={() => router.push(`?page=${page - 1}`)}
       >
         Previous
       </button>
+      <span className="mx-1 text-gray-700 text-sm select-none min-w-[36px] text-center">
+        {page}
+      </span>
       <button
+        className="px-3 py-1 rounded-full text-sm border border-gray-300 bg-white hover:bg-blue-50 hover:border-blue-400 transition disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
         disabled={!hasNext}
-        className={styles.button}
+        aria-label="Next page"
         onClick={() => router.push(`?page=${page + 1}`)}
       >
         Next
       </button>
-    </div>
+    </nav>
   );
 };
 

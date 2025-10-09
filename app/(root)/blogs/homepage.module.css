@@ -1,4 +1,40 @@
-.content{
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 24px 16px;
+}
+
+/* Main content area with blogs + menu */
+.content {
   display: flex;
   gap: 50px;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+/* Blog list */
+.content > :first-child {
+  flex: 1;
+  max-width: 800px;
+}
+
+/* Menu */
+.content > :last-child {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+  }
+  .content > :last-child {
+    width: 100%;
+    max-width: 800px;
+  }
 }

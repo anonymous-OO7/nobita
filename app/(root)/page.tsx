@@ -13,6 +13,10 @@ import UserCount from "@/components/homelements/UserCount";
 import Accordian from "@/components/homelements/Accordian";
 import Navbar from "@/components/pages/landing/Navbar";
 import LatestJobs from "@/components/homelements/LatestJobsShowcase";
+import CategoryList from "@/components/pages/blogs/categoryList/CategoryList";
+import CardList from "@/components/pages/blogs/cardList/CardList";
+import Menu from "@/components/pages/blogs/Menu/Menu";
+import styles from "./blogs/blog/blogPage.module.css";
 
 export default function About() {
   const [isTrialModalOpen, setIsTrialModalOpen] = useState(false);
@@ -31,10 +35,14 @@ export default function About() {
           <section id="home">
             <FrontContent onOpenTrialModal={() => setIsTrialModalOpen(true)} />
           </section>
-
+          {/* <CategoryList /> */}
+          <div className={styles.content}>
+            <CardList />
+            {/* <Menu /> */}
+          </div>
           {/* <TechContent /> */}
           <LatestJobs />
-          <Clients />
+          {/* <Clients /> */}
           <Testimonials />
           {/* <Founders /> */}
           <UserCount />

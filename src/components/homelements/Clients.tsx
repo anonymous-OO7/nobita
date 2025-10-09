@@ -56,7 +56,7 @@ const Clients = () => {
             </div>
           </div>
 
-          <OurCustomer />
+          {/* <OurCustomer /> */}
         </div>
       </section>
     </div>
