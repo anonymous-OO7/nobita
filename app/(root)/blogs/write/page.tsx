@@ -6,17 +6,19 @@ import {
   ChangeEvent,
   useEffect,
   useRef,
-  useMemo, // Import useMemo
+  useMemo,
 } from "react";
 import Image from "next/image";
 import styles from "./writePage.module.css";
 import { useRouter } from "next/navigation";
 import { Storage } from "megajs";
-import JoditEditor from "jodit-react";
 
 import useToast from "@/hooks/useToast";
 import useApi from "@/hooks/useApi";
 import { CreateBlogApi } from "@/apis";
+import dynamic from "next/dynamic";
+
+const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
 const WritePage: React.FC = () => {
   const router = useRouter();
@@ -27,13 +29,9 @@ const WritePage: React.FC = () => {
   const [megaStorage, setMegaStorage] = useState<any>(null);
 
   useEffect(() => {
-    // --- SECURITY WARNING ---
-    // Hardcoding credentials is very insecure. Anyone can see them in your
-    // site's JavaScript files. Use environment variables instead.
-    // Example: process.env.NEXT_PUBLIC_MEGA_EMAIL
     const storage = new Storage({
-      email: "workist.ai@gmail.com", // Replace with process.env.NEXT_PUBLIC_MEGA_EMAIL
-      password: "Gaurav@123", // Replace with process.env.NEXT_PUBLIC_MEGA_PASSWORD
+      email: process.env.NEXT_PUBLIC_MEGA_EMAIL || "workist.ai@gmail.com",
+      password: process.env.NEXT_PUBLIC_MEGA_PASSWORD || "Gaurav@123",
       userAgent: "WorkistBlog/1.0",
     });
 
@@ -147,26 +145,40 @@ const WritePage: React.FC = () => {
     router,
   ]);
 
-  // *** FIX 1: Memoize the editor config object ***
   const editorConfig = useMemo(
     () => ({
       readonly: false,
       placeholder: "Tell your story, add code, images, videos...",
-      height: 550, // Increased height for a better view
+      height: 800,
       style: {
-        fontSize: "18px", // Cleaner font size
+        fontSize: "18px",
+      },
+
+      font: "Poppins, sans-serif",
+      controls: {
+        font: {
+          list: {
+            "Poppins, sans-serif": "Poppins",
+            "Arial,Helvetica,sans-serif": "Arial",
+            "Georgia,serif": "Georgia",
+            "Impact,Charcoal,sans-serif": "Impact",
+            "Tahoma,Geneva,sans-serif": "Tahoma",
+            "'Times New Roman',Times,serif": "Times New Roman",
+            "Verdana,Geneva,sans-serif": "Verdana",
+          },
+        },
       },
       buttons:
-        "bold,italic,underline,strike,|,align,|,ul,ol,|,font,fontsize,|,link,image,|,source",
+        "bold,italic,underline,strike,|,align,|,ul,ol,|,paragraph,font,fontsize,|,link,image,|,source",
     }),
-    [] // Empty dependency array means this object is created only once
+    []
   );
 
-  // *** FIX 2: Memoize the onChange handler ***
   const handleEditorChange = useCallback((newContent: string) => {
     setValue(newContent);
   }, []);
 
+  // The rest of your component's JSX remains exactly the same
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -210,6 +222,7 @@ const WritePage: React.FC = () => {
             <option value="culture">Culture</option>
             <option value="travel">Travel</option>
             <option value="coding">Coding</option>
+            <option value="news">News</option>
           </select>
         </div>
 
@@ -254,8 +267,8 @@ const WritePage: React.FC = () => {
         <JoditEditor
           ref={editor}
           value={value}
-          config={editorConfig} // Use the memoized config
-          onChange={handleEditorChange} // Use the memoized handler
+          config={editorConfig}
+          onChange={handleEditorChange}
         />
         {descError && <div className={styles.errorText}>{descError}</div>}
       </div>

@@ -63,7 +63,7 @@ interface CardListProps {
   cat?: string;
 }
 
-const POST_PER_PAGE = 4;
+const POST_PER_PAGE = 12;
 
 const CardList: React.FC<CardListProps> = ({ cat }) => {
   const { makeApiCall } = useApi();
@@ -115,7 +115,7 @@ const CardList: React.FC<CardListProps> = ({ cat }) => {
 
   return (
     <div className={clsx(styles.container, "font-poppins")}>
-      <h1 className={clsx(styles.title, "font-poppins")}>Recent Posts</h1>
+      <h1 className={clsx(styles.title, "font-poppins")}>Popular Posts</h1>
       <div className={styles.posts}>
         {posts.map((item) => (
           <div

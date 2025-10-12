@@ -35,3 +35,7 @@
 .categoryItem.coding {
   background-color: #5e4fff31;
 }
+
+.categoryItem.news {
+  background-color: yellowgreen;
+}

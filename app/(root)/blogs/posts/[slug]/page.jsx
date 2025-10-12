@@ -110,16 +110,15 @@ const SinglePage = ({ params }) => {
     headline: data.title,
     image:
       imageUrl || (data.img && !data.img.includes("mega.nz") ? data.img : null),
-    // Use correct field name data.CreatedAt for schema
     datePublished: data.CreatedAt,
-    dateModified: data.UpdatedAt || data.CreatedAt, // Use data.UpdatedAt if available
+    dateModified: data.UpdatedAt || data.CreatedAt,
     author: {
       "@type": "Person",
-      name: data.user?.Name || "Unknown Author",
+      name: data.user?.Name || "workist",
     },
     publisher: {
       "@type": "Organization",
-      name: "Workist", // Updated publisher name
+      name: "Workist",
       logo: {
         "@type": "ImageObject",
         url: "URL_TO_YOUR_BLOG_LOGO",
@@ -211,7 +210,7 @@ const SinglePage = ({ params }) => {
 
           <article className={styles.post}>
             <div
-              className={styles.description}
+              className={`${styles.description} font-poppins font-light text-black`}
               dangerouslySetInnerHTML={{ __html: data.desc }}
             />
           </article>

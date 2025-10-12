@@ -83,6 +83,9 @@
 .category.style {
   background-color: #789cff;
 }
+.category.news {
+  background-color: yellowgreen;
+}
 
 .detail {
   font-size: 12px;

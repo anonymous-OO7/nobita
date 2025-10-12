@@ -27,14 +27,13 @@
 .cardWrapper {
   border-radius: 20px;
   transition: all 0.25s ease;
-  background: #fafafe;
   overflow: hidden;
   cursor: pointer;
+  padding: 10px;
 }
 
 .cardWrapper:hover {
-  box-shadow: 0 8px 28px rgba(86, 118, 252, 0.18),
-    0 4px 14px rgba(0, 0, 0, 0.1);
+
   transform: translateY(-6px) scale(1.03);
 }
 
@@ -48,4 +47,12 @@
   .title {
     font-size: 1.4rem;
   }
+}
+
+/* Add this to your cardList.module.css file */
+
+.paginating {
+  opacity: 0.6;
+  pointer-events: none; /* Prevents clicking on old links while new ones load */
+  transition: opacity 0.2s ease-in-out;
 }

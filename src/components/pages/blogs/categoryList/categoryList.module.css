@@ -73,6 +73,9 @@
 .category.coding {
   background-color: #5e4fff31;
 }
+.category.news {
+  background-color: yellowgreen;
+}
 
 /* Responsive widths */
 @media screen and (max-width: 1280px) {

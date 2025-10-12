@@ -37,6 +37,7 @@ const MenuCategories = () => {
       <p className={`${styles.categoryItem} ${styles.travel}`}>Travel</p>
       <p className={`${styles.categoryItem} ${styles.culture}`}>Culture</p>
       <p className={`${styles.categoryItem} ${styles.coding}`}>Coding</p>
+      <p className={`${styles.categoryItem} ${styles.news}`}>Coding</p>
     </div>
   );
 };

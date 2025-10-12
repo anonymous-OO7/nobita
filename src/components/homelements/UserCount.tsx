@@ -16,7 +16,7 @@ const UserCount = () => {
 
           <div className="flex flex-wrap justify-center gap-6 px-4">
             {/* Visitors */}
-            <div className="w-full md:w-1/4 h-40 flex items-center justify-center">
+            {/* <div className="w-full md:w-1/4 h-40 flex items-center justify-center">
               <div className="flex flex-col space-y-2 px-4 text-center">
                 <div className="text-sm font-medium font-poppins">Visitors</div>
                 <div className="text-5xl font-bold font-poppins text-[#0071e3]">
@@ -26,7 +26,7 @@ const UserCount = () => {
                   Workist has over 100+ daily visitors.
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Total Referrals */}
             <div className="w-full md:w-1/4 h-40 flex items-center justify-center">
@@ -44,7 +44,7 @@ const UserCount = () => {
             </div>
 
             {/* Engagement */}
-            <div className="w-full md:w-1/4 h-40 flex items-center justify-center">
+            {/* <div className="w-full md:w-1/4 h-40 flex items-center justify-center">
               <div className="flex flex-col space-y-2 px-4 text-center">
                 <div className="text-sm font-medium font-poppins">
                   Engagement
@@ -56,7 +56,7 @@ const UserCount = () => {
                   Workist gained 100+ users last month.
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
