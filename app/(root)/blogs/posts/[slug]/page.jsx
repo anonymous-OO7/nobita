@@ -194,21 +194,21 @@ const SinglePage = ({ params }) => {
         </div>
 
         <div className={styles.content}>
-          {imageLoading && <p>Loading image...</p>}
-          {imageUrl && !imageLoading && (
-            <div className={styles.imageContainer}>
-              <Image
-                src={imageUrl}
-                alt={data.title || "Main blog image"}
-                fill
-                className={styles.image}
-                unoptimized
-                sizes="100vw"
-              />
-            </div>
-          )}
-
           <article className={styles.post}>
+            {imageLoading && <p>Loading image...</p>}
+            {imageUrl && !imageLoading && (
+              <div className={styles.imageContainer}>
+                <Image
+                  src={imageUrl}
+                  alt={data.title || "Main blog image"}
+                  fill
+                  className={styles.image}
+                  unoptimized
+                  sizes="100vw"
+                />
+              </div>
+            )}
+
             <div
               className={`${styles.description} font-poppins font-light text-black`}
               dangerouslySetInnerHTML={{ __html: data.desc }}

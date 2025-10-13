@@ -112,20 +112,22 @@
   padding: 0 16px;
   margin-top: 36px;
   max-width: 1000px;
-  /* KEY FIX: allows image to span first row, post/menu on second row */
   flex-wrap: wrap; 
 }
 
 .imageContainer {
   position: relative;
-  width: 100%; /* Image takes full width of the centered content block */
+  width: 92%;
+  max-width: 100%; 
   height: 0;
-  padding-bottom: 54%; 
-  margin-bottom: 36px;
+  padding-bottom: 40%; 
+  margin-bottom: 24px; 
   border-radius: 12px;
   overflow: hidden;
-  flex-shrink: 0;
+  margin: 0 0 24px 0;
 }
+
+
 
 .image {
   border-radius: 12px;
@@ -134,7 +136,7 @@
 
 .post {
   flex: 1;
-  max-width: 700px; /* Max width for the primary content area */
+  max-width: 700px; 
 }
 
 .description p {
