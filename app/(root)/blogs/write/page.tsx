@@ -218,11 +218,14 @@ const WritePage: React.FC = () => {
           >
             <option value="style">Style</option>
             <option value="fashion">Fashion</option>
-            <option value="food">Food</option>
             <option value="culture">Culture</option>
             <option value="travel">Travel</option>
             <option value="coding">Coding</option>
             <option value="news">News</option>
+            <option value="investment-and-finance">
+              Investing and Finance
+            </option>
+            <option value="others">Others</option>
           </select>
         </div>
 

@@ -33,11 +33,14 @@ const MenuCategories = () => {
         Style
       </p>
       <p className={`${styles.categoryItem} ${styles.fashion}`}>Fashion</p>
-      <p className={`${styles.categoryItem} ${styles.food}`}>Food</p>
       <p className={`${styles.categoryItem} ${styles.travel}`}>Travel</p>
       <p className={`${styles.categoryItem} ${styles.culture}`}>Culture</p>
       <p className={`${styles.categoryItem} ${styles.coding}`}>Coding</p>
-      <p className={`${styles.categoryItem} ${styles.news}`}>Coding</p>
+      <p className={`${styles.categoryItem} ${styles.news}`}>
+        Investment and Finance
+      </p>
+      <p className={`${styles.categoryItem} ${styles.news}`}>News</p>
+      <p className={`${styles.categoryItem} ${styles.news}`}>Others</p>
     </div>
   );
 };
