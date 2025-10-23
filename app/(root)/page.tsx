@@ -25,10 +25,7 @@ export default function About() {
 
   return (
     <div>
-      <div
-        className="flex flex-col min-h-screen "
-        style={{ background: Colors.light }}
-      >
+      <div className="flex flex-col  " style={{ background: Colors.light }}>
         {/* <Header /> */}
         <Navbar onOpenTrialModal={() => setIsTrialModalOpen(true)} />
         <div className="flex-grow">
